@@ -258,6 +258,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       'tryToAutoReconnect',
       !window.ethereum ? 'no window.ethereum' : 'have window.ethereum'
     );
+    WalletConnectionApi.debugWindowVars();
 
     // Skip if already connected
     if (this.isConnected()) {
@@ -369,6 +370,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     return _getWeb3FromProvider(wallet.provider);
   }
 
+  private static debugWindowVars() {
+    WalletConnectionApi.debug('debugWindowVars', JSON.stringify(Object.keys(window)));
+  }
+
   /**
    * Ask the user to connect if he isn't already
    */
@@ -377,6 +382,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       'askUserToConnectIfNeeded',
       !window.ethereum ? 'no window.ethereum' : 'have window.ethereum'
     );
+    WalletConnectionApi.debugWindowVars();
 
     if (this.isConnected()) {
       console.log('askUserToConnectIfNeeded: Already connected');
