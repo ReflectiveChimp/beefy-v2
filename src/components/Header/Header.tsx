@@ -1,4 +1,4 @@
-import React, { memo, Suspense, useState } from 'react';
+import React, { memo, Suspense, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
@@ -29,6 +29,7 @@ import { ChainEntity } from '../../features/data/entities/chain';
 import { NetworkStatus } from '../NetworkStatus';
 import { styles } from './styles';
 import { BIG_ZERO } from '../../helpers/big-number';
+import { featureFlag_getDebugRoom } from '../../features/data/utils/feature-flags';
 
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = React.lazy(() => import(`./components/WalletContainer`));
@@ -211,7 +212,32 @@ export const Header = connect((state: BeefyState) => {
             </Toolbar>
           </Container>
         </AppBar>
+        <DetectWindowEthereum />
       </Box>
     );
   }
 );
+
+const DetectWindowEthereum = memo(function () {
+  const [debug] = useState(() => !!featureFlag_getDebugRoom());
+  const [exists, setExists] = useState(() => !!window.ethereum);
+
+  useEffect(() => {
+    const handle = setInterval(() => {
+      setExists(!!window.ethereum);
+    }, 500);
+    return () => clearInterval(handle);
+  }, [setExists]);
+
+  return debug ? (
+    <div
+      style={{
+        textAlign: 'center',
+        color: exists ? 'green' : '#f00',
+        background: '#fff',
+      }}
+    >
+      window.ethereum {exists ? 'exists' : 'does not exist'}
+    </div>
+  ) : null;
+});

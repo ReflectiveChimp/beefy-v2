@@ -154,3 +154,8 @@ export function featureFlag_getDebugRoom(): string | null {
 
   return null;
 }
+
+export function featureFlag_getMockOnboard(): boolean {
+  const params = new URLSearchParams(window.location.search);
+  return params.has('__mock_onboard');
+}

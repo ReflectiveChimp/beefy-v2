@@ -7,6 +7,7 @@ import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-c
 import { BridgeApi } from './bridge/bridge';
 import { IOnRampApi } from './on-ramp/on-ramp-types';
 import Web3 from 'web3';
+import { featureFlag_getMockOnboard } from '../utils/feature-flags';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -79,40 +80,44 @@ export async function getWalletConnectionApiInstance(
     throw new Error('Please initialize wallet instance');
   }
   if (!walletConnection) {
-    // allow code splitting to put all wallet connect stuff
-    // in a separate, non-critical-path js file
-    // const { WalletConnectionApi } = await import('./wallet/wallet-connection');
-    const WalletConnectionApi = class MockWalletConnectionApi implements IWalletConnectionApi {
-      private static debug(...args: any[]) {
-        console.debug('MockWalletConnectionApi', ...args);
-      }
-      private static debugWindowVars() {
-        WalletConnectionApi.debug('debugWindowVars', JSON.stringify(Object.keys(window)));
-      }
-      constructor(protected options: WalletConnectionOptions) {
-        MockWalletConnectionApi.debug('constructor');
-      }
-      async tryToAutoReconnect(): Promise<void> {
-        MockWalletConnectionApi.debug('tryToAutoReconnect');
-        MockWalletConnectionApi.debugWindowVars();
-      }
-      async askUserToConnectIfNeeded(): Promise<void> {
-        MockWalletConnectionApi.debug('askUserToConnectIfNeeded');
-        MockWalletConnectionApi.debugWindowVars();
-      }
-      async askUserForChainChange(chainId: ChainEntity['id']): Promise<void> {
-        MockWalletConnectionApi.debug('askUserForChainChange');
-      }
-      async disconnect(): Promise<void> {
-        MockWalletConnectionApi.debug('disconnect');
-        this.options.onWalletDisconnected();
-      }
-      async getConnectedWeb3Instance(): Promise<Web3> {
-        MockWalletConnectionApi.debug('getConnectedWeb3Instance');
-        throw new Error(`Mock: not connected`);
-      }
-    };
-    walletConnection = new WalletConnectionApi(options);
+    if (featureFlag_getMockOnboard()) {
+      const WalletConnectionApi = class MockWalletConnectionApi implements IWalletConnectionApi {
+        private static debug(...args: any[]) {
+          console.debug('MockWalletConnectionApi', ...args);
+        }
+        private static debugWindowVars() {
+          WalletConnectionApi.debug('debugWindowVars', JSON.stringify(Object.keys(window)));
+        }
+        constructor(protected options: WalletConnectionOptions) {
+          MockWalletConnectionApi.debug('constructor');
+        }
+        async tryToAutoReconnect(): Promise<void> {
+          MockWalletConnectionApi.debug('tryToAutoReconnect');
+          MockWalletConnectionApi.debugWindowVars();
+        }
+        async askUserToConnectIfNeeded(): Promise<void> {
+          MockWalletConnectionApi.debug('askUserToConnectIfNeeded');
+          MockWalletConnectionApi.debugWindowVars();
+        }
+        async askUserForChainChange(chainId: ChainEntity['id']): Promise<void> {
+          MockWalletConnectionApi.debug('askUserForChainChange');
+        }
+        async disconnect(): Promise<void> {
+          MockWalletConnectionApi.debug('disconnect');
+          this.options.onWalletDisconnected();
+        }
+        async getConnectedWeb3Instance(): Promise<Web3> {
+          MockWalletConnectionApi.debug('getConnectedWeb3Instance');
+          throw new Error(`Mock: not connected`);
+        }
+      };
+      walletConnection = new WalletConnectionApi(options);
+    } else {
+      // allow code splitting to put all wallet connect stuff
+      // in a separate, non-critical-path js file
+      const { WalletConnectionApi } = await import('./wallet/wallet-connection');
+      walletConnection = new WalletConnectionApi(options);
+    }
   }
   return walletConnection;
 }
