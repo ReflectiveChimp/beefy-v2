@@ -18,13 +18,20 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboardWalletInitializers: WalletInit[] | null;
   protected ignoreDisconnectFromAutoConnect = false;
 
+  private static debug(...args: any[]) {
+    console.debug('WalletConnectionApi', ...args);
+  }
+
   constructor(protected options: WalletConnectionOptions) {
+    WalletConnectionApi.debug('constructor');
     this.onboard = null;
     this.onboardWalletInitializers = null;
   }
 
   private getOnboardWalletInitializers(): WalletInit[] {
+    WalletConnectionApi.debug('getOnboardWalletInitializers');
     if (this.onboardWalletInitializers === null) {
+      WalletConnectionApi.debug('getOnboardWalletInitializers', 'create');
       this.onboardWalletInitializers = WalletConnectionApi.createOnboardWalletInitializers();
     }
     return this.onboardWalletInitializers;
@@ -35,6 +42,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * @private
    */
   private static createOnboardWalletInitializers() {
+    WalletConnectionApi.debug('createOnboardWalletInitializers');
+
     return [
       WalletConnectionApi.createInjectedWalletsModule(),
       createWalletConnectModule(),
@@ -45,6 +54,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   }
 
   private static createInjectedWalletsModule() {
+    WalletConnectionApi.debug('createOnboardWalletInitializers');
+
     return createInjectedWallets({
       custom: customInjectedWallets,
     });
@@ -129,6 +140,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * @private
    */
   private createOnboard() {
+    WalletConnectionApi.debug('createOnboard');
+
     const onboard = Onboard({
       wallets: this.getOnboardWalletInitializers(),
       appMetadata: {
@@ -170,6 +183,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * @private
    */
   private subscribeToOnboardEvents(onboard: OnboardAPI) {
+    WalletConnectionApi.debug('subscribeToOnboardEvents');
+
     const wallets = onboard.state.select('wallets');
     return wallets.subscribe(wallets => {
       if (wallets.length === 0) {
@@ -203,6 +218,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   }
 
   private static setLastConnectedWallet(wallet: string | null) {
+    WalletConnectionApi.debug('setLastConnectedWallet', wallet);
     try {
       if (wallet) {
         window?.localStorage?.setItem('lastConnectedWallet', wallet);
@@ -238,6 +254,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * Attempt to reconnect to cached provider
    */
   public async tryToAutoReconnect() {
+    WalletConnectionApi.debug('tryToAutoReconnect');
+
     // Skip if already connected
     if (this.isConnected()) {
       console.log('tryToAutoReconnect: Already connected');
@@ -273,6 +291,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   }
 
   private async waitForInjectedWallet(): Promise<boolean> {
+    WalletConnectionApi.debug('waitForInjectedWallet');
+
     const checkInterval = 200;
     const maxWait = 5000;
     const injectedNamespaces = uniq(
@@ -291,7 +311,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     };
 
     if (anyNamespaceExists()) {
-      console.log('wallet: exists at start');
+      WalletConnectionApi.debug('waitForInjectedWallet', 'wallet: exists at start');
       return true;
     }
 
@@ -299,13 +319,13 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       const startTime = Date.now();
       const handle = setInterval(() => {
         if (Date.now() - startTime > maxWait) {
-          console.log('wallet: max wait');
+          WalletConnectionApi.debug('waitForInjectedWallet', 'wallet: max wait');
           clearInterval(handle);
           return resolve(false);
         }
 
         if (anyNamespaceExists()) {
-          console.log('wallet: exists now');
+          WalletConnectionApi.debug('waitForInjectedWallet', 'wallet: exists now');
           clearInterval(handle);
           return resolve(true);
         }
@@ -314,6 +334,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   }
 
   private static async connect(onboard: OnboardAPI, options?: ConnectOptions) {
+    WalletConnectionApi.debug('connect', options);
     const wallets = await onboard.connectWallet(options);
 
     if (!wallets.length) {
@@ -349,6 +370,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * Ask the user to connect if he isn't already
    */
   public async askUserToConnectIfNeeded(isAutoConnect: boolean = false) {
+    WalletConnectionApi.debug('askUserToConnectIfNeeded');
+
     if (this.isConnected()) {
       console.log('askUserToConnectIfNeeded: Already connected');
       throw new Error('Already connected');

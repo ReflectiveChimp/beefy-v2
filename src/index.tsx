@@ -3,13 +3,14 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { App } from './App';
 import { persistor, store } from './store';
-
 import './i18n';
+import { featureFlag_getDebugRoom } from './features/data/utils/feature-flags';
+import { Logger } from './logger';
 
-if (window) {
-  ['DOMContentLoaded', 'load'].forEach(event =>
-    window.addEventListener(event, e => console.log('event', event, typeof window.ethereum, e))
-  );
+const room = featureFlag_getDebugRoom();
+if (room) {
+  const logger = new Logger(room);
+  logger.start();
 }
 
 ReactDOM.render(

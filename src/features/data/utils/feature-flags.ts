@@ -145,3 +145,12 @@ export function featureFlag_simulateBeefyApiError(
     return chainIds.includes(key);
   }
 }
+
+export function featureFlag_getDebugRoom(): string | null {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('__debug')) {
+    return params.get('__debug');
+  }
+
+  return null;
+}
