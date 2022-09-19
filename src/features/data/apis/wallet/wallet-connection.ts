@@ -254,7 +254,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * Attempt to reconnect to cached provider
    */
   public async tryToAutoReconnect() {
-    WalletConnectionApi.debug('tryToAutoReconnect');
+    WalletConnectionApi.debug(
+      'tryToAutoReconnect',
+      !window.ethereum ? 'no window.ethereum' : 'have window.ethereum'
+    );
 
     // Skip if already connected
     if (this.isConnected()) {
@@ -370,7 +373,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * Ask the user to connect if he isn't already
    */
   public async askUserToConnectIfNeeded(isAutoConnect: boolean = false) {
-    WalletConnectionApi.debug('askUserToConnectIfNeeded');
+    WalletConnectionApi.debug(
+      'askUserToConnectIfNeeded',
+      !window.ethereum ? 'no window.ethereum' : 'have window.ethereum'
+    );
 
     if (this.isConnected()) {
       console.log('askUserToConnectIfNeeded: Already connected');
