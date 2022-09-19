@@ -11,6 +11,13 @@ export class Logger {
 
   start() {
     this.hookConsole();
+    this.logWindowEvents();
+  }
+
+  logWindowEvents() {
+    ['DOMContentLoaded', 'load'].forEach(event =>
+      window.addEventListener(event, () => console.debug('window', event))
+    );
   }
 
   hookConsole() {

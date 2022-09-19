@@ -49,6 +49,8 @@ export const chains = chainsConfig.map(id => ({ id }));
  * Fetch all necessary information for the home page
  */
 export async function initHomeDataV4(store: BeefyStore) {
+  console.debug('initHomeDataV4', 'start');
+
   const captureFulfill = createFulfilledActionCapturer(store);
 
   // start fetching chain config
@@ -186,6 +188,8 @@ export async function initHomeDataV4(store: BeefyStore) {
   }
 
   preLoadPages();
+
+  console.debug('initHomeDataV4', 'done');
 }
 
 export function fetchCaptureUserData(
