@@ -1,10 +1,9 @@
 import { memo, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 export const DefaultMeta = memo(function () {
-  const location = useLocation();
+  const location = window.location;
   const { t, i18n } = useTranslation();
   const canonical = useMemo(() => {
     return `https://app.beefy.com${location.pathname}`;
