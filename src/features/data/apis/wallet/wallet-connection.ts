@@ -372,6 +372,15 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
   private static debugWindowVars() {
     WalletConnectionApi.debug('debugWindowVars', JSON.stringify(Object.keys(window)));
+    WalletConnectionApi.debug(
+      'debugScripts',
+      JSON.stringify(
+        Array.from(document.getElementsByTagName('script')).map(script => [
+          script.src || 'no src',
+          script.innerText || 'no innerText',
+        ])
+      )
+    );
   }
 
   /**
