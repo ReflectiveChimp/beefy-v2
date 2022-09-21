@@ -29,7 +29,13 @@ export const App = () => {
         replayReduxActions /* add it here to make webpack add it to the build */
       );
     } else {
-      initHomeDataV4(store);
+      if (document.readyState === 'complete') {
+        initHomeDataV4(store);
+      } else {
+        const cb = () => initHomeDataV4(store);
+        window.addEventListener('load', cb);
+        return () => window.removeEventListener('load', cb);
+      }
     }
   }, []);
   return (
