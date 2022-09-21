@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, Button } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+
 import { Card } from '../Card/Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
@@ -10,6 +10,7 @@ import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

@@ -5,9 +5,10 @@ import { Meta } from '../../../../components/Meta/Meta';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
-import { useTranslation } from 'react-i18next';
+
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectPlatformById } from '../../../data/selectors/platforms';
+import { useTranslation } from '../../../../mock';
 
 export type VaultMetaProps = {
   vaultId: VaultEntity['id'];

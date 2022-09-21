@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, IconButton, makeStyles, Snackbar } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
@@ -13,6 +13,7 @@ import { ChainEntity } from '../../features/data/entities/chain';
 import { BridgeInfo } from './components/BridgeInfo';
 import { TransactionLink } from './components/TransactionLink';
 import { Button } from '../Button';
+import { useTranslation } from '../../mock';
 
 const useStyles = makeStyles(styles);
 

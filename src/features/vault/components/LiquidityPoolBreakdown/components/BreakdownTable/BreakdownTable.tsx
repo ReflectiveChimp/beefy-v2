@@ -12,7 +12,7 @@ import clsx from 'clsx';
 import { BigNumber } from 'bignumber.js';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

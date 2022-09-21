@@ -15,8 +15,9 @@ import { styles } from './styles';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { AmountLabel } from '../AmountLabel';
-import { useTranslation } from 'react-i18next';
+
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

@@ -2,9 +2,10 @@ import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { Debug } from './Debug';
-import { useTranslation } from 'react-i18next';
+
 import { PROVIDERS } from '../OnRamp/providers';
 import { featureFlag_debugOnRamp } from '../../../data/utils/feature-flags';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

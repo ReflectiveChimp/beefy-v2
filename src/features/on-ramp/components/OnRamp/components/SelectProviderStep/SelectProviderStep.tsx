@@ -2,7 +2,7 @@ import React, { memo, useCallback } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { Step } from '../Step';
-import { useTranslation } from 'react-i18next';
+
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 import { useAppSelector } from '../../../../../../store';
 import {
@@ -15,6 +15,7 @@ import { ItemInnerProps } from '../SearchableList/ItemInner';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import { ProviderIcon } from '../ProviderIcon';
 import { PROVIDERS } from '../../providers';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

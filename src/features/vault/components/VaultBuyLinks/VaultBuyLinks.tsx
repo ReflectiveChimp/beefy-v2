@@ -1,11 +1,12 @@
 import { makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../store';
 import { Bridge } from '../../../../components/Bridge';
 import { LinkButton } from '../../../../components/LinkButton';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

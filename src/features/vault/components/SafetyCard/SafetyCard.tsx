@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import React, { Fragment } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { Popover } from '../../../../components/Popover';
 import { RISKS } from '../../../../config/risk';
 import { SafetyScore } from '../../../../components/SafetyScore';
@@ -14,6 +14,7 @@ import down from './down.svg';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { VaultEntity } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

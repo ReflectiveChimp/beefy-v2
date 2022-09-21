@@ -1,9 +1,10 @@
 import { makeStyles } from '@material-ui/core';
 import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { AlertWarning } from '../../../../components/Alerts';
 import { useAppSelector } from '../../../../store';
 import { styles } from './styles';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

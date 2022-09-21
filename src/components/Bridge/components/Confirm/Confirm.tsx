@@ -1,6 +1,6 @@
 import { CardContent, makeStyles } from '@material-ui/core';
 import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { fetchAllowanceAction } from '../../../../features/data/actions/allowance';
 import {
   askForNetworkChange,
@@ -24,6 +24,7 @@ import { useAppDispatch, useAppSelector } from '../../../../store';
 import { Button } from '../../../Button';
 import { styles } from './styles';
 import { formatAddressShort } from '../../../../helpers/format';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

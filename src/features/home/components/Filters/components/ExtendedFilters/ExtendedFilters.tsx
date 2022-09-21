@@ -1,11 +1,12 @@
 import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { makeStyles } from '@material-ui/core';
 import { PlatformDropdownFilter } from '../PlatformFilters';
 import { styles } from './styles';
 import { VaultCategoryDropdownFilter } from '../VaultCategoryFilters';
 import { CheckboxFilter } from '../CheckboxFilter';
 import { ShownVaultsCount } from './ShownVaultsCount';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

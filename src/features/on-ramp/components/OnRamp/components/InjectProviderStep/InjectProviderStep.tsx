@@ -1,11 +1,12 @@
 import React, { memo } from 'react';
 import { Step } from '../Step';
-import { useTranslation } from 'react-i18next';
+
 import { useAppSelector } from '../../../../../../store';
 import { selectSelectedQuote } from '../../../../../data/selectors/on-ramp';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import { PROVIDERS } from '../../providers';
 import { ProviderFrame } from './ProviderFrame';
+import { useTranslation } from '../../../../../../mock';
 
 export const InjectProviderStep = memo(function () {
   const quote = useAppSelector(selectSelectedQuote);

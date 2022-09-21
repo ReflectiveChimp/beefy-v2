@@ -15,8 +15,9 @@ import { styles } from './styles';
 import { FiatAmountAdornment } from '../FiatAmountAdornment';
 import { AmountOutput } from '../AmountOutput';
 import { AmountLabel } from '../AmountLabel';
-import { useTranslation } from 'react-i18next';
+
 import { InputError } from '../../../../../data/reducers/on-ramp-types';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

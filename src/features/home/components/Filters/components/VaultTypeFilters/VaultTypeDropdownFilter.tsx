@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectFilterVaultType } from '../../../../../data/selectors/filtered-vaults';
 import { ToggleButtonsProps } from '../../../../../../components/ToggleButtons';
@@ -9,6 +9,7 @@ import {
 } from '../../../../../data/reducers/filtered-vaults';
 import { LabeledSelect } from '../../../../../../components/LabeledSelect';
 import { TYPE_OPTIONS } from './type-options';
+import { useTranslation } from '../../../../../../mock';
 
 export type VaultTypeDropdownFilterProps = {
   className?: string;

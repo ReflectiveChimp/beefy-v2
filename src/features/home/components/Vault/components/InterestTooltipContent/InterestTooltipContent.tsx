@@ -1,7 +1,8 @@
 import { Fragment, memo } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

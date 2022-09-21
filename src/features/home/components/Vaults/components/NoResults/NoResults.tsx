@@ -10,12 +10,13 @@ import {
   selectIsWalletKnown,
   selectWalletAddressIfKnown,
 } from '../../../../../data/selectors/wallet';
-import { useTranslation } from 'react-i18next';
+
 import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/data-loader';
 import { Loader } from '../../../../../../components/Loader';
 import { askForWalletConnection, doDisconnectWallet } from '../../../../../data/actions/wallet';
 import { Button } from '../../../../../../components/Button';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

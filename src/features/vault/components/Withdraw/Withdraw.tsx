@@ -12,7 +12,7 @@ import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import { isArray } from 'lodash';
 import React, { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
 import { Step } from '../../../../components/Steps/types';
@@ -63,6 +63,7 @@ import { BIG_ZERO } from '../../../../helpers/big-number';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
 import { isFulfilled } from '../../../data/reducers/data-loader-types';
 import { FeeBreakdown } from '../FeeBreakdown';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

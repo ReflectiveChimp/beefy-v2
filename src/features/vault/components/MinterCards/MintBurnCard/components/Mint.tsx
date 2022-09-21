@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Button, InputBase, makeStyles, Paper } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+
 import { CardContent } from '../../../Card';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { styles } from '../styles';
@@ -27,6 +27,7 @@ import { selectAllowanceByTokenAddress } from '../../../../../data/selectors/all
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

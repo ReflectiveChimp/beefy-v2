@@ -2,9 +2,10 @@ import { memo, useMemo } from 'react';
 import { Drawer, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { ExtendedFilters } from './ExtendedFilters';
-import { useTranslation } from 'react-i18next';
+
 import { Button } from '../../../../../../components/Button';
 import { CloseOutlined } from '@material-ui/icons';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

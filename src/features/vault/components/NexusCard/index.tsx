@@ -1,7 +1,8 @@
 import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { InsuranceCard } from '../InsuranceCard';
 import NexusLogo from '../../../../images/partners/nexus.svg';
+import { useTranslation } from '../../../../mock';
 
 export const NexusCard = memo(function () {
   const { t } = useTranslation();

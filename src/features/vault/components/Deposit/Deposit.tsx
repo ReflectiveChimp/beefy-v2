@@ -9,7 +9,7 @@ import {
   RadioGroup,
 } from '@material-ui/core';
 import React, { ChangeEventHandler, useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
 import { Step } from '../../../../components/Steps/types';
@@ -41,6 +41,7 @@ import { MaxNativeDepositAlert } from '../MaxNativeDepositAlert';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
 import { isFulfilled } from '../../../data/reducers/data-loader-types';
 import { FeeBreakdown } from '../FeeBreakdown';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

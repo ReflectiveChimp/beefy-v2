@@ -1,11 +1,12 @@
 import { makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { styles } from './styles';
 import { VaultGov } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {

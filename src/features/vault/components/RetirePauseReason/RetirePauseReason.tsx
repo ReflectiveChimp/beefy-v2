@@ -1,9 +1,10 @@
 import { memo, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { AlertWarning } from '../../../../components/Alerts';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
+import { useTranslation } from '../../../../mock';
 
 export type RetirePauseReasonProps = {
   vaultId: VaultEntity['id'];

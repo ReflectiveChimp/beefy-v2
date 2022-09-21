@@ -1,11 +1,12 @@
 import { memo, PropsWithChildren } from 'react';
 import { Hidden, makeStyles, useMediaQuery } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+
 import { formatPercent, formatUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../store';
 import { selectUserGlobalStats } from '../../../../data/selectors/apy';
 import { selectIsBalanceHidden } from '../../../../data/selectors/wallet';
+import { useTranslation } from '../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

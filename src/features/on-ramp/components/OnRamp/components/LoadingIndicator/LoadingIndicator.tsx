@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { CircularProgress, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

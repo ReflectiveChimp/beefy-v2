@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo } from 'react';
 import { ToggleButtons, ToggleButtonsProps } from '../../../../../../components/ToggleButtons';
-import { useTranslation } from 'react-i18next';
+
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectFilterVaultCategory } from '../../../../../data/selectors/filtered-vaults';
 import {
@@ -8,6 +8,7 @@ import {
   FilteredVaultsState,
 } from '../../../../../data/reducers/filtered-vaults';
 import { CATEGORY_OPTIONS } from './category-options';
+import { useTranslation } from '../../../../../../mock';
 
 export type VaultCategoryButtonFilterProps = {
   className?: string;

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { LinkButton } from '../../../../components/LinkButton';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
 import { ChainEntity } from '../../../data/entities/chain';
@@ -17,6 +17,7 @@ import { CardHeader } from '../Card/CardHeader';
 import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../store';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

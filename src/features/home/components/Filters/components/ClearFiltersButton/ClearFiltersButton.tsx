@@ -6,10 +6,11 @@ import {
   selectHasActiveFilter,
 } from '../../../../../data/selectors/filtered-vaults';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { useTranslation } from 'react-i18next';
+
 import { Clear } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

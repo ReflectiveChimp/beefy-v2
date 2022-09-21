@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import React, { memo, Suspense, useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { initBridgeForm } from '../../features/data/actions/scenarios';
 import { bridgeModalActions } from '../../features/data/reducers/wallet/bridge-modal';
 import { selectIsWalletKnown, selectWalletAddress } from '../../features/data/selectors/wallet';
@@ -8,6 +8,7 @@ import { StatLoader } from '../StatLoader';
 import { BridgeModal } from './components/BridgeModal';
 import { useAppSelector, useAppStore } from '../../store';
 import { isFulfilled } from '../../features/data/reducers/data-loader-types';
+import { useTranslation } from '../../mock';
 
 export const Bridge = memo(function _Bridge({ buttonClassname }: { buttonClassname: string }) {
   const { t } = useTranslation();

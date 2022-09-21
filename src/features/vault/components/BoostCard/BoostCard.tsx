@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { LinkButton } from '../../../../components/LinkButton';
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { styles } from './styles';
@@ -8,6 +8,7 @@ import { VaultEntity } from '../../../data/entities/vault';
 import { selectBoostById, selectPreStakeOrActiveBoostIds } from '../../../data/selectors/boosts';
 import { selectBoostedVaultMainPartner } from '../../../data/selectors/partners';
 import { useAppSelector } from '../../../../store';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 export const BoostCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {

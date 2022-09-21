@@ -1,10 +1,11 @@
 import { Button, makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { ChainEntity } from '../../../../features/data/entities/chain';
 import { selectChainById } from '../../../../features/data/selectors/chains';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../store';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

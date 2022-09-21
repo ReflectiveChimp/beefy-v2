@@ -1,6 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 import { CardHeader, CardTitle } from '../../../../features/vault/components/Card';
-import { useTranslation } from 'react-i18next';
+
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/styles';
 import { Preview } from '../Preview';
@@ -10,6 +10,7 @@ import { useStepper } from '../../../Steps/hooks';
 import { useAppSelector } from '../../../../store';
 import { styles } from './styles';
 import { Modal } from '../../../Modal';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

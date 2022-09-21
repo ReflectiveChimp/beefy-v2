@@ -5,8 +5,9 @@ import { selectFilterSearchText } from '../../../../../data/selectors/filtered-v
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { debounce } from 'lodash';
-import { useTranslation } from 'react-i18next';
+
 import { CloseRounded, Search } from '@material-ui/icons';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

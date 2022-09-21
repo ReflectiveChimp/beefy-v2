@@ -8,7 +8,7 @@ import { useAsync } from '../../../../../../helpers/useAsync';
 import { LoadingIndicator } from '../LoadingIndicator';
 import { PROVIDERS } from '../../providers';
 import { ErrorIndicator } from '../ErrorIndicator';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

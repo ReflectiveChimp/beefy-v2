@@ -1,10 +1,11 @@
 import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { useAppSelector } from '../../../../../../store';
 import {
   selectFilteredVaultCount,
   selectTotalVaultCount,
 } from '../../../../../data/selectors/filtered-vaults';
+import { useTranslation } from '../../../../../../mock';
 
 export type ShownVaultsCountProps = {
   className?: string;

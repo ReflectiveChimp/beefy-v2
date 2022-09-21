@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import { Trans, useTranslation } from 'react-i18next';
 import AnimateHeight from 'react-animate-height';
 import { styles } from './styles';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
@@ -17,6 +16,7 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
 import { Button } from '../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../store';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 
@@ -67,11 +67,11 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
     <div className={classes.containerExpired}>
       <div className={classes.title}>
         <span>
-          <Trans
-            t={t}
-            i18nKey="Boost-ExpiredBoost"
-            components={{ white: <span className={classes.titleWhite} /> }}
-          />
+          {/*<Trans*/}
+          {/*  t={t}*/}
+          {/*  i18nKey="Boost-ExpiredBoost"*/}
+          {/*  components={{ white: <span className={classes.titleWhite} /> }}*/}
+          {/*/>*/}
         </span>
       </div>
       <AnimateHeight duration={500} height="auto">

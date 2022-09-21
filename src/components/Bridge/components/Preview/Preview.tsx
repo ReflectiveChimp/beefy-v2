@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Button as MuiButton, InputBase, makeStyles, Paper } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+
 import { selectChainById } from '../../../../features/data/selectors/chains';
 import { CardContent } from '../../../../features/vault/components/Card';
 import { Fees } from '../Fees';
@@ -27,6 +27,7 @@ import { Button } from '../../../Button';
 import { styles } from './styles';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { isFulfilled } from '../../../../features/data/reducers/data-loader-types';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

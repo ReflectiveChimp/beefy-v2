@@ -4,8 +4,9 @@ import { styles } from './styles';
 import { Item } from './Item';
 import { ItemInner, ItemInnerProps } from './ItemInner';
 import { SearchInput } from '../SearchInput';
-import { useTranslation } from 'react-i18next';
+
 import { Scrollable } from '../Scrollable';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

@@ -1,6 +1,6 @@
 import { Box, Button, CircularProgress, makeStyles } from '@material-ui/core';
 import React, { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { selectChainById } from '../../../../features/data/selectors/chains';
 import { selectCurrentChainId } from '../../../../features/data/selectors/wallet';
 import { formatBigNumberSignificant } from '../../../../helpers/format';
@@ -12,6 +12,7 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { AlertWarning } from '../../../Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { styles } from './styles';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+
 import { styles } from './styles';
 import { formatBigDecimals } from '../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
@@ -26,6 +26,7 @@ import { useAppDispatch, useAppSelector } from '../../../../store';
 import { IconWithBasicTooltip } from '../../../../components/Tooltip/IconWithBasicTooltip';
 import { Button } from '../../../../components/Button';
 import { Modal } from '../../../../components/Modal';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

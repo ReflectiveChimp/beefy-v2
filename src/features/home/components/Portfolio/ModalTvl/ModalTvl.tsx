@@ -3,7 +3,7 @@ import React, { forwardRef, memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../../vault/components/Card';
 import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
-import { useTranslation } from 'react-i18next';
+
 import { selectChainById } from '../../../../data/selectors/chains';
 import { ChainEntity } from '../../../../data/entities/chain';
 import { selectTvlByChain } from '../../../../data/selectors/tvl';
@@ -13,6 +13,7 @@ import { ContentLoading } from '../../../../../components/ContentLoading';
 import { Button } from '../../../../../components/Button';
 import { useAppSelector } from '../../../../../store';
 import { sortBy } from 'lodash';
+import { useTranslation } from '../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

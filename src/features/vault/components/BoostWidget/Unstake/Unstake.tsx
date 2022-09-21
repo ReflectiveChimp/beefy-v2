@@ -7,7 +7,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { formatBigNumberSignificant } from '../../../../../helpers/format';
 import CloseIcon from '@material-ui/icons/Close';
 import { Card, CardContent, CardHeader, CardTitle } from '../../Card';
@@ -38,6 +38,7 @@ import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loade
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../../store';
 import { Button } from '../../../../../components/Button';
 import { isFulfilled } from '../../../../data/reducers/data-loader-types';
+import { useTranslation } from '../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { connect } from 'react-redux';
 import { VaultEntity } from '../../features/data/entities/vault';
 import { selectUserBalanceOfToken } from '../../features/data/selectors/balance';
@@ -9,6 +9,7 @@ import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
+import { useTranslation } from '../../mock';
 
 const _VaultWalletAmount = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {

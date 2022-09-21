@@ -7,8 +7,9 @@ import clsx from 'clsx';
 import { Floating } from '../Floating';
 import { LabeledSelectCommonProps } from '../LabeledSelect';
 import { styles } from './styles';
-import { useTranslation } from 'react-i18next';
+
 import { LabelledCheckbox, LabelledCheckboxProps } from '../LabelledCheckbox';
+import { useTranslation } from '../../mock';
 
 const useStyles = makeStyles(styles);
 

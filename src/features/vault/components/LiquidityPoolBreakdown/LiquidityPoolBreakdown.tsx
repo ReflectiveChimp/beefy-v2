@@ -4,7 +4,7 @@ import { BIG_ZERO } from '../../../../helpers/big-number';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { ToggleButtons } from '../../../../components/ToggleButtons';
-import { useTranslation } from 'react-i18next';
+
 import { BreakdownTable } from './components/BreakdownTable';
 import { BreakdownMode } from './types';
 import { ChartWithLegend } from './components/ChartWithLegend';
@@ -19,6 +19,7 @@ import {
   selectShouldInitAddressBook,
 } from '../../../data/selectors/data-loader';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

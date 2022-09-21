@@ -10,10 +10,11 @@ import {
   CardSuperTitle,
   CardTitle,
 } from '../Card';
-import { useTranslation } from 'react-i18next';
+
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../store';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

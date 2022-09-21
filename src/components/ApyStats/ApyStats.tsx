@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { LabeledStat } from '../LabeledStat';
-import { useTranslation } from 'react-i18next';
+
 import { formattedTotalApy } from '../../helpers/format';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import {
@@ -19,6 +19,7 @@ import { AllValuesAsString } from '../../features/data/utils/types-utils';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { InterestTooltipContent } from '../../features/home/components/Vault/components/InterestTooltipContent';
 import { useAppSelector } from '../../store';
+import { useTranslation } from '../../mock';
 
 const _YearlyBreakdownTooltip = ({
   isGovVault,

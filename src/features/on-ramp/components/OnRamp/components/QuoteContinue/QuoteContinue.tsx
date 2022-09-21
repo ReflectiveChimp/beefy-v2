@@ -8,7 +8,7 @@ import { selectCanQuote, selectHaveQuote } from '../../../../../data/selectors/o
 import { QuoteBest } from '../QuoteBest';
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

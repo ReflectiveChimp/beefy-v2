@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo } from 'react';
 import { ToggleButtons, ToggleButtonsProps } from '../../../../../../components/ToggleButtons';
-import { useTranslation } from 'react-i18next';
+
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectFilterUserCategory } from '../../../../../data/selectors/filtered-vaults';
 import {
@@ -10,6 +10,7 @@ import {
 import { CATEGORY_OPTIONS } from './category-options';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

@@ -1,6 +1,6 @@
 import { Box, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import {
   Area,
   AreaChart,
@@ -26,6 +26,7 @@ import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
 import { LabelledCheckbox } from '../../../../components/LabelledCheckbox';
 import { useMemo } from 'react';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

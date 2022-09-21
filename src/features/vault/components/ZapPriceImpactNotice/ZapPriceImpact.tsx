@@ -1,11 +1,12 @@
 import { makeStyles } from '@material-ui/core';
 import { memo, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { AlertError, AlertWarning } from '../../../../components/Alerts';
 import { useAppSelector } from '../../../../store';
 import { styles } from './styles';
 import { LabelledCheckbox } from '../../../../components/LabelledCheckbox';
 import { formatPercent } from '../../../../helpers/format';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 const IMPACT_WARN_PERCENT = 1 / 100;

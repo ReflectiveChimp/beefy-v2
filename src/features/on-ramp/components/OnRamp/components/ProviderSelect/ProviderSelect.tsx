@@ -10,11 +10,12 @@ import {
 import clsx from 'clsx';
 import ContentLoader from 'react-content-loader';
 import { ProviderIcon } from '../ProviderIcon';
-import { useTranslation } from 'react-i18next';
+
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import { PROVIDERS } from '../../providers';
 import { ChevronRight } from '@material-ui/icons';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

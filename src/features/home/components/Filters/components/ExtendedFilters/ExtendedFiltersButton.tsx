@@ -1,9 +1,10 @@
 import { memo, useCallback, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Button } from '../../../../../../components/Button';
-import { useTranslation } from 'react-i18next';
+
 import { Dropdown } from './Dropdown';
 import { Sidebar } from './Sidebar';
+import { useTranslation } from '../../../../../../mock';
 
 export type ExtendedFiltersButtonProps = {
   desktopView: boolean;

@@ -1,6 +1,6 @@
 import { Box, Grid, makeStyles } from '@material-ui/core';
 import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { styles } from './styles';
 import { Loader } from '../../../../components/Loader';
 import { VaultEntity } from '../../../data/entities/vault';
@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import { formatPercent } from '../../../../helpers/format';
 import { AlertWarning } from '../../../../components/Alerts';
 import { ZapDepositEstimate, ZapWithdrawEstimate } from '../../../data/apis/zap/zap-types';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

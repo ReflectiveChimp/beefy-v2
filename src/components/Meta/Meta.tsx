@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { routerMode } from '../Router';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../../mock';
 
 export type MetaProps = {
   title?: string;

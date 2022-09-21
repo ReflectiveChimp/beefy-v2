@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { connect } from 'react-redux';
 import { TokenEntity } from '../../features/data/entities/token';
 import { VaultGov } from '../../features/data/entities/vault';
@@ -13,6 +13,7 @@ import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
+import { useTranslation } from '../../mock';
 
 const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: VaultGov['id'] }) => {
   const vault = selectVaultById(state, vaultId);

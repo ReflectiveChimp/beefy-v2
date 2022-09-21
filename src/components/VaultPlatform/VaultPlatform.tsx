@@ -4,7 +4,7 @@ import { selectVaultById } from '../../features/data/selectors/vaults';
 import { VaultEntity } from '../../features/data/entities/vault';
 import { useAppSelector } from '../../store';
 import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../../mock';
 
 export type VaultPlatformProps = {
   vaultId: VaultEntity['id'];

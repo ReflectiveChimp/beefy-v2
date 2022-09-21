@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { Step } from '../Step';
-import { useTranslation } from 'react-i18next';
+
 import { InputSwitcher } from '../InputSwitcher';
 import { useAppSelector } from '../../../../../../store';
 import { selectInputMode } from '../../../../../data/selectors/on-ramp';
@@ -10,6 +10,7 @@ import { FiatAmount } from '../FiatAmount';
 import { TokenAmount } from '../TokenAmount';
 import { QuoteContinue } from '../QuoteContinue';
 import { FormStep, InputMode } from '../../../../../data/reducers/on-ramp-types';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

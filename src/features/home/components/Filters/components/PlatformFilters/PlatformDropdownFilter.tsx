@@ -1,11 +1,12 @@
 import { memo, useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectFilterPlatformId } from '../../../../../data/selectors/filtered-vaults';
 import { ToggleButtonsProps } from '../../../../../../components/ToggleButtons';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { LabeledSelect } from '../../../../../../components/LabeledSelect';
 import { selectFilterPlatforms } from '../../../../../data/selectors/platforms';
+import { useTranslation } from '../../../../../../mock';
 
 export type PlatformDropdownFilterProps = {
   className?: string;

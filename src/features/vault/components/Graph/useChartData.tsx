@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { getBeefyApi } from '../../../data/apis/instances';
 import { config } from '../../../../config/config';
 import { max } from 'lodash';
-import { useTranslation } from 'react-i18next';
+
 import { BeefyChartDataResponse } from '../../../data/apis/beefy';
+import { useTranslation } from '../../../../mock';
 
 const STATS = ['tvl', 'price', 'apy'];
 const PERIODS = ['hour', 'hour', 'day', 'day'];

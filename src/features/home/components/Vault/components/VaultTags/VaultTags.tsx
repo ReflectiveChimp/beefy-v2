@@ -15,13 +15,14 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { VaultTag, VaultTagWithTooltip } from './VaultTag';
-import { useTranslation } from 'react-i18next';
+
 import { ChainEntity } from '../../../../../data/entities/chain';
 import { TokenEntity } from '../../../../../data/entities/token';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { useIsOverflowingHorizontally } from '../../../../../../helpers/overflow';
 import { VaultPlatform } from '../../../../../../components/VaultPlatform';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

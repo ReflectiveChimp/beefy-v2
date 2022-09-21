@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { styles } from './styles';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import image from '../../images/404image.svg';
 import { Button } from '../../components/Button';
 import { Container } from '@material-ui/core';
+import { useTranslation } from '../../mock';
 
 const useStyles = makeStyles(styles);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Box, Divider, Grid, makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+
 import { styles } from './styles';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
@@ -12,6 +12,7 @@ import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDepos
 import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVaultRewards';
 import { getBeefyApi } from '../../../data/apis/instances';
 import { useAppSelector } from '../../../../store';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

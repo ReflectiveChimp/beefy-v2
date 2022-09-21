@@ -1,11 +1,12 @@
 import { memo, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { VaultEntity, VaultStandard } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectPlatformById } from '../../../data/selectors/platforms';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectChainById } from '../../../data/selectors/chains';
+import { useTranslation } from '../../../../mock';
 
 export type StrategyDescriptionProps = {
   vaultId: VaultEntity['id'];

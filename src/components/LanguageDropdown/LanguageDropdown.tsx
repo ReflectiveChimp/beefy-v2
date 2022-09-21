@@ -1,9 +1,9 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo, useCallback, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { localeToLanguageMap } from '../../i18n';
+
 import { styles } from './styles';
 import { LabeledSelect, LabeledSelectProps } from '../LabeledSelect';
+import { useTranslation } from '../../mock';
 const useStyles = makeStyles(styles);
 
 const getSelectedLanguage = i18n => {
@@ -13,14 +13,14 @@ const getSelectedLanguage = i18n => {
     return 'en';
   }
 
-  if (cachedLanguage in localeToLanguageMap) {
-    return cachedLanguage;
-  }
-
-  const languageCode = cachedLanguage.split('-')[0].toLowerCase();
-  if (languageCode in localeToLanguageMap) {
-    return languageCode;
-  }
+  // if (cachedLanguage in localeToLanguageMap) {
+  //   return cachedLanguage;
+  // }
+  //
+  // const languageCode = cachedLanguage.split('-')[0].toLowerCase();
+  // if (languageCode in localeToLanguageMap) {
+  //   return languageCode;
+  // }
 
   return 'en';
 };
@@ -46,7 +46,7 @@ export const LanguageDropdown = () => {
     <LabeledSelect
       value={language}
       borderless={true}
-      options={localeToLanguageMap}
+      options={{ en: 'EN' }}
       onChange={handleSwitch}
       SelectedItemComponent={SelectedLanguage}
       dropdownAutoWidth={false}

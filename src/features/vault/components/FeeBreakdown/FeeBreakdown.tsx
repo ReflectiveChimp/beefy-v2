@@ -1,6 +1,6 @@
 import { Box, Grid, makeStyles } from '@material-ui/core';
 import { memo, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { styles } from './styles';
 import { VaultEntity } from '../../../data/entities/vault';
 import { useAppDispatch, useAppSelector } from '../../../../store';
@@ -16,6 +16,7 @@ import {
 import { fetchFees } from '../../../data/actions/fees';
 import ContentLoader from 'react-content-loader';
 import { VaultFee } from '../../../data/reducers/fees';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

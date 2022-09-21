@@ -1,9 +1,10 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { InputBase, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { useTranslation } from 'react-i18next';
+
 import { CloseRounded, Search } from '@material-ui/icons';
 import clsx from 'clsx';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

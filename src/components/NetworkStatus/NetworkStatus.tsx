@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { isEqual, sortedUniq, uniq } from 'lodash';
 import React, { useCallback, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { ChainEntity } from '../../features/data/entities/chain';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader';
 import { selectBoostById } from '../../features/data/selectors/boosts';
@@ -18,6 +18,7 @@ import {
   isRejected,
   LoaderState,
 } from '../../features/data/reducers/data-loader-types';
+import { useTranslation } from '../../mock';
 
 const useStyles = makeStyles(styles);
 

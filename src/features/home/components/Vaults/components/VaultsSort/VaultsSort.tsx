@@ -5,7 +5,7 @@ import {
   filteredVaultsActions,
   FilteredVaultsState,
 } from '../../../../../data/reducers/filtered-vaults';
-import { useTranslation } from 'react-i18next';
+
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectFilterSearchSortDirection,
@@ -13,6 +13,7 @@ import {
 } from '../../../../../data/selectors/filtered-vaults';
 import { LabeledSelect, LabeledSelectProps } from '../../../../../../components/LabeledSelect';
 import { styles } from './styles';
+import { useTranslation } from '../../../../../../mock';
 
 const useStyles = makeStyles(styles);
 

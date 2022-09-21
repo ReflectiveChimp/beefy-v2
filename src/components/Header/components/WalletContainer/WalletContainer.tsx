@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar, Box, FormControl, Grid, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { connect } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+
 import { StatLoader } from '../../../StatLoader';
 import { useTheme } from '@material-ui/core/styles';
 import {
@@ -22,6 +22,7 @@ import { selectIsWalletPending } from '../../../../features/data/selectors/data-
 import clsx from 'clsx';
 import { useAppDispatch } from '../../../../store';
 import { formatAddressShort, formatEns } from '../../../../helpers/format';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

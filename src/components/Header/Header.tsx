@@ -17,7 +17,7 @@ import {
 import { Close, Menu } from '@material-ui/icons';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import { useTranslation } from 'react-i18next';
+
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
@@ -30,6 +30,7 @@ import { NetworkStatus } from '../NetworkStatus';
 import { styles } from './styles';
 import { BIG_ZERO } from '../../helpers/big-number';
 import { featureFlag_getDebug } from '../../features/data/utils/feature-flags';
+import { useTranslation } from '../../mock';
 
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = React.lazy(() => import(`./components/WalletContainer`));

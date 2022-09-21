@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+
 import { Card } from '../Card/Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
@@ -9,6 +9,7 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectMoonpotData } from '../../../data/selectors/partners';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
+import { useTranslation } from '../../../../mock';
 
 const useStyles = makeStyles(styles);
 

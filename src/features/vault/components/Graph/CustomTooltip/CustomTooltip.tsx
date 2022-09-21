@@ -1,10 +1,11 @@
 import { Box, makeStyles } from '@material-ui/core';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+
 import moment from 'moment';
 import { styles } from './styles';
 import { formatPercent, formatUsd } from '../../../../../helpers/format';
 import { CustomTooltipProps } from './CustomTooltipProps';
+import { useTranslation } from '../../../../../mock';
 
 const useStyles = makeStyles(styles);
 export const CustomTooltip: React.FC<CustomTooltipProps> = ({
