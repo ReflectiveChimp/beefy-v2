@@ -1,4 +1,5 @@
 import React, { memo, Suspense, useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   AppBar,
@@ -66,12 +67,13 @@ const NavLinks = memo(function () {
   return (
     <>
       {navLinks.map(({ title, url, badge }) => (
-        <a
+        <NavLink
+          activeClassName={classes.active}
+          exact={true}
           className={classes.navLink}
           key={url}
-          href={url}
+          to={url[0] === '/' ? url : { pathname: url }}
           target={url[0] === '/' ? undefined : '_blank'}
-          rel={'noopener'}
         >
           {badge ? (
             <Badge badgeContent="New" color="primary">
@@ -80,7 +82,7 @@ const NavLinks = memo(function () {
           ) : (
             t(title)
           )}
-        </a>
+        </NavLink>
       ))}
     </>
   );
@@ -126,7 +128,7 @@ export const Header = connect((state: BeefyState) => {
           <Container className={classes.container} maxWidth="lg">
             <Toolbar disableGutters={true}>
               <Box sx={{ flexGrow: 1 }}>
-                <a className={classes.beefy} href="/">
+                <Link className={classes.beefy} to="/">
                   <img
                     alt="BIFI"
                     src={
@@ -135,7 +137,7 @@ export const Header = connect((state: BeefyState) => {
                         : require(`../../images/bifi-logos/header-logo.svg`).default
                     }
                   />
-                </a>
+                </Link>
               </Box>
               <Hidden mdDown>
                 <Box className={classes.flex} sx={{ flexGrow: 1 }}>

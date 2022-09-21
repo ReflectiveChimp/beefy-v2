@@ -5,6 +5,7 @@ import { styles } from './styles';
 import { selectIsVaultGov, selectIsVaultRetired } from '../../../data/selectors/vaults';
 import clsx from 'clsx';
 import { useAppSelector } from '../../../../store';
+import { Link } from 'react-router-dom';
 import { VaultIdentity } from './components/VaultIdentity';
 import { VaultStats } from './components/VaultStats';
 
@@ -19,8 +20,8 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
   const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
 
   return (
-    <a
-      href={`/vault/${vaultId}`}
+    <Link
+      to={`/vault/${vaultId}`}
       className={clsx({
         [classes.vault]: true,
         [classes.vaultRetired]: isRetired,
@@ -31,6 +32,6 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
         <VaultIdentity vaultId={vaultId} />
         <VaultStats vaultId={vaultId} />
       </div>
-    </a>
+    </Link>
   );
 });

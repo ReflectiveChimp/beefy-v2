@@ -2,6 +2,7 @@ import React, { memo, useRef } from 'react';
 import { Container, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { Clear } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 import { sample } from 'lodash';
 
 const useStyles = makeStyles(styles);
@@ -57,10 +58,10 @@ export const ProposalBanner = memo(function ProposalBanner() {
                 />
                 <div>
                   The new Beefy On-Ramp is live:
-                  <a href={'/onramp'} className={classes.link}>
+                  <Link to={'/onramp'} className={classes.link}>
                     {' '}
                     Buy Crypto
-                  </a>{' '}
+                  </Link>{' '}
                   using card or bank transfer from selected providers
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import { Button, Container, Hidden, makeStyles } from '@material-ui/core';
 import React, { lazy, memo, PropsWithChildren, useState } from 'react';
+import { Redirect, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { DisplayTags } from '../../components/vaultTags';
 import { AssetsImage } from '../../components/AssetsImage';
@@ -49,7 +50,7 @@ type VaultUrlParams = {
   id: VaultEntity['id'];
 };
 export const Vault = memo(function Vault() {
-  let { id } = { id: 'beefy-maxi' };
+  let { id } = useParams<VaultUrlParams>();
   const isLoaded = useAppSelector(selectIsConfigAvailable);
   const vaultExists = useAppSelector(state => selectVaultExistsById(state, id));
 
@@ -68,9 +69,9 @@ type VaultNotFoundProps = PropsWithChildren<VaultUrlParams>;
 const VaultNotFound = memo<VaultNotFoundProps>(function VaultNotFound({ id }) {
   const maybeVaultId = useAppSelector(state => selectVaultIdIgnoreCase(state, id));
 
-  // if (maybeVaultId !== undefined) {
-  //   return <Redirect to={`/vault/${maybeVaultId}`} />;
-  // }
+  if (maybeVaultId !== undefined) {
+    return <Redirect to={`/vault/${maybeVaultId}`} />;
+  }
 
   return <PageNotFound />;
 });

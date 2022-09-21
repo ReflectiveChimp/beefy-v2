@@ -2,6 +2,7 @@ import { ButtonHTMLAttributes, DetailedHTMLProps, forwardRef, memo, ReactNode } 
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
+import { Link, LinkProps } from 'react-router-dom';
 
 const useStyles = makeStyles(styles);
 
@@ -18,8 +19,6 @@ export type CommonButtonProps = {
 
 export type ButtonProps = CommonButtonProps &
   DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
-
-export type LinkProps = { to?: string };
 
 export type ButtonLinkProps = CommonButtonProps & LinkProps;
 
@@ -67,7 +66,7 @@ export const ButtonLink = memo<ButtonLinkProps>(function ButtonLink({
   const classes = useStyles();
 
   return (
-    <a
+    <Link
       {...rest}
       className={clsx(classes.button, classes[variant], className, {
         [classes.borderless]: borderless,
@@ -75,6 +74,6 @@ export const ButtonLink = memo<ButtonLinkProps>(function ButtonLink({
       })}
     >
       {children}
-    </a>
+    </Link>
   );
 });
