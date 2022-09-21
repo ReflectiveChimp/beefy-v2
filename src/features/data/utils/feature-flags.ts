@@ -146,6 +146,11 @@ export function featureFlag_simulateBeefyApiError(
   }
 }
 
+export function featureFlag_getDebug(): boolean {
+  const params = new URLSearchParams(window.location.search);
+  return params.has('__debug');
+}
+
 export function featureFlag_getDebugRoom(): string | null {
   const params = new URLSearchParams(window.location.search);
   if (params.has('__debug')) {

@@ -29,7 +29,7 @@ import { ChainEntity } from '../../features/data/entities/chain';
 import { NetworkStatus } from '../NetworkStatus';
 import { styles } from './styles';
 import { BIG_ZERO } from '../../helpers/big-number';
-import { featureFlag_getDebugRoom } from '../../features/data/utils/feature-flags';
+import { featureFlag_getDebug } from '../../features/data/utils/feature-flags';
 
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = React.lazy(() => import(`./components/WalletContainer`));
@@ -219,7 +219,7 @@ export const Header = connect((state: BeefyState) => {
 );
 
 const DetectWindowEthereum = memo(function () {
-  const [debug] = useState(() => !!featureFlag_getDebugRoom());
+  const [debug] = useState(() => featureFlag_getDebug());
   const [exists, setExists] = useState(() => !!window.ethereum);
 
   useEffect(() => {
