@@ -8,8 +8,13 @@ import { store } from './store';
 import { featureFlag_replayReduxActions } from './features/data/utils/feature-flags';
 import { replayReduxActions } from './features/data/middlewares/debug/debug-replay';
 import { CowLoader } from './components/CowLoader';
+import { DefaultMeta } from './components/Meta';
+import { HelmetProvider } from 'react-helmet-async';
 
 const Home = React.lazy(() => import(`./features/home`));
+const Vault = React.lazy(() => import(`./features/vault`));
+const OnRamp = React.lazy(() => import(`./features/on-ramp`));
+const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
   React.useEffect(() => {
@@ -32,12 +37,15 @@ export const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <WrappedFooter>
-        <Header />
-        <React.Suspense fallback={<CowLoader text="Loading" />}>
-          <Home />
-        </React.Suspense>
-      </WrappedFooter>
+      <HelmetProvider>
+        <DefaultMeta />
+        <WrappedFooter>
+          <Header />
+          <React.Suspense fallback={<CowLoader text="Loading" />}>
+            <Home />
+          </React.Suspense>
+        </WrappedFooter>
+      </HelmetProvider>
     </ThemeProvider>
   );
 };
