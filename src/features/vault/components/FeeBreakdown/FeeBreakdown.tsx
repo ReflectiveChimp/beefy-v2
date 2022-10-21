@@ -1,5 +1,5 @@
 import { Box, Grid, makeStyles } from '@material-ui/core';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { VaultEntity } from '../../../data/entities/vault';
@@ -49,7 +49,7 @@ const PerformanceFees = memo<PerformanceFeesProps>(function ({ fees }) {
     });
   }
 
-  if ('strategist' in fees) {
+  if ('call' in fees) {
     rows.push({
       label: t('Fee-HarvestFee'),
       value: `${formatPercent(fees.call, 2, '0%')}`,
@@ -87,7 +87,16 @@ export const FeeBreakdown = memo(({ vaultId }: { vaultId: VaultEntity['id'] }) =
   const shouldInitFees = useAppSelector(selectShouldInitFees);
   const fees = useAppSelector(state => selectFeesByVaultId(state, vaultId));
   const areFeesLoaded = useAppSelector(selectAreFeesLoaded);
-  const deposit = useAppSelector(state => selectVaultDepositFee(state, vaultId));
+  const depositFromConfig = useAppSelector(state => selectVaultDepositFee(state, vaultId));
+  const deposit = useMemo(() => {
+    if (areFeesLoaded && fees) {
+      return typeof fees.deposit === 'number'
+        ? formatPercent(fees.deposit, 2, '0%')
+        : depositFromConfig;
+    }
+
+    return '?';
+  }, [areFeesLoaded, fees, depositFromConfig]);
 
   useEffect(() => {
     if (shouldInitFees) {
@@ -103,7 +112,9 @@ export const FeeBreakdown = memo(({ vaultId }: { vaultId: VaultEntity['id'] }) =
         </Grid>
         <Grid item xs={6}>
           <div className={classes.label}>{t('Fee-Deposit')}</div>
-          <div className={classes.value}>{deposit}</div>
+          <div className={classes.value}>
+            {areFeesLoaded ? fees ? deposit : '?' : <FeeLoading />}
+          </div>
         </Grid>
         <Grid item xs={6}>
           <div className={classes.label}>{t('Fee-Withdraw')}</div>

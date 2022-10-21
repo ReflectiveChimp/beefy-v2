@@ -7,6 +7,7 @@ import { VaultEntity } from '../entities/vault';
 export type VaultFee = {
   id: VaultEntity['id'];
   withdraw: ApyVaultFeeData['withdraw'];
+  deposit?: ApyVaultFeeData['deposit'];
 } & ApyPerformanceFeeData;
 
 export type FeesState = NormalizedEntity<VaultFee>;
@@ -35,12 +36,23 @@ export const feesSlice = createSlice({
           if (sliceState.byId[vaultId].withdraw !== data.withdraw) {
             sliceState.byId[vaultId].withdraw = data.withdraw;
           }
+          if (
+            typeof data.deposit === 'number' &&
+            sliceState.byId[vaultId].deposit !== data.deposit
+          ) {
+            sliceState.byId[vaultId].deposit = data.deposit;
+          }
         } else {
           sliceState.byId[vaultId] = {
             id: vaultId,
             ...data.performance,
             withdraw: data.withdraw,
           };
+
+          if (typeof data.deposit === 'number') {
+            sliceState.byId[vaultId].deposit = data.deposit;
+          }
+
           added = true;
         }
       }
