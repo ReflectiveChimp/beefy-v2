@@ -15,7 +15,7 @@ import { NetswapUniswapV2Pool } from './uniswap-v2/NetswapUniswapV2Pool';
 import { StellaUniswapV2Pool } from './uniswap-v2/StellaUniswapV2Pool';
 import { VelodromeSolidlyPool } from './solidly/VelodromeSolidlyPool';
 import { EthereumSolidlyPool } from './solidly/EthereumSolidlyPool';
-import { VelodromeV2SolidlyPool } from './VelodromeV2SolidlyPool';
+import { VelodromeV2SolidlyPool } from './solidly/VelodromeV2SolidlyPool';
 import { BVMSolidlyPool } from './solidly/BVMSolidlyPool';
 
 const mapUniswapV2 = {

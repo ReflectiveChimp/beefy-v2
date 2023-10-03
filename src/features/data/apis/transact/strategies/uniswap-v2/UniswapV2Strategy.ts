@@ -1,6 +1,5 @@
 import type { IStrategy, TransactHelpers, UniswapV2StrategyOptions } from '../IStrategy';
 import type {
-  DepositOption,
   InputTokenAmount,
   TokenAmount,
   UniswapV2AggregatorDepositQuote,
@@ -9,7 +8,6 @@ import type {
   UniswapV2PoolDepositQuote,
   UniswapV2WithdrawOption,
   UniswapV2WithdrawQuote,
-  WithdrawOption,
   ZapFee,
   ZapQuoteStep,
   ZapQuoteStepBuild,
@@ -27,7 +25,7 @@ import {
   isZapQuoteStepWithdraw,
 } from '../../transact-types';
 import { selectAmmById } from '../../../../selectors/amm';
-import { AmmEntityUniswapV2, isUniswapV2Amm } from '../../../../entities/amm';
+import { type AmmEntityUniswapV2, isUniswapV2Amm } from '../../../../entities/amm';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
@@ -37,10 +35,10 @@ import {
 import type { TokenEntity, TokenErc20, TokenNative } from '../../../../entities/token';
 import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../../entities/token';
 import {
-  tokensToLp,
-  includeNativeAndWrapped,
   allTokensAreDistinct,
+  includeNativeAndWrapped,
   nativeAndWrappedAreSame,
+  tokensToLp,
 } from '../../helpers/tokens';
 import {
   createOptionId,
@@ -52,7 +50,7 @@ import {
 } from '../../helpers/options';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
 import { calculatePriceImpact, highestFeeOrZero, ZERO_FEE } from '../../helpers/quotes';
-import { first, mapValues, uniqBy } from 'lodash-es';
+import { first, uniqBy } from 'lodash-es';
 import {
   BIG_ZERO,
   bigNumberToStringDeep,
@@ -78,7 +76,6 @@ import { getTokenAddress, NO_RELAY } from '../../helpers/zap';
 import type { ChainEntity } from '../../../../entities/chain';
 import type { UniswapV2Pool } from '../../../amm/uniswap-v2/UniswapV2Pool';
 import { fetchZapAggregatorSwap } from '../../zap/swap';
-import { ZERO_ADDRESS } from '../../../../../../helpers/addresses';
 import { walletActions } from '../../../../actions/wallet-actions';
 import { Balances } from '../../helpers/Balances';
 import { isStandardVault } from '../../../../entities/vault';
@@ -134,6 +131,7 @@ export class UniswapV2Strategy implements IStrategy {
     this.lpTokens = tokensToLp(this.tokens, this.wnative);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   async initialize(): Promise<void> {}
 
   async aggregatorTokenSupport() {
@@ -265,17 +263,17 @@ export class UniswapV2Strategy implements IStrategy {
       lpTokenAmounts.reverse(); // in-place
     }
 
-    const { liquidity, addAmountA, addAmountB, returnedA, returnedB } = pool.addLiquidity(
+    const { liquidity, returnedA, returnedB } = pool.addLiquidity(
       toWei(lpTokenAmounts[0].amount, lpTokenAmounts[0].token.decimals),
       lpTokenAmounts[0].token.address,
       toWei(lpTokenAmounts[1].amount, lpTokenAmounts[1].token.decimals)
     );
 
     const liquidityAmount = fromWei(liquidity, depositToken.decimals);
-    const usedTokenAmounts = [addAmountA, addAmountB].map((amount, i) => ({
-      token: lpTokens[i],
-      amount: fromWei(amount, lpTokens[i].decimals),
-    }));
+    // const usedTokenAmounts = [addAmountA, addAmountB].map((amount, i) => ({
+    //   token: lpTokens[i],
+    //   amount: fromWei(amount, lpTokens[i].decimals),
+    // }));
     const returnedTokenAmounts = [returnedA, returnedB].map((amount, i) => ({
       token: lpTokens[i],
       amount: fromWei(amount, lpTokens[i].decimals),
@@ -390,7 +388,7 @@ export class UniswapV2Strategy implements IStrategy {
     // How much input to swap to each lp token
     const swapInAmounts = Object.values(
       pool.getAddLiquidityRatio(toWei(input.amount, input.token.decimals))
-    ).map((amount, i) => fromWei(amount, input.token.decimals));
+    ).map(amount => fromWei(amount, input.token.decimals));
 
     console.log('swapInAmounts', bigNumberToStringDeep(swapInAmounts));
 
@@ -441,17 +439,17 @@ export class UniswapV2Strategy implements IStrategy {
 
     console.log('lpTokenAmounts', bigNumberToStringDeep(lpTokenAmounts));
 
-    const { liquidity, addAmountA, addAmountB, returnedA, returnedB } = pool.addLiquidity(
+    const { liquidity, returnedA, returnedB } = pool.addLiquidity(
       toWei(lpTokenAmounts[0].amount, lpTokenAmounts[0].token.decimals),
       lpTokenAmounts[0].token.address,
       toWei(lpTokenAmounts[1].amount, lpTokenAmounts[1].token.decimals)
     );
 
     const liquidityAmount = fromWei(liquidity, depositToken.decimals);
-    const usedTokenAmounts = [addAmountA, addAmountB].map((amount, i) => ({
-      token: lpTokens[i],
-      amount: fromWei(amount, lpTokens[i].decimals),
-    }));
+    // const usedTokenAmounts = [addAmountA, addAmountB].map((amount, i) => ({
+    //   token: lpTokens[i],
+    //   amount: fromWei(amount, lpTokens[i].decimals),
+    // }));
     const returnedTokenAmounts = [returnedA, returnedB].map((amount, i) => ({
       token: lpTokens[i],
       amount: fromWei(amount, lpTokens[i].decimals),
@@ -463,7 +461,7 @@ export class UniswapV2Strategy implements IStrategy {
     // Build quote steps
     const steps: ZapQuoteStep[] = [];
 
-    quotePerLpToken.forEach((quote, i) => {
+    quotePerLpToken.forEach(quote => {
       if (quote) {
         steps.push({
           type: 'swap',
@@ -589,11 +587,7 @@ export class UniswapV2Strategy implements IStrategy {
     const { zap } = this.helpers;
     const { slippage, pool } = zapHelpers;
 
-    const {
-      liquidity: liquidityWei,
-      addAmountA: addAmount0Wei,
-      addAmountB: addAmount1Wei,
-    } = pool.addLiquidity(
+    const { liquidity: liquidityWei } = pool.addLiquidity(
       toWei(minInputs[0].amount, minInputs[0].token.decimals),
       minInputs[0].token.address,
       toWei(minInputs[1].amount, minInputs[1].token.decimals)
@@ -661,7 +655,7 @@ export class UniswapV2Strategy implements IStrategy {
   }
 
   async fetchDepositStep(quote: UniswapV2PoolDepositQuote, t: TFunction<Namespace>): Promise<Step> {
-    const { vault, vaultType, zap, swapAggregator } = this.helpers;
+    const { vault, vaultType } = this.helpers;
 
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
@@ -1112,7 +1106,7 @@ export class UniswapV2Strategy implements IStrategy {
   }
 
   async fetchWithdrawStep(quote: UniswapV2WithdrawQuote, t: TFunction<Namespace>): Promise<Step> {
-    const { vault, vaultType, zap, swapAggregator } = this.helpers;
+    const { vault, vaultType } = this.helpers;
 
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();

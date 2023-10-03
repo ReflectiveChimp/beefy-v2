@@ -13,6 +13,9 @@ function getSearchParams(): URLSearchParams {
   return searchParamsCache;
 }
 
+export const isDevelopment = process.env.NODE_ENV === 'development';
+export const isProduction = process.env.NODE_ENV === 'production';
+
 export function featureFlag_getContractDataApiImplem():
   | 'eth-multicall'
   | 'new-multicall'
@@ -182,4 +185,18 @@ export function featureFlag_simulateBeefyApiError(
 export function featureFlag_breakpoints() {
   const params = getSearchParams();
   return params.has('__breakpoints');
+}
+
+export function featureFlag_walletConnectChainId(): number {
+  const params = getSearchParams();
+  if (params.has('__wc_chain_id')) {
+    const maybeId = params.get('__wc_chain_id');
+    if (maybeId) {
+      const chainId = parseInt(maybeId, 10);
+      if (chainId) {
+        return chainId;
+      }
+    }
+  }
+  return undefined;
 }

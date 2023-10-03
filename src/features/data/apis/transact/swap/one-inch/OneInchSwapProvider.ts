@@ -17,9 +17,6 @@ import { EEEE_ADDRESS } from '../../../../../../helpers/addresses';
 import { selectSwapAggregatorForChainType } from '../../../../selectors/zap';
 import type { OneInchSwapConfig } from '../../../config-types';
 import type { VaultEntity } from '../../../../entities/vault';
-import { ISwapAggregator } from '../ISwapAggregator';
-import { getTokenAddress } from '../../helpers/zap';
-import type { ZapAggregatorSwapRequest, ZapAggregatorSwapResponse } from '../../zap/swap';
 import { slipBy } from '../../helpers/amounts';
 
 export class OneInchSwapProvider implements ISwapProvider {

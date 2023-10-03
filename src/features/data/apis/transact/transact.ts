@@ -9,6 +9,7 @@ import type {
 } from './transact-types';
 import { partition } from 'lodash';
 import type { VaultEntity } from '../../entities/vault';
+import { isStandardVault } from '../../entities/vault';
 import type { GetStateFn } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 import type { IStrategy, StrategyOptions, TransactHelpers } from './strategies/IStrategy';
@@ -22,14 +23,9 @@ import { vaultTypeBuildersById } from './vaults';
 import { uniq } from 'lodash-es';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
 import { selectZapByChainId } from '../../selectors/zap';
-import { captureWalletErrors } from '../../actions/wallet-actions';
-import { isZapQuote } from './transact-types';
-import { isStandardVault } from '../../entities/vault';
 
 export class TransactApi implements ITransactApi {
   private swapAggregator: ISwapAggregator;
-
-  constructor() {}
 
   protected async getSwapAggregator(): Promise<ISwapAggregator> {
     if (!this.swapAggregator) {

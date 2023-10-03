@@ -4,7 +4,6 @@ import { getTokenAddress } from '../helpers/zap';
 import type { ZapStepRequest, ZapStepResponse } from './types';
 import { first } from 'lodash-es';
 import { isTokenNative } from '../../../entities/token';
-import { slipBy } from '../helpers/amounts';
 
 export type ZapAggregatorSwapRequest = ZapStepRequest & {
   providerId: string;

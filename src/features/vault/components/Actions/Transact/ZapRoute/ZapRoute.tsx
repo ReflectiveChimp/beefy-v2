@@ -210,7 +210,6 @@ export const ZapRoute = memo<ZapRouteProps>(function ZapRoute({ quote, className
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const option = quote.option;
   const quotes = useAppSelector(selectTransactQuoteIds);
   const quoteIndex = quotes.findIndex(id => id === quote.id);
   const hasMultipleOptions = quotes.length > 1;

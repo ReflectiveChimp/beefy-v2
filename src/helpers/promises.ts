@@ -1,3 +1,5 @@
+import { isDevelopment } from '../features/data/utils/feature-flags';
+
 export function isFulfilledResult<T>(
   result: PromiseSettledResult<T>
 ): result is PromiseFulfilledResult<T> {
@@ -15,7 +17,17 @@ export function isRejectedResult<T>(
  */
 export async function allFulfilled<T>(promises: Promise<T>[]): Promise<T[]> {
   const results = await Promise.allSettled(promises);
-  return results.filter(isFulfilledResult).map(result => result.value);
+  const fulfilled = results.filter(isFulfilledResult);
+  if (isDevelopment) {
+    const failed = results.filter(isRejectedResult);
+    if (failed.length > 0) {
+      console.debug(
+        `[allFulfilled] ${failed.length} promises rejected, ${fulfilled.length} fulfilled`
+      );
+      failed.forEach(failure => console.debug(failure.reason));
+    }
+  }
+  return fulfilled.map(result => result.value);
 }
 
 export function asyncMap<T, U>(array: T[], mapper: (item: T) => Promise<U>): Promise<U[]> {

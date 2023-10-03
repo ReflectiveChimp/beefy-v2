@@ -18,6 +18,7 @@ export class VaultStrategy<T extends IVaultType> implements IStrategy {
 
   constructor(protected readonly vaultType: T) {}
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   async initialize(): Promise<void> {}
 
   async fetchDepositOptions(): Promise<DepositOption[]> {

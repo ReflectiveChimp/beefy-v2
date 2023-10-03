@@ -8,7 +8,7 @@ import type { ChainEntity } from '../../../entities/chain';
 import { createContract } from '../../../../../helpers/web3';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
 import { getWeb3Instance } from '../../instances';
-import { BIG_ZERO, toWei, toWeiString } from '../../../../../helpers/big-number';
+import { BIG_ZERO, toWei } from '../../../../../helpers/big-number';
 import type {
   AddLiquidityRatio,
   AddLiquidityResult,

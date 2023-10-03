@@ -1,4 +1,4 @@
-import { isGovVault, VaultEntity, VaultGov } from '../../../entities/vault';
+import { isGovVault, type VaultEntity, type VaultGov } from '../../../entities/vault';
 import type { BeefyState, GetStateFn } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import type {
@@ -52,6 +52,7 @@ export class GovVaultType implements IGovVaultType {
     this.depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   async initialize(): Promise<void> {}
 
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {

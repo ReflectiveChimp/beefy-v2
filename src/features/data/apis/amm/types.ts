@@ -1,7 +1,6 @@
 import type BigNumber from 'bignumber.js';
 import type { ShapeWithLabel } from 'eth-multicall';
-import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../transact/zap/types';
-import type { TokenAmount } from '../transact/transact-types';
+import type { ZapStepRequest, ZapStepResponse } from '../transact/zap/types';
 
 export type SwapResult = {
   amountIn: BigNumber;

@@ -25,7 +25,7 @@ export class WNativeSwapProvider implements ISwapProvider {
     return 'wnative';
   }
 
-  async fetchQuote(request: QuoteRequest, state: BeefyState): Promise<QuoteResponse> {
+  async fetchQuote(request: QuoteRequest, _state: BeefyState): Promise<QuoteResponse> {
     // 1:1
     return {
       providerId: this.getId(),

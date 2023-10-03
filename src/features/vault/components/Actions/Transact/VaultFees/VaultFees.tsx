@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core';
 import { Trans, useTranslation } from 'react-i18next';
-import { selectVaultDepositFee } from '../../../../../data/selectors/vaults';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
 import { memo } from 'react';

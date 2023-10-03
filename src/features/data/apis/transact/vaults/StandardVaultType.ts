@@ -1,4 +1,5 @@
-import { isStandardVault, VaultEntity, VaultStandard } from '../../../entities/vault';
+import { isStandardVault } from '../../../entities/vault';
+import type { VaultEntity, VaultStandard } from '../../../entities/vault';
 import type { BeefyState, GetStateFn } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import type {
@@ -12,8 +13,8 @@ import {
   isTokenEqual,
   isTokenErc20,
   isTokenNative,
-  TokenEntity,
-  TokenErc20,
+  type TokenEntity,
+  type TokenErc20,
 } from '../../../entities/token';
 import {
   createOptionId,
@@ -71,6 +72,7 @@ export class StandardVaultType implements IStandardVaultType {
     this.shareToken = shareToken;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   async initialize(): Promise<void> {}
 
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {

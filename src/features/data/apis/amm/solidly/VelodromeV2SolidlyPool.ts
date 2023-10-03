@@ -1,11 +1,11 @@
 import type { ShapeWithLabel } from 'eth-multicall';
-import { createContract } from '../../../../helpers/web3';
+import { createContract } from '../../../../../helpers/web3';
 import BigNumber from 'bignumber.js';
-import type { SwapFeeParams } from './types';
+import type { SwapFeeParams } from '../types';
 import type { PairData, PairDataResponse } from './SolidlyPool';
 import { MetadataKeys, SolidlyPool } from './SolidlyPool';
 import type { AbiItem } from 'web3-utils';
-import { VelodromeV2PairAbi } from '../../../../config/abi';
+import { VelodromeV2PairAbi } from '../../../../../config/abi';
 
 export type FactoryDataResponse = {
   fee: string;

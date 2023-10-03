@@ -12,7 +12,6 @@ import {
   selectTransactSelectedTokens,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { errorToString } from '../../../../../../helpers/format';
 import { TextLoader } from '../../../../../../components/TextLoader';

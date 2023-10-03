@@ -66,9 +66,9 @@ type BaseWithdrawOption = BaseOption & {
   mode: TransactMode.Withdraw;
 };
 
-type ZapBaseDepositOption = BaseDepositOption & {};
+type ZapBaseDepositOption = BaseDepositOption;
 
-type ZapBaseWithdrawOption = BaseWithdrawOption & {};
+type ZapBaseWithdrawOption = BaseWithdrawOption;
 
 export type StandardVaultDepositOption = BaseDepositOption & {
   strategyId: 'vault';
@@ -279,7 +279,7 @@ export type SingleWithdrawQuote = BaseZapQuote<SingleWithdrawOption> & {
   swapQuote: QuoteResponse;
 };
 
-export type UniswapV2BreakWithdrawQuote = BaseZapQuote<UniswapV2WithdrawOption> & {};
+export type UniswapV2BreakWithdrawQuote = BaseZapQuote<UniswapV2WithdrawOption>;
 export type UniswapV2PoolWithdrawQuote = BaseZapQuote<UniswapV2WithdrawOption> & {
   quote: { from: TokenAmount; to: TokenAmount };
 };

@@ -169,7 +169,7 @@ export const transactFetchOptions = createAsyncThunk<
   }
 );
 
-function getUniqueTokensForOptions(options: TransactOption[], state: BeefyState): TokenEntity[] {
+function getUniqueTokensForOptions(options: TransactOption[], _state: BeefyState): TokenEntity[] {
   const tokens = options.flatMap(option => {
     return option.mode === TransactMode.Deposit ? option.inputs : option.wantedOutputs;
   });

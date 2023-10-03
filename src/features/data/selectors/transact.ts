@@ -2,14 +2,12 @@ import type { BeefyState } from '../../../redux-types';
 import { createSelector } from '@reduxjs/toolkit';
 import type { ChainEntity } from '../entities/chain';
 import { first, orderBy } from 'lodash-es';
-import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
+import { selectTokenPriceByAddress } from './tokens';
 import { selectWalletAddressIfKnown } from './wallet';
 import { selectUserBalanceOfToken } from './balance';
 import type { TokenAmount, TransactOption, TransactQuote } from '../apis/transact/transact-types';
 import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
-import { orderByBigNumber } from '../../../helpers/big-number';
-import { selectZapTokenScoresByChainId } from './zap';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) => state.ui.transact.vaultId;

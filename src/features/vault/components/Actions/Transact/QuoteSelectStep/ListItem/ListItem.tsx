@@ -6,7 +6,6 @@ import { ChevronRight } from '@material-ui/icons';
 import { ListJoin } from '../../../../../../../components/ListJoin';
 import { useAppSelector } from '../../../../../../../store';
 import {
-  selectTransactOptionById,
   selectTransactQuoteById,
   selectTransactQuoteIds,
 } from '../../../../../../data/selectors/transact';
@@ -23,7 +22,6 @@ export type ListItemProps = {
 export const ListItem = memo<ListItemProps>(function ListItem({ quoteId, className, onSelect }) {
   const classes = useStyles();
   const quote = useAppSelector(state => selectTransactQuoteById(state, quoteId));
-  const option = quote ? quote.option : null;
   const quotes = useAppSelector(selectTransactQuoteIds);
   const quoteIndex = quotes.findIndex(id => id === quote.id);
   const handleClick = useCallback(() => onSelect(quoteId), [onSelect, quoteId]);

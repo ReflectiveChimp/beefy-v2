@@ -46,7 +46,7 @@ export class SwapAggregator implements ISwapAggregator {
     const blockedTokens: string[] = options?.blockTokens || [];
 
     if (blockedTokens.length === 0) {
-      return undefined;
+      return tokens;
     }
 
     return tokens.filter(token => !blockedTokens.includes(token.id));

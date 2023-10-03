@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllSwapAggregatorsAction, fetchAllZapsAction } from '../actions/zap';
 import type { ChainEntity } from '../entities/chain';
 import type { SwapAggregatorEntity, ZapEntity } from '../entities/zap';
-import { orderBy } from 'lodash-es';
 
 export type ZapsState = {
   zaps: {

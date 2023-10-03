@@ -24,7 +24,6 @@ import { fetchAllMinters } from '../actions/minters';
 import type { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
 import type { LpData } from '../apis/beefy/beefy-api';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
-import { mapValues } from 'lodash-es';
 
 /**
  * State containing Vault infos

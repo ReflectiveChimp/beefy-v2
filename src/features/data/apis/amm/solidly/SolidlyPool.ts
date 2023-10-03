@@ -1,8 +1,7 @@
 import type Web3 from 'web3';
 import type { AmmEntitySolidly } from '../../../entities/amm';
-import BigNumber from 'bignumber.js';
-import type { ShapeWithLabel } from 'eth-multicall';
-import { MultiCall } from 'eth-multicall';
+import { BigNumber } from 'bignumber.js';
+import { MultiCall, type ShapeWithLabel } from 'eth-multicall';
 import { SolidlyPairAbi } from '../../../../../config/abi';
 import type { ChainEntity } from '../../../entities/chain';
 import { createContract } from '../../../../../helpers/web3';
@@ -17,7 +16,7 @@ import type {
   SwapResult,
 } from '../types';
 import { WANT_TYPE } from '../types';
-import { cloneDeep } from '../../../../../helpers/object';
+import type { ZapStepRequest, ZapStepResponse } from '../../transact/zap/types';
 
 export enum MetadataKeys {
   decimals0,
@@ -57,10 +56,6 @@ export type PairData = {
   stable: boolean;
 };
 
-export type FactoryDataResponse = {};
-
-export type FactoryData = FactoryDataResponse;
-
 export type InOut = {
   reservesIn: BigNumber;
   reservesOut: BigNumber;
@@ -79,7 +74,6 @@ export class SolidlyPool implements IPool {
   public readonly type = 'solidly';
 
   protected pairData: PairData | null = null;
-  protected factoryData: FactoryData | null = null;
   private web3: Web3 | null = null;
   private multicall: MultiCall | null = null;
 
@@ -88,51 +82,6 @@ export class SolidlyPool implements IPool {
     protected amm: AmmEntitySolidly,
     protected chain: ChainEntity
   ) {}
-
-  protected setPairData(pairData: PairData) {
-    this.pairData = cloneDeep(pairData);
-  }
-
-  protected setFactoryData(factoryData: FactoryData) {
-    this.factoryData = cloneDeep(factoryData);
-  }
-
-  protected setWeb3(web3: Web3) {
-    this.web3 = web3;
-  }
-
-  protected setMulticall(multicall: MultiCall) {
-    this.multicall = multicall;
-  }
-
-  public getPairData(): PairData {
-    if (!this.pairData) {
-      throw new Error('Pair data is not loaded');
-    }
-
-    return this.pairData;
-  }
-
-  public getFactoryData(): FactoryData {
-    if (!this.factoryData) {
-      throw new Error('Factory data is not loaded');
-    }
-    return this.factoryData;
-  }
-
-  public clone<T extends SolidlyPool>(): T {
-    const instance = new (this.constructor as unknown as T['constructor'])(
-      this.address,
-      this.amm,
-      this.chain
-    );
-    instance.setPairData(this.pairData);
-    instance.setFactoryData(this.factoryData);
-    instance.setWeb3(this.web3);
-    instance.setMulticall(this.multicall);
-
-    return instance;
-  }
 
   async getWeb3(): Promise<Web3> {
     if (this.web3 === null) {
@@ -768,5 +717,17 @@ export class SolidlyPool implements IPool {
     }
 
     return this.pairData.stable ? WANT_TYPE.SOLIDLY_STABLE : WANT_TYPE.SOLIDLY_VOLATILE;
+  }
+
+  async getZapAddLiquidity(_request: ZapStepRequest): Promise<ZapStepResponse> {
+    throw new Error('Method not implemented.');
+  }
+
+  async getZapRemoveLiquidity(_request: ZapStepRequest): Promise<ZapStepResponse> {
+    throw new Error('Method not implemented.');
+  }
+
+  async getZapSwap(_request: ZapStepRequest): Promise<ZapStepResponse> {
+    throw new Error('Method not implemented.');
   }
 }

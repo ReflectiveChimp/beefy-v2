@@ -5,7 +5,6 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectTransactOptionById,
   selectTransactQuoteStatus,
   selectTransactSelectedQuote,
 } from '../../../../../data/selectors/transact';
