@@ -29,7 +29,7 @@ import {
   selectIsVaultCorrelated,
   selectIsVaultStable,
   selectVaultById,
-  selectVaultSupportsAnyZap,
+  selectVaultSupportsZap,
 } from './vaults';
 import escapeStringRegexp from 'escape-string-regexp';
 import { selectTokenByAddress } from './tokens';
@@ -47,7 +47,7 @@ export const selectFilterSearchSortField = (state: BeefyState) => state.ui.filte
 export const selectFilterSearchSortDirection = (state: BeefyState) =>
   state.ui.filteredVaults.sortDirection;
 export const selectFilterUserCategory = (state: BeefyState) => state.ui.filteredVaults.userCategory;
-export const selectFilterVaultType = (state: BeefyState) => state.ui.filteredVaults.vaultType;
+export const selectFilterAssetType = (state: BeefyState) => state.ui.filteredVaults.assetType;
 export const selectFilterVaultCategory = (state: BeefyState) =>
   state.ui.filteredVaults.vaultCategory;
 export const selectFilterPlatformId = (state: BeefyState) => state.ui.filteredVaults.platformId;
@@ -66,7 +66,7 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.onlyZappable ? 1 : 0) +
     (filterOptions.platformId !== null ? 1 : 0) +
-    (filterOptions.vaultType !== 'all' ? 1 : 0) +
+    (filterOptions.assetType !== 'all' ? 1 : 0) +
     (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length
@@ -77,7 +77,7 @@ export const selectHasActiveFilter = createSelector(
   filterOptions =>
     filterOptions.vaultCategory !== 'all' ||
     filterOptions.userCategory !== 'all' ||
-    filterOptions.vaultType !== 'all' ||
+    filterOptions.assetType !== 'all' ||
     filterOptions.onlyRetired !== false ||
     filterOptions.onlyPaused !== false ||
     filterOptions.onlyBoosted !== false ||
@@ -92,7 +92,7 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
   selectFilterOptions,
   filterOptions =>
     filterOptions.vaultCategory !== 'all' ||
-    filterOptions.vaultType !== 'all' ||
+    filterOptions.assetType !== 'all' ||
     filterOptions.onlyRetired !== false ||
     filterOptions.onlyPaused !== false ||
     filterOptions.onlyBoosted !== false ||
@@ -259,7 +259,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
       return false;
     }
 
-    if (filterOptions.onlyZappable && !selectVaultSupportsAnyZap(state, vault.id)) {
+    if (filterOptions.onlyZappable && !selectVaultSupportsZap(state, vault.id)) {
       return false;
     }
 
@@ -274,10 +274,10 @@ export const selectFilteredVaults = (state: BeefyState) => {
       return false;
     }
 
-    if (filterOptions.vaultType === 'lps' && vault.type !== 'lps') {
+    if (filterOptions.assetType === 'lps' && vault.assetType !== 'lps') {
       return false;
     }
-    if (filterOptions.vaultType === 'single' && vault.type !== 'single') {
+    if (filterOptions.assetType === 'single' && vault.assetType !== 'single') {
       return false;
     }
 

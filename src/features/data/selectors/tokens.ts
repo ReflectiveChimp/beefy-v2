@@ -233,3 +233,31 @@ export const selectHasBreakdownData = (
   // Must have prices of tokens in state
   return tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token.oracleId]) === -1;
 };
+
+export const selectSupportedSwapTokenAddressesForChainAggregator = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  providerId: string
+) => {
+  return state.entities.tokens.swapSupport.byChainId[chainId]?.byProvider[providerId] || [];
+};
+
+export const selectSupportedSwapTokensForChainAggregator = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  providerId: string
+) => {
+  return selectSupportedSwapTokenAddressesForChainAggregator(state, chainId, providerId)
+    .map(address => selectTokenByAddressOrNull(state, chainId, address))
+    .filter(v => !!v);
+};
+
+export const selectSupportedSwapTokensForChainAggregatorHavingPrice = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  providerId: string
+) => {
+  return selectSupportedSwapTokensForChainAggregator(state, chainId, providerId).filter(token =>
+    selectTokenPriceByTokenOracleId(state, token.oracleId).gt(BIG_ZERO)
+  );
+};

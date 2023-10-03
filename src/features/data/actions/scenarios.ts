@@ -7,7 +7,7 @@ import { fetchApyAction } from './apy';
 import { fetchAllBoosts, initiateBoostForm } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction, fetchBeefyBuybackAction } from './prices';
-import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsZapSupport } from './vaults';
+import { fetchAllVaults, fetchFeaturedVaults } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_noDataPolling } from '../utils/feature-flags';
@@ -16,7 +16,7 @@ import { chains as chainsConfig } from '../../../config/config';
 import { initWallet } from './wallet';
 import { recomputeBoostStatus } from '../reducers/boosts';
 import { fetchPartnersConfig } from './partners';
-import { fetchAddressBookAction, fetchAllAddressBookAction } from './tokens';
+import { fetchAddressBookAction, fetchAllAddressBookAction, fetchTokenSwapSupport } from './tokens';
 import type { BoostEntity } from '../entities/boost';
 import { selectBoostById } from '../selectors/boosts';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
@@ -67,7 +67,7 @@ export async function initHomeDataV4(store: BeefyStore) {
 
     store.dispatch(fetchFeaturedVaults());
 
-    store.dispatch(fetchVaultsZapSupport());
+    store.dispatch(fetchTokenSwapSupport());
 
     store.dispatch(fetchPartnersConfig());
 

@@ -1,1 +1,1 @@
-export * from './ZapProvider';
+export * from './ZapQuoteTitle';

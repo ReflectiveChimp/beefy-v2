@@ -51,10 +51,10 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
     }, [optionsForChain, search]);
     // const hasMultipleChains = availableChains.length > 1;
     const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
-      tokenId => {
+      selectionId => {
         dispatch(
-          transactActions.selectToken({
-            tokensId: tokenId,
+          transactActions.selectSelection({
+            selectionId: selectionId,
             resetInput: false,
           })
         );
@@ -74,7 +74,7 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
               filteredOptionsForChain.map(option => (
                 <ListItem
                   key={option.id}
-                  tokenId={option.id}
+                  selectionId={option.id}
                   tokens={option.tokens}
                   chainId={selectedChain}
                   onSelect={handleTokenSelect}

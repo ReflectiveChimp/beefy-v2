@@ -9,7 +9,7 @@ import {
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactSelectedChainId,
-  selectTransactSelectedTokenAddresses,
+  selectTransactSelectedTokens,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
@@ -32,18 +32,14 @@ const useStyles = makeStyles(styles);
 
 const SelectedInWallet = memo(function SelectedInWallet() {
   const chainId = useAppSelector(selectTransactSelectedChainId);
-  const tokenAddresses = useAppSelector(selectTransactSelectedTokenAddresses);
+  const tokens = useAppSelector(selectTransactSelectedTokens);
+  const token = tokens?.[0];
 
-  const token = useAppSelector(state =>
-    tokenAddresses.length && chainId
-      ? selectTokenByAddress(state, chainId, tokenAddresses[0])
-      : undefined
-  );
   const balance = useAppSelector(state =>
     token ? selectUserBalanceOfToken(state, token.chainId, token.address) : undefined
   );
 
-  if (!chainId || !tokenAddresses.length || !token || !balance) {
+  if (!chainId || !tokens.length || !token || !balance) {
     return <TextLoader placeholder="0.0000000 BNB-BIFI" />;
   }
 

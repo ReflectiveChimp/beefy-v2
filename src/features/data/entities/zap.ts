@@ -1,6 +1,5 @@
-import type { BeefyZapConfig, OneInchZapConfig } from '../apis/config-types';
+import type { SwapAggregatorConfig, ZapConfig } from '../apis/config-types';
 
-export type ZapEntityBeefy = BeefyZapConfig & { type: 'beefy' };
-export type ZapEntityOneInch = OneInchZapConfig & { type: 'one-inch' };
+export type ZapEntity = ZapConfig;
 
-export type ZapEntity = ZapEntityBeefy | ZapEntityOneInch;
+export type SwapAggregatorEntity = SwapAggregatorConfig;

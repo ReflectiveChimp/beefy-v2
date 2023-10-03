@@ -9,5 +9,5 @@ export function isSolidlyAmm(amm: AmmEntity): amm is AmmEntitySolidly {
 }
 
 export function isUniswapV2Amm(amm: AmmEntity): amm is AmmEntityUniswapV2 {
-  return amm.type === 'uniswapv2';
+  return amm.type === 'uniswap-v2';
 }

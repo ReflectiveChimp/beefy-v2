@@ -107,7 +107,13 @@ export type BeefySnapshotProposal = {
 };
 export type BeefySnapshotActiveResponse = BeefySnapshotProposal[];
 
-export type BeefyVaultZapSupportResponse = Record<string, ('beefy' | 'oneInch')[]>;
+export type BeefyTokenSwapSupportResponse = {
+  [chainId: ChainEntity['id']]: {
+    [tokenAddress: TokenEntity['address']]: {
+      [provider: string]: boolean;
+    };
+  };
+};
 
 export class BeefyAPI {
   public api: AxiosInstance;
@@ -245,14 +251,18 @@ export class BeefyAPI {
     return res.data;
   }
 
-  public async getVaultZapSupport(): Promise<BeefyVaultZapSupportResponse> {
+  public async getTokenSwapSupport(): Promise<BeefyTokenSwapSupportResponse> {
     if (featureFlag_simulateBeefyApiError('zap-support')) {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get<BeefyVaultZapSupportResponse>('/vaults/zap-support', {
-      params: { _: this.getCacheBuster('long') },
-    });
+    // TODO: fix url
+    const res = await this.api.get<BeefyTokenSwapSupportResponse>(
+      'http://localhost:3030/zap/swaps',
+      {
+        params: { _: this.getCacheBuster('long') },
+      }
+    );
     return res.data;
   }
 

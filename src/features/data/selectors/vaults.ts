@@ -5,6 +5,7 @@ import type { TokenEntity } from '../entities/token';
 import type { VaultEntity, VaultGov } from '../entities/vault';
 import {
   isGovVault,
+  isStandardVault,
   isVaultPaused,
   isVaultPausedOrRetired,
   isVaultRetired,
@@ -232,46 +233,14 @@ export const selectVaultName = createCachedSelector(
   (vault: VaultEntity) => vault.name
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectVaultDepositFee = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.byId[vaultId].depositFee,
-  (fee: string) => fee || '0%'
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+export const selectVaultDepositFee = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.entities.vaults.byId[vaultId].depositFee;
 
-export const selectVaultSupportsAnyZap = createCachedSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
-  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (zapSupportById, vaultId) => {
-    const zapSupport = zapSupportById[vaultId];
-    if (zapSupport === undefined) {
-      return false;
-    }
-
-    return zapSupport.beefy || zapSupport.oneInch;
+export const selectVaultSupportsZap = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const vault = selectVaultById(state, vaultId);
+  if (isStandardVault(vault)) {
+    return (vault.zaps?.length || 0) > 0;
   }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectVaultSupportsBeefyZap = createCachedSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
-  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (zapSupportById, vaultId) => {
-    const zapSupport = zapSupportById[vaultId];
-    if (zapSupport === undefined) {
-      return false;
-    }
-
-    return zapSupport.beefy;
-  }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
-
-export const selectVaultSupportsOneInchZap = createCachedSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
-  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (zapSupportById, vaultId) => {
-    const zapSupport = zapSupportById[vaultId];
-    if (zapSupport === undefined) {
-      return false;
-    }
-
-    return zapSupport.oneInch;
-  }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+  return false;
+};

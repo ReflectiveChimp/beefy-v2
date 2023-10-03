@@ -5,7 +5,7 @@ import type { ChainEntity } from '../features/data/entities/chain';
 import { lookupAddress } from 'ens-reverse';
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
-const EEEE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
+export const EEEE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 const NATIVE_ADDRESS_ALTERNATIVES = [ZERO_ADDRESS, EEEE_ADDRESS.toLowerCase()];
 
 export function isNativeAlternativeAddress(address: string) {

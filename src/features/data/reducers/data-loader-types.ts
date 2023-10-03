@@ -72,6 +72,7 @@ export interface DataLoaderState {
     wallet: LoaderState;
     amms: LoaderState;
     zaps: LoaderState;
+    swapAggregators: LoaderState;
     depositForm: LoaderState;
     withdrawForm: LoaderState;
     boostForm: LoaderState;

@@ -4,17 +4,18 @@ import type { ChainEntity } from '../entities/chain';
 import { infoCards } from '../../../config/info-cards';
 import type {
   AmmConfig,
-  BeefyZapConfig,
   BoostConfig,
   ChainConfig,
   FeaturedVaultConfig,
   InfoCardsConfig,
   MinterConfig,
-  OneInchZapConfig,
   PartnersConfig,
   PlatformConfig,
   StrategyTypeConfig,
+  SwapAggregatorConfig,
+  SwapAggregatorConfigLoose,
   VaultConfig,
+  ZapConfig,
 } from './config-types';
 import { mapValues } from 'lodash-es';
 
@@ -46,12 +47,15 @@ export class ConfigAPI {
     );
   }
 
-  public async fetchBeefyZapsConfig(): Promise<BeefyZapConfig[]> {
-    return (await import('../../../config/zap/beefy')).zaps;
+  public async fetchSwapAggregatorsConfig(): Promise<SwapAggregatorConfig[]> {
+    const config: SwapAggregatorConfigLoose[] = (
+      await import('../../../config/zap/swap-aggregators.json')
+    ).default; // json types are wide
+    return config as SwapAggregatorConfig[];
   }
 
-  public async fetchOneInchZapsConfig(): Promise<OneInchZapConfig[]> {
-    return (await import('../../../config/zap/one-inch')).zaps;
+  public async fetchZapsConfig(): Promise<ZapConfig[]> {
+    return (await import('../../../config/zap/zaps.json')).default;
   }
 
   public async fetchAllVaults(): Promise<{ [chainId: ChainEntity['id']]: VaultConfig[] }> {

@@ -3,6 +3,7 @@ import type { VaultEntity } from '../../../data/entities/vault';
 import { Transact } from './Transact/Transact';
 import { Boosts } from './Boosts';
 import { Minters } from './Minter';
+import { TransactDebugger } from './Transact/TransactDebugger';
 
 export type ActionsProps = {
   vaultId: VaultEntity['id'];
@@ -10,6 +11,7 @@ export type ActionsProps = {
 export const Actions = memo<ActionsProps>(function Actions({ vaultId }) {
   return (
     <>
+      {import.meta.env.VITE_TRANSACT_DEBUG ? <TransactDebugger /> : null}
       <Transact vaultId={vaultId} />
       <Boosts vaultId={vaultId} />
       <Minters vaultId={vaultId} />

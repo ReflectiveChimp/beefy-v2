@@ -5,8 +5,11 @@ import { isEmpty, mapValues, sortBy } from 'lodash-es';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import type { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsZapSupport } from '../actions/vaults';
+import {
+  fetchTokenSwapSupport,
+  reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
+} from '../actions/tokens';
+import { fetchAllVaults, fetchFeaturedVaults } from '../actions/vaults';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { ChainEntity } from '../entities/chain';
 import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
@@ -64,24 +67,14 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
    * We want to know if the vault is featured or not
    */
   featuredVaults: FeaturedVaultConfig;
-
-  /**
-   * Which zaps are enabled for each vault
-   */
-  zapSupportById: {
-    [vaultId: VaultEntity['id']]: {
-      beefy: boolean;
-      oneInch: boolean;
-    };
-  };
 };
+
 export const initialVaultsState: VaultsState = {
   byId: {},
   allIds: [],
   byChainId: {},
   contractData: { byVaultId: {} },
   featuredVaults: {},
-  zapSupportById: {},
 };
 
 export const vaultsSlice = createSlice({
@@ -121,15 +114,6 @@ export const vaultsSlice = createSlice({
         addContractDataToState(sliceState, action.payload.contractData);
       }
     );
-
-    builder.addCase(fetchVaultsZapSupport.fulfilled, (sliceState, action) => {
-      sliceState.zapSupportById = mapValues(action.payload.byVaultId, support => {
-        return {
-          beefy: support.includes('beefy'),
-          oneInch: support.includes('oneInch'),
-        };
-      });
-    });
   },
 });
 
@@ -174,12 +158,13 @@ function addVaultToState(
   }
   const score = getVaultSafetyScore(state, chainId, apiVault);
 
-  if (apiVault.isGovVault) {
+  if (apiVault.type === 'gov') {
     const vault: VaultGov = {
       id: apiVault.id,
       name: apiVault.name,
-      isGovVault: true,
+      type: 'gov',
       depositTokenAddress: apiVault.tokenAddress,
+      zaps: apiVault.zaps || [],
       earnedTokenAddress: apiVault.earnedTokenAddress,
       earnContractAddress: apiVault.earnContractAddress,
       excludedId: apiVault.excluded || null,
@@ -188,12 +173,12 @@ function addVaultToState(
       platformId: apiVault.platformId,
       safetyScore: score,
       assetIds: apiVault.assets || [],
-      type: 'single',
+      assetType: 'single',
       risks: apiVault.risks || [],
       buyTokenUrl: apiVault.buyTokenUrl || null,
       addLiquidityUrl: null,
       removeLiquidityUrl: null,
-      depositFee: apiVault.depositFee ?? '0%',
+      depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
       retireReason: apiVault.retireReason,
       pauseReason: apiVault.pauseReason,
@@ -232,22 +217,23 @@ function addVaultToState(
     const vault: VaultStandard = {
       id: apiVault.id,
       name: apiVault.name,
-      isGovVault: false,
+      type: apiVault.type || 'standard',
       depositTokenAddress: apiVault.tokenAddress ?? 'native',
+      zaps: apiVault.zaps || [],
       earnContractAddress: apiVault.earnContractAddress,
       earnedTokenAddress: apiVault.earnedTokenAddress,
       strategyTypeId: apiVault.strategyTypeId,
       chainId: chainId,
       platformId: apiVault.platformId,
       status: apiVault.status as VaultStandard['status'],
-      type: !apiVault.assets ? 'single' : apiVault.assets.length > 1 ? 'lps' : 'single',
+      assetType: !apiVault.assets ? 'single' : apiVault.assets.length > 1 ? 'lps' : 'single',
       safetyScore: score,
       assetIds: apiVault.assets || [],
       risks: apiVault.risks || [],
       buyTokenUrl: apiVault.buyTokenUrl || null,
       addLiquidityUrl: apiVault.addLiquidityUrl || null,
       removeLiquidityUrl: apiVault.removeLiquidityUrl || null,
-      depositFee: apiVault.depositFee ?? '0%',
+      depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
       retireReason: apiVault.retireReason,
       pauseReason: apiVault.pauseReason,

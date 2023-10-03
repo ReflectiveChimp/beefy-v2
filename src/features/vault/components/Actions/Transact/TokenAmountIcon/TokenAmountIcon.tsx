@@ -91,7 +91,7 @@ const TokenAmountIconComponent = memo<TokenAmountIconComponentProps>(
       <div className={clsx(classes.holder, className)}>
         <div className={classes.amountWithValue}>
           {amount}
-          <div className={classes.value}>{value}</div>
+          <div className={classes.value}>~{value}</div>
         </div>
         <div className={classes.tokenWithIcon}>
           <span className={classes.token}>{tokenSymbol}</span>

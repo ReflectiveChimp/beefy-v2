@@ -19,7 +19,7 @@ import {
   doDisconnectWallet,
   initWallet,
 } from '../actions/wallet';
-import { fetchAllZapsAction } from '../actions/zap';
+import { fetchAllSwapAggregatorsAction, fetchAllZapsAction } from '../actions/zap';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
 import { fetchAllInfoCards } from '../actions/info-cards';
 import { initiateBridgeForm } from '../actions/bridge';
@@ -72,6 +72,7 @@ export const initialDataLoaderState: DataLoaderState = {
     wallet: dataLoaderStateInit,
     amms: dataLoaderStateInit,
     zaps: dataLoaderStateInit,
+    swapAggregators: dataLoaderStateInit,
     depositForm: dataLoaderStateInit,
     withdrawForm: dataLoaderStateInit,
     boostForm: dataLoaderStateInit,
@@ -199,6 +200,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm', true);
     addGlobalAsyncThunkActions(builder, initiateBridgeForm, 'bridge', true);
     addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps', true);
+    addGlobalAsyncThunkActions(builder, fetchAllSwapAggregatorsAction, 'swapAggregators', true);
     addGlobalAsyncThunkActions(builder, fetchAllAmmsAction, 'amms', true);
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);

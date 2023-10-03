@@ -28,11 +28,11 @@ export enum TransactStatus {
   Fulfilled,
 }
 
-export type TransactTokens = {
-  allTokensIds: string[];
-  byTokensId: Record<TransactOption['tokensId'], TokenEntity['address'][]>;
+export type TransactSelections = {
+  allSelectionIds: string[];
+  bySelectionId: Record<TransactOption['selectionId'], TokenEntity[]>;
   allChainIds: ChainEntity['id'][];
-  byChainId: Record<ChainEntity['id'], TransactOption['tokensId'][]>;
+  byChainId: Record<ChainEntity['id'], TransactOption['selectionId'][]>;
 };
 
 export type TransactOptions = {
@@ -43,12 +43,12 @@ export type TransactOptions = {
   requestId: string | null;
   allOptionIds: TransactOption['id'][];
   byOptionId: Record<TransactOption['id'], TransactOption>;
-  byTokensId: Record<TransactOption['tokensId'], TransactOption['id'][]>;
+  bySelectionId: Record<TransactOption['selectionId'], TransactOption['id'][]>;
 };
 
 export type TransactQuotes = {
   allQuoteIds: string[];
-  byQuoteId: Record<TransactQuote['optionId'], TransactQuote>;
+  byQuoteId: Record<TransactQuote['id'], TransactQuote>;
   status: TransactStatus;
   requestId: string;
   error: SerializedError | null;
@@ -64,14 +64,14 @@ export type TransactConfirm = {
 export type TransactState = {
   vaultId: VaultEntity['id'] | null;
   selectedChainId: string | null;
-  selectedTokensId: string | null;
+  selectedSelectionId: string | null;
   selectedQuoteId: string | null;
   swapSlippage: number;
   inputAmount: BigNumber;
   inputMax: boolean;
   mode: TransactMode;
   step: TransactStep;
-  tokens: TransactTokens;
+  selections: TransactSelections;
   options: TransactOptions;
   quotes: TransactQuotes;
   confirm: TransactConfirm;

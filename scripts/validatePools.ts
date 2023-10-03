@@ -14,7 +14,7 @@ import strategyABI from '../src/config/abi/strategy.json';
 import vaultABI from '../src/config/abi/vault.json';
 import platforms from '../src/config/platforms.json';
 import strategyTypes from '../src/config/strategy-types.json';
-import { VaultConfig } from '../src/features/data/apis/config-types';
+import type { VaultConfig } from '../src/features/data/apis/config-types';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -61,21 +61,23 @@ const allowedEarnSameToken = new Set(['venus-wbnb']);
 const validPlatformIds = platforms.map(platform => platform.id);
 const validstrategyTypeIds = strategyTypes.map(strategyType => strategyType.id);
 
-const oldFields = [
-  'tokenDescription',
-  'tokenDescriptionUrl',
-  'pricePerFullShare',
-  'tvl',
-  'oraclePrice',
-  'platform',
-  'stratType',
-  'logo',
-  'depositsPaused',
-  'withdrawalFee',
-  'updatedFees',
-  'mintTokenUrl',
-  'callFee',
-];
+const oldFields = {
+  tokenDescription: 'Use addressbook',
+  tokenDescriptionUrl: 'Use addressbook',
+  pricePerFullShare: 'Not required',
+  tvl: 'Not required',
+  oraclePrice: 'Not required',
+  platform: 'Use platformId',
+  stratType: 'Use strategyTypeId',
+  logo: 'Not required',
+  depositsPaused: 'Use status: paused',
+  withdrawalFee: 'Not required (use api)',
+  updatedFees: 'Not required',
+  mintTokenUrl: 'Use minters config',
+  callFee: 'Not required (use api)',
+  tokenAmmId: 'Use zap: VaultZapConfig if needed',
+  isGovVault: 'Use type: gov',
+};
 
 const validatePools = async () => {
   let exitCode = 0;
@@ -123,7 +125,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   let updates: Record<string, Record<string, any>> = {};
   let exitCode = 0;
   //Governance pools should be separately verified
-  pools = pools.filter(pool => !pool.isGovVault);
+  pools = pools.filter(pool => pool.type !== 'gov');
 
   const poolIds = new Set(pools.map(pool => pool.id));
   const uniqueEarnedToken = new Set();
@@ -222,11 +224,12 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     }
 
     // Old fields we no longer need
-    const fieldsToDelete = oldFields.filter(field => field in pool);
+    const fieldsToDelete = Object.keys(oldFields).filter(field => field in pool);
     if (fieldsToDelete.length) {
       console.error(
         `Error: ${pool.id} : These fields are no longer needed: ${fieldsToDelete.join(', ')}`
       );
+      fieldsToDelete.forEach(field => console.log(`\t${field}: '${oldFields[field]}',`));
       exitCode = 1;
     }
 

@@ -7,20 +7,18 @@ import type {
   ZapQuoteStepDeposit,
   ZapQuoteStepSplit,
   ZapQuoteStepSwap,
+  ZapQuoteStepWithdraw,
 } from '../../../../../data/apis/transact/transact-types';
 import { Trans, useTranslation } from 'react-i18next';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectPlatformById } from '../../../../../data/selectors/platforms';
 import { ListJoin } from '../../../../../../components/ListJoin';
-import {
-  selectTransactOptionById,
-  selectTransactQuoteIds,
-} from '../../../../../data/selectors/transact';
+import { selectTransactQuoteIds } from '../../../../../data/selectors/transact';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { ZapProvider } from '../ZapProvider';
+import { ZapQuoteTitle } from '../ZapProvider';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types';
 
@@ -35,13 +33,21 @@ const StepContentSwap = memo<StepContentProps<ZapQuoteStepSwap>>(function StepCo
   step,
 }) {
   const { t } = useTranslation();
+  const textKey =
+    step.via === 'aggregator' && step.providerId === 'wnative'
+      ? step.toToken.type === 'native'
+        ? 'Transact-Route-Step-Unwrap'
+        : 'Transact-Route-Step-Wrap'
+      : 'Transact-Route-Step-Swap';
+
   return (
     <Trans
       t={t}
-      i18nKey="Transact-Route-Step-Swap"
+      i18nKey={textKey}
       values={{
         fromToken: step.fromToken.symbol,
         toToken: step.toToken.symbol,
+        via: step.via === 'aggregator' ? step.providerId : step.via,
       }}
       components={{
         fromAmount: (
@@ -113,6 +119,26 @@ const StepContentDeposit = memo<StepContentProps<ZapQuoteStepDeposit>>(function 
   );
 });
 
+const StepContentWithdraw = memo<StepContentProps<ZapQuoteStepWithdraw>>(
+  function StepContentWithdraw({ step }) {
+    const { t } = useTranslation();
+    return (
+      <Trans
+        t={t}
+        i18nKey="Transact-Route-Step-Withdraw"
+        values={{
+          token: step.token.symbol,
+        }}
+        components={{
+          amount: (
+            <TokenAmountFromEntity amount={step.amount} token={step.token} minShortPlaces={4} />
+          ),
+        }}
+      />
+    );
+  }
+);
+
 const StepContentSplit = memo<StepContentProps<ZapQuoteStepSplit>>(function StepContentSplit({
   step,
 }) {
@@ -154,6 +180,7 @@ const StepContentComponents: Record<
   swap: StepContentSwap,
   build: StepContentBuild,
   deposit: StepContentDeposit,
+  withdraw: StepContentWithdraw,
   split: StepContentSplit,
 };
 
@@ -183,8 +210,9 @@ export const ZapRoute = memo<ZapRouteProps>(function ZapRoute({ quote, className
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const option = useAppSelector(state => selectTransactOptionById(state, quote.optionId));
+  const option = quote.option;
   const quotes = useAppSelector(selectTransactQuoteIds);
+  const quoteIndex = quotes.findIndex(id => id === quote.id);
   const hasMultipleOptions = quotes.length > 1;
   const handleSwitch = useCallback(() => {
     dispatch(transactActions.switchStep(TransactStep.QuoteSelect));
@@ -200,7 +228,7 @@ export const ZapRoute = memo<ZapRouteProps>(function ZapRoute({ quote, className
           })}
           onClick={hasMultipleOptions ? handleSwitch : undefined}
         >
-          <ZapProvider providerId={option.providerId} className={classes.routeHeaderProvider} />
+          <ZapQuoteTitle index={quoteIndex} className={classes.routeHeaderProvider} />
           {hasMultipleOptions ? '>' : undefined}
         </div>
         <div className={classes.routeContent}>

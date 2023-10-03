@@ -50,6 +50,7 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
       standardVaults.push(vault);
     }
   }
+
   const res = await contractApi.fetchAllContractData(state, standardVaults, govVaults, boosts);
 
   // always re-fetch the latest state

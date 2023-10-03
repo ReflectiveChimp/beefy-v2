@@ -1,33 +1,45 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllZapsAction } from '../actions/zap';
+import { fetchAllSwapAggregatorsAction, fetchAllZapsAction } from '../actions/zap';
 import type { ChainEntity } from '../entities/chain';
-import type { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
-import type { AmmEntity } from '../entities/amm';
+import type { SwapAggregatorEntity, ZapEntity } from '../entities/zap';
+import { orderBy } from 'lodash-es';
 
-/**
- * State containing Vault infos
- */
 export type ZapsState = {
-  beefy: {
+  zaps: {
     byChainId: {
-      [chainId: ChainEntity['id']]: ZapEntityBeefy[];
-    };
-    byAmmId: {
-      [ammId: AmmEntity['id']]: ZapEntityBeefy;
+      [chainId: ChainEntity['id']]: ZapEntity;
     };
   };
-  oneInch: {
+  aggregators: {
+    byId: {
+      [aggregatorId: string]: SwapAggregatorEntity;
+    };
     byChainId: {
-      [chainId: ChainEntity['id']]: ZapEntityOneInch;
+      [chainId: ChainEntity['id']]: {
+        byType: {
+          [aggregatorType in SwapAggregatorEntity['type']]?: SwapAggregatorEntity['id'];
+        };
+      };
+    };
+  };
+  tokens: {
+    byChainId: {
+      [chainId: ChainEntity['id']]: {
+        scoreById: Record<string, number>;
+      };
     };
   };
 };
+
 const initialZapsState: ZapsState = {
-  beefy: {
+  zaps: {
     byChainId: {},
-    byAmmId: {},
   },
-  oneInch: {
+  aggregators: {
+    byId: {},
+    byChainId: {},
+  },
+  tokens: {
     byChainId: {},
   },
 };
@@ -39,36 +51,38 @@ export const zapsSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    builder.addCase(fetchAllZapsAction.fulfilled, (sliceState, action) => {
-      for (const zap of action.payload.beefy) {
-        const typedZap: ZapEntityBeefy = {
-          type: 'beefy',
-          ...zap,
-        };
-
-        if (!(zap.ammId in sliceState.beefy.byAmmId)) {
-          sliceState.beefy.byAmmId[zap.ammId] = typedZap;
-
-          if (!(zap.chainId in sliceState.beefy.byChainId)) {
-            sliceState.beefy.byChainId[zap.chainId] = [];
+    builder
+      .addCase(fetchAllZapsAction.fulfilled, (sliceState, action) => {
+        for (const zap of action.payload.zaps) {
+          sliceState.zaps.byChainId[zap.chainId] = zap;
+        }
+      })
+      .addCase(fetchAllSwapAggregatorsAction.fulfilled, (sliceState, action) => {
+        for (const aggregator of action.payload.aggregators) {
+          // Aggregator
+          sliceState.aggregators.byId[aggregator.id] = aggregator;
+          if (!(aggregator.chainId in sliceState.aggregators.byChainId)) {
+            sliceState.aggregators.byChainId[aggregator.chainId] = { byType: {} };
           }
 
-          sliceState.beefy.byChainId[zap.chainId].push(typedZap);
-        } else {
-          console.warn(`Ignoring duplicate beefy zap for amm ${zap.ammId}`);
-        }
-      }
+          if (!(aggregator.type in sliceState.aggregators.byChainId[aggregator.chainId].byType)) {
+            sliceState.aggregators.byChainId[aggregator.chainId].byType[aggregator.type] =
+              aggregator.id;
+          } else {
+            console.warn(
+              `Ignoring duplicate aggregator type ${aggregator.type} for chain ${aggregator.chainId}`
+            );
+          }
 
-      for (const zap of action.payload.oneInch) {
-        if (!(zap.chainId in sliceState.oneInch.byChainId)) {
-          sliceState.oneInch.byChainId[zap.chainId] = {
-            type: 'one-inch',
-            ...zap,
-          };
-        } else {
-          console.warn(`Ignoring duplicate 1inch zap for chain ${zap.chainId}`);
+          // Priority Tokens
+          if (!(aggregator.chainId in sliceState.tokens.byChainId)) {
+            sliceState.tokens.byChainId[aggregator.chainId] = { scoreById: {} };
+            for (const tokenId of aggregator.priorityTokens) {
+              sliceState.tokens.byChainId[aggregator.chainId].scoreById[tokenId] =
+                (sliceState.tokens.byChainId[aggregator.chainId].scoreById[tokenId] || 0) + 1;
+            }
+          }
         }
-      }
-    });
+      });
   },
 });

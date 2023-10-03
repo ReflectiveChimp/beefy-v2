@@ -86,3 +86,5 @@ export type BeefyThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+export type GetStateFn = () => BeefyState;

@@ -8,8 +8,9 @@ import { useAppSelector } from '../../../../../../../store';
 import {
   selectTransactOptionById,
   selectTransactQuoteById,
+  selectTransactQuoteIds,
 } from '../../../../../../data/selectors/transact';
-import { ZapProvider } from '../../ZapProvider';
+import { ZapQuoteTitle } from '../../ZapProvider';
 import { TokenAmountFromEntity } from '../../../../../../../components/TokenAmount';
 
 const useStyles = makeStyles(styles);
@@ -22,7 +23,9 @@ export type ListItemProps = {
 export const ListItem = memo<ListItemProps>(function ListItem({ quoteId, className, onSelect }) {
   const classes = useStyles();
   const quote = useAppSelector(state => selectTransactQuoteById(state, quoteId));
-  const option = useAppSelector(state => selectTransactOptionById(state, quote.optionId));
+  const option = quote ? quote.option : null;
+  const quotes = useAppSelector(selectTransactQuoteIds);
+  const quoteIndex = quotes.findIndex(id => id === quote.id);
   const handleClick = useCallback(() => onSelect(quoteId), [onSelect, quoteId]);
   const outputs = useMemo(
     () =>
@@ -34,7 +37,7 @@ export const ListItem = memo<ListItemProps>(function ListItem({ quoteId, classNa
 
   return (
     <button className={clsx(classes.item, className)} onClick={handleClick}>
-      <ZapProvider providerId={option.providerId} className={classes.provider} />
+      <ZapQuoteTitle index={quoteIndex} className={classes.provider} />
       <div className={classes.output}>
         <ListJoin items={outputs} />
       </div>

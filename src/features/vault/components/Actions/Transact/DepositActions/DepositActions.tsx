@@ -37,9 +37,7 @@ export type DepositActionsProps = {
 export const DepositActions = memo<DepositActionsProps>(function DepositActions({ className }) {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuote);
-  const option = useAppSelector(state =>
-    quote ? selectTransactOptionById(state, quote.optionId) : null
-  );
+  const option = quote ? quote.option : null;
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const connectedChainId = useAppSelector(selectCurrentChainId);
 

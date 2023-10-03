@@ -3,17 +3,19 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity } from '../entities/token';
 import type { PlatformEntity } from '../entities/platform';
 import type { StrategyTypeEntity } from '../entities/strategy-type';
-import type { AmmEntity } from '../entities/amm';
+import type { StrategyOptions } from './transact/strategies/IStrategy';
 import type { ZapFee } from './transact/transact-types';
+import type { ChangeTypeOfKeys } from '../utils/types-utils';
 
 export interface VaultConfig {
   id: string;
   name: string;
+  type?: 'standard' | 'gov' /*| 'concentrated-liquidity'*/;
   token: string;
   tokenAddress?: string | null;
   tokenDecimals: number;
   tokenProviderId?: PlatformEntity['id'];
-  tokenAmmId?: AmmEntity['id'];
+  zaps?: StrategyOptions[];
   earnedToken: string;
   earnedTokenAddress: string;
   earnedTokenDecimals?: number | null;
@@ -27,7 +29,6 @@ export interface VaultConfig {
   strategyTypeId: StrategyTypeEntity['id'];
   network: string;
   excluded?: string | null;
-  isGovVault?: boolean | null;
   callFee?: number | null;
   createdAt?: number | null;
   addLiquidityUrl?: string | null;
@@ -35,7 +36,7 @@ export interface VaultConfig {
   retireReason?: string | null;
   pauseReason?: string | null;
   removeLiquidityUrl?: string | null;
-  depositFee?: string | null;
+  depositFee?: number | undefined;
   refund?: boolean | null;
   refundContractAddress?: string | null;
   showWarning?: boolean | null;
@@ -157,7 +158,7 @@ export interface AmmConfigBase {
 }
 
 export interface AmmConfigUniswapV2 extends AmmConfigBase {
-  readonly type: 'uniswapv2';
+  readonly type: 'uniswap-v2';
   mintFeeNumerator: string;
   mintFeeDenominator: string;
   getAmountOutMode: 'getAmountOut' | 'getAmountsOut' | 'getAmountOutWithFee';
@@ -175,25 +176,38 @@ export function isSolidlyAmmConfig(amm: AmmConfig): amm is AmmConfigSolidly {
 }
 
 export function isUniswapV2AmmConfig(amm: AmmConfig): amm is AmmConfigUniswapV2 {
-  return amm.type === 'uniswapv2';
+  return amm.type === 'uniswap-v2';
 }
 
-export interface BeefyZapConfig {
-  zapAddress: string; // identifier
-  ammId: AmmEntity['id'];
+export interface ZapConfig {
+  router: string;
+  manager: string;
   chainId: ChainEntity['id'];
 }
 
-export interface OneInchZapConfig {
-  zapAddress: string; // identifier
-  priceOracleAddress: string;
+export interface OneInchSwapConfig {
+  id: string;
+  type: 'one-inch';
   chainId: ChainEntity['id'];
-  depositFromTokens: TokenEntity['id'][];
-  withdrawToTokens: TokenEntity['id'][];
+  priorityTokens: TokenEntity['id'][];
   blockedTokens: TokenEntity['id'][];
   blockedVaults: VaultEntity['id'][];
   fee: ZapFee;
 }
+
+export interface KyberSwapConfig {
+  id: string;
+  type: 'kyber';
+  chainId: ChainEntity['id'];
+  priorityTokens: TokenEntity['id'][];
+  blockedTokens: TokenEntity['id'][];
+  blockedVaults: VaultEntity['id'][];
+  fee: ZapFee;
+}
+
+export type SwapAggregatorConfig = OneInchSwapConfig | KyberSwapConfig;
+
+export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<SwapAggregatorConfig, 'type', string>; // loosen type
 
 export interface MinterConfigTokenErc20 {
   oracleId: string;

@@ -71,6 +71,4 @@ export interface IOneInchApi {
   getQuote(request: QuoteRequest): Promise<QuoteResponse>;
 
   getSwap(request: SwapRequest): Promise<SwapResponse>;
-
-  getPriceInNative(request: PriceRequest): Promise<PriceResponse>;
 }

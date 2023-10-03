@@ -1,11 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getConfigApi } from '../apis/instances';
-import type { BeefyZapConfig, OneInchZapConfig } from '../apis/config-types';
+import type { SwapAggregatorConfig, ZapConfig } from '../apis/config-types';
 
 interface FetchAllZapsFulfilledPayload {
-  beefy: BeefyZapConfig[];
-  oneInch: OneInchZapConfig[];
+  zaps: ZapConfig[];
 }
 
 export const fetchAllZapsAction = createAsyncThunk<
@@ -14,13 +13,22 @@ export const fetchAllZapsAction = createAsyncThunk<
   { state: BeefyState }
 >('zap/fetchAllZapsAction', async () => {
   const api = getConfigApi();
-  const [beefy, oneInch] = await Promise.all([
-    api.fetchBeefyZapsConfig(),
-    api.fetchOneInchZapsConfig(),
-  ]);
+  const zaps = await api.fetchZapsConfig();
 
-  return {
-    beefy,
-    oneInch,
-  };
+  return { zaps };
+});
+
+interface FetchAllSwapAggregatorsFulfilledPayload {
+  aggregators: SwapAggregatorConfig[];
+}
+
+export const fetchAllSwapAggregatorsAction = createAsyncThunk<
+  FetchAllSwapAggregatorsFulfilledPayload,
+  void,
+  { state: BeefyState }
+>('zap/fetchAllSwapAggregatorsAction', async () => {
+  const api = getConfigApi();
+  const aggregators = await api.fetchSwapAggregatorsConfig();
+
+  return { aggregators };
 });

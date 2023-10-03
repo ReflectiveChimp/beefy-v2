@@ -15,6 +15,7 @@ import { createGasPricer } from './gas-prices';
 import { AnalyticsApi } from './analytics/analytics';
 import type { IOneInchApi } from './one-inch/one-inch-types';
 import type { IBeefyDataApi } from './beefy/beefy-data-api-types';
+import { supportedChainIds } from './one-inch';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -135,14 +136,15 @@ export async function getTransactApi(): Promise<ITransactApi> {
 
 const OneInchApiPromise = import('./one-inch');
 const oneInchApiCache: { [chainId: string]: IOneInchApi } = {};
-export async function getOneInchApi(
-  chain: ChainEntity,
-  oracleAddress: string
-): Promise<IOneInchApi> {
-  if (!oneInchApiCache[chain.id]) {
-    const { OneInchApi } = await OneInchApiPromise;
-    console.debug(`Instanciating OneInchApi for chain ${chain.id}`);
-    oneInchApiCache[chain.id] = new OneInchApi(chain, oracleAddress);
+export async function getOneInchApi(chain: ChainEntity): Promise<IOneInchApi> {
+  if (!(chain.id in oneInchApiCache)) {
+    const { OneInchApi, supportedChainIds } = await OneInchApiPromise;
+    if (supportedChainIds.includes(chain.id)) {
+      console.debug(`Instantiating OneInchApi for chain ${chain.id}`);
+      oneInchApiCache[chain.id] = new OneInchApi(chain);
+    } else {
+      throw new Error(`OneInchApi not supported for chain ${chain.id}`);
+    }
   }
 
   return oneInchApiCache[chain.id];

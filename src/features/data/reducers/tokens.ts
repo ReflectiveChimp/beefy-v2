@@ -6,7 +6,11 @@ import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllPricesAction } from '../actions/prices';
 import type { FetchAddressBookPayload } from '../actions/tokens';
-import { fetchAddressBookAction, fetchAllAddressBookAction } from '../actions/tokens';
+import {
+  fetchAddressBookAction,
+  fetchAllAddressBookAction,
+  fetchTokenSwapSupport,
+} from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20, TokenLpBreakdown, TokenNative } from '../entities/token';
@@ -20,6 +24,7 @@ import { fetchAllMinters } from '../actions/minters';
 import type { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
 import type { LpData } from '../apis/beefy/beefy-api';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
+import { mapValues } from 'lodash-es';
 
 /**
  * State containing Vault infos
@@ -56,11 +61,21 @@ export type TokensState = {
       [tokenId: TokenEntity['oracleId']]: TokenLpBreakdown;
     };
   };
+  swapSupport: {
+    byChainId: {
+      [chainId: ChainEntity['id']]: {
+        byProvider: {
+          [providerId: string]: TokenEntity['address'][];
+        };
+      };
+    };
+  };
 };
 export const initialTokensState: TokensState = {
   byChainId: {},
   prices: { byOracleId: {} },
   breakdown: { byOracleId: {} },
+  swapSupport: { byChainId: {} },
 };
 
 export const tokensSlice = createSlice({
@@ -155,6 +170,30 @@ export const tokensSlice = createSlice({
     builder.addCase(fetchAllAddressBookAction.fulfilled, (sliceState, action) => {
       for (const payload of action.payload) {
         addAddressBookToState(sliceState, payload);
+      }
+    });
+
+    // which tokens are supported by which swap aggregators
+    builder.addCase(fetchTokenSwapSupport.fulfilled, (sliceState, action) => {
+      for (const [chainId, swapSupport] of Object.entries(action.payload)) {
+        if (!sliceState.swapSupport.byChainId[chainId]) {
+          sliceState.swapSupport.byChainId[chainId] = { byProvider: {} };
+        }
+
+        sliceState.swapSupport.byChainId[chainId].byProvider = Object.entries(swapSupport).reduce(
+          (acc, [address, providers]) => {
+            for (const [provider, supported] of Object.entries(providers)) {
+              if (supported) {
+                if (!acc[provider]) {
+                  acc[provider] = [];
+                }
+                acc[provider].push(address);
+              }
+            }
+            return acc;
+          },
+          {} as Record<string, string[]>
+        );
       }
     });
   },
@@ -392,7 +431,7 @@ function addVaultToState(
   // add earned token data
   const addressKey = vault.earnedTokenAddress ? vault.earnedTokenAddress.toLowerCase() : 'native';
   if (sliceState.byChainId[chainId].byAddress[addressKey] === undefined) {
-    if (vault.isGovVault) {
+    if (vault.type === 'gov') {
       const addressKey =
         vault.earnedToken === sliceState.byChainId[chainId].native
           ? 'native'

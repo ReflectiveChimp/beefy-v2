@@ -18,7 +18,7 @@ export type FilteredVaultsState = {
   sortDirection: 'asc' | 'desc';
   vaultCategory: 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy' | 'correlated';
   userCategory: 'all' | 'eligible' | 'deposited';
-  vaultType: 'all' | 'lps' | 'single';
+  assetType: 'all' | 'lps' | 'single';
   searchText: string;
   chainIds: ChainEntity['id'][];
   platformId: PlatformEntity['id'] | null;
@@ -35,7 +35,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   sortDirection: 'desc',
   vaultCategory: 'all',
   userCategory: 'all',
-  vaultType: 'all',
+  assetType: 'all',
   searchText: '',
   chainIds: [],
   platformId: null,
@@ -79,9 +79,9 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.userCategory = action.payload;
     },
-    setVaultType(sliceState, action: PayloadAction<FilteredVaultsState['vaultType']>) {
+    setAssetType(sliceState, action: PayloadAction<FilteredVaultsState['assetType']>) {
       sliceState.reseted = false;
-      sliceState.vaultType = action.payload;
+      sliceState.assetType = action.payload;
     },
     setSearchText(sliceState, action: PayloadAction<FilteredVaultsState['searchText']>) {
       sliceState.reseted = false;

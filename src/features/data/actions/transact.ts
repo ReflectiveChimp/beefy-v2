@@ -1,34 +1,38 @@
 import { createAsyncThunk, miniSerializeError, nanoid } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState, BeefyThunk } from '../../../redux-types';
 import type { VaultEntity, VaultGov } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
 import { fetchAddressBookAction } from './tokens';
 import { isInitialLoader } from '../reducers/data-loader-types';
-import { fetchAllZapsAction } from './zap';
+import { fetchAllSwapAggregatorsAction, fetchAllZapsAction } from './zap';
 import { getTransactApi } from '../apis/instances';
 import { transactActions } from '../reducers/wallet/transact';
 import {
   selectTokenAmountsTotalValue,
   selectTransactInputAmount,
   selectTransactInputMax,
-  selectTransactOptionById,
-  selectTransactOptionsForTokensId,
+  selectTransactOptionsForSelectionId,
   selectTransactOptionsMode,
   selectTransactOptionsVaultId,
   selectTransactSelectedChainId,
   selectTransactSelectedQuote,
-  selectTransactSelectedTokensId,
-  selectTransactTokensIdTokens,
+  selectTransactSelectedSelectionId,
+  selectTransactSelectionTokensById,
   selectTransactVaultId,
 } from '../selectors/transact';
 import type {
   InputTokenAmount,
   ITransactApi,
   QuoteOutputTokenAmountChange,
-  QuoteTokenAmount,
   TransactOption,
   TransactQuote,
+} from '../apis/transact/transact-types';
+import {
+  isDepositOption,
+  isDepositQuote,
+  isWithdrawOption,
+  isWithdrawQuote,
 } from '../apis/transact/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import type { ChainEntity } from '../entities/chain';
@@ -42,7 +46,6 @@ import { selectAllowanceByTokenAddress } from '../selectors/allowances';
 import { walletActions } from './wallet-actions';
 import type { ThunkAction } from 'redux-thunk';
 import { startStepperWithSteps } from './stepper';
-import type { KeysOfType } from '../utils/types-utils';
 import { TransactMode } from '../reducers/wallet/transact-types';
 import { selectTokenByAddress } from '../selectors/tokens';
 import { first, groupBy, uniqBy } from 'lodash-es';
@@ -83,6 +86,11 @@ export const transactInit = createAsyncThunk<
       loaders.push(dispatch(fetchAllZapsAction()));
     }
 
+    const swapAggregatorsLoader = getState().ui.dataLoader.global.swapAggregators;
+    if (swapAggregatorsLoader && isInitialLoader(swapAggregatorsLoader)) {
+      loaders.push(dispatch(fetchAllSwapAggregatorsAction()));
+    }
+
     const feesLoader = getState().ui.dataLoader.global.fees;
     if (feesLoader && isInitialLoader(feesLoader)) {
       loaders.push(dispatch(fetchFees()));
@@ -107,13 +115,11 @@ export type TransactFetchOptionsPayload = {
   options: TransactOption[];
 };
 
-const optionsForByMode: Record<
-  TransactMode,
-  KeysOfType<ITransactApi, ITransactApi['getDepositOptionsFor']>
-> = {
-  [TransactMode.Deposit]: 'getDepositOptionsFor',
-  [TransactMode.Withdraw]: 'getWithdrawOptionsFor',
-};
+const optionsForByMode = {
+  [TransactMode.Deposit]: 'fetchDepositOptionsFor',
+  [TransactMode.Withdraw]: 'fetchWithdrawOptionsFor',
+} as const satisfies Record<TransactMode, keyof ITransactApi>;
+
 export const transactFetchOptions = createAsyncThunk<
   TransactFetchOptionsPayload,
   TransactFetchOptionsArgs,
@@ -124,7 +130,7 @@ export const transactFetchOptions = createAsyncThunk<
     const api = await getTransactApi();
     const state = getState();
     const method = optionsForByMode[mode];
-    const options = await api[method](vaultId, state);
+    const options = await api[method](vaultId, getState);
 
     if (!options || options.length === 0) {
       throw new Error(`No transact options available.`);
@@ -164,30 +170,21 @@ export const transactFetchOptions = createAsyncThunk<
 
 function getUniqueTokensForOptions(options: TransactOption[], state: BeefyState): TokenEntity[] {
   const tokens = options.flatMap(option => {
-    return option.tokenAddresses.map(tokenAddress => {
-      return selectTokenByAddress(state, option.chainId, tokenAddress);
-    });
+    return option.mode === TransactMode.Deposit ? option.inputs : option.wantedOutputs;
   });
 
   return uniqueTokens(tokens);
 }
 
-export type TransactFetchDepositQuotesPayload = {
-  tokensId: string;
+export type TransactFetchQuotesPayload = {
+  selectionId: string;
   chainId: ChainEntity['id'];
-  inputAmounts: QuoteTokenAmount[];
+  inputAmounts: InputTokenAmount[];
   quotes: TransactQuote[];
 };
 
-const quotesForByMode: Record<
-  TransactMode,
-  KeysOfType<ITransactApi, ITransactApi['getDepositQuotesFor']>
-> = {
-  [TransactMode.Deposit]: 'getDepositQuotesFor',
-  [TransactMode.Withdraw]: 'getWithdrawQuotesFor',
-};
 export const transactFetchQuotes = createAsyncThunk<
-  TransactFetchDepositQuotesPayload,
+  TransactFetchQuotesPayload,
   void,
   { state: BeefyState }
 >('transact/fetchQuotes', async (_, { getState, dispatch }) => {
@@ -200,9 +197,9 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`Can not quote for 0`);
   }
 
-  const tokensId = selectTransactSelectedTokensId(state);
-  if (!tokensId) {
-    throw new Error(`No tokensId selected`);
+  const selectionId = selectTransactSelectedSelectionId(state);
+  if (!selectionId) {
+    throw new Error(`No selectionId selected`);
   }
 
   const chainId = selectTransactSelectedChainId(state);
@@ -210,14 +207,14 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No chainId selected`);
   }
 
-  const options = selectTransactOptionsForTokensId(state, tokensId);
+  const options = selectTransactOptionsForSelectionId(state, selectionId);
   if (!options || options.length === 0) {
-    throw new Error(`No options for tokensId ${tokensId}`);
+    throw new Error(`No options for selectionId ${selectionId}`);
   }
 
-  const tokens = selectTransactTokensIdTokens(state, tokensId);
+  const tokens = selectTransactSelectionTokensById(state, selectionId);
   if (!tokens || tokens.length === 0) {
-    throw new Error(`No tokens for tokensId ${tokensId}`);
+    throw new Error(`No tokens for selectionId ${selectionId}`);
   }
 
   const vaultId = selectTransactVaultId(state);
@@ -233,8 +230,14 @@ export const transactFetchQuotes = createAsyncThunk<
     },
   ];
 
-  const method = quotesForByMode[mode];
-  const quotes = await api[method](options, inputAmounts, state);
+  let quotes: TransactQuote[];
+  if (options.every(isDepositOption)) {
+    quotes = await api.fetchDepositQuotesFor(options, inputAmounts, getState);
+  } else if (options.every(isWithdrawOption)) {
+    quotes = await api.fetchWithdrawQuotesFor(options, inputAmounts, getState);
+  } else {
+    throw new Error(`Invalid options`);
+  }
 
   quotes.sort((a, b) => {
     const valueA = selectTokenAmountsTotalValue(state, a.outputs);
@@ -265,7 +268,7 @@ export const transactFetchQuotes = createAsyncThunk<
   );
 
   return {
-    tokensId,
+    selectionId,
     chainId,
     inputAmounts,
     quotes,
@@ -280,17 +283,17 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
     let shouldFetch = true;
 
     if (quote) {
-      const option = selectTransactOptionById(state, quote.optionId);
+      const option = quote.option;
       const vaultId = selectTransactVaultId(state);
       const chainId = selectTransactSelectedChainId(state);
-      const tokensId = selectTransactSelectedTokensId(state);
+      const selectionId = selectTransactSelectedSelectionId(state);
       const inputAmount = selectTransactInputAmount(state);
       const input = first(quote.inputs);
 
       shouldFetch =
         option.chainId !== chainId ||
         option.vaultId !== vaultId ||
-        option.tokensId !== tokensId ||
+        option.selectionId !== selectionId ||
         !input.amount.eq(inputAmount);
     }
 
@@ -299,14 +302,6 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
     }
   }
 );
-
-const actionForByMode: Record<
-  TransactMode,
-  KeysOfType<ITransactApi, ITransactApi['getDepositStep']>
-> = {
-  [TransactMode.Deposit]: 'getDepositStep',
-  [TransactMode.Withdraw]: 'getWithdrawStep',
-};
 
 /**
  * Steps to deposit into or withdraw from a vault
@@ -321,7 +316,6 @@ export function transactSteps(
   return async function (dispatch, getState) {
     const steps: Step[] = [];
     const state = getState();
-    const option = selectTransactOptionById(state, quote.optionId);
     const api = await getTransactApi();
 
     for (const allowanceTokenAmount of quote.allowances) {
@@ -347,8 +341,15 @@ export function transactSteps(
       }
     }
 
-    const method = actionForByMode[option.mode];
-    const originalStep = await api[method](quote, option, state, t);
+    let originalStep: Step;
+    if (isDepositQuote(quote)) {
+      originalStep = await api.fetchDepositStep(quote, getState, t);
+    } else if (isWithdrawQuote(quote)) {
+      originalStep = await api.fetchWithdrawStep(quote, getState, t);
+    } else {
+      throw new Error(`Invalid quote`);
+    }
+
     steps.push(wrapStepConfirmQuote(originalStep, quote));
 
     dispatch(startStepperWithSteps(steps, quote.inputs[0].token.chainId));
@@ -381,21 +382,27 @@ export function transactStepsClaimGov(
 
 /**
  * Wraps a step action in order to confirm the quote is still valid before performing the TX
+ * Needed as we (may) have allowance TXs to perform first
  */
 function wrapStepConfirmQuote(originalStep: Step, originalQuote: TransactQuote): Step {
-  const action = async function (dispatch, getState) {
+  const action: BeefyThunk = async function (dispatch, getState) {
     const requestId = nanoid();
     dispatch(transactActions.confirmPending({ requestId }));
 
     try {
-      const state = getState();
       const api = await getTransactApi();
-      const option = selectTransactOptionById(state, originalQuote.optionId);
-      const mode = option.mode;
-      const method = quotesForByMode[mode];
-      const quotes = await api[method]([option], originalQuote.inputs, state);
-      const newQuote = quotes.find(quote => quote.optionId === originalQuote.optionId);
-      const minAllowedRatio = new BigNumber('0.995'); // max 0.5% lower
+      const option = originalQuote.option;
+      let quotes: TransactQuote[];
+      if (isDepositOption(option)) {
+        quotes = await api.fetchDepositQuotesFor([option], originalQuote.inputs, getState);
+      } else if (isWithdrawOption(option)) {
+        quotes = await api.fetchWithdrawQuotesFor([option], originalQuote.inputs, getState);
+      } else {
+        throw new Error(`Invalid option`);
+      }
+
+      const newQuote = quotes.find(quote => quote.option.id === originalQuote.option.id);
+      const minAllowedRatio = new BigNumber('0.9975'); // max 0.25% lower
 
       if (!newQuote) {
         throw new Error(`Failed to get new quote.`);
@@ -419,6 +426,12 @@ function wrapStepConfirmQuote(originalStep: Step, originalQuote: TransactQuote):
         }
       }
 
+      // Perform original action if no changes
+      if (significantChanges.length === 0) {
+        dispatch(transactActions.confirmUnneeded({ requestId }));
+        return await originalStep.action(dispatch, getState, undefined);
+      }
+
       console.debug('original', originalQuote);
       console.debug('new', newQuote);
       console.debug(
@@ -427,12 +440,6 @@ function wrapStepConfirmQuote(originalStep: Step, originalQuote: TransactQuote):
           .map(change => `${change.difference.toString(10)} ${change.token.symbol}`)
           .join(',\n')
       );
-
-      // Perform original action if no changes
-      if (significantChanges.length === 0) {
-        dispatch(transactActions.confirmUnneeded({ requestId }));
-        return await originalStep.action(dispatch, getState, undefined);
-      }
 
       // Hide stepper (as UI will now show confirm notice)
       dispatch(stepperActions.reset());

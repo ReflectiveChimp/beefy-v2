@@ -5,7 +5,7 @@ import { getChainAddressBook } from '../apis/addressbook';
 import type { TokenAllowance } from '../apis/allowance/allowance-types';
 import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import { getAllowanceApi, getBalanceApi, getContractDataApi } from '../apis/instances';
+import { getAllowanceApi, getBalanceApi, getBeefyApi, getContractDataApi } from '../apis/instances';
 import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity } from '../entities/token';
@@ -15,6 +15,7 @@ import { selectBoostById } from '../selectors/boosts';
 import { selectAllChains, selectChainById } from '../selectors/chains';
 import { selectGovVaultById } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
+import type { BeefyTokenSwapSupportResponse } from '../apis/beefy/beefy-api';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
@@ -123,3 +124,12 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
     };
   }
 );
+export type FulfilledFetchTokenSwapSupportPayload = BeefyTokenSwapSupportResponse;
+export const fetchTokenSwapSupport = createAsyncThunk<
+  FulfilledFetchTokenSwapSupportPayload,
+  void,
+  { state: BeefyState }
+>('vaults/fetchVaultsZapSupport', async () => {
+  const api = getBeefyApi();
+  return await api.getTokenSwapSupport();
+});
