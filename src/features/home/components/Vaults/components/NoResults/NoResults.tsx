@@ -7,10 +7,7 @@ import {
   selectHasActiveFilterExcludingUserCategoryAndSort,
 } from '../../../../../data/selectors/filtered-vaults';
 import { styles } from './styles';
-import {
-  selectIsWalletKnown,
-  selectWalletAddressIfKnown,
-} from '../../../../../data/selectors/wallet';
+import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet';
 import { useTranslation } from 'react-i18next';
 import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/data-loader';
 import { Loader } from '../../../../../../components/Loader';
@@ -87,23 +84,27 @@ const LoadingMessage = memo(function LoadingMessage() {
 export const NoResults = memo(function NoResults() {
   const hasActiveFilter = useAppSelector(selectHasActiveFilterExcludingUserCategoryAndSort);
   const userCategory = useAppSelector(selectFilterUserCategory);
-  const userBalanceAvailable = useAppSelector(selectIsUserBalanceAvailable);
-  const isWalletKnown = useAppSelector(selectIsWalletKnown);
+  const walletAddress = useAppSelector(selectWalletAddressIfKnown);
+  const userBalanceAvailable = useAppSelector(state =>
+    selectIsUserBalanceAvailable(state, walletAddress)
+  );
 
-  if (!isWalletKnown && (userCategory === 'eligible' || userCategory === 'deposited')) {
+  if (!walletAddress && userCategory === 'deposited') {
     return (
       <NotConnectedMessage
         title={'NoResults-NotConnected'}
-        text={
-          userCategory === 'deposited'
-            ? 'NoResults-ConnectToViewMyVaults'
-            : 'NoResults-ConnectToViewEligibleVaults'
-        }
+        text={'NoResults-ConnectToViewMyVaults'}
       />
     );
   }
 
-  if (!userBalanceAvailable && (userCategory === 'eligible' || userCategory === 'deposited')) {
+  if (userCategory === 'saved') {
+    return (
+      <NotDepositedMessage title="NoResults-NoSavedVaults-Title" text="NoResults-NoSavedVaults" />
+    );
+  }
+
+  if (!userBalanceAvailable && userCategory === 'deposited') {
     return <LoadingMessage />;
   }
 
@@ -111,5 +112,5 @@ export const NoResults = memo(function NoResults() {
     return <NotDepositedMessage title="NoResults-NotDeposited" text="NoResults-FindVault" />;
   }
 
-  return <Message title="NoResults-NoResultsFound" text="NoResults-TryClearFilters" />;
+  return <Message title="NoResults-NoResultsFound" text={'NoResults-TryClearFilters'} />;
 });

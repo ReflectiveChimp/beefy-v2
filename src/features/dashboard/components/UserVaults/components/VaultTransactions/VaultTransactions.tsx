@@ -11,6 +11,7 @@ import { useSortedTimeline } from './hook';
 
 interface VaultTransactionsProps {
   vaultId: VaultEntity['id'];
+  address: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -23,18 +24,19 @@ const useStyles = makeStyles(() => ({
 
 export const VaultTransactions = memo<VaultTransactionsProps>(function VaultTransactions({
   vaultId,
+  address,
 }) {
   const classes = useStyles();
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
-  const token = useAppSelector(state =>
+  const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
 
-  const { sortedTimeline, sortedOptions, handleSort } = useSortedTimeline(vaultId);
+  const { sortedTimeline, sortedOptions, handleSort } = useSortedTimeline(vaultId, address);
 
-  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
 
   const TxComponent = useMemo(() => {
     return smDown ? TransactionMobile : Transaction;
@@ -44,7 +46,13 @@ export const VaultTransactions = memo<VaultTransactionsProps>(function VaultTran
     <div className={classes.transactionsGrid}>
       <TransactionsFilter sortOptions={sortedOptions} handleSort={handleSort} />
       {sortedTimeline.map(tx => {
-        return <TxComponent key={tx.datetime.getTime()} tokenDecimals={token.decimals} data={tx} />;
+        return (
+          <TxComponent
+            key={tx.datetime.getTime()}
+            tokenDecimals={depositToken.decimals}
+            data={tx}
+          />
+        );
       })}
     </div>
   );

@@ -91,11 +91,7 @@ export type BeefyChartDataResponse = {
   v: number;
 }[];
 
-// note that there is more infos but we don't need it
-type BeefyAPIVaultsResponse = {
-  id: string;
-  lastHarvest?: number | string;
-}[];
+type BeefyApiVaultLastHarvestResponse = Record<string, number>;
 
 export type BeefySnapshotProposal = {
   id: string;
@@ -210,34 +206,12 @@ export class BeefyAPI {
    * For now we fetch lastHarvest from the api
    * TODO: fetch this from the contract directly
    */
-  public async getVaultLastHarvest(vaultId: VaultEntity['id']): Promise<null | Date> {
-    const res = await this.api.get<BeefyAPIVaultsResponse>('/vaults', {
+  public async getVaultLastHarvest(): Promise<BeefyApiVaultLastHarvestResponse> {
+    const res = await this.api.get<BeefyApiVaultLastHarvestResponse>('/vaults/last-harvest', {
       params: { _: this.getCacheBuster('short') },
     });
 
-    // const vault = data.filter(vault => vault.id.includes(vaultId));
-    const vaultConfig = res.data.find(vault => {
-      return vault.id === vaultId;
-    });
-
-    if (!vaultConfig) {
-      // vault is not harvestable (most probably a gov vault)
-      return null;
-    }
-    if (!('lastHarvest' in vaultConfig)) {
-      return null;
-    }
-    let lh = 0;
-    if (isString(vaultConfig.lastHarvest)) {
-      lh = parseInt(vaultConfig.lastHarvest);
-    } else {
-      lh = vaultConfig.lastHarvest;
-    }
-    if (lh === 0) {
-      return null;
-    }
-
-    return new Date(lh * 1000);
+    return res.data;
   }
 
   public async getFees(): Promise<ApyFeeData> {
@@ -246,7 +220,7 @@ export class BeefyAPI {
     }
 
     const res = await this.api.get<ApyFeeData>('/fees', {
-      params: { _: this.getCacheBuster('long') },
+      params: { _: this.getCacheBuster('short') },
     });
     return res.data;
   }
@@ -260,7 +234,7 @@ export class BeefyAPI {
     const res = await this.api.get<BeefyTokenSwapSupportResponse>(
       'http://localhost:3030/zap/swaps',
       {
-        params: { _: this.getCacheBuster('long') },
+        params: { _: this.getCacheBuster('short') },
       }
     );
     return res.data;
@@ -272,7 +246,7 @@ export class BeefyAPI {
     }
 
     const res = await this.api.get<TreasuryConfig>('/treasury', {
-      params: { _: this.getCacheBuster('long') },
+      params: { _: this.getCacheBuster('short') },
     });
     return res.data;
   }
@@ -283,7 +257,7 @@ export class BeefyAPI {
     }
 
     const res = await this.api.get<BeefySnapshotActiveResponse>('/snapshot/active', {
-      params: { _: this.getCacheBuster('long') },
+      params: { _: this.getCacheBuster('short') },
     });
     return res.data;
   }

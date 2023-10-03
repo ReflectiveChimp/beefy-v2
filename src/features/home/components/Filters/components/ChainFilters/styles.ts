@@ -48,11 +48,24 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   iconWithChainIcon: {
-    marginRight: '8px',
+    marginRight: '4px',
   },
   iconWithChainSelected: {
     '& $iconWithChainIcon': {
       marginRight: '4px',
     },
+  },
+  badge: {
+    top: 'auto',
+    right: 'auto',
+    marginTop: '-12px',
+    marginLeft: '4px',
+  },
+  badgeMobile: {
+    position: 'static' as const,
+    transform: 'none',
+    top: '0',
+    right: '0',
+    marginLeft: '8px',
   },
 });

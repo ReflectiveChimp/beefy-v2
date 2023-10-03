@@ -1,9 +1,8 @@
 {
-  "curve-matic-stmatic": true,
-  "curve-op-f-susd": true,
-  "cakev2-cake-bnb": true,
-  "curve-kava-3pool": true,
-  "cone-wbnb-busd": true,
-  "stargate-op-eth": true,
-  "curve-avax-atricrypto": true
+  "stargate-polygon-usdt": true,
+  "balancer-zkevm-wsteth-reth": true,
+  "balancer-tbtc-weth": true,
+  "velodrome-v2-weth-op": true,
+  "convex-tricrypto-usdc": true,
+  "thena-gamma-bnbx-bnb": true
 }

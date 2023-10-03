@@ -31,6 +31,11 @@ import type { TreasuryState } from './features/data/reducers/treasury';
 import type { AnalyticsState } from './features/data/reducers/analytics';
 import type { ProposalsState } from './features/data/reducers/proposals';
 import type { HistoricalState } from './features/data/reducers/historical-types';
+import type { SavedVaultsState } from './features/data/reducers/saved-vaults';
+import type { ResolverState } from './features/data/reducers/wallet/resolver-types';
+import type { BridgesState } from './features/data/reducers/bridges';
+import type { MigrationState } from './features/data/reducers/wallet/migration';
+import type { TooltipsState } from './features/data/reducers/tooltips';
 
 export interface BeefyState {
   entities: {
@@ -45,6 +50,7 @@ export interface BeefyState {
     minters: MintersState;
     infoCards: InfoCardsState;
     proposals: ProposalsState;
+    bridges: BridgesState;
   };
   biz: {
     tvl: TvlState;
@@ -54,11 +60,13 @@ export interface BeefyState {
     historical: HistoricalState;
   };
   user: {
-    wallet: WalletState;
-    walletActions: WalletActionsState;
-    balance: BalanceState;
     allowance: AllowanceState;
     analytics: AnalyticsState;
+    balance: BalanceState;
+    resolver: ResolverState;
+    wallet: WalletState;
+    walletActions: WalletActionsState;
+    migration: MigrationState;
   };
   ui: {
     dataLoader: DataLoaderState;
@@ -70,6 +78,8 @@ export interface BeefyState {
     onRamp: OnRampTypes;
     stepperState: StepperState;
     treasury: TreasuryState;
+    savedVaults: SavedVaultsState;
+    tooltips: TooltipsState;
   };
 }
 

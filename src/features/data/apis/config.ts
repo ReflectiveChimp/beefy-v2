@@ -5,6 +5,7 @@ import { infoCards } from '../../../config/info-cards';
 import type {
   AmmConfig,
   BoostConfig,
+  BridgeConfig,
   ChainConfig,
   FeaturedVaultConfig,
   InfoCardsConfig,
@@ -18,6 +19,7 @@ import type {
   ZapConfig,
 } from './config-types';
 import { mapValues } from 'lodash-es';
+import type { MigrationConfig } from '../reducers/wallet/migration';
 
 /**
  * A class to access beefy configuration
@@ -99,6 +101,19 @@ export class ConfigAPI {
     );
   }
 
+  public async fetchAllMigrators(): Promise<{
+    [chainId: ChainEntity['id']]: MigrationConfig[];
+  }> {
+    return Object.fromEntries(
+      await Promise.all(
+        Object.keys(chainConfigs).map(async chainId => [
+          chainId,
+          (await import(`../../../config/migrators/${chainId}.tsx`)).migrators,
+        ])
+      )
+    );
+  }
+
   public async fetchAllInfoCards(): Promise<InfoCardsConfig> {
     return infoCards;
   }
@@ -109,5 +124,9 @@ export class ConfigAPI {
 
   public async fetchPlatforms(): Promise<PlatformConfig[]> {
     return (await import('../../../config/platforms.json')).default;
+  }
+
+  public async fetchBridges(): Promise<BridgeConfig[]> {
+    return (await import('../../../config/bridges.json')).default;
   }
 }

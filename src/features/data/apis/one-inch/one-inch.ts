@@ -11,7 +11,7 @@ import axios from 'axios';
 import { axiosErrorToString } from '../transact/helpers/axios';
 import type { ChainConfig } from '../config-types';
 
-const API_URL = import.meta.env.VITE_ONE_INCH_API || 'https://api.beefy.finance';
+const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
 
 export const supportedChainIds: ChainConfig['id'][] = [
   'ethereum',

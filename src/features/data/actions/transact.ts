@@ -55,6 +55,7 @@ import { fetchFees } from './fees';
 import { uniqueTokens } from '../../../helpers/tokens';
 import { fetchBalanceAction } from './balance';
 import type { Action } from 'redux';
+import { selectWalletAddress } from '../selectors/wallet';
 
 export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
@@ -193,6 +194,7 @@ export const transactFetchQuotes = createAsyncThunk<
   const mode = selectTransactOptionsMode(state);
   const inputAmount = selectTransactInputAmount(state);
   const inputMax = selectTransactInputMax(state);
+  const walletAddress = selectWalletAddress(state);
   if (inputAmount.lte(BIG_ZERO)) {
     throw new Error(`Can not quote for 0`);
   }
@@ -262,6 +264,7 @@ export const transactFetchQuotes = createAsyncThunk<
           chainId: allowances[0].token.chainId,
           spenderAddress: allowances[0].spenderAddress,
           tokens: allowances.map(allowance => allowance.token),
+          walletAddress,
         })
       )
     )

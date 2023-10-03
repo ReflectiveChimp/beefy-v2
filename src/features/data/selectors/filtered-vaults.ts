@@ -10,7 +10,6 @@ import {
 } from '../entities/vault';
 import {
   selectHasUserDepositInVault,
-  selectIsUserEligibleForVault,
   selectUserDepositedVaultIds,
   selectUserVaultDepositInUsd,
   selectUserVaultDepositTokenWalletBalanceInUsd,
@@ -31,13 +30,16 @@ import {
   selectVaultById,
   selectVaultSupportsZap,
 } from './vaults';
-import escapeStringRegexp from 'escape-string-regexp';
 import { selectTokenByAddress } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import type { KeysOfType } from '../utils/types-utils';
 import type { FilteredVaultsState } from '../reducers/filtered-vaults';
 import type { PlatformEntity } from '../entities/platform';
 import { selectActiveChainIds, selectAllChainIds } from './chains';
+import { selectIsVaultIdSaved } from './saved-vaults';
+import { isEmpty } from '../../../helpers/utils';
+import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string';
+import escapeStringRegexp from 'escape-string-regexp';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -50,7 +52,7 @@ export const selectFilterUserCategory = (state: BeefyState) => state.ui.filtered
 export const selectFilterAssetType = (state: BeefyState) => state.ui.filteredVaults.assetType;
 export const selectFilterVaultCategory = (state: BeefyState) =>
   state.ui.filteredVaults.vaultCategory;
-export const selectFilterPlatformId = (state: BeefyState) => state.ui.filteredVaults.platformId;
+export const selectFilterPlatformIds = (state: BeefyState) => state.ui.filteredVaults.platformIds;
 
 export const selectFilterBoolean = createCachedSelector(
   (state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key,
@@ -65,11 +67,11 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyPaused ? 1 : 0) +
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.onlyZappable ? 1 : 0) +
-    (filterOptions.platformId !== null ? 1 : 0) +
     (filterOptions.assetType !== 'all' ? 1 : 0) +
     (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
-    filterOptions.chainIds.length
+    filterOptions.chainIds.length +
+    filterOptions.platformIds.length
 );
 
 export const selectHasActiveFilter = createSelector(
@@ -83,7 +85,7 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.onlyBoosted !== false ||
     filterOptions.onlyZappable !== false ||
     filterOptions.searchText !== '' ||
-    filterOptions.platformId !== null ||
+    filterOptions.platformIds.length > 0 ||
     filterOptions.sort !== 'default' ||
     filterOptions.chainIds.length > 0
 );
@@ -98,7 +100,7 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.onlyBoosted !== false ||
     filterOptions.onlyZappable !== false ||
     filterOptions.searchText !== '' ||
-    filterOptions.platformId !== null ||
+    filterOptions.platformIds.length > 0 ||
     filterOptions.chainIds.length > 0
 );
 
@@ -107,22 +109,9 @@ export const selectVaultCategory = createSelector(
   filterOptions => filterOptions.vaultCategory
 );
 
-function simplifySearchText(text: string) {
-  return (text || '').replace(/-/g, ' ').trim();
-}
-
-function safeSearchRegex(needle: string, caseInsensitive: boolean = true) {
-  const modifiers = `g${caseInsensitive ? 'i' : ''}`;
-  return new RegExp(escapeStringRegexp(needle), modifiers);
-}
-
 // TOKEN, WTOKEN or TOKENW
 function fuzzyTokenRegex(token: string) {
   return new RegExp(`^w?${escapeStringRegexp(token)}w?$`, 'gi');
-}
-
-function stringFoundAnywhere(haystack: string, needle: string, caseInsensitive: boolean = true) {
-  return (haystack || '').match(safeSearchRegex(needle, caseInsensitive));
 }
 
 function vaultNameMatches(vault: VaultEntity, searchText: string) {
@@ -189,8 +178,14 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
   });
 }
 
-export const selectUserFilteredVaults = (state: BeefyState, text: string) => {
-  const vaults = selectUserDepositedVaultIds(state).map(id => selectVaultById(state, id));
+export const selectUserFilteredVaults = (
+  state: BeefyState,
+  text: string,
+  walletAddress?: string
+) => {
+  const vaults = selectUserDepositedVaultIds(state, walletAddress).map(id =>
+    selectVaultById(state, id)
+  );
   const searchText = simplifySearchText(text);
   const filteredVaults = vaults.filter(vault => {
     if (searchText.length > 0 && !selectVaultMatchesText(state, vault, searchText)) {
@@ -202,10 +197,25 @@ export const selectUserFilteredVaults = (state: BeefyState, text: string) => {
   return filteredVaults;
 };
 
+function selectFilterPlatformIdsForVault(state: BeefyState, vault: VaultEntity): string[] {
+  const vaultPlatform = selectPlatformIdForFilter(state, vault.platformId);
+  const vaultPlatforms = [vaultPlatform];
+
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  if (depositToken.providerId) {
+    const depositTokenPlatform = selectPlatformIdForFilter(state, depositToken.providerId);
+    if (depositTokenPlatform !== 'other' && depositTokenPlatform != vaultPlatform) {
+      vaultPlatforms.push(depositTokenPlatform);
+    }
+  }
+
+  return vaultPlatforms;
+}
+
 const selectPlatformIdForFilter = createCachedSelector(
-  (state: BeefyState) => state.entities.platforms.filterIds,
+  (state: BeefyState) => state.entities.platforms.allIds,
   (state: BeefyState, platformId: PlatformEntity['id']) => platformId,
-  (filterIds, platformId) => (filterIds.includes(platformId) ? platformId : 'other')
+  (allIds, platformId) => (allIds.includes(platformId) ? platformId : 'other')
 )((state: BeefyState, platformId: PlatformEntity['id']) => platformId);
 
 // todo: use createSelector or put the result in the state to avoid re-computing these on every render
@@ -244,11 +254,12 @@ export const selectFilteredVaults = (state: BeefyState) => {
     if (!shouldShowChain[vault.chainId]) {
       return false;
     }
-    if (
-      filterOptions.platformId !== null &&
-      selectPlatformIdForFilter(state, vault.platformId) !== filterOptions.platformId
-    ) {
-      return false;
+
+    if (!isEmpty(filterOptions.platformIds)) {
+      const vaultPlatforms = selectFilterPlatformIdsForVault(state, vault);
+      if (!filterOptions.platformIds.some(platform => vaultPlatforms.includes(platform))) {
+        return false;
+      }
     }
 
     if (filterOptions.onlyRetired && !isVaultRetired(vault)) {
@@ -282,10 +293,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     }
 
     // hide when no wallet balance of deposit token
-    if (
-      filterOptions.userCategory === 'eligible' &&
-      !selectIsUserEligibleForVault(state, vault.id)
-    ) {
+    if (filterOptions.userCategory === 'saved' && !selectIsVaultIdSaved(state, vault.id)) {
       return false;
     }
 

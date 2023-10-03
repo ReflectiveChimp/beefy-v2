@@ -14,7 +14,6 @@ import type { VaultGov } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectAllChains, selectChainById } from '../selectors/chains';
 import { selectGovVaultById } from '../selectors/vaults';
-import { selectWalletAddress } from '../selectors/wallet';
 import type { BeefyTokenSwapSupportResponse } from '../apis/beefy/beefy-api';
 
 interface ActionParams {
@@ -59,6 +58,7 @@ interface ReloadBalanceAllowanceRewardsParams {
   spenderAddress: string;
   govVaultId?: VaultGov['id'];
   boostId?: BoostEntity['id'];
+  walletAddress: string;
 }
 
 interface ReloadBalanceAllowanceRewardsFulfilledPayload {
@@ -78,9 +78,8 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
   { state: BeefyState }
 >(
   'deposit/reloadBalanceAndAllowanceAndGovRewards',
-  async ({ chainId, tokens, spenderAddress, govVaultId, boostId }, { getState }) => {
+  async ({ chainId, tokens, spenderAddress, govVaultId, boostId, walletAddress }, { getState }) => {
     const chain = selectChainById(getState(), chainId);
-    const walletAddress = selectWalletAddress(getState());
 
     const govVault = govVaultId ? selectGovVaultById(getState(), govVaultId) : null;
     const boost = boostId ? selectBoostById(getState(), boostId) : null;

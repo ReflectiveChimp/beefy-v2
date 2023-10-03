@@ -5,14 +5,16 @@ import type { VaultTimelineAnalyticsEntity } from '../entities/analytics';
 import BigNumber from 'bignumber.js';
 import type { AnalyticsPriceResponse, TimeBucketType } from '../apis/analytics/analytics-types';
 import type { VaultEntity } from '../entities/vault';
+import { isFiniteNumber } from '../../../helpers/number';
 
-export interface fetchWalletTimelineFullfilled {
+export interface fetchWalletTimelineFulfilled {
   timeline: VaultTimelineAnalyticsEntity[];
+  walletAddress: string;
   state: BeefyState;
 }
 
 export const fetchWalletTimeline = createAsyncThunk<
-  fetchWalletTimelineFullfilled,
+  fetchWalletTimelineFulfilled,
   { address: string },
   { state: BeefyState }
 >('analytics/fetchWalletTimeline', async ({ address }, { getState }) => {
@@ -32,46 +34,66 @@ export const fetchWalletTimeline = createAsyncThunk<
       shareToUnderlyingPrice: new BigNumber(row.share_to_underlying_price),
       underlyingBalance: new BigNumber(row.underlying_balance),
       underlyingDiff: new BigNumber(row.underlying_diff),
-      underlyingToUsdPrice: row.underlying_to_usd_price
+      underlyingToUsdPrice: isFiniteNumber(row.underlying_to_usd_price)
         ? new BigNumber(row.underlying_to_usd_price)
         : null,
-      usdBalance: row.usd_balance ? new BigNumber(row.usd_balance) : null,
-      usdDiff: row.usd_diff ? new BigNumber(row.usd_diff) : null,
+      usdBalance: isFiniteNumber(row.usd_balance) ? new BigNumber(row.usd_balance) : null,
+      usdDiff: isFiniteNumber(row.usd_diff) ? new BigNumber(row.usd_diff) : null,
     };
   });
 
-  return { timeline, state: getState() };
+  return { timeline, walletAddress: address.toLowerCase(), state: getState() };
 });
 
-interface DataMartPricesFullfilled {
+interface DataMartPricesFulfilled {
   data: AnalyticsPriceResponse;
   vaultId: VaultEntity['id'];
   timebucket: TimeBucketType;
+  walletAddress: string;
   state: BeefyState;
 }
 
 interface DataMartPricesProps {
   productKey: string;
   timebucket: TimeBucketType;
+  walletAddress: string;
   vaultId: VaultEntity['id'];
 }
 
 export const fetchShareToUnderlying = createAsyncThunk<
-  DataMartPricesFullfilled,
+  DataMartPricesFulfilled,
   DataMartPricesProps,
   { state: BeefyState }
->('analytics/fetchShareToUnderlying', async ({ productKey, timebucket, vaultId }, { getState }) => {
-  const api = await getAnalyticsApi();
-  const data = await api.getVaultPrices(productKey, 'share_to_underlying', timebucket);
-  return { data, vaultId, timebucket, state: getState() };
-});
+>(
+  'analytics/fetchShareToUnderlying',
+  async ({ productKey, walletAddress, timebucket, vaultId }, { getState }) => {
+    const api = await getAnalyticsApi();
+    const data = await api.getVaultPrices(productKey, 'share_to_underlying', timebucket);
+    return {
+      data,
+      vaultId,
+      timebucket,
+      walletAddress: walletAddress.toLocaleLowerCase(),
+      state: getState(),
+    };
+  }
+);
 
 export const fetchUnderlyingToUsd = createAsyncThunk<
-  DataMartPricesFullfilled,
+  DataMartPricesFulfilled,
   DataMartPricesProps,
   { state: BeefyState }
->('analytics/fetchUnderlyingToUsd', async ({ productKey, timebucket, vaultId }, { getState }) => {
-  const api = await getAnalyticsApi();
-  const data = await api.getVaultPrices(productKey, 'underlying_to_usd', timebucket);
-  return { data, vaultId, timebucket, state: getState() };
-});
+>(
+  'analytics/fetchUnderlyingToUsd',
+  async ({ productKey, timebucket, walletAddress, vaultId }, { getState }) => {
+    const api = await getAnalyticsApi();
+    const data = await api.getVaultPrices(productKey, 'underlying_to_usd', timebucket);
+    return {
+      data,
+      vaultId,
+      timebucket,
+      walletAddress: walletAddress.toLocaleLowerCase(),
+      state: getState(),
+    };
+  }
+);

@@ -5,12 +5,14 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { Button } from '../../../../components/Button';
 import { LinkButton } from '../../../../components/LinkButton';
 import { useAppSelector } from '../../../../store';
+import { getSingleAssetSrc } from '../../../../helpers/singleAssetSrc';
 import type { ChainEntity } from '../../../data/entities/chain';
 import type { TokenEntity } from '../../../data/entities/token';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
 import { ReactComponent as PlusIcon } from '../../../../images/icons/plus.svg';
 import { styles } from './styles';
+import { explorerTokenUrl } from '../../../../helpers/url';
 
 const useStyles = makeStyles(styles);
 
@@ -39,15 +41,14 @@ export const AddTokenToWallet = memo<AddTokenToWalletProps>(function AddTokenToW
             address: token.address,
             symbol: token.symbol,
             decimals: token.decimals,
+            image: window.location.origin + getSingleAssetSrc(token.id, chainId),
           },
         },
       });
     } catch (error) {
       // ignore
     }
-  }, [token.address, token.decimals, token.symbol]);
-
-  const explorerUrl = chain.explorerUrl + '/address/' + token.address;
+  }, [chainId, token.address, token.decimals, token.id, token.symbol]);
 
   const shouldShowAddButton = isWalletConnected && isWalletOnSameChain;
 
@@ -64,7 +65,11 @@ export const AddTokenToWallet = memo<AddTokenToWalletProps>(function AddTokenToW
             <PlusIcon className={classes.icon} />
           </Button>
         )}
-        <LinkButton className={classes.linkButtonBg} href={explorerUrl} text={t('Explorer')} />
+        <LinkButton
+          className={classes.linkButtonBg}
+          href={explorerTokenUrl(chain, token.address)}
+          text={t('Explorer')}
+        />
       </div>
     </div>
   );

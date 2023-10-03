@@ -3,6 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { ChainEntity } from '../entities/chain';
 import type { PlatformEntity } from '../entities/platform';
 import type { KeysOfType } from '../utils/types-utils';
+import createTransform from 'redux-persist/es/createTransform';
+import type {
+  SortDirectionType,
+  SortType,
+  UserCategoryType,
+  VaultCategoryType,
+  VaultAssetType,
+} from './filtered-vaults-types';
+import { isValidUserCategory } from './filtered-vaults-types';
 
 /**
  * State containing Vault infos
@@ -14,14 +23,14 @@ export type FilteredVaultsState = {
    * to reset their local copy. The search text is (for now) the only example.
    **/
   reseted: boolean;
-  sort: 'tvl' | 'apy' | 'daily' | 'safetyScore' | 'default' | 'depositValue' | 'walletValue';
-  sortDirection: 'asc' | 'desc';
-  vaultCategory: 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy' | 'correlated';
-  userCategory: 'all' | 'eligible' | 'deposited';
-  assetType: 'all' | 'lps' | 'single';
+  sort: SortType;
+  sortDirection: SortDirectionType;
+  vaultCategory: VaultCategoryType;
+  userCategory: UserCategoryType;
+  assetType: VaultAssetType;
   searchText: string;
   chainIds: ChainEntity['id'][];
-  platformId: PlatformEntity['id'] | null;
+  platformIds: PlatformEntity['id'][];
   onlyRetired: boolean;
   onlyPaused: boolean;
   onlyBoosted: boolean;
@@ -38,7 +47,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   assetType: 'all',
   searchText: '',
   chainIds: [],
-  platformId: null,
+  platformIds: [],
   onlyRetired: false,
   onlyPaused: false,
   onlyBoosted: false,
@@ -91,9 +100,9 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.chainIds = action.payload;
     },
-    setPlatformId(sliceState, action: PayloadAction<FilteredVaultsState['platformId']>) {
+    setPlatformIds(sliceState, action: PayloadAction<FilteredVaultsState['platformIds']>) {
       sliceState.reseted = false;
-      sliceState.platformId = action.payload;
+      sliceState.platformIds = action.payload;
     },
     setOnlyRetired(sliceState, action: PayloadAction<FilteredVaultsState['onlyRetired']>) {
       sliceState.reseted = false;
@@ -111,6 +120,7 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.onlyZappable = action.payload;
     },
+
     setBoolean(
       sliceState,
       action: PayloadAction<{ filter: FilteredVaultBooleanKeys; value: boolean }>
@@ -122,3 +132,19 @@ export const filteredVaultsSlice = createSlice({
 });
 
 export const filteredVaultsActions = filteredVaultsSlice.actions;
+
+export const userCategoryTransform = createTransform(
+  (userCategory: FilteredVaultsState['userCategory']) => userCategory,
+  (userCategoryFromLocalStorage: string): FilteredVaultsState['userCategory'] => {
+    return isValidUserCategory(userCategoryFromLocalStorage) ? userCategoryFromLocalStorage : 'all';
+  },
+  { whitelist: ['userCategory'] }
+);
+
+export const chanIdsTransform = createTransform(
+  (chanIds: FilteredVaultsState['chainIds']) => chanIds,
+  (chainIdsFromLocalStorage: FilteredVaultsState['chainIds']) => {
+    return chainIdsFromLocalStorage.filter(chainId => !['heco', 'harmony'].includes(chainId));
+  },
+  { whitelist: ['chainIds'] }
+);

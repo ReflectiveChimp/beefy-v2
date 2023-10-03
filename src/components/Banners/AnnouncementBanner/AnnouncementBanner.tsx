@@ -3,14 +3,13 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
 import { Banner } from '../Banner';
-import DashboardIcon from '../../../images/icons/dashboard.svg';
-import { Link } from 'react-router-dom';
+import Snap from '../../../images/icons/beefy-treasury.svg';
 
 const useStyles = makeStyles(styles);
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideDashV2Banner', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideSnapCheckBanner', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -22,15 +21,19 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
 
   return (
     <Banner
-      icon={<img className={classes.icon} src={DashboardIcon} alt="graph" />}
+      icon={<img alt="snapshot" src={Snap} className={classes.icon} />}
       text={
         <>
-          Beefy{' '}
-          <Link className={classes.link} to="/dashboard">
-            Dashboard
-          </Link>{' '}
-          just got better! The updated version now shows your accrued yield, PNL, transaction
-          history, claimable boost rewards and more.
+          The wait is almost over. A new era dawns. Review the{' '}
+          <a
+            className={classes.link}
+            href="https://snapshot.beefy.finance/"
+            target="_blank"
+            rel="noopener"
+          >
+            $BIFI snapshot
+          </a>{' '}
+          to check your allocation for the upcoming distribution.
         </>
       }
       onClose={closeBanner}

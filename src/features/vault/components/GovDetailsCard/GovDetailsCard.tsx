@@ -8,6 +8,7 @@ import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
 import { LinkButton } from '../../../../components/LinkButton';
 import { selectChainById } from '../../../data/selectors/chains';
+import { explorerAddressUrl } from '../../../../helpers/url';
 
 const useStyles = makeStyles(styles);
 export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
@@ -24,7 +25,7 @@ export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
       <CardHeader className={classes.header}>
         <CardTitle title={t('Gov-Pool')} />
         <LinkButton
-          href={`${chain.explorerUrl}/address/${vault.earnContractAddress}`}
+          href={explorerAddressUrl(chain, vault.earnContractAddress)}
           text={t('Strat-PoolAddress')}
         />
       </CardHeader>
@@ -38,6 +39,8 @@ export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
             ? t('beQI-description')
             : vaultId === 'beefy-beopx-earnings'
             ? t('beOPX-description')
+            : vaultId === 'beefy-bevelo-v2-earnings'
+            ? t('beVELOV2-description')
             : t('Gov-Info1') +
               earnedToken.symbol +
               t('Gov-Info2') +

@@ -13,7 +13,7 @@ import { dataLoaderSlice } from './data-loader';
 import { walletSlice } from './wallet/wallet';
 import type { BeefyState } from '../../../redux-types';
 import { buybackSlice } from './buyback';
-import { filteredVaultsSlice } from './filtered-vaults';
+import { chanIdsTransform, filteredVaultsSlice, userCategoryTransform } from './filtered-vaults';
 import { platformsSlice } from './platforms';
 import { uiThemeSlice } from './ui-theme';
 import { partnersSlice } from './partners';
@@ -32,8 +32,13 @@ import { treasurySlice } from './treasury';
 import { analyticsSlice } from './analytics';
 import { proposalsSlice } from './proposals';
 import { historicalSlice } from './historical';
+import { savedVaultsSlice } from './saved-vaults';
 import type { Reducer } from 'react';
 import type { AnyAction } from '@reduxjs/toolkit';
+import { resolverReducer } from './wallet/resolver';
+import { bridgesSlice } from './bridges';
+import { migrationSlice } from './wallet/migration';
+import { tooltipsSlice } from './tooltips';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -47,6 +52,7 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   minters: mintersSlice.reducer,
   infoCards: infoCardsSlice.reducer,
   proposals: proposalsSlice.reducer,
+  bridges: bridgesSlice.reducer,
 });
 const bizReducer = combineReducers<BeefyState['biz']>({
   tvl: tvlSlice.reducer,
@@ -64,17 +70,28 @@ const userReducer = combineReducers<BeefyState['user']>({
     walletSlice.reducer
   ),
   walletActions: walletActionsReducer,
+  resolver: resolverReducer,
+  migration: migrationSlice.reducer,
 });
 const uiReducer = combineReducers<BeefyState['ui']>({
-  filteredVaults: persistReducer({ key: 'filters', storage }, filteredVaultsSlice.reducer),
+  filteredVaults: persistReducer(
+    {
+      key: 'filters',
+      storage,
+      transforms: [userCategoryTransform, chanIdsTransform],
+    },
+    filteredVaultsSlice.reducer
+  ),
   theme: persistReducer({ key: 'theme', storage }, uiThemeSlice.reducer),
   transact: transactReducer as Reducer<BeefyState['ui']['transact'], AnyAction>,
   boost: boostSlice.reducer as Reducer<BeefyState['ui']['boost'], AnyAction>,
   bridge: bridgeSlice.reducer as Reducer<BeefyState['ui']['bridge'], AnyAction>,
+  savedVaults: persistReducer({ key: 'savedVaults', storage }, savedVaultsSlice.reducer),
   onRamp: onRamp.reducer,
   dataLoader: dataLoaderSlice.reducer,
   stepperState: stepperSlice.reducer as Reducer<BeefyState['ui']['stepperState'], AnyAction>,
   treasury: treasurySlice.reducer,
+  tooltips: tooltipsSlice.reducer,
 });
 
 export const rootReducer = combineReducers<BeefyState>({

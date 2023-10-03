@@ -14,7 +14,7 @@ import {
 import { fetchAllVaults } from '../actions/vaults';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20, TokenLpBreakdown, TokenNative } from '../entities/token';
-import { isTokenNative } from '../entities/token';
+import { isTokenErc20, isTokenNative } from '../entities/token';
 import { selectChainById } from '../selectors/chains';
 import {
   getBoostTokenAddressFromLegacyConfig,
@@ -291,6 +291,9 @@ function addAddressBookToState(
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
+      if (isTokenErc20(existingToken)) {
+        existingToken.bridge = existingToken.bridge || token.bridge;
+      }
     }
 
     if (addressBookId === 'WNATIVE' && !sliceState.byChainId[chainId].wnative) {

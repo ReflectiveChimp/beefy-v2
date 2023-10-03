@@ -74,5 +74,6 @@ export type TransactState = {
   selections: TransactSelections;
   options: TransactOptions;
   quotes: TransactQuotes;
+  migrateQuotes: TransactQuotes;
   confirm: TransactConfirm;
 };

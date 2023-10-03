@@ -15,6 +15,8 @@ import { NetswapUniswapV2Pool } from './uniswap-v2/NetswapUniswapV2Pool';
 import { StellaUniswapV2Pool } from './uniswap-v2/StellaUniswapV2Pool';
 import { VelodromeSolidlyPool } from './solidly/VelodromeSolidlyPool';
 import { EthereumSolidlyPool } from './solidly/EthereumSolidlyPool';
+import { VelodromeV2SolidlyPool } from './VelodromeV2SolidlyPool';
+import { BVMSolidlyPool } from './solidly/BVMSolidlyPool';
 
 const mapUniswapV2 = {
   'avax-swapsicle': SwapsicleUniswapV2Pool,
@@ -30,9 +32,16 @@ const mapSolidly = {
   'bsc-cone': ConeSolidlyPool,
   'arbitrum-solidlizard': ConeSolidlyPool,
   'fantom-spirit-v2': SpiritSwapV2SolidlyPool,
+  'fantom-fvm': BVMSolidlyPool,
   'optimism-velodrome': VelodromeSolidlyPool,
+  'optimism-velodrome-v2': VelodromeV2SolidlyPool,
+  'base-aerodrome': VelodromeV2SolidlyPool,
   'fantom-equalizer': VelodromeSolidlyPool,
   'canto-velocimeter': VelodromeSolidlyPool,
+  'base-bvm': BVMSolidlyPool,
+  'zksync-velocore': VelodromeSolidlyPool,
+  'zksync-vesync': VelodromeSolidlyPool,
+  'zksync-dracula': ConeSolidlyPool,
   'kava-equilibre': VelodromeSolidlyPool,
   'arbitrum-ramses': VelodromeSolidlyPool,
   'ethereum-solidly': EthereumSolidlyPool,

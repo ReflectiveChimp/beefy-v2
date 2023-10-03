@@ -12,7 +12,7 @@ import {
   fetchAllAddressBookAction,
   reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
 } from '../actions/tokens';
-import { fetchAllVaults } from '../actions/vaults';
+import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults';
 import {
   askForNetworkChange,
   askForWalletConnection,
@@ -26,12 +26,20 @@ import { initiateBridgeForm } from '../actions/bridge';
 import { fetchPlatforms } from '../actions/platforms';
 import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
 import { fetchFees } from '../actions/fees';
-import type { DataLoaderState, LoaderState } from './data-loader-types';
+import type {
+  ChainIdDataByAddressEntity,
+  ChainIdDataEntity,
+  DataLoaderState,
+  LoaderState,
+} from './data-loader-types';
 import { errorToString } from '../../../helpers/format';
 import { fetchAllAmmsAction } from '../actions/amm';
 import { fetchTreasury } from '../actions/treasury';
+import type { fetchWalletTimelineFulfilled } from '../actions/analytics';
 import { fetchWalletTimeline } from '../actions/analytics';
 import { fetchActiveProposals } from '../actions/proposal';
+import { fetchBridges } from '../actions/bridges';
+import { fetchAllMigrators } from '../actions/migrator';
 
 const dataLoaderStateInit: LoaderState = {
   alreadyLoadedOnce: false,
@@ -50,9 +58,16 @@ const dataLoaderStatePending: LoaderState = {
 };
 const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
   contractData: dataLoaderStateInit,
+  addressBook: dataLoaderStateInit,
+};
+
+const dataLoaderStateInitByAddresAndChainId = {
+  byChainId: {},
+};
+
+const dataLoaderStateByChainIdWithAddress: ChainIdDataByAddressEntity = {
   balance: dataLoaderStateInit,
   allowance: dataLoaderStateInit,
-  addressBook: dataLoaderStateInit,
 };
 
 export const initialDataLoaderState: DataLoaderState = {
@@ -68,6 +83,7 @@ export const initialDataLoaderState: DataLoaderState = {
     apy: dataLoaderStateInit,
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
+    lastHarvests: dataLoaderStateInit,
     fees: dataLoaderStateInit,
     wallet: dataLoaderStateInit,
     amms: dataLoaderStateInit,
@@ -86,8 +102,12 @@ export const initialDataLoaderState: DataLoaderState = {
     treasury: dataLoaderStateInit,
     analytics: dataLoaderStateInit,
     proposals: dataLoaderStateInit,
+    bridges: dataLoaderStateInit,
+    migrators: dataLoaderStateInit,
   },
   byChainId: {},
+  byAddress: {},
+  timelineByAddress: {},
 };
 
 /**
@@ -125,50 +145,151 @@ function addGlobalAsyncThunkActions(
   });
 }
 
-function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
+function addByChainAsyncThunkActions<
+  ActionParams extends { chainId: string; walletAddress?: string }
+>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, ActionParams, unknown>,
-  stateKeys: Array<keyof DataLoaderState['byChainId']['bsc']>
+  stateKeys: Array<keyof ChainIdDataEntity | keyof ChainIdDataByAddressEntity>,
+  updateByAddress: boolean
 ) {
   builder.addCase(action.pending, (sliceState, action) => {
     const chainId = action.meta?.arg.chainId;
-    if (sliceState.byChainId[chainId] === undefined) {
-      sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
-    }
-    for (const stateKey of stateKeys) {
-      sliceState.byChainId[chainId][stateKey] = {
-        ...dataLoaderStatePending,
-        alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
-      };
+    if (updateByAddress) {
+      const walletAddress = action.meta?.arg.walletAddress;
+      if (sliceState.byAddress[walletAddress] === undefined) {
+        sliceState.byAddress[walletAddress] = {
+          ...dataLoaderStateInitByAddresAndChainId,
+        };
+      }
+
+      if (sliceState.byAddress[walletAddress].byChainId[chainId] === undefined) {
+        sliceState.byAddress[walletAddress].byChainId = {
+          [chainId]: dataLoaderStateByChainIdWithAddress,
+        };
+      }
+      for (const stateKey of stateKeys) {
+        sliceState.byAddress[walletAddress].byChainId[chainId] = {
+          [stateKey]: {
+            ...dataLoaderStatePending,
+            alreadyLoadedOnce: true,
+          },
+          ...sliceState.byAddress[walletAddress].byChainId[chainId],
+        };
+      }
+    } else {
+      if (sliceState.byChainId[chainId] === undefined) {
+        sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
+      }
+      for (const stateKey of stateKeys) {
+        sliceState.byChainId[chainId][stateKey] = {
+          ...dataLoaderStatePending,
+          alreadyLoadedOnce: true,
+        };
+      }
     }
   });
   builder.addCase(action.rejected, (sliceState, action) => {
     const chainId = action.meta?.arg.chainId;
-    if (sliceState.byChainId[chainId] === undefined) {
-      sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
-    }
 
     const msg = errorToString(action.error);
-    // here, maybe put an error message
-    for (const stateKey of stateKeys) {
-      sliceState.byChainId[chainId][stateKey] = {
-        alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
-        status: 'rejected',
-        error: msg,
-      };
 
-      // something got rejected, we want to auto-open the indicator
-      sliceState.statusIndicator.open = true;
+    if (updateByAddress) {
+      const walletAddress = action.meta?.arg.walletAddress;
+      if (sliceState.byAddress[walletAddress] === undefined) {
+        sliceState.byAddress[walletAddress] = {
+          ...dataLoaderStateInitByAddresAndChainId,
+        };
+      }
+      if (sliceState.byAddress[walletAddress].byChainId[chainId] === undefined) {
+        sliceState.byAddress[walletAddress].byChainId[chainId] = {
+          ...dataLoaderStateByChainIdWithAddress,
+        };
+      }
+      for (const stateKey of stateKeys) {
+        sliceState.byAddress[walletAddress].byChainId[chainId][stateKey] = {
+          alreadyLoadedOnce:
+            sliceState.byAddress[walletAddress].byChainId[chainId][stateKey].alreadyLoadedOnce,
+          status: 'rejected',
+          error: msg,
+        };
+      }
+    } else {
+      if (sliceState.byChainId[chainId] === undefined) {
+        sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
+      }
+      // here, maybe put an error message
+      for (const stateKey of stateKeys) {
+        sliceState.byChainId[chainId][stateKey] = {
+          alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
+          status: 'rejected',
+          error: msg,
+        };
+
+        // something got rejected, we want to auto-open the indicator
+        sliceState.statusIndicator.open = true;
+      }
     }
   });
   builder.addCase(action.fulfilled, (sliceState, action) => {
     const chainId = action.meta?.arg.chainId;
-    if (sliceState.byChainId[chainId] === undefined) {
-      sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
+    if (updateByAddress) {
+      const walletAddress = action.meta?.arg.walletAddress;
+      if (sliceState.byAddress[walletAddress] === undefined) {
+        sliceState.byAddress[walletAddress] = {
+          ...dataLoaderStateInitByAddresAndChainId,
+        };
+      }
+      if (sliceState.byAddress[walletAddress].byChainId[chainId] === undefined) {
+        sliceState.byAddress[walletAddress].byChainId[chainId] = {
+          ...dataLoaderStateByChainIdWithAddress,
+        };
+      }
+      for (const stateKey of stateKeys) {
+        sliceState.byAddress[walletAddress].byChainId[chainId][stateKey] = dataLoaderStateFulfilled;
+      }
+    } else {
+      if (sliceState.byChainId[chainId] === undefined) {
+        sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
+      }
+      for (const stateKey of stateKeys) {
+        sliceState.byChainId[chainId][stateKey] = dataLoaderStateFulfilled;
+      }
     }
-    for (const stateKey of stateKeys) {
-      sliceState.byChainId[chainId][stateKey] = dataLoaderStateFulfilled;
+  });
+}
+
+function addByAddressAsyncThunkActions(
+  builder: ActionReducerMapBuilder<DataLoaderState>,
+  action: AsyncThunk<fetchWalletTimelineFulfilled, { address: string }, unknown>
+) {
+  builder.addCase(action.pending, (sliceState, action) => {
+    const address = action.meta?.arg.address;
+    if (sliceState.timelineByAddress[address] === undefined) {
+      sliceState.timelineByAddress[address] = dataLoaderStatePending;
     }
+  });
+  builder.addCase(action.rejected, (sliceState, action) => {
+    const address = action.meta?.arg.address;
+    const msg = errorToString(action.error);
+
+    if (sliceState.timelineByAddress[address] === undefined) {
+      sliceState.timelineByAddress[address] = dataLoaderStateInit;
+    }
+
+    sliceState.timelineByAddress[address] = {
+      alreadyLoadedOnce: true,
+      status: 'rejected',
+      error: msg,
+    };
+  });
+  builder.addCase(action.fulfilled, (sliceState, action) => {
+    const address = action.meta?.arg.address;
+    if (sliceState.timelineByAddress[address] === undefined) {
+      sliceState.timelineByAddress[address] = dataLoaderStatePending;
+    }
+
+    sliceState.timelineByAddress[address] = { ...dataLoaderStateFulfilled };
   });
 }
 
@@ -192,9 +313,11 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllPricesAction, 'prices', true);
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy', true);
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults', true);
+    addGlobalAsyncThunkActions(builder, fetchVaultsLastHarvests, 'lastHarvests', true);
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts', true);
     addGlobalAsyncThunkActions(builder, fetchFees, 'fees', true);
     addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters', false);
+    addGlobalAsyncThunkActions(builder, fetchAllMigrators, 'migrators', false);
     addGlobalAsyncThunkActions(builder, fetchAllInfoCards, 'infoCards', false);
     addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm', true);
     addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm', true);
@@ -204,18 +327,26 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllAmmsAction, 'amms', true);
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);
+    addGlobalAsyncThunkActions(builder, fetchBridges, 'bridges', true);
     addGlobalAsyncThunkActions(builder, fetchOnRampSupportedProviders, 'onRamp', true);
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);
-    addGlobalAsyncThunkActions(builder, fetchWalletTimeline, 'analytics', true);
     addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals', false);
-    addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
-    addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);
-    addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance']);
-    addByChainAsyncThunkActions(builder, reloadBalanceAndAllowanceAndGovRewardsAndBoostData, [
-      'balance',
-      'allowance',
-    ]);
-    addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);
+    addByChainAsyncThunkActions(
+      builder,
+      fetchAllContractDataByChainAction,
+      ['contractData'],
+      false
+    );
+    addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook'], false);
+    addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance'], true);
+    addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance'], true);
+    addByChainAsyncThunkActions(
+      builder,
+      reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
+      ['balance', 'allowance'],
+      true
+    );
+    addByAddressAsyncThunkActions(builder, fetchWalletTimeline);
   },
 });
 

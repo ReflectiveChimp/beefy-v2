@@ -3,7 +3,7 @@ import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity } from '../entities/token';
 import { isTokenErc20, isTokenNative } from '../entities/token';
-import { selectChainById } from './chains';
+import { selectAllChainIds, selectChainById } from './chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectIsAddressBookLoaded } from './data-loader';
 import type { VaultEntity } from '../entities/vault';
@@ -49,7 +49,7 @@ export const selectTokenByAddress = (
   const tokensByChainId = selectTokensByChainId(state, chainId);
   const token = tokensByChainId.byAddress[address.toLowerCase()];
   if (token === undefined) {
-    throw new Error(`selectTokenByAddress: Unknown token address`);
+    throw new Error(`selectTokenByAddress: Unknown token address ${address}`);
   }
   return token;
 };
@@ -190,7 +190,7 @@ export const selectTokenPriceByTokenOracleId = createCachedSelector(
 export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
   state.entities.tokens.breakdown.byOracleId[oracleId];
 
-export const selectLpBreakdownByAddress = (
+export const selectLpBreakdownByTokenAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   address: string
@@ -199,16 +199,24 @@ export const selectLpBreakdownByAddress = (
   return selectLpBreakdownByOracleId(state, token.oracleId);
 };
 
-export const selectHasBreakdownData = (
+export const selectHasBreakdownDataByTokenAddress = (
   state: BeefyState,
   depositTokenAddress: VaultEntity['depositTokenAddress'],
   chainId: ChainEntity['id']
 ) => {
-  const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
-  const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
   const token = selectTokenByAddressOrNull(state, chainId, depositTokenAddress);
   if (!token) return false;
-  const breakdown = selectLpBreakdownByOracleId(state, token.oracleId);
+  return selectHasBreakdownDataByOracleId(state, token.oracleId, chainId);
+};
+
+export const selectHasBreakdownDataByOracleId = (
+  state: BeefyState,
+  oracleId: TokenEntity['oracleId'],
+  chainId: ChainEntity['id']
+) => {
+  const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
+  const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
+  const breakdown = selectLpBreakdownByOracleId(state, oracleId);
 
   if (
     !isPricesLoaded ||
@@ -233,6 +241,34 @@ export const selectHasBreakdownData = (
   // Must have prices of tokens in state
   return tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token.oracleId]) === -1;
 };
+
+export const selectIsTokenLoadedOnChain = createCachedSelector(
+  (state: BeefyState, _address: TokenEntity['address'], chainId: ChainEntity['id']) =>
+    state.entities.tokens.byChainId[chainId],
+  (state: BeefyState, address: TokenEntity['address']) => address.toLowerCase(),
+  (tokensByChainId, address) => (tokensByChainId.byAddress[address] === undefined ? false : true)
+)((state: BeefyState, address: TokenEntity['address'], _chainId: ChainEntity['id']) => address);
+
+export const selectWrappedToNativeSymbolMap = (state: BeefyState) => {
+  const chainIds = selectAllChainIds(state);
+
+  const wrappedToNativeSymbolMap = new Map();
+
+  for (const chainId of chainIds) {
+    const wnative = selectChainWrappedNativeToken(state, chainId);
+    const native = selectChainNativeToken(state, chainId);
+    wrappedToNativeSymbolMap.set(wnative.symbol, native.symbol);
+  }
+  return wrappedToNativeSymbolMap;
+};
+
+export const selectWrappedToNativeSymbolOrTokenSymbol = createCachedSelector(
+  (state: BeefyState, _symbol: string) => selectWrappedToNativeSymbolMap(state),
+  (state: BeefyState, symbol: string) => symbol,
+  (wrappedToNativeSymbolMap, symbol) => {
+    return wrappedToNativeSymbolMap.has(symbol) ? wrappedToNativeSymbolMap.get(symbol) : symbol;
+  }
+)((state: BeefyState, symbol: string) => symbol);
 
 export const selectSupportedSwapTokenAddressesForChainAggregator = (
   state: BeefyState,

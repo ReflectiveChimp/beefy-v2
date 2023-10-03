@@ -11,12 +11,6 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'space-between',
     margin: 'auto 0 2px 4px',
   },
-  label: {
-    ...theme.typography['body-lg-med'],
-    color: 'inherit',
-    lineHeight: 1,
-    textAlign: 'center' as const,
-  },
   bar: {
     backgroundColor: theme.palette.text.disabled,
     width: '5px',
@@ -39,21 +33,18 @@ export const styles = (theme: Theme) => ({
     '& $barsContainer': {
       margin: '0 0 0 8px',
     },
-    '& $label': {
-      ...theme.typography['h2'],
-    },
   },
   withScoreLow: {
     '& $sm': {
-      backgroundColor: '#E84525',
+      backgroundColor: theme.palette.primary.main,
     },
   },
   withScoreMed: {
     '& $sm': {
-      backgroundColor: '#E88225',
+      backgroundColor: theme.palette.primary.main,
     },
     '& $md': {
-      backgroundColor: '#E88225',
+      backgroundColor: theme.palette.primary.main,
     },
   },
   withScoreHigh: {
@@ -65,28 +56,6 @@ export const styles = (theme: Theme) => ({
     },
     '& $lg': {
       backgroundColor: theme.palette.primary.main,
-    },
-  },
-  withWhiteLabel: {
-    '& $label': {
-      color: theme.palette.type === 'dark' ? '#ffffff' : '#000',
-    },
-  },
-  withColorLabel: {
-    '&$withScoreLow': {
-      '& $label': {
-        color: '#E84525',
-      },
-    },
-    '&$withScoreMed': {
-      '& $label': {
-        color: '#E88225',
-      },
-    },
-    '&$withScoreHigh': {
-      '& $label': {
-        color: theme.palette.primary.main,
-      },
     },
   },
   withRightAlign: {

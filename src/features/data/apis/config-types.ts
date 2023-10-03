@@ -41,6 +41,7 @@ export interface VaultConfig {
   refundContractAddress?: string | null;
   showWarning?: boolean | null;
   warning?: string | null;
+  migrationIds?: string[];
 }
 
 export interface FeaturedVaultConfig {
@@ -128,6 +129,9 @@ export interface ChainConfig {
   chainId: number;
   rpc: string[];
   explorerUrl: string;
+  explorerAddressUrlTemplate?: string;
+  explorerTokenUrlTemplate?: string;
+  explorerTxUrlTemplate?: string;
   multicallAddress: string;
   appMulticallContractAddress: string;
   providerName: string;
@@ -144,6 +148,7 @@ export interface ChainConfig {
   };
   gas: GasConfig;
   stableCoins: string[];
+  new?: boolean;
 }
 
 export interface AmmConfigBase {
@@ -279,7 +284,6 @@ export type StrategyTypeConfig = {
 export type PlatformConfig = {
   id: string;
   name: string;
-  filter: boolean;
 };
 
 export interface TokenHoldingConfig {
@@ -288,7 +292,7 @@ export interface TokenHoldingConfig {
   decimals: number;
   oracleId: string;
   oracleType: 'lps' | 'token' | 'validator';
-  assetType: 'token' | 'native' | 'validator';
+  assetType: 'token' | 'native' | 'validator' | 'concLiquidity';
   price: number;
   usdValue: string;
   balance: string;
@@ -329,4 +333,16 @@ export type TreasuryConfig = {
       };
     };
   };
+};
+
+export interface BridgeConfig {
+  readonly id: string;
+  readonly name: string;
+  readonly tagName?: string;
+  readonly website: string;
+}
+export type BaseMigrationConfig = {
+  readonly id: string; // eg ethereum-conic
+  readonly name: string; // eg Conic Finance
+  readonly icon: string;
 };

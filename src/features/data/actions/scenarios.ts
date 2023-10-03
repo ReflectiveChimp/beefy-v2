@@ -1,13 +1,13 @@
 import type { Action } from 'redux';
 import type { ChainEntity } from '../entities/chain';
-import { selectIsWalletKnown } from '../selectors/wallet';
+import { selectIsWalletKnown, selectWalletAddress } from '../selectors/wallet';
 import type { PollStop } from '../utils/async-utils';
 import { createFulfilledActionCapturer, poll } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
 import { fetchAllBoosts, initiateBoostForm } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction, fetchBeefyBuybackAction } from './prices';
-import { fetchAllVaults, fetchFeaturedVaults } from './vaults';
+import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsLastHarvests } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_noDataPolling } from '../utils/feature-flags';
@@ -26,6 +26,7 @@ import { selectMinterById } from '../selectors/minters';
 import { initiateBridgeForm } from './bridge';
 import { fetchPlatforms } from './platforms';
 import { selectAllChainIds } from '../selectors/chains';
+import { fetchBridges } from './bridges';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 
@@ -72,6 +73,10 @@ export async function initHomeDataV4(store: BeefyStore) {
     store.dispatch(fetchPartnersConfig());
 
     store.dispatch(fetchPlatforms());
+
+    store.dispatch(fetchBridges());
+
+    store.dispatch(fetchVaultsLastHarvests());
   });
 
   // create the wallet instance as soon as we get the chain list
@@ -157,6 +162,12 @@ export async function initHomeDataV4(store: BeefyStore) {
   }, 45 * 1000 /* every 45s */);
   pollStopFns.push(pollStop);
 
+  // regular calls to update last harvest
+  pollStop = poll(async () => {
+    return store.dispatch(fetchVaultsLastHarvests());
+  }, 3 * 60 * 1000 /* every 3 minutes */);
+  pollStopFns.push(pollStop);
+
   // now set regular calls to update contract data
   for (const chain of chains) {
     const pollStop = poll(async () => {
@@ -203,8 +214,9 @@ export function manualPoll(): BeefyThunk {
     }
 
     if (selectIsWalletKnown(state)) {
+      const walletAddress = selectWalletAddress(state);
       for (const chainId of chains) {
-        dispatch(fetchAllBalanceAction({ chainId }));
+        dispatch(fetchAllBalanceAction({ chainId, walletAddress }));
       }
     }
   };
@@ -215,8 +227,10 @@ export function fetchCaptureUserData(
   chainId: ChainEntity['id']
 ): CapturedFulfilledActions['user'] {
   const captureFulfill = createFulfilledActionCapturer(store);
+
+  const walletAddress = selectWalletAddress(store.getState());
   return {
-    balance: captureFulfill(fetchAllBalanceAction({ chainId })),
+    balance: captureFulfill(fetchAllBalanceAction({ chainId, walletAddress })),
     // TODO: do we really need to fetch allowances right now?
     //allowance: captureFulfill(fetchAllAllowanceAction({ chainId })),
   };

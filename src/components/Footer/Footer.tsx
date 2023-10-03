@@ -7,6 +7,8 @@ import { ReactComponent as IconTelegram } from '../../images/socials/telegram.sv
 import { ReactComponent as IconDiscord } from '../../images/socials/discord.svg';
 import { ReactComponent as IconTwitter } from '../../images/socials/twitter.svg';
 import { ReactComponent as IconReddit } from '../../images/socials/reddit.svg';
+import { ReactComponent as IconDebank } from '../../images/socials/debank.svg';
+
 import clsx from 'clsx';
 import { useLocation } from 'react-router';
 
@@ -47,7 +49,7 @@ const socialLinks = [
   },
   {
     title: 'Discord',
-    path: 'https://discord.gg/yq8wfHd',
+    path: 'https://beefy.com/discord',
     Icon: IconDiscord,
   },
   {
@@ -59,6 +61,11 @@ const socialLinks = [
     title: 'Reddit',
     path: 'https://www.reddit.com/r/Beefy/',
     Icon: IconReddit,
+  },
+  {
+    title: 'Debank',
+    path: 'https://debank.com/official-account/110448',
+    Icon: IconDebank,
   },
 ];
 
