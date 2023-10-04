@@ -47,6 +47,10 @@ export type SwapFeeParams = {
 };
 
 export interface IPool {
+  readonly type: string;
+
+  getOptimalSwapAmount(fullAmountIn: BigNumber, tokenIn: string): BigNumber;
+
   swap(amountIn: BigNumber, tokenIn: string, updateReserves?: boolean): SwapResult;
 
   addLiquidity(amountA: BigNumber, tokenA: string, amountB: BigNumber): AddLiquidityResult;

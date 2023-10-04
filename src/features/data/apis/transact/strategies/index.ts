@@ -1,4 +1,4 @@
-import type { IStrategy, StrategyConstructor, TransactHelpers, StrategyOptions } from './IStrategy';
+import type { IStrategy, StrategyConstructor, StrategyOptions, TransactHelpers } from './IStrategy';
 import type { BeefyState } from '../../../../../redux-types';
 
 function makeLazyLoader<T extends StrategyConstructor>(loader: () => Promise<T>) {
@@ -20,6 +20,7 @@ export const strategyBuildersById = {
   'uniswap-v2': makeLazyLoader(
     async () => (await import('./uniswap-v2/UniswapV2Strategy')).UniswapV2Strategy
   ),
+  solidly: makeLazyLoader(async () => (await import('./solidly/SolidlyStrategy')).SolidlyStrategy),
   // 'solidly': SolidlyStrategy,
   // conic
 } as const satisfies Record<

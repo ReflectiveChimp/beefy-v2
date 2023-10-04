@@ -16,7 +16,13 @@ import type {
   SwapResult,
 } from '../types';
 import { WANT_TYPE } from '../types';
-import type { ZapStepRequest, ZapStepResponse } from '../../transact/zap/types';
+import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../../transact/zap/types';
+import { first } from 'lodash-es';
+import type { TokenAmount } from '../../transact/transact-types';
+import { slipAllBy, slipBy } from '../../transact/helpers/amounts';
+import { isTokenNative, type TokenEntity } from '../../../entities/token';
+import abiCoder from 'web3-eth-abi';
+import { getInsertIndex } from '../../transact/helpers/zap';
 
 export enum MetadataKeys {
   decimals0,
@@ -338,7 +344,9 @@ export class SolidlyPool implements IPool {
   }
 
   /**
-   * @see BeefySolidlyZap.sol#_getSwapAmount
+   * Optimal swap amount when swapping tokenIn to tokenOut via the pool such that after the swap
+   *  the amount of tokenIn/Out is in the correct ratio for adding liquidity.
+   * Only works when swapping through the pool, otherwise use getAddLiquidityRatio
    */
   getOptimalSwapAmount(fullAmountIn: BigNumber, tokenIn: string): BigNumber {
     if (!this.pairData) {
@@ -675,6 +683,17 @@ export class SolidlyPool implements IPool {
     return this.pairData.token0.toLowerCase() === token.toLowerCase();
   }
 
+  protected isTokenInPair(token: TokenEntity): boolean {
+    if (isTokenNative(token)) {
+      return false;
+    }
+
+    return (
+      this.pairData.token0.toLowerCase() === token.address.toLowerCase() ||
+      this.pairData.token1.toLowerCase() === token.address.toLowerCase()
+    );
+  }
+
   /**
    * @see BaseV1Router01.sol#_addLiquidity
    */
@@ -719,15 +738,315 @@ export class SolidlyPool implements IPool {
     return this.pairData.stable ? WANT_TYPE.SOLIDLY_STABLE : WANT_TYPE.SOLIDLY_VOLATILE;
   }
 
-  async getZapAddLiquidity(_request: ZapStepRequest): Promise<ZapStepResponse> {
-    throw new Error('Method not implemented.');
+  protected buildZapSwapTx(
+    amountIn: BigNumber,
+    amountOutMin: BigNumber,
+    routes: { from: string; to: string }[],
+    to: string,
+    deadline: number,
+    insertBalance: boolean
+  ): ZapStep {
+    return {
+      target: this.amm.routerAddress,
+      value: '0',
+      data: abiCoder.encodeFunctionCall(
+        {
+          type: 'function',
+          name: 'swapExactTokensForTokens',
+          constant: false,
+          payable: false,
+          inputs: [
+            { type: 'uint256', name: 'amountIn' },
+            {
+              type: 'uint256',
+              name: 'amountOutMin',
+            },
+            {
+              type: 'tuple[]',
+              name: 'routes',
+              components: [
+                { type: 'address', name: 'from' },
+                { type: 'address', name: 'to' },
+                {
+                  type: 'bool',
+                  name: 'stable',
+                },
+              ],
+            },
+            { type: 'address', name: 'to' },
+            { type: 'uint256', name: 'deadline' },
+          ],
+          outputs: [{ type: 'uint256[]', name: 'amounts' }],
+        },
+        [
+          amountIn.toString(10),
+          amountOutMin.toString(10),
+          routes.map(({ from, to }) => [from, to, this.pairData.stable]),
+          to,
+          deadline.toString(10),
+        ]
+      ),
+      tokens: [
+        {
+          token: routes[0].from,
+          index: insertBalance ? getInsertIndex(0) : -1, // amountIn
+        },
+      ],
+    };
   }
 
-  async getZapRemoveLiquidity(_request: ZapStepRequest): Promise<ZapStepResponse> {
-    throw new Error('Method not implemented.');
+  async getZapSwap(request: ZapStepRequest): Promise<ZapStepResponse> {
+    const { inputs, outputs, maxSlippage, zapRouter, insertBalance } = request;
+    const input = first(inputs);
+    const output = first(outputs);
+
+    if (!this.isTokenInPair(input.token) || !this.isTokenInPair(output.token)) {
+      throw new Error('Invalid token');
+    }
+
+    const minOutput: TokenAmount = {
+      token: output.token,
+      amount: slipBy(output.amount, maxSlippage, output.token.decimals),
+    };
+    const deadline = Math.floor(Date.now() / 1000) + 10 * 60; // 10 minutes
+
+    return {
+      inputs,
+      outputs,
+      minOutputs: [minOutput],
+      returned: [],
+      zap: this.buildZapSwapTx(
+        toWei(input.amount, input.token.decimals),
+        toWei(minOutput.amount, minOutput.token.decimals),
+        [{ from: input.token.address, to: output.token.address }],
+        zapRouter,
+        deadline,
+        insertBalance
+      ),
+    };
   }
 
-  async getZapSwap(_request: ZapStepRequest): Promise<ZapStepResponse> {
-    throw new Error('Method not implemented.');
+  protected buildZapAddLiquidityTx(
+    tokenA: string,
+    tokenB: string,
+    stable: boolean,
+    amountADesired: BigNumber,
+    amountBDesired: BigNumber,
+    amountAMin: BigNumber,
+    amountBMin: BigNumber,
+    to: string,
+    deadline: number,
+    insertBalance: boolean
+  ): ZapStep {
+    return {
+      target: this.amm.routerAddress,
+      value: '0',
+      data: abiCoder.encodeFunctionCall(
+        {
+          type: 'function',
+          name: 'addLiquidity',
+          constant: false,
+          payable: false,
+          inputs: [
+            { type: 'address', name: 'tokenA' },
+            { type: 'address', name: 'tokenB' },
+            {
+              type: 'bool',
+              name: 'stable',
+            },
+            { type: 'uint256', name: 'amountADesired' },
+            {
+              type: 'uint256',
+              name: 'amountBDesired',
+            },
+            { type: 'uint256', name: 'amountAMin' },
+            {
+              type: 'uint256',
+              name: 'amountBMin',
+            },
+            { type: 'address', name: 'to' },
+            { type: 'uint256', name: 'deadline' },
+          ],
+          outputs: [
+            { type: 'uint256', name: 'amountA' },
+            {
+              type: 'uint256',
+              name: 'amountB',
+            },
+            { type: 'uint256', name: 'liquidity' },
+          ],
+        },
+        [
+          tokenA,
+          tokenB,
+          stable,
+          amountADesired.toString(10),
+          amountBDesired.toString(10),
+          amountAMin.toString(10),
+          amountBMin.toString(10),
+          to,
+          deadline.toString(10),
+        ]
+      ),
+      tokens: [
+        {
+          token: tokenA,
+          index: insertBalance ? getInsertIndex(3) : -1, // amountADesired
+        },
+        {
+          token: tokenB,
+          index: insertBalance ? getInsertIndex(4) : -1, // amountBDesired
+        },
+      ],
+    };
+  }
+
+  async getZapAddLiquidity(request: ZapStepRequest): Promise<ZapStepResponse> {
+    const { inputs, outputs, maxSlippage, zapRouter, insertBalance } = request;
+
+    if (inputs.length !== 2) {
+      throw new Error('Invalid inputs');
+    }
+
+    for (const input of inputs) {
+      if (!this.isTokenInPair(input.token)) {
+        throw new Error('Invalid token');
+      }
+    }
+
+    const deadline = Math.floor(Date.now() / 1000) + 10 * 60; // 10 minutes
+
+    return {
+      inputs,
+      outputs,
+      minOutputs: slipAllBy(outputs, maxSlippage),
+      returned: [],
+      zap: this.buildZapAddLiquidityTx(
+        inputs[0].token.address,
+        inputs[1].token.address,
+        this.pairData.stable,
+        toWei(inputs[0].amount, inputs[0].token.decimals),
+        toWei(inputs[1].amount, inputs[1].token.decimals),
+        toWei(
+          slipBy(inputs[0].amount, maxSlippage, inputs[0].token.decimals),
+          inputs[0].token.decimals
+        ),
+        toWei(
+          slipBy(inputs[1].amount, maxSlippage, inputs[1].token.decimals),
+          inputs[1].token.decimals
+        ),
+        zapRouter,
+        deadline,
+        insertBalance
+      ),
+    };
+  }
+
+  protected buildZapRemoveLiquidityTx(
+    tokenA: string,
+    tokenB: string,
+    stable: boolean,
+    liquidity: BigNumber,
+    amountAMin: BigNumber,
+    amountBMin: BigNumber,
+    to: string,
+    deadline: number,
+    insertBalance: boolean
+  ): ZapStep {
+    return {
+      target: this.amm.routerAddress,
+      value: '0',
+      data: abiCoder.encodeFunctionCall(
+        {
+          type: 'function',
+          name: 'removeLiquidity',
+          constant: false,
+          payable: false,
+          inputs: [
+            { type: 'address', name: 'tokenA' },
+            { type: 'address', name: 'tokenB' },
+            {
+              type: 'bool',
+              name: 'stable',
+            },
+            { type: 'uint256', name: 'liquidity' },
+            {
+              type: 'uint256',
+              name: 'amountAMin',
+            },
+            { type: 'uint256', name: 'amountBMin' },
+            { type: 'address', name: 'to' },
+            {
+              type: 'uint256',
+              name: 'deadline',
+            },
+          ],
+          outputs: [
+            { type: 'uint256', name: 'amountA' },
+            { type: 'uint256', name: 'amountB' },
+          ],
+        },
+        [
+          tokenA,
+          tokenB,
+          stable,
+          liquidity.toString(10),
+          amountAMin.toString(10),
+          amountBMin.toString(10),
+          to,
+          deadline.toString(10),
+        ]
+      ),
+      tokens: [
+        {
+          token: this.address,
+          index: insertBalance ? getInsertIndex(3) : -1, // liquidity
+        },
+      ],
+    };
+  }
+
+  async getZapRemoveLiquidity(request: ZapStepRequest): Promise<ZapStepResponse> {
+    const { inputs, outputs, maxSlippage, zapRouter, insertBalance } = request;
+
+    if (inputs.length !== 1) {
+      throw new Error('Invalid input count');
+    }
+
+    const input = first(inputs);
+    if (this.address.toLowerCase() !== input.token.address.toLowerCase()) {
+      throw new Error('Invalid input token');
+    }
+
+    if (outputs.length !== 2) {
+      throw new Error('Invalid output count');
+    }
+
+    for (const output of outputs) {
+      if (!this.isTokenInPair(output.token)) {
+        throw new Error('Invalid output token');
+      }
+    }
+
+    const deadline = Math.floor(Date.now() / 1000) + 10 * 60; // 10 minutes
+    const minOutputs = slipAllBy(outputs, maxSlippage);
+
+    return {
+      inputs,
+      outputs,
+      minOutputs,
+      returned: [],
+      zap: this.buildZapRemoveLiquidityTx(
+        outputs[0].token.address,
+        outputs[1].token.address,
+        this.pairData.stable,
+        toWei(input.amount, input.token.decimals),
+        toWei(minOutputs[0].amount, minOutputs[0].token.decimals),
+        toWei(minOutputs[1].amount, minOutputs[1].token.decimals),
+        zapRouter,
+        deadline,
+        insertBalance
+      ),
+    };
   }
 }

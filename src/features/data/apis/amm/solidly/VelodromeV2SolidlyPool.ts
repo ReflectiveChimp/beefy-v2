@@ -6,6 +6,9 @@ import type { PairData, PairDataResponse } from './SolidlyPool';
 import { MetadataKeys, SolidlyPool } from './SolidlyPool';
 import type { AbiItem } from 'web3-utils';
 import { VelodromeV2PairAbi } from '../../../../../config/abi';
+import abiCoder from 'web3-eth-abi';
+import type { ZapStep } from '../../transact/zap/types';
+import { getInsertIndex } from '../../transact/helpers/zap';
 
 export type FactoryDataResponse = {
   fee: string;
@@ -117,6 +120,64 @@ export class VelodromeV2SolidlyPool extends SolidlyPool {
     return {
       numerator: this.factoryData.fee,
       denominator: new BigNumber(this.amm.swapFeeDenominator),
+    };
+  }
+
+  protected buildZapSwapTx(
+    amountIn: BigNumber,
+    amountOutMin: BigNumber,
+    routes: { from: string; to: string }[],
+    to: string,
+    deadline: number,
+    insertBalance: boolean
+  ): ZapStep {
+    return {
+      target: this.amm.routerAddress,
+      value: '0',
+      data: abiCoder.encodeFunctionCall(
+        {
+          type: 'function',
+          name: 'swapExactTokensForTokens',
+          constant: false,
+          payable: false,
+          inputs: [
+            { type: 'uint256', name: 'amountIn' },
+            {
+              type: 'uint256',
+              name: 'amountOutMin',
+            },
+            {
+              type: 'tuple[]',
+              name: 'routes',
+              components: [
+                { type: 'address', name: 'from' },
+                { type: 'address', name: 'to' },
+                {
+                  type: 'bool',
+                  name: 'stable',
+                },
+                { type: 'address', name: 'factory' },
+              ],
+            },
+            { type: 'address', name: 'to' },
+            { type: 'uint256', name: 'deadline' },
+          ],
+          outputs: [{ type: 'uint256[]', name: 'amounts' }],
+        },
+        [
+          amountIn.toString(10),
+          amountOutMin.toString(10),
+          routes.map(({ from, to }) => [from, to, this.pairData.stable, this.pairData.factory]),
+          to,
+          deadline.toString(10),
+        ]
+      ),
+      tokens: [
+        {
+          token: routes[0].from,
+          index: insertBalance ? getInsertIndex(0) : -1, // amountIn
+        },
+      ],
     };
   }
 }

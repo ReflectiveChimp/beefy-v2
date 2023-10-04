@@ -2,18 +2,18 @@ import type {
   DepositOption,
   DepositQuote,
   InputTokenAmount,
+  TransactQuote,
   WithdrawOption,
   WithdrawQuote,
 } from '../transact-types';
 import type { VaultType } from '../vaults/IVaultType';
 import type { ISwapAggregator } from '../swap/ISwapAggregator';
 import type { VaultEntity } from '../../../entities/vault';
-import type { BeefyState, BeefyThunk } from '../../../../../redux-types';
+import type { BeefyState } from '../../../../../redux-types';
 import type { ZapEntity } from '../../../entities/zap';
-import type { TransactQuote } from '../transact-types';
 import type { Step } from '../../../reducers/wallet/stepper';
-import type { GetStateFn } from '../../../../../redux-types';
 import type { Namespace, TFunction } from 'react-i18next';
+import type { AmmEntity, AmmEntitySolidly, AmmEntityUniswapV2 } from '../../../entities/amm';
 
 export type SwapAggregatorId = 'one-inch' | 'kyber';
 
@@ -30,19 +30,19 @@ export type SingleStrategyOptions = {
   strategyId: 'single';
 } & OptionalStrategySwapOption;
 
-export type UniswapV2StrategyOptions = {
-  strategyId: 'uniswap-v2';
-  ammId: string;
+export type UniswapLikeStrategyOptions<TAmm extends AmmEntity> = {
+  strategyId: TAmm['type'];
+  ammId: TAmm['id'];
 } & OptionalStrategySwapOption;
 
-export type SolidlyStrategyOptions = {
-  strategyId: 'solidly';
-  ammId: string;
-} & OptionalStrategySwapOption;
+export type UniswapV2StrategyOptions = UniswapLikeStrategyOptions<AmmEntityUniswapV2>;
 
-export type StrategyOptions = SingleStrategyOptions | UniswapV2StrategyOptions;
+export type SolidlyStrategyOptions = UniswapLikeStrategyOptions<AmmEntitySolidly>;
 
-// | SolidlyStrategyOptions;
+export type StrategyOptions =
+  | SingleStrategyOptions
+  | UniswapV2StrategyOptions
+  | SolidlyStrategyOptions;
 
 export interface IStrategy {
   readonly id: string;

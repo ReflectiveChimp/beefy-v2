@@ -361,7 +361,6 @@ export class UniswapV2Pool implements IPool {
    * Optimal swap amount when swapping tokenIn to tokenOut via the pool such that after the swap
    *  the amount of tokenIn/Out is in the correct ratio for adding liquidity.
    * Only works when swapping through the pool, otherwise use getAddLiquidityRatio
-   * @see BeefyZap.sol#_getSwapAmount
    */
   getOptimalSwapAmount(fullAmountIn: BigNumber, tokenIn: string): BigNumber {
     if (!this.pairData) {

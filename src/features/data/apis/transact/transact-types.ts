@@ -6,7 +6,7 @@ import type { TokenEntity, TokenErc20 } from '../../entities/token';
 import type { Step } from '../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
 import { TransactMode } from '../../reducers/wallet/transact-types';
-import type { AmmEntityUniswapV2 } from '../../entities/amm';
+import type { AmmEntity, AmmEntitySolidly, AmmEntityUniswapV2 } from '../../entities/amm';
 import type { QuoteResponse } from './swap/ISwapProvider';
 
 export type TokenAmount = {
@@ -90,21 +90,25 @@ export type GovVaultWithdrawOption = BaseWithdrawOption & {
   vaultType: 'gov';
 };
 
-export type UniswapV2DepositOption = ZapBaseDepositOption & {
-  strategyId: 'uniswap-v2';
+export type UniswapLikeDepositOption<TAmm extends AmmEntity> = ZapBaseDepositOption & {
+  strategyId: TAmm['type'];
   depositToken: TokenEntity;
   lpTokens: TokenErc20[];
-  amm: AmmEntityUniswapV2;
   swapVia: 'pool' | 'aggregator';
 };
 
-export type UniswapV2WithdrawOption = ZapBaseWithdrawOption & {
-  strategyId: 'uniswap-v2';
+export type UniswapV2DepositOption = UniswapLikeDepositOption<AmmEntityUniswapV2>;
+export type SolidlyDepositOption = UniswapLikeDepositOption<AmmEntitySolidly>;
+
+export type UniswapLikeWithdrawOption<TAmm extends AmmEntity> = ZapBaseWithdrawOption & {
+  strategyId: TAmm['type'];
   depositToken: TokenEntity;
   lpTokens: TokenErc20[];
-  amm: AmmEntityUniswapV2;
   swapVia?: 'pool' | 'aggregator';
 };
+
+export type UniswapV2WithdrawOption = UniswapLikeWithdrawOption<AmmEntityUniswapV2>;
+export type SolidlyWithdrawOption = UniswapLikeWithdrawOption<AmmEntitySolidly>;
 
 export type SingleDepositOption = ZapBaseDepositOption & {
   strategyId: 'single';
@@ -117,12 +121,14 @@ export type SingleWithdrawOption = ZapBaseWithdrawOption & {
 export type DepositOption =
   | StandardVaultDepositOption
   | GovVaultDepositOption
+  | SolidlyDepositOption
   | UniswapV2DepositOption
   | SingleDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
   | GovVaultWithdrawOption
+  | SolidlyWithdrawOption
   | UniswapV2WithdrawOption
   | SingleWithdrawOption;
 
@@ -253,17 +259,32 @@ export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
   swapQuote: QuoteResponse;
 };
 
+export type UniswapLikePoolDepositQuote = BaseZapQuote<UniswapLikeDepositOption<AmmEntity>> & {
+  quote: { from: TokenAmount; to: TokenAmount };
+};
+
+export type UniswapLikeAggregatorDepositQuote = BaseZapQuote<
+  UniswapLikeDepositOption<AmmEntity>
+> & {
+  lpQuotes: QuoteResponse[];
+};
+
+export type UniswapLikeDepositQuote =
+  | UniswapLikePoolDepositQuote
+  | UniswapLikeAggregatorDepositQuote;
+
 export type UniswapV2PoolDepositQuote = BaseZapQuote<UniswapV2DepositOption> & {
   quote: { from: TokenAmount; to: TokenAmount };
 };
 export type UniswapV2AggregatorDepositQuote = BaseZapQuote<UniswapV2DepositOption> & {
   lpQuotes: QuoteResponse[];
 };
-export type UniswapV2DepositQuote = UniswapV2PoolDepositQuote | UniswapV2AggregatorDepositQuote;
+export type UniswapV2DepositQuote = UniswapLikeDepositQuote;
+export type SolidlyDepositQuote = UniswapLikeDepositQuote;
 
 export type VaultDepositQuote = StandardVaultDepositQuote | GovVaultDepositQuote;
 
-export type ZapDepositQuote = SingleDepositQuote | UniswapV2DepositQuote;
+export type ZapDepositQuote = SingleDepositQuote | UniswapV2DepositQuote | SolidlyDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -279,21 +300,26 @@ export type SingleWithdrawQuote = BaseZapQuote<SingleWithdrawOption> & {
   swapQuote: QuoteResponse;
 };
 
-export type UniswapV2BreakWithdrawQuote = BaseZapQuote<UniswapV2WithdrawOption>;
-export type UniswapV2PoolWithdrawQuote = BaseZapQuote<UniswapV2WithdrawOption> & {
+export type UniswapLikeBreakWithdrawQuote = BaseZapQuote<UniswapLikeWithdrawOption<AmmEntity>>;
+export type UniswapLikePoolWithdrawQuote = BaseZapQuote<UniswapLikeWithdrawOption<AmmEntity>> & {
   quote: { from: TokenAmount; to: TokenAmount };
 };
-export type UniswapV2AggregatorWithdrawQuote = BaseZapQuote<UniswapV2WithdrawOption> & {
+export type UniswapLikeAggregatorWithdrawQuote = BaseZapQuote<
+  UniswapLikeWithdrawOption<AmmEntity>
+> & {
   lpQuotes: QuoteResponse[];
 };
-export type UniswapV2WithdrawQuote =
-  | UniswapV2BreakWithdrawQuote
-  | UniswapV2PoolWithdrawQuote
-  | UniswapV2AggregatorWithdrawQuote;
+export type UniswapLikeWithdrawQuote =
+  | UniswapLikeBreakWithdrawQuote
+  | UniswapLikePoolWithdrawQuote
+  | UniswapLikeAggregatorWithdrawQuote;
+
+export type UniswapV2WithdrawQuote = UniswapLikeWithdrawQuote;
+export type SolidlyWithdrawQuote = UniswapLikeWithdrawQuote;
 
 export type VaultWithdrawQuote = StandardVaultWithdrawQuote | GovVaultWithdrawQuote;
 
-export type ZapWithdrawQuote = SingleWithdrawQuote | UniswapV2WithdrawQuote;
+export type ZapWithdrawQuote = SingleWithdrawQuote | UniswapV2WithdrawQuote | SolidlyWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;
 
@@ -310,8 +336,12 @@ export function isZapQuote(quote: TransactQuote): quote is ZapQuote {
   return 'steps' in quote;
 }
 
+export function isVaultWithdrawQuote(quote: TransactQuote): quote is VaultWithdrawQuote {
+  return isWithdrawQuote(quote) && quote.strategyId === 'vault';
+}
+
 export function isGovVaultWithdrawQuote(quote: TransactQuote): quote is GovVaultWithdrawQuote {
-  return isWithdrawQuote(quote) && quote.strategyId === 'vault' && quote.vaultType === 'gov';
+  return isVaultWithdrawQuote(quote) && quote.vaultType === 'gov';
 }
 
 export function isDepositQuote(quote: TransactQuote): quote is DepositQuote {
