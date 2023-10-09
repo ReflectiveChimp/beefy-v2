@@ -417,6 +417,8 @@ export class SolidlyPool implements IPool {
         .multipliedBy(halfAmountIn)
         .multipliedBy(nominator)
         .dividedToIntegerBy(denominator)
+        .squareRoot()
+        .decimalPlaces(0, BigNumber.ROUND_FLOOR)
     );
   }
 

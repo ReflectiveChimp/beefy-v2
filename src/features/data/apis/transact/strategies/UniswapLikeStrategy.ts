@@ -81,6 +81,7 @@ import { BigNumber } from 'bignumber.js';
 import { slipBy, tokenAmountToWei } from '../helpers/amounts';
 import type { IPool } from '../../amm/types';
 import { QuoteChangedError } from './errors';
+import { isDevelopment } from '../../../utils/feature-flags';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -159,7 +160,7 @@ export abstract class UniswapLikeStrategy<
         const supported =
           isTokenEqual(token, lpToken) ||
           tokenSupport.tokens[i].some(supportedToken => isTokenEqual(supportedToken, token));
-        if (!supported) {
+        if (isDevelopment && !supported) {
           console.debug(
             `Token ${token.symbol} not supported by aggregator, no provider also supports ${lpToken.symbol}`
           );

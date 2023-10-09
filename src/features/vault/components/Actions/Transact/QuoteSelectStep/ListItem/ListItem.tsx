@@ -5,11 +5,8 @@ import clsx from 'clsx';
 import { ChevronRight } from '@material-ui/icons';
 import { ListJoin } from '../../../../../../../components/ListJoin';
 import { useAppSelector } from '../../../../../../../store';
-import {
-  selectTransactQuoteById,
-  selectTransactQuoteIds,
-} from '../../../../../../data/selectors/transact';
-import { ZapQuoteTitle } from '../../ZapProvider';
+import { selectTransactQuoteById } from '../../../../../../data/selectors/transact';
+import { QuoteTitle } from '../../QuoteTitle';
 import { TokenAmountFromEntity } from '../../../../../../../components/TokenAmount';
 
 const useStyles = makeStyles(styles);
@@ -22,8 +19,6 @@ export type ListItemProps = {
 export const ListItem = memo<ListItemProps>(function ListItem({ quoteId, className, onSelect }) {
   const classes = useStyles();
   const quote = useAppSelector(state => selectTransactQuoteById(state, quoteId));
-  const quotes = useAppSelector(selectTransactQuoteIds);
-  const quoteIndex = quotes.findIndex(id => id === quote.id);
   const handleClick = useCallback(() => onSelect(quoteId), [onSelect, quoteId]);
   const outputs = useMemo(
     () =>
@@ -35,7 +30,7 @@ export const ListItem = memo<ListItemProps>(function ListItem({ quoteId, classNa
 
   return (
     <button className={clsx(classes.item, className)} onClick={handleClick}>
-      <ZapQuoteTitle index={quoteIndex} className={classes.provider} />
+      <QuoteTitle quote={quote} className={classes.provider} />
       <div className={classes.output}>
         <ListJoin items={outputs} />
       </div>

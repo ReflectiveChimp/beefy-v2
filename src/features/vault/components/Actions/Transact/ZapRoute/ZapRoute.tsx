@@ -21,7 +21,7 @@ import { selectTransactQuoteIds } from '../../../../../data/selectors/transact';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { ZapQuoteTitle } from '../ZapProvider';
+import { QuoteTitle } from '../QuoteTitle';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types';
 
@@ -226,7 +226,6 @@ export const ZapRoute = memo<ZapRouteProps>(function ZapRoute({ quote, className
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const quotes = useAppSelector(selectTransactQuoteIds);
-  const quoteIndex = quotes.findIndex(id => id === quote.id);
   const hasMultipleOptions = quotes.length > 1;
   const handleSwitch = useCallback(() => {
     dispatch(transactActions.switchStep(TransactStep.QuoteSelect));
@@ -242,7 +241,7 @@ export const ZapRoute = memo<ZapRouteProps>(function ZapRoute({ quote, className
           })}
           onClick={hasMultipleOptions ? handleSwitch : undefined}
         >
-          <ZapQuoteTitle index={quoteIndex} className={classes.routeHeaderProvider} />
+          <QuoteTitle quote={quote} className={classes.routeHeaderProvider} />
           {hasMultipleOptions ? '>' : undefined}
         </div>
         <div className={classes.routeContent}>
