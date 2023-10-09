@@ -12,7 +12,10 @@ import type {
 import { Trans, useTranslation } from 'react-i18next';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectPlatformById } from '../../../../../data/selectors/platforms';
+import {
+  selectPlatformById,
+  selectPlatformByIdOrUndefined,
+} from '../../../../../data/selectors/platforms';
 import { ListJoin } from '../../../../../../components/ListJoin';
 import { selectTransactQuoteIds } from '../../../../../data/selectors/transact';
 import clsx from 'clsx';
@@ -32,9 +35,21 @@ type StepContentProps<T extends ZapQuoteStep> = {
 const StepContentSwap = memo<StepContentProps<ZapQuoteStepSwap>>(function StepContentSwap({
   step,
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { providerId, via } = step;
+  const platform = useAppSelector(state => selectPlatformByIdOrUndefined(state, providerId));
+  const platformName = useMemo(() => {
+    if (via === 'pool' && platform) {
+      return platform.name;
+    }
+    const i18nKey = `Transact-SwapPlatform-${providerId}`;
+    if (i18n.exists(i18nKey)) {
+      return t(i18nKey);
+    }
+    return providerId;
+  }, [providerId, platform, t, i18n, via]);
   const textKey =
-    step.via === 'aggregator' && step.providerId === 'wnative'
+    via === 'aggregator' && providerId === 'wnative'
       ? step.toToken.type === 'native'
         ? 'Transact-Route-Step-Unwrap'
         : 'Transact-Route-Step-Wrap'
@@ -47,7 +62,7 @@ const StepContentSwap = memo<StepContentProps<ZapQuoteStepSwap>>(function StepCo
       values={{
         fromToken: step.fromToken.symbol,
         toToken: step.toToken.symbol,
-        via: step.via === 'aggregator' ? step.providerId : step.via,
+        via: platformName,
       }}
       components={{
         fromAmount: (

@@ -7,7 +7,7 @@ import type {
   SingleWithdrawQuote,
   ZapQuoteStep,
 } from '../../transact-types';
-import type { BeefyThunk, GetStateFn } from '../../../../../../redux-types';
+import type { BeefyThunk } from '../../../../../../redux-types';
 import { isTokenEqual, isTokenErc20 } from '../../../../entities/token';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
 import {
@@ -43,13 +43,14 @@ export class SingleStrategy implements IStrategy {
     onlyAssetCount(vault, 1);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   async initialize(): Promise<void> {}
 
   async aggregatorTokenSupport() {
     const { vault, vaultType, swapAggregator, getState } = this.helpers;
 
     const state = getState();
-    const tokenSupport = await swapAggregator.getTokenSupport(
+    const tokenSupport = await swapAggregator.fetchTokenSupport(
       [vaultType.depositToken],
       vault.id,
       vault.chainId,

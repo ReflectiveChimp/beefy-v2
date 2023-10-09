@@ -146,7 +146,7 @@ export abstract class UniswapLikeStrategy<
   async aggregatorTokenSupport() {
     const { vault, swapAggregator, getState } = this.helpers;
     const state = getState();
-    const tokenSupport = await swapAggregator.getTokenSupport(
+    const tokenSupport = await swapAggregator.fetchTokenSupport(
       this.lpTokens,
       vault.id,
       vault.chainId,
@@ -324,6 +324,7 @@ export abstract class UniswapLikeStrategy<
       toToken: swapOutToken,
       toAmount: swapOutAmount,
       via: 'pool',
+      providerId: depositToken.providerId,
     });
 
     steps.push({
@@ -954,7 +955,7 @@ export abstract class UniswapLikeStrategy<
     steps: ZapQuoteStep[],
     pool: IPool
   ): Promise<PartialWithdrawQuote> {
-    const { wantedOutputs } = option;
+    const { wantedOutputs, depositToken } = option;
     if (wantedOutputs.length !== 1) {
       throw new Error('Can only swap to 1 output token');
     }
@@ -985,6 +986,7 @@ export abstract class UniswapLikeStrategy<
       toToken: lpOutput,
       toAmount: swapOutAmount,
       via: 'pool',
+      providerId: depositToken.providerId,
     });
 
     const outputAmount = keepTokenAmount.amount.plus(swapOutAmount);

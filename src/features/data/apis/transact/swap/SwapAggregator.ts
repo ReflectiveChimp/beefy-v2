@@ -63,7 +63,7 @@ export class SwapAggregator implements ISwapAggregator {
     return this.allowedTokens(tokens, options);
   }
 
-  async getTokenSupport(
+  async fetchTokenSupport(
     wantedTokens: TokenEntity[],
     vaultId: VaultEntity['id'],
     chainId: ChainEntity['id'],

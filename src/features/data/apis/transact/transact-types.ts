@@ -162,6 +162,7 @@ export type ZapQuoteStepSwapAggregator = BaseZapQuoteStepSwap & {
 
 export type ZapQuoteStepSwapPool = BaseZapQuoteStepSwap & {
   via: 'pool';
+  providerId: string;
 };
 
 export type ZapQuoteStepSwap = ZapQuoteStepSwapAggregator | ZapQuoteStepSwapPool;

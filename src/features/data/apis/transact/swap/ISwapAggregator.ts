@@ -32,7 +32,7 @@ export interface ISwapAggregator {
    * Returns tokens supported for each input token
    * Optionally, some providers or tokens can be disabled
    */
-  getTokenSupport(
+  fetchTokenSupport(
     tokens: TokenEntity[],
     vaultId: VaultEntity['id'],
     chainId: ChainEntity['id'],
