@@ -1,5 +1,5 @@
-import { isStandardVault } from '../../../entities/vault';
 import type { VaultEntity, VaultStandard } from '../../../entities/vault';
+import { isStandardVault } from '../../../entities/vault';
 import type { BeefyState, GetStateFn } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import type {
@@ -15,6 +15,7 @@ import {
   isTokenNative,
   type TokenEntity,
   type TokenErc20,
+  type TokenNative,
 } from '../../../entities/token';
 import {
   createOptionId,
@@ -33,7 +34,13 @@ import type {
 } from '../transact-types';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
 import { first } from 'lodash-es';
-import { BIG_ZERO, bigNumberToStringDeep, fromWei, toWei } from '../../../../../helpers/big-number';
+import {
+  BIG_ZERO,
+  bigNumberToStringDeep,
+  fromWei,
+  toWei,
+  toWeiString,
+} from '../../../../../helpers/big-number';
 import { selectFeesByVaultId } from '../../../selectors/fees';
 import { selectChainById } from '../../../selectors/chains';
 import { getWeb3Instance } from '../../instances';
@@ -47,6 +54,7 @@ import type { Step } from '../../../reducers/wallet/stepper';
 import { MultiCall } from 'eth-multicall';
 import { getVaultWithdrawnFromContract, getVaultWithdrawnFromState } from '../helpers/vault';
 import { selectWalletAddress } from '../../../selectors/wallet';
+import type { ZapStep } from '../zap/types';
 
 export class StandardVaultType implements IStandardVaultType {
   public readonly id = 'standard';
@@ -92,10 +100,6 @@ export class StandardVaultType implements IStandardVaultType {
       throw new Error('Input token is not the deposit token');
     }
 
-    if (isTokenNative(input.token)) {
-      throw new Error('Input token is not native **TODO support**'); // TODO support native
-    }
-
     const state = this.getState();
     const chain = selectChainById(state, this.vault.chainId);
     const web3 = await getWeb3Instance(chain);
@@ -126,34 +130,73 @@ export class StandardVaultType implements IStandardVaultType {
           amount: fromWei(expectedShares, this.shareToken.decimals),
         },
       ],
-      zap: {
-        target: this.vault.earnContractAddress,
-        value: isTokenNative(input.token) ? inputWei.toString(10) : '0',
-        data: abiCoder.encodeFunctionCall(
-          {
-            constant: false,
-            inputs: [
-              {
-                internalType: 'uint256',
-                name: '_amount',
-                type: 'uint256',
-              },
-            ],
-            name: 'deposit', // TODO native?
-            outputs: [],
-            payable: false,
-            stateMutability: 'nonpayable',
-            type: 'function',
-          },
-          [inputWei.toString(10)]
-        ),
-        tokens: [
-          {
-            token: getTokenAddress(input.token),
-            index: getInsertIndex(0),
-          },
-        ],
-      },
+      zap: isTokenNative(input.token)
+        ? this.fetchNativeZap(this.vault.earnContractAddress, input.token, input.amount)
+        : this.fetchErc20Zap(this.vault.earnContractAddress, input.token, input.amount),
+    };
+  }
+
+  protected fetchErc20Zap(
+    vaultAddress: string,
+    depositToken: TokenErc20,
+    depositAmount: BigNumber
+  ): ZapStep {
+    return {
+      target: vaultAddress,
+      value: '0',
+      data: abiCoder.encodeFunctionCall(
+        {
+          constant: false,
+          inputs: [
+            {
+              internalType: 'uint256',
+              name: '_amount',
+              type: 'uint256',
+            },
+          ],
+          name: 'deposit',
+          outputs: [],
+          payable: false,
+          stateMutability: 'nonpayable',
+          type: 'function',
+        },
+        [toWeiString(depositAmount, depositToken.decimals)]
+      ),
+      tokens: [
+        {
+          token: getTokenAddress(depositToken),
+          index: getInsertIndex(0),
+        },
+      ],
+    };
+  }
+
+  protected fetchNativeZap(
+    vaultAddress: string,
+    depositToken: TokenNative,
+    depositAmount: BigNumber
+  ): ZapStep {
+    return {
+      target: vaultAddress,
+      value: toWeiString(depositAmount, depositToken.decimals),
+      data: abiCoder.encodeFunctionCall(
+        {
+          constant: false,
+          inputs: [],
+          name: 'depositBNB',
+          outputs: [],
+          payable: true,
+          stateMutability: 'payable',
+          type: 'function',
+        },
+        []
+      ),
+      tokens: [
+        {
+          token: getTokenAddress(depositToken),
+          index: -1,
+        },
+      ],
     };
   }
 

@@ -80,6 +80,7 @@ import { getVaultWithdrawnFromState } from '../helpers/vault';
 import { BigNumber } from 'bignumber.js';
 import { slipBy, tokenAmountToWei } from '../helpers/amounts';
 import type { IPool } from '../../amm/types';
+import { QuoteChangedError } from './errors';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -570,7 +571,7 @@ export abstract class UniswapLikeStrategy<
 
     if (swapOutAmount.lt(quoteStep.toAmount)) {
       console.debug(quoteStep, swap);
-      throw new Error('Swap returned less than expected');
+      throw new QuoteChangedError('Swap returned less than expected');
     }
 
     return await pool.getZapSwap({
@@ -639,7 +640,7 @@ export abstract class UniswapLikeStrategy<
           quote: quoteOutput.amount.toString(10),
           now: amountOut.toString(10),
         });
-        throw new Error('Split returned less than expected');
+        throw new QuoteChangedError('Split returned less than expected');
       }
 
       return {
@@ -844,12 +845,12 @@ export abstract class UniswapLikeStrategy<
 
     const input = first(inputs);
     if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('Uniswap v2 strategy: Quote called with 0 input amount');
+      throw new Error('Quote called with 0 input amount');
     }
 
     const { vault, vaultType, zap, getState } = this.helpers;
     if (!isStandardVault(vault)) {
-      throw new Error('Uniswap v2 strategy: Vault is not standard');
+      throw new Error('Vault is not standard');
     }
 
     // Common: Withdraw from vault
@@ -892,7 +893,7 @@ export abstract class UniswapLikeStrategy<
         token => token.address.toLowerCase() === address.toLowerCase()
       );
       if (!token) {
-        throw new Error(`Uniswap v2 strategy: LP token ${address} not found`);
+        throw new Error(`LP token ${address} not found`);
       }
 
       return { amount: fromWei(amount, token.decimals), token };
@@ -955,18 +956,16 @@ export abstract class UniswapLikeStrategy<
   ): Promise<PartialWithdrawQuote> {
     const { wantedOutputs } = option;
     if (wantedOutputs.length !== 1) {
-      throw new Error('Uniswap v2 strategy: Can only swap to 1 output token');
+      throw new Error('Can only swap to 1 output token');
     }
     const wantedOutput = first(wantedOutputs);
     const isWantedOutputNative = isTokenNative(wantedOutput);
     const lpOutput = isWantedOutputNative ? this.wnative : wantedOutput;
     if (!this.lpTokens.some(token => isTokenEqual(token, lpOutput))) {
-      throw new Error('Uniswap v2 strategy: Wanted output token is not in the LP');
+      throw new Error('Wanted output token is not in the LP');
     }
     if (!breakOutputs.some(tokenAmount => isTokenEqual(tokenAmount.token, lpOutput))) {
-      throw new Error(
-        'Uniswap v2 strategy: Wanted output token is not one of the break lp outputs'
-      );
+      throw new Error('Wanted output token is not one of the break lp outputs');
     }
 
     const swapTokenAmount = breakOutputs.find(
@@ -1003,7 +1002,7 @@ export abstract class UniswapLikeStrategy<
       );
       const wrapQuote = first(unwrapQuotes);
       if (!wrapQuote || wrapQuote.toAmount.lt(outputAmount)) {
-        throw new Error('Uniswap v2 strategy: No unwrap quote found');
+        throw new Error('No unwrap quote found');
       }
 
       steps.push({
@@ -1038,7 +1037,7 @@ export abstract class UniswapLikeStrategy<
     const { swapAggregator, getState } = this.helpers;
 
     if (wantedOutputs.length !== 1) {
-      throw new Error('Uniswap v2 strategy: Can only swap to 1 output token');
+      throw new Error('Can only swap to 1 output token');
     }
 
     const state = getState();
@@ -1076,7 +1075,7 @@ export abstract class UniswapLikeStrategy<
       if (needsSwap[i]) {
         const swap = swaps[i];
         if (!swap) {
-          throw new Error('Uniswap v2 strategy: No swap found');
+          throw new Error('No swap found');
         }
 
         outputTotal = outputTotal.plus(swap.toAmount);
@@ -1124,16 +1123,16 @@ export abstract class UniswapLikeStrategy<
         inputs: quote.inputs,
       });
       if (vaultWithdraw.outputs.length !== 1) {
-        throw new Error('Uniswap v2 strategy: Withdraw output count mismatch');
+        throw new Error('Withdraw output count mismatch');
       }
 
       const withdrawOutput = first(vaultWithdraw.outputs);
       if (!isTokenEqual(withdrawOutput.token, splitQuote.inputToken)) {
-        throw new Error('Uniswap v2 strategy: Withdraw output token mismatch');
+        throw new Error('Withdraw output token mismatch');
       }
 
       if (withdrawOutput.amount.lt(withdrawQuote.toAmount)) {
-        throw new Error('Uniswap v2 strategy: Withdraw output amount mismatch');
+        throw new Error('Withdraw output amount mismatch');
       }
 
       const steps: ZapStep[] = [vaultWithdraw.zap];

@@ -5,6 +5,7 @@ import { Boosts } from './Boosts';
 import { Minters } from './Minter';
 import { TransactDebugger } from './Transact/TransactDebugger';
 import { Migration } from '../Migation';
+import { isDevelopment } from '../../../data/utils/feature-flags';
 
 export type ActionsProps = {
   vaultId: VaultEntity['id'];
@@ -12,7 +13,7 @@ export type ActionsProps = {
 export const Actions = memo<ActionsProps>(function Actions({ vaultId }) {
   return (
     <>
-      {import.meta.env.VITE_TRANSACT_DEBUG ? <TransactDebugger /> : null}
+      {isDevelopment ? <TransactDebugger /> : null}
       <Migration vaultId={vaultId} />
       <Transact vaultId={vaultId} />
       <Boosts vaultId={vaultId} />

@@ -13,8 +13,8 @@ function getSearchParams(): URLSearchParams {
   return searchParamsCache;
 }
 
-export const isDevelopment = process.env.NODE_ENV === 'development';
-export const isProduction = process.env.NODE_ENV === 'production';
+export const isDevelopment = import.meta.env.DEV;
+export const isProduction = import.meta.env.PROD;
 
 export function featureFlag_getContractDataApiImplem():
   | 'eth-multicall'

@@ -30,6 +30,7 @@ import type { Namespace, TFunction } from 'react-i18next';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { isStandardVault } from '../../../../entities/vault';
 import { slipBy } from '../../helpers/amounts';
+import { QuoteChangedError } from '../errors';
 
 export class SingleStrategy implements IStrategy {
   public readonly id = 'single';
@@ -45,7 +46,7 @@ export class SingleStrategy implements IStrategy {
   async initialize(): Promise<void> {}
 
   async aggregatorTokenSupport() {
-    const { vault, vaultType, swapAggregator, getState, zap } = this.helpers;
+    const { vault, vaultType, swapAggregator, getState } = this.helpers;
 
     const state = getState();
     const tokenSupport = await swapAggregator.getTokenSupport(
@@ -94,7 +95,7 @@ export class SingleStrategy implements IStrategy {
     // Input
     const input = first(inputs);
     if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('Single strategy: Quote called with 0 input amount');
+      throw new Error('Quote called with 0 input amount');
     }
 
     // Token Allowances
@@ -287,13 +288,13 @@ export class SingleStrategy implements IStrategy {
 
     const { vault, swapAggregator, zap, getState } = this.helpers;
     if (!isStandardVault(vault)) {
-      throw new Error('Single strategy: Vault is not standard');
+      throw new Error('Vault is not standard');
     }
 
     // Input
     const input = first(inputs);
     if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('Single strategy: Quote called with 0 input amount');
+      throw new Error('Quote called with 0 input amount');
     }
 
     // Token Allowances
@@ -376,12 +377,12 @@ export class SingleStrategy implements IStrategy {
         inputs: quote.inputs,
       });
       if (vaultWithdraw.outputs.length !== 1) {
-        throw new Error('Single strategy: Withdraw output count mismatch');
+        throw new Error('Withdraw output count mismatch');
       }
 
       const withdrawOutput = first(vaultWithdraw.outputs);
       if (!isTokenEqual(withdrawOutput.token, quote.swapQuote.fromToken)) {
-        throw new Error('Single strategy: Withdraw output token mismatch');
+        throw new Error('Withdraw output token mismatch');
       }
 
       const steps: ZapStep[] = [vaultWithdraw.zap];
@@ -401,7 +402,7 @@ export class SingleStrategy implements IStrategy {
 
       if (swap.toAmount.lt(quote.swapQuote.toAmount)) {
         // We just did a quote before fetching a swap, so this should never happen
-        throw new Error('Single strategy: Swap output amount mismatch');
+        throw new QuoteChangedError('Swap output amount mismatch');
       }
 
       const swapStep: ZapStep = {
