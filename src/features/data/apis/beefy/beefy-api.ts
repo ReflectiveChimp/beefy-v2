@@ -237,7 +237,15 @@ export class BeefyAPI {
         params: { _: this.getCacheBuster('short') },
       }
     );
-    return res.data;
+
+    // Handle api->app chain id
+    const data = res.data;
+    if ('one' in data) {
+      data['harmony'] = data['one'];
+      delete data['one'];
+    }
+
+    return data;
   }
 
   public async getTreasury(): Promise<TreasuryConfig> {
