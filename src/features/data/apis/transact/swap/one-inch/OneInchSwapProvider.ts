@@ -66,7 +66,7 @@ export class OneInchSwapProvider implements ISwapProvider {
       fromTokenAddress: this.getTokenAddress(request.fromToken),
       toTokenAddress: this.getTokenAddress(request.toToken),
       amount: toWeiString(request.fromAmount, request.fromToken.decimals),
-      slippage: request.slippage,
+      slippage: request.slippage * 100,
       disableEstimate: true,
       fee: config.fee.value.toString(10),
       referrerAddress: config.fee.recipient,
