@@ -82,7 +82,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: 'rgba(112, 212, 75, 0.2)',
   },
   'headerNetwork-moonbeam': {
-    backgroundColor: 'rgba(149, 143, 220, 0.4)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
   'headerNetwork-optimism': {
     backgroundColor: 'rgba(255, 4, 32, 0.2)',
