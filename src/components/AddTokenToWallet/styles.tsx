@@ -1,23 +1,9 @@
 import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
-  cardHolder: {
-    position: 'absolute' as const,
-    outline: 'none',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '24px',
-    [theme.breakpoints.down('xs')]: {
-      padding: '0',
-    },
-  },
   card: {
     margin: 0,
+    outline: 'none',
     maxHeight: '100%',
     display: 'flex',
     flexDirection: 'column' as const,
@@ -34,6 +20,7 @@ export const styles = (theme: Theme) => ({
   },
   cardIcon: {
     marginRight: '8px',
+    height: '32px',
   },
   cardTitle: {
     color: theme.palette.text.light,
@@ -91,6 +78,7 @@ export const styles = (theme: Theme) => ({
     outline: 'none',
     cursor: 'pointer',
     color: theme.palette.text.middle,
+    padding: '1px 6px',
     '&:hover': {
       color: theme.palette.text.light,
     },

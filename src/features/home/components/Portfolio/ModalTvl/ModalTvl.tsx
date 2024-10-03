@@ -1,5 +1,5 @@
 import { IconButton, makeStyles } from '@material-ui/core';
-import { forwardRef, memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../../vault/components/Card';
 import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
@@ -22,7 +22,7 @@ export type ModalTvlProps = {
   close: () => void;
 };
 
-const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ close }, ref) {
+export const ModalTvl = memo<ModalTvlProps>(function ModalTvl({ close }: ModalTvlProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const tvls = useAppSelector(selectTvlByChain);
@@ -43,32 +43,33 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ 
   }, [tvls, activeChainIds]);
 
   return (
-    <div className={classes.holder} ref={ref} tabIndex={-1}>
-      <Card className={classes.card}>
-        <CardHeader className={classes.header}>
-          <CardTitle titleClassName={classes.title} title={t('TVL-bychain')} />
-          <IconButton className={classes.closeIcon} onClick={close} aria-label="settings">
-            <CloseIcon htmlColor="#D0D0DA" />
-          </IconButton>
-        </CardHeader>
-        <CardContent className={classes.content}>
-          <div className={classes.gridScroller}>
-            <div className={classes.grid}>
-              {sortedTvls.map(item => (
-                <Chain key={item.chainId} chainId={item.chainId} tvl={item.tvl} />
-              ))}
-            </div>
+    <Card className={classes.card}>
+      <CardHeader className={classes.header}>
+        <CardTitle titleClassName={classes.title} title={t('TVL-bychain')} />
+        <IconButton
+          className={classes.closeIcon}
+          onClick={close}
+          aria-label="settings"
+          disableRipple={true}
+        >
+          <CloseIcon htmlColor="#D0D0DA" />
+        </IconButton>
+      </CardHeader>
+      <CardContent className={classes.content}>
+        <div className={classes.gridScroller}>
+          <div className={classes.grid}>
+            {sortedTvls.map(item => (
+              <Chain key={item.chainId} chainId={item.chainId} tvl={item.tvl} />
+            ))}
           </div>
-          <Button onClick={close} fullWidth={true} className={classes.closeButton}>
-            {t('Close')}
-          </Button>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+        <Button onClick={close} fullWidth={true} className={classes.closeButton}>
+          {t('Close')}
+        </Button>
+      </CardContent>
+    </Card>
   );
 });
-
-export const ModalTvl = memo<ModalTvlProps>(_ModalTvl);
 
 type ChainProps = { chainId: ChainEntity['id']; tvl: BigNumber };
 const Chain = memo<ChainProps>(function Chain({ chainId, tvl }) {

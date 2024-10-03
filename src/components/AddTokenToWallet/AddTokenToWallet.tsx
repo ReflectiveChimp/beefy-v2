@@ -175,26 +175,20 @@ export const AddTokenToWallet = memo(function AddTokenToWallet() {
   }, [dispatch]);
 
   return (
-    <Modal open={isOpen} onClose={handleClose} tabIndex={-1}>
-      {isOpen ? (
-        <div className={classes.cardHolder}>
-          <Card className={classes.card}>
-            <CardHeader className={classes.cardHeader}>
-              {status === 'fulfilled' ? <FulfilledCardTitle /> : <PendingCardTitle />}
-              <IconButton onClick={handleClose} aria-label="close" className={classes.closeButton}>
-                <CloseIcon htmlColor="#999CB3" />
-              </IconButton>
-            </CardHeader>
-            <CardContent className={classes.cardContent}>
-              {status === 'pending' && <Pending />}
-              {status === 'rejected' && <Rejected />}
-              {status === 'fulfilled' && <Fulfilled />}
-            </CardContent>
-          </Card>
-        </div>
-      ) : (
-        <></>
-      )}
+    <Modal open={isOpen} onClose={handleClose}>
+      <Card className={classes.card}>
+        <CardHeader className={classes.cardHeader}>
+          {status === 'fulfilled' ? <FulfilledCardTitle /> : <PendingCardTitle />}
+          <IconButton onClick={handleClose} aria-label="close" className={classes.closeButton}>
+            <CloseIcon htmlColor="#999CB3" />
+          </IconButton>
+        </CardHeader>
+        <CardContent className={classes.cardContent}>
+          {status === 'pending' && <Pending />}
+          {status === 'rejected' && <Rejected />}
+          {status === 'fulfilled' && <Fulfilled />}
+        </CardContent>
+      </Card>
     </Modal>
   );
 });

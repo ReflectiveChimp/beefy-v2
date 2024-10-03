@@ -53,20 +53,18 @@ const TenderlyModal = memo<TenderlyModalProps>(function TenderlyModal({ mode, on
   const Component = modeToComponent[mode] || FallbackMode;
 
   return (
-    <div className={classes.cardHolder}>
-      <Card className={classes.card}>
-        <CardHeader className={classes.cardHeader}>
-          <img src={logoUrl} alt="" width={24} height={24} className={classes.cardIcon} />
-          <CardTitle title="Tenderly Simulation" titleClassName={classes.cardTitle} />
-          <IconButton onClick={onClose} aria-label="close" className={classes.closeButton}>
-            <CloseIcon htmlColor="#999CB3" />
-          </IconButton>
-        </CardHeader>
-        <CardContent className={classes.cardContent}>
-          <Component />
-        </CardContent>
-      </Card>
-    </div>
+    <Card className={classes.card}>
+      <CardHeader className={classes.cardHeader}>
+        <img src={logoUrl} alt="" width={24} height={24} className={classes.cardIcon} />
+        <CardTitle title="Tenderly Simulation" titleClassName={classes.cardTitle} />
+        <IconButton onClick={onClose} aria-label="close" className={classes.closeButton}>
+          <CloseIcon htmlColor="#999CB3" />
+        </IconButton>
+      </CardHeader>
+      <CardContent className={classes.cardContent}>
+        <Component />
+      </CardContent>
+    </Card>
   );
 });
 
@@ -80,7 +78,7 @@ export const Tenderly = memo(function Tenderly() {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      {open ? <TenderlyModal mode={mode} onClose={handleClose} /> : <></>}
+      {open ? <TenderlyModal mode={mode} onClose={handleClose} /> : null}
     </Modal>
   );
 });
