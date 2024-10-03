@@ -7,6 +7,7 @@ import eslint from 'vite-plugin-eslint';
 import { visualizer } from 'rollup-plugin-visualizer';
 import * as path from 'node:path';
 import versionPlugin from './version-plugin';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 const optionalPlugins: Plugin[] = [];
 
@@ -37,6 +38,7 @@ export default defineConfig({
     open: true,
   },
   plugins: [
+    tsconfigPaths(),
     react(),
     {
       ...svgrPlugin(),

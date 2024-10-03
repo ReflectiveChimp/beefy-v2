@@ -50,6 +50,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "viem": "^2.7.13",
+    "vite-tsconfig-paths": "^5.0.1",
     "web3": "^1.10.4"
   },
   "resolutions": {
@@ -61,7 +62,7 @@
     "@types/react-dom": "18.3.0"
   },
   "scripts": {
-    "prepare": "husky",
+    "prepare": "husky && panda codegen",
     "start": "vite",
     "build": "echo 'DO NOT disable validation on build, fix underlying issue' && yarn validate && tsc && vite build",
     "build-only": "tsc && vite build",
@@ -106,6 +107,7 @@
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@pandacss/dev": "^0.46.1",
     "@types/command-line-usage": "^5.0.4",
     "@types/lodash-es": "^4.17.7",
     "@types/node": "^20.10.0",
@@ -120,6 +122,7 @@
     "dotenv": "^16.3.1",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-nibble": "^8.1.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-react": "^7.32.2",
