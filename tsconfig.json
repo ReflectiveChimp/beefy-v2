@@ -25,6 +25,6 @@
       "@styles/*": ["./build-tools/styles/generated/*"]
     }
   },
-  "include": ["src", "styled-system"],
-  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "node_modules"]
+  "include": ["./src", "./build-tools/styles/generated"],
+  "exclude": ["./src/**/*.test.ts", "./src/**/*.test.tsx", "./node_modules"]
 }

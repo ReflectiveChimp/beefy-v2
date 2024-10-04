@@ -1,5 +1,6 @@
 import { defineConfig, defineTextStyles } from '@pandacss/dev';
 import { buildConfig } from './build-tools/styles/config-builder';
+import { pluginStricterProperties } from './build-tools/styles/stricter-properties-plugin';
 
 // @dev some changes require running `yarn panda codegen` after
 
@@ -23,17 +24,6 @@ const sansSerifFontStack = [
   .map(v => (v.includes(' ') ? `"${v}"` : v))
   .join(', ');
 
-const createZIndexLayer = (layer: number) => {
-  const base = layer * 1000;
-  const next = (layer + 1) * 1000;
-
-  return {
-    DEFAULT: { value: base },
-    tooltip: { value: base + 100 },
-    modal: { value: next },
-  } as const;
-};
-
 const config = buildConfig(
   // Base config
   {
@@ -41,6 +31,13 @@ const config = buildConfig(
     jsxFramework: 'react',
     // jsx/styled() can only be used for recipes
     jsxStyleProps: 'none',
+    // Typescript validation for some supported properties
+    // @see https://panda-css.com/docs/concepts/writing-styles#strictpropertyvalues
+    strictPropertyValues: true,
+    // For any css property with a token set, only tokens can be used if this is enabled
+    strictTokens: false,
+    // error if this config is not valid
+    validation: 'error',
     // The output directory for your css system
     outdir: 'build-tools/styles/generated',
     // Tell panda we are importing generated code from @styles/* rather than {outdir}/*
@@ -53,6 +50,16 @@ const config = buildConfig(
     include: ['./src/**/*.{js,jsx,ts,tsx}'],
     // Files to exclude
     exclude: [],
+    // Plugins
+    plugins: [
+      pluginStricterProperties({
+        zIndex: {
+          removeAny: true,
+          removeReact: true,
+          add: ['number', '"auto"'],
+        },
+      }),
+    ],
     // Global css declarations
     globalCss: {
       html: {
@@ -158,11 +165,6 @@ const config = buildConfig(
           grayLight: { value: '#e5e5e5', description: 'txsModal.bgLine' },
           whiteOff: { value: '#f5f5f5', description: 'text light' },
           white: { value: '#ffffff', description: 'text lightest + txsModal.bg' },
-        },
-        zIndex: {
-          layer0: createZIndexLayer(0),
-          layer1: createZIndexLayer(1),
-          layer2: createZIndexLayer(2),
         },
       },
       semanticTokens: {
@@ -328,6 +330,10 @@ const config = buildConfig(
           border: '{colors.background.contentPrimary}',
         },
       },
+    },
+    zIndex: {
+      tooltip: 800,
+      modal: 900,
     },
   }
 );

@@ -41,7 +41,7 @@ const useStyles = sva({
     layer: {
       0: {
         backdrop: {
-          zIndex: 'layer0.modal',
+          zIndex: 'modal',
         },
       },
       1: {
