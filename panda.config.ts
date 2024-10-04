@@ -1,132 +1,335 @@
-import { defineConfig } from '@pandacss/dev';
+import { defineConfig, defineTextStyles } from '@pandacss/dev';
+import { buildConfig } from './build-tools/styles/config-builder';
 
-export default defineConfig({
-  // Enabled jsx/styled() support
-  jsxFramework: 'react',
-  // The output directory for your css system
-  outdir: 'styled-system',
-  // Tell panda we are importing generated code from @styles/* rather than {outdir}/*
-  importMap: '@styles',
-  // Base present only (excluding panda opinionated presets)
-  presets: ['@pandacss/preset-base'],
-  // Whether to use css reset
-  preflight: true,
-  // Where to look for your css declarations
-  include: ['./src/**/*.{js,jsx,ts,tsx}'],
-  // Files to exclude
-  exclude: [],
-  // Global css declarations
-  globalCss: {
-    html: {
-      '&:has(dialog[open]:modal)': {
-        overflow: 'hidden',
-        '& body': {
-          paddingLeft: 'calc(100vw - 100%)',
-        },
-      },
-    },
-  },
-  // Theme variables
-  theme: {
-    tokens: {
-      fonts: {
-        body: {
-          value: [
-            '"DM Sans"',
-            'system-ui',
-            '-apple-system',
-            '"Segoe UI"',
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            '"Noto Sans"',
-            '"Liberation Sans"',
-            'sans-serif',
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-            '"Noto Color Emoji"',
-          ].join(','),
-        },
-      },
-      colors: {
-        red: { value: '#dc2c10', description: 'txsModal.error' },
-        redOrange: { value: '#da5932', description: 'indicators.error' },
-        orangeBoost: { value: '#db8332', description: 'boost button bg + vaults boost' },
-        orangeWarning: { value: '#d19847', description: 'indicators.warning' },
-        yellow: { value: '#d6d05d', description: 'indicators.loading' },
-        orangeBoostLight: { value: '#e5a66b', description: 'boost button bg hover' },
-        green: { value: '#4db258', description: 'primary main + indicators.success' },
-        greenLight: { value: '#68be71', description: 'primary light' },
-        greenDark: { value: '#004708', description: 'primary dark' },
-        au: { value: '#775744', description: 'tag.boost' },
-        av: { value: '#532f39', description: 'tag.retired' },
-        aw: { value: '#564a46', description: 'tag.paused' },
-        blackOff: { value: '#020203', description: 'footer header' },
-        purpleDarkest: { value: '#121421', description: 'app bg + search input bg' },
-        aa: {
-          value: '#1c1e32',
-          description:
-            'light tooltip text title/content/label/link + contentDark + tooltip dark bg',
-        },
-        aq: { value: '#1e2a48', description: 'vaults clmVault' },
-        ah: { value: '#232644', description: 'dashboard summary icon bg' },
-        ar: { value: '#242032', description: 'vaults inactive' },
-        ab: {
-          value: '#242842',
-          description: 'light tooltip text value + contentPrimary + vaults.default + txsModal.bg',
-        },
-        ap: { value: '#252c63', description: 'vaults clm + vaults clmPool' },
-        ak: { value: '#2d3153', description: 'contentLight' },
-        ao: { value: '#322460', description: 'vaults gov' },
-        ai: { value: '#363b63', description: 'border + button bg' },
-        ay: { value: '#38428f', description: 'tag.platformClm' },
-        az: { value: '#4b388f', description: 'tag.platformGov' },
-        al: { value: '#495086', description: 'button bg hover' },
-        ax: { value: '#5c70d6', description: 'tag.clm + indicators.info' },
-        grayDark: { value: '#999cb3', description: 'text dark' },
-        gray: { value: '#d0d0da', description: 'text middle' },
-        grayLight: { value: '#e5e5e5', description: 'txsModal.bgLine' },
-        whiteOff: { value: '#f5f5f5', description: 'text light' },
-        white: { value: '#ffffff', description: 'text lightest + txsModal.bg' },
-      },
-    },
-    semanticTokens: {
-      colors: {
-        text: {
-          lightest: { value: '{colors.white}' },
-          light: { value: '{colors.whiteOff}' },
-          middle: { value: '{colors.gray}' },
-          dark: { value: '{colors.grayDark}' },
-        },
-        modal: {
-          backdrop: { value: '{colors.white/20}' },
-        },
-        tooltip: {
-          light: {
-            background: { value: '{colors.white}' },
-            text: {
-              DEFAULT: { value: '{colors.aa}' },
-              title: { value: '{colors.aa}' },
-              content: { value: '{colors.aa}' },
-              // value: { value: '{colors.ab}' },
-              label: { value: '{colors.aa}' },
-              link: { value: '{colors.aa}' },
-            },
-          },
-          dark: {
-            background: { value: '{colors.aa}' },
-            text: {
-              DEFAULT: { value: '{colors.whiteOff}' },
-              title: { value: '{colors.white}' },
-              content: { value: '{colors.whiteOff}' },
-              // value: { value: '{colors.gray}' },
-              label: { value: '{colors.whiteOff}' },
-              link: { value: '{colors.white}' },
-            },
+// @dev some changes require running `yarn panda codegen` after
+
+const sansSerifFontStack = [
+  'DM Sans',
+  'ui-sans-serif',
+  'system-ui',
+  '-apple-system',
+  'Segoe UI',
+  'Roboto',
+  'Helvetica Neue',
+  'Arial',
+  'Noto Sans',
+  'Liberation Sans',
+  'sans-serif',
+  'Apple Color Emoji',
+  'Segoe UI Emoji',
+  'Segoe UI Symbol',
+  'Noto Color Emoji',
+]
+  .map(v => (v.includes(' ') ? `"${v}"` : v))
+  .join(', ');
+
+const createZIndexLayer = (layer: number) => {
+  const base = layer * 1000;
+  const next = (layer + 1) * 1000;
+
+  return {
+    DEFAULT: { value: base },
+    tooltip: { value: base + 100 },
+    modal: { value: next },
+  } as const;
+};
+
+const config = buildConfig(
+  // Base config
+  {
+    // Enabled jsx/styled() support
+    jsxFramework: 'react',
+    // jsx/styled() can only be used for recipes
+    jsxStyleProps: 'none',
+    // The output directory for your css system
+    outdir: 'build-tools/styles/generated',
+    // Tell panda we are importing generated code from @styles/* rather than {outdir}/*
+    importMap: '@styles',
+    // Base present only (excluding panda opinionated presets)
+    presets: ['@pandacss/preset-base'],
+    // Whether to use css reset
+    preflight: true,
+    // Where to look for your css declarations
+    include: ['./src/**/*.{js,jsx,ts,tsx}'],
+    // Files to exclude
+    exclude: [],
+    // Global css declarations
+    globalCss: {
+      html: {
+        '--global-font-body': sansSerifFontStack,
+        // '--global-font-mono': '',
+        // '--global-color-border': '',
+        // '--global-color-placeholder': '',
+        '&:has(.modal[data-open="true"])': {
+          overflow: 'hidden',
+          '& body': {
+            paddingLeft: 'calc(100vw - 100%)',
           },
         },
       },
+      button: {
+        color: 'inherit',
+        background: 'none',
+        border: 'none',
+        borderRadius: 0,
+        minWidth: 0,
+        padding: 0,
+        margin: 0,
+        display: 'inline-flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 'fit-content',
+        cursor: 'pointer',
+        userSelect: 'none',
+        boxShadow: 'none',
+        textAlign: 'center',
+        textDecoration: 'none',
+        outline: 'none',
+        '&:focus': {
+          outline: 'none',
+        },
+        '&:disabled,&:hover:disabled,&:active:disabled,&:focus:disabled': {
+          color: 'inherit',
+          background: 'none',
+          border: 'none',
+          pointerEvents: 'none',
+        },
+      },
+      'onboard-v2': {
+        position: 'relative!',
+        zIndex: 'layer1.modal!',
+      },
+      'wcm-modal, #cryptoconnect-extension': {
+        position: 'relative!',
+        zIndex: 'layer2.modal!',
+      },
+    },
+    // Theme variables
+    theme: {
+      breakpoints: {
+        sm: '600px',
+        md: '960px',
+        lg: '1296px',
+        xl: '1920px',
+      },
+      tokens: {
+        fonts: {
+          body: {
+            value: sansSerifFontStack,
+          },
+        },
+        colors: {
+          red: { value: '#dc2c10', description: 'txsModal.error' },
+          redOrange: { value: '#da5932', description: 'indicators.error' },
+          orangeBoost: { value: '#db8332', description: 'boost button bg + vaults boost' },
+          orangeWarning: { value: '#d19847', description: 'indicators.warning' },
+          yellow: { value: '#d6d05d', description: 'indicators.loading' },
+          orangeBoostLight: { value: '#e5a66b', description: 'boost button bg hover' },
+          green: { value: '#4db258', description: 'primary main + indicators.success' },
+          greenLight: { value: '#68be71', description: 'primary light' },
+          greenDark: { value: '#004708', description: 'primary dark' },
+          au: { value: '#775744', description: 'tag.boost' },
+          av: { value: '#532f39', description: 'tag.retired' },
+          aw: { value: '#564a46', description: 'tag.paused' },
+          blackOff: { value: '#020203', description: 'footer header' },
+          purpleDarkest: { value: '#121421', description: 'app bg + search input bg' },
+          aa: {
+            value: '#1c1e32',
+            description:
+              'light tooltip text title/content/label/link + contentDark + tooltip dark bg',
+          },
+          aq: { value: '#1e2a48', description: 'vaults clmVault' },
+          ah: { value: '#232644', description: 'dashboard summary icon bg' },
+          ar: { value: '#242032', description: 'vaults inactive' },
+          ab: {
+            value: '#242842',
+            description: 'light tooltip text value + contentPrimary + vaults.default + txsModal.bg',
+          },
+          ap: { value: '#252c63', description: 'vaults clm + vaults clmPool' },
+          ak: { value: '#2d3153', description: 'contentLight' },
+          ao: { value: '#322460', description: 'vaults gov' },
+          ai: { value: '#363b63', description: 'border + button bg' },
+          ay: { value: '#38428f', description: 'tag.platformClm' },
+          az: { value: '#4b388f', description: 'tag.platformGov' },
+          al: { value: '#495086', description: 'button bg hover' },
+          ax: { value: '#5c70d6', description: 'tag.clm + indicators.info' },
+          grayDark: { value: '#999cb3', description: 'text dark' },
+          gray: { value: '#d0d0da', description: 'text middle' },
+          grayLight: { value: '#e5e5e5', description: 'txsModal.bgLine' },
+          whiteOff: { value: '#f5f5f5', description: 'text light' },
+          white: { value: '#ffffff', description: 'text lightest + txsModal.bg' },
+        },
+        zIndex: {
+          layer0: createZIndexLayer(0),
+          layer1: createZIndexLayer(1),
+          layer2: createZIndexLayer(2),
+        },
+      },
+      semanticTokens: {
+        colors: {
+          text: {
+            lightest: { value: '{colors.white}' },
+            light: { value: '{colors.whiteOff}' },
+            middle: { value: '{colors.gray}' },
+            dark: { value: '{colors.grayDark}' },
+          },
+          background: {
+            contentDark: { value: '{colors.aa}' },
+            contentPrimary: { value: '{colors.ab}' },
+            border: { value: '{colors.ai}' },
+            button: { value: '{colors.ai}' },
+            contentLight: { value: '{colors.ak}' },
+          },
+          modal: {
+            backdrop: { value: '{colors.white/20}' },
+          },
+          tooltip: {
+            light: {
+              background: { value: '{colors.white}' },
+              text: {
+                DEFAULT: { value: '{colors.aa}' },
+                title: { value: '{colors.aa}' },
+                content: { value: '{colors.aa}' },
+                // value: { value: '{colors.ab}' },
+                label: { value: '{colors.aa}' },
+                link: { value: '{colors.aa}' },
+              },
+            },
+            dark: {
+              background: { value: '{colors.aa}' },
+              text: {
+                DEFAULT: { value: '{colors.whiteOff}' },
+                title: { value: '{colors.white}' },
+                content: { value: '{colors.whiteOff}' },
+                // value: { value: '{colors.gray}' },
+                label: { value: '{colors.whiteOff}' },
+                link: { value: '{colors.white}' },
+              },
+            },
+          },
+          searchInput: {
+            background: { value: '{colors.purpleDarkest}' },
+            text: { value: '{colors.gray}' },
+          },
+        },
+      },
+      textStyles: defineTextStyles({
+        'body-lg': {
+          value: {
+            // fontFamily: '{fonts.body}',
+            fontSize: '16px',
+            lineHeight: '24px',
+            textTransform: 'none' as const,
+            fontWeight: 400,
+          },
+        },
+        'body-lg-med': {
+          value: {
+            // fontFamily: '{fonts.body}',
+            fontSize: '16px',
+            lineHeight: '24px',
+            textTransform: 'none' as const,
+            fontWeight: 500,
+          },
+        },
+        'body-sm': {
+          value: {
+            // fontFamily: '{fonts.body}',
+            fontSize: '12px',
+            lineHeight: '20px',
+            textTransform: 'none',
+            fontWeight: 400,
+          },
+        },
+        'body-sm-med': {
+          value: {
+            // fontFamily: '{fonts.body}',
+            fontSize: '12px',
+            lineHeight: '20px',
+            textTransform: 'none',
+            fontWeight: 500,
+          },
+        },
+        'subline-lg': {
+          value: {
+            // fontFamily: '{fonts.body}',
+            fontSize: '15px',
+            lineHeight: '24px',
+            fontWeight: 500,
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+          },
+        },
+        'subline-sm': {
+          value: {
+            // fontFamily: '{fonts.body}',
+            fontSize: '12px',
+            lineHeight: '20px',
+            fontWeight: 500,
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+          },
+        },
+      }),
     },
   },
-});
+  // Custom config which gets merged with the base config
+  {
+    buttons: {
+      default: {
+        base: {
+          color: '{colors.text.light}',
+          background: '{colors.ai}',
+          border: '{colors.ai}',
+        },
+        hover: {
+          background: '{colors.al}',
+          border: '{colors.al}',
+        },
+      },
+      success: {
+        base: {
+          color: '{colors.text.light}',
+          background: '{colors.green}',
+          border: '{colors.green}',
+        },
+        hover: {
+          background: '{colors.greenLight}',
+          border: '{colors.greenLight}',
+        },
+      },
+      boost: {
+        base: {
+          color: '{colors.text.light}',
+          background: '{colors.orangeBoost}',
+          border: '{colors.orangeBoost}',
+        },
+        hover: {
+          background: '{colors.orangeBoostLight}',
+          border: '{colors.orangeBoostLight}',
+        },
+      },
+      filter: {
+        base: {
+          color: '{colors.text.dark}',
+          background: '{colors.background.contentDark}',
+          border: '{colors.background.contentPrimary}',
+        },
+        hover: {
+          color: '{colors.text.middle}',
+        },
+        active: {
+          color: '{colors.text.light}',
+          background: '{colors.background.button}',
+          border: '{colors.background.contentLight}',
+        },
+        disabled: {
+          color: '{colors.text.middle}',
+          border: '{colors.background.contentPrimary}',
+        },
+      },
+    },
+  }
+);
+
+export default defineConfig(config);

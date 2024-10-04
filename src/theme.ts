@@ -298,18 +298,6 @@ const theme = createTheme(
           body: {
             backgroundColor: '#121420',
           },
-          'onboard-v2': {
-            // @ts-ignore need to force above other modals
-            position: 'relative !important' as PositionProperty,
-            // @ts-ignore need to force above other modals
-            zIndex: '1400 !important' as ZIndexProperty,
-          },
-          'wcm-modal, #cryptoconnect-extension': {
-            // @ts-ignore need to force above other modals
-            position: 'relative !important' as PositionProperty,
-            // @ts-ignore need to force above other modals
-            zIndex: '1500 !important' as ZIndexProperty,
-          },
         },
       },
       MuiInputBase: {

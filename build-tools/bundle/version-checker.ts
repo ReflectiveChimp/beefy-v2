@@ -18,7 +18,7 @@ type WindowType = Window & {
   __beefyHandleNewVersion?: HandleNewVersionFn;
 };
 
-(function (localVersion) {
+(function (localVersion: BuildVersion) {
   const handleNewVersionFallback: HandleNewVersionFn = async (
     _currentVersion: BuildVersion,
     newVersion: BuildVersion,
@@ -53,7 +53,7 @@ type WindowType = Window & {
       return typedWindow.__beefyHandleNewVersion || handleNewVersionFallback;
     };
   })();
-  const handleNewVersion = async newVersion => {
+  const handleNewVersion = async (newVersion: BuildVersion) => {
     const currentDate = new Date(localVersion.timestamp * 1000).toLocaleString();
     const newDate = new Date(newVersion.timestamp * 1000).toLocaleString();
     const newVersionMessage = `A new version of the app is available.\n\nYou have version ${
@@ -72,7 +72,7 @@ type WindowType = Window & {
   const checkForUpdate = async () => {
     try {
       const response = await fetch(`/version.json`, { cache: 'no-store' });
-      const latestVersion = await response.json();
+      const latestVersion = (await response.json()) as BuildVersion;
       const isNewer = latestVersion.timestamp > localVersion.timestamp;
       const isContentDifferent = latestVersion.content !== localVersion.content;
       const isGitDifferent =

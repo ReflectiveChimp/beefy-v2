@@ -1,6 +1,5 @@
-import { IconButton, makeStyles } from '@material-ui/core';
-import { memo, useCallback, useRef } from 'react';
-import { styles } from './styles';
+import { IconButton } from '@material-ui/core';
+import { memo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { Modal } from '../Modal';
 import {
@@ -13,18 +12,50 @@ import { addToWalletActions } from '../../features/data/reducers/add-to-wallet';
 import { Card, CardContent, CardHeader, CardTitle } from '../../features/vault/components/Card';
 import CloseIcon from '@material-ui/icons/Close';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
-import { FileCopy } from '@material-ui/icons';
-import {
-  selectCurrentChainId,
-  selectIsWalletConnected,
-} from '../../features/data/selectors/wallet';
-import { askForNetworkChange, askForWalletConnection } from '../../features/data/actions/wallet';
-import { getWalletConnectionApi } from '../../features/data/apis/instances';
-import { Button } from '../Button';
-import { selectChainById } from '../../features/data/selectors/chains';
+import { AddTokenForm } from './AddTokenForm';
+import { css } from '@styles/css';
 
-const useStyles = makeStyles(styles);
+const classes = {
+  card: css({
+    margin: 0,
+    outline: 'none',
+    maxHeight: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    width: '500px',
+    maxWidth: '100%',
+  }),
+  cardHeader: css({
+    display: 'flex',
+    alignItems: 'center',
+    padding: '18px 24px',
+    background: 'background.contentDark',
+    borderRadius: '10px 10px 0px 0px ',
+    borderBottom: `2px solid {background.border}`,
+  }),
+  cardIcon: css({
+    marginRight: '8px',
+    height: '32px',
+  }),
+  cardTitle: css({
+    color: 'text.light',
+    marginRight: 'auto',
+  }),
+  closeButton: css({
+    '&:hover': {
+      background: 'none',
+    },
+  }),
+  cardContent: css({
+    background: 'background.contentPrimary',
+    borderRadius: '0 0 12px 12px',
+    padding: '24px',
+    minHeight: '200px',
+    flexShrink: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  }),
+};
 
 const Pending = memo(function Pending() {
   return <div>Pending</div>;
@@ -35,114 +66,8 @@ const Rejected = memo(function Rejected() {
   return <div>Error: {error?.message || 'unknown error'}</div>;
 });
 
-type CopyTextProps = {
-  className?: string;
-  value: string;
-};
-
-const CopyText = memo<CopyTextProps>(function CopyText({ className, value }) {
-  const classes = useStyles();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const handleCopy = useCallback(() => {
-    if (inputRef.current) {
-      inputRef.current.select();
-    }
-    navigator.clipboard.writeText(value).catch(e => console.error(e));
-  }, [value, inputRef]);
-
-  return (
-    <div className={clsx(classes.copyText, className)}>
-      <input type="text" readOnly className={classes.copyTextInput} value={value} ref={inputRef} />
-      <button className={classes.copyTextButton} onClick={handleCopy}>
-        <FileCopy />
-      </button>
-    </div>
-  );
-});
-
-const Fulfilled = memo(function Fulfilled() {
-  const classes = useStyles();
-  const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-  const iconUrl = useAppSelector(selectAddToWalletIconUrl);
-  const token = useAppSelector(selectAddToWalletToken);
-  const { symbol, chainId, address, decimals } = token;
-  const chain = useAppSelector(state => selectChainById(state, chainId));
-  const isWalletConnected = useAppSelector(selectIsWalletConnected);
-  const currentChainId = useAppSelector(selectCurrentChainId);
-  const isWalletConnectedCorrectChain = isWalletConnected && currentChainId === chainId;
-
-  const handleAddToken = useCallback(() => {
-    const perform = async () => {
-      const walletApi = await getWalletConnectionApi();
-      const web3 = await walletApi.getConnectedWeb3Instance();
-      const currentProvider = web3.currentProvider;
-      if (
-        currentProvider &&
-        typeof currentProvider === 'object' &&
-        'request' in currentProvider &&
-        typeof currentProvider.request === 'function'
-      ) {
-        await currentProvider.request({
-          method: 'wallet_watchAsset',
-          params: {
-            type: 'ERC20',
-            options: {
-              chainId,
-              address,
-              symbol,
-              decimals,
-              image: iconUrl,
-            },
-          },
-        });
-      }
-    };
-    perform().catch(err => console.error(err));
-  }, [address, symbol, decimals, iconUrl, chainId]);
-
-  const handleConnect = useCallback(() => {
-    if (!isWalletConnected) {
-      dispatch(askForWalletConnection());
-    }
-  }, [dispatch, isWalletConnected]);
-
-  const handleNetworkChange = useCallback(() => {
-    dispatch(askForNetworkChange({ chainId }));
-  }, [dispatch, chainId]);
-
-  const handleClick = isWalletConnectedCorrectChain
-    ? handleAddToken
-    : isWalletConnected
-    ? handleNetworkChange
-    : handleConnect;
-
-  return (
-    <>
-      <div className={classes.tokenDetails}>
-        <div className={classes.tokenLabel}>{t('Token-Symbol')}</div>
-        <CopyText className={classes.tokenValue} value={token.symbol} />
-        <div className={classes.tokenLabel}>{t('Token-Address')}</div>
-        <CopyText className={classes.tokenValue} value={token.address} />
-        <div className={classes.tokenLabel}>{t('Token-Decimals')}</div>
-        <CopyText className={classes.tokenValue} value={token.decimals.toString()} />
-      </div>
-      <div className={classes.buttons}>
-        <Button variant="success" fullWidth={true} borderless={true} onClick={handleClick}>
-          {isWalletConnectedCorrectChain
-            ? t('Add-To-Wallet')
-            : isWalletConnected
-            ? t('Network-Change', { network: chain.name })
-            : t('Network-ConnectWallet')}
-        </Button>
-      </div>
-    </>
-  );
-});
-
 const FulfilledCardTitle = memo(function FulfilledCardTitle() {
   const { t } = useTranslation();
-  const classes = useStyles();
   const token = useAppSelector(selectAddToWalletToken);
   const iconUrl = useAppSelector(selectAddToWalletIconUrl);
 
@@ -159,14 +84,12 @@ const FulfilledCardTitle = memo(function FulfilledCardTitle() {
 
 const PendingCardTitle = memo(function PendingCardTitle() {
   const { t } = useTranslation();
-  const classes = useStyles();
 
   return <CardTitle title={t('Add-To-Wallet')} titleClassName={classes.cardTitle} />;
 });
 
 export const AddTokenToWallet = memo(function AddTokenToWallet() {
   const dispatch = useAppDispatch();
-  const classes = useStyles();
   const status = useAppSelector(selectAddToWalletStatus);
   const isOpen = status !== 'idle';
 
@@ -186,7 +109,7 @@ export const AddTokenToWallet = memo(function AddTokenToWallet() {
         <CardContent className={classes.cardContent}>
           {status === 'pending' && <Pending />}
           {status === 'rejected' && <Rejected />}
-          {status === 'fulfilled' && <Fulfilled />}
+          {status === 'fulfilled' && <AddTokenForm />}
         </CardContent>
       </Card>
     </Modal>

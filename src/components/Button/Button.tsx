@@ -1,81 +1,34 @@
-import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 import { forwardRef, memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
 import clsx from 'clsx';
-import type { LinkProps } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { css } from '@styles/css';
+import { buttonRecipe, type MakeButtonProps } from './recipe';
 
-const useStyles = makeStyles(styles);
+type ButtonElementProps = DetailedHTMLProps<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;
 
-export type CommonButtonProps = {
-  children: ReactNode;
-  className?: string;
-  borderless?: boolean;
-  fullWidth?: boolean;
-  active?: boolean;
-  variant?: 'default' | 'filter' | 'success' | 'light' | 'middle' | 'boost';
-  component?: 'button' | 'a';
-  size?: 'sm' | 'lg';
-};
-
-export type ButtonProps = CommonButtonProps &
-  DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
-
-export type ButtonLinkProps = CommonButtonProps & LinkProps;
+export type ButtonProps = MakeButtonProps<ButtonElementProps>;
 
 export const Button = memo(
   forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-    {
-      children,
-      className,
-      borderless = false,
-      fullWidth = false,
-      active = false,
-      variant = 'default',
-      size = 'lg',
-      ...rest
-    },
+    { children, className, variant = 'default', ...props },
     ref
   ) {
-    const classes = useStyles();
-
+    const [styleProps, rest] = buttonRecipe.splitVariantProps(props);
     return (
       <button
         {...rest}
         ref={ref}
-        className={clsx(classes.button, classes[variant], className, {
-          [classes.borderless]: borderless,
-          [classes.fullWidth]: fullWidth,
-          [classes.active]: active,
-          [classes.sm]: size === 'sm',
-        })}
+        className={clsx(
+          css({ colorPalette: `buttons.${variant}` }),
+          buttonRecipe(styleProps),
+          className
+        )}
       >
         {children}
       </button>
     );
   })
 );
-
-export const ButtonLink = memo<ButtonLinkProps>(function ButtonLink({
-  children,
-  className,
-  borderless = false,
-  fullWidth = false,
-  variant = 'default',
-  ...rest
-}) {
-  const classes = useStyles();
-
-  return (
-    <Link
-      {...rest}
-      className={clsx(classes.button, classes[variant], className, {
-        [classes.borderless]: borderless,
-        [classes.fullWidth]: fullWidth,
-      })}
-    >
-      {children}
-    </Link>
-  );
-});

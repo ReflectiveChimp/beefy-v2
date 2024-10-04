@@ -34,6 +34,7 @@ export const styles = (theme: Theme) => ({
     flexShrink: 1,
     display: 'flex',
     flexDirection: 'column' as const,
+    gap: '24px',
   },
   gridScroller: {
     flexShrink: 1,
@@ -55,9 +56,7 @@ export const styles = (theme: Theme) => ({
       gridTemplateColumns: 'repeat(5, 1fr)',
     },
   },
-  closeButton: {
-    marginTop: '32px',
-  },
+  closeButton: {},
   chain: {
     display: 'flex',
     alignItems: 'center',

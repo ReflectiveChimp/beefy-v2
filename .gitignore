@@ -13,5 +13,4 @@ yarn-error.log
 /scripts/.cache/
 
 ## Panda
-styled-system
-styled-system-studio
+/build-tools/styles/generated/

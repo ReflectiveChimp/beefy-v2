@@ -21,7 +21,7 @@ export const SimulateForm = memo(function CallsForm() {
   return (
     <VerticalLayout>
       <ErrorMessage />
-      <Button variant={'light'} onClick={handleEditCredentials}>
+      <Button variant={'success'} onClick={handleEditCredentials}>
         Edit Credentials
       </Button>
     </VerticalLayout>

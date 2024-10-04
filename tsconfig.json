@@ -22,7 +22,7 @@
     "verbatimModuleSyntax": true,
     "strictNullChecks": true,
     "paths": {
-      "@styles/*": ["./styled-system/*"]
+      "@styles/*": ["./build-tools/styles/generated/*"]
     }
   },
   "include": ["src", "styled-system"],

@@ -6,7 +6,7 @@ import svgrPlugin from 'vite-plugin-svgr';
 import eslint from 'vite-plugin-eslint';
 import { visualizer } from 'rollup-plugin-visualizer';
 import * as path from 'node:path';
-import versionPlugin from './version-plugin';
+import versionPlugin from './build-tools/bundle/version-plugin';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 const optionalPlugins: Plugin[] = [];
