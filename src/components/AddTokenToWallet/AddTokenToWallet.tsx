@@ -13,49 +13,52 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../features/vault/c
 import CloseIcon from '@material-ui/icons/Close';
 import { useTranslation } from 'react-i18next';
 import { AddTokenForm } from './AddTokenForm';
-import { css } from '@styles/css';
+import { sva } from '@styles/css';
 
-const classes = {
-  card: css({
-    margin: 0,
-    outline: 'none',
-    maxHeight: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    width: '500px',
-    maxWidth: '100%',
-  }),
-  cardHeader: css({
-    display: 'flex',
-    alignItems: 'center',
-    padding: '18px 24px',
-    background: 'background.contentDark',
-    borderRadius: '10px 10px 0px 0px ',
-    borderBottom: `2px solid {background.border}`,
-  }),
-  cardIcon: css({
-    marginRight: '8px',
-    height: '32px',
-  }),
-  cardTitle: css({
-    color: 'text.light',
-    marginRight: 'auto',
-  }),
-  closeButton: css({
-    '&:hover': {
-      background: 'none',
+const useStyles = sva({
+  slots: ['card', 'cardHeader', 'cardIcon', 'cardTitle', 'closeButton', 'cardContent'],
+  base: {
+    card: {
+      margin: 0,
+      outline: 'none',
+      maxHeight: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      width: '500px',
+      maxWidth: '100%',
     },
-  }),
-  cardContent: css({
-    background: 'background.contentPrimary',
-    borderRadius: '0 0 12px 12px',
-    padding: '24px',
-    minHeight: '200px',
-    flexShrink: 1,
-    display: 'flex',
-    flexDirection: 'column',
-  }),
-};
+    cardHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: '18px 24px',
+      background: 'background.contentDark',
+      borderRadius: '10px 10px 0px 0px ',
+      borderBottom: `2px solid {background.border}`,
+    },
+    cardIcon: {
+      marginRight: '8px',
+      height: '32px',
+    },
+    cardTitle: {
+      color: 'text.light',
+      marginRight: 'auto',
+    },
+    closeButton: {
+      '&:hover': {
+        background: 'none',
+      },
+    },
+    cardContent: {
+      background: 'background.contentPrimary',
+      borderRadius: '0 0 12px 12px',
+      padding: '24px',
+      minHeight: '200px',
+      flexShrink: 1,
+      display: 'flex',
+      flexDirection: 'column',
+    },
+  },
+});
 
 const Pending = memo(function Pending() {
   return <div>Pending</div>;
@@ -67,29 +70,32 @@ const Rejected = memo(function Rejected() {
 });
 
 const FulfilledCardTitle = memo(function FulfilledCardTitle() {
+  const classes = useStyles();
   const { t } = useTranslation();
   const token = useAppSelector(selectAddToWalletToken);
   const iconUrl = useAppSelector(selectAddToWalletIconUrl);
 
   return (
     <>
-      {iconUrl && <img src={iconUrl} alt={token.symbol} height={32} className={classes.cardIcon} />}
+      {iconUrl && <img className={classes.cardIcon} src={iconUrl} alt={token.symbol} height={32} />}
       <CardTitle
+        className={classes.cardTitle}
         title={t('Add-Token-To-Wallet', { token: token.symbol })}
-        titleClassName={classes.cardTitle}
       />
     </>
   );
 });
 
 const PendingCardTitle = memo(function PendingCardTitle() {
+  const classes = useStyles();
   const { t } = useTranslation();
 
-  return <CardTitle title={t('Add-To-Wallet')} titleClassName={classes.cardTitle} />;
+  return <CardTitle className={classes.cardTitle} title={t('Add-To-Wallet')} />;
 });
 
 export const AddTokenToWallet = memo(function AddTokenToWallet() {
   const dispatch = useAppDispatch();
+  const classes = useStyles();
   const status = useAppSelector(selectAddToWalletStatus);
   const isOpen = status !== 'idle';
 

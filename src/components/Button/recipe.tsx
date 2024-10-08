@@ -1,7 +1,4 @@
-import type { ReactNode } from 'react';
 import { cva } from '@styles/css';
-import type { UtilityValues } from '@styles/types/prop-type';
-import type { RecipeVariantProps } from '@styles/types';
 
 export const buttonRecipe = cva({
   base: {
@@ -52,6 +49,20 @@ export const buttonRecipe = cva({
       false: {},
       true: {},
     },
+    variant: {
+      default: {
+        colorPalette: 'buttons.default',
+      },
+      filter: {
+        colorPalette: 'buttons.filter',
+      },
+      success: {
+        colorPalette: 'buttons.success',
+      },
+      boost: {
+        colorPalette: 'buttons.boost',
+      },
+    },
   },
   compoundVariants: [
     {
@@ -76,22 +87,3 @@ export const buttonRecipe = cva({
     active: false,
   },
 });
-
-type ButtonVariant = {
-  [K in UtilityValues['colorPalette']]: K extends `buttons.${string}.${string}`
-    ? never
-    : K extends `buttons.${infer T}`
-    ? T
-    : never;
-}[UtilityValues['colorPalette']];
-
-type RecipeProps = Exclude<RecipeVariantProps<typeof buttonRecipe>, undefined>;
-
-type BaseProps = {
-  children: ReactNode;
-  className?: string;
-  /** @dev To add a new variant, see panda.config.ts */
-  variant?: ButtonVariant;
-};
-
-export type MakeButtonProps<T> = T & BaseProps & RecipeProps;

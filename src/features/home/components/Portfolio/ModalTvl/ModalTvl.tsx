@@ -45,7 +45,7 @@ export const ModalTvl = memo<ModalTvlProps>(function ModalTvl({ close }: ModalTv
   return (
     <Card className={classes.card}>
       <CardHeader className={classes.header}>
-        <CardTitle titleClassName={classes.title} title={t('TVL-bychain')} />
+        <CardTitle className={classes.title} title={t('TVL-bychain')} />
         <IconButton
           className={classes.closeIcon}
           onClick={close}

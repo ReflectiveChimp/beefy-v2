@@ -1,4 +1,4 @@
-import { type Config, type CssRule, type SemanticTokens, type Tokens } from '@pandacss/types';
+import { type Config, type SemanticTokens, type Tokens } from '@pandacss/types';
 import { defaults, mapValues } from 'lodash';
 
 export type ButtonColors = { color: string; background: string; border: string };
@@ -42,19 +42,6 @@ function buildButtonsColors(buttons: Record<string, Button>): SemanticTokens['co
   }));
 }
 
-function buildButtonsStaticCss(buttons: Record<string, Button>): CssRule | undefined {
-  const variants = Object.keys(buttons);
-  if (variants.length === 0) {
-    return undefined;
-  }
-
-  return {
-    properties: {
-      colorPalette: variants.map(variant => `buttons.${variant}`),
-    },
-  };
-}
-
 function addButtons(config: Config, buttons: Record<string, Button>): Config {
   config.theme ??= {};
   config.theme.semanticTokens ??= {};
@@ -63,13 +50,6 @@ function addButtons(config: Config, buttons: Record<string, Button>): Config {
     ...(config.theme.semanticTokens.colors.buttons || {}),
     ...buildButtonsColors(buttons),
   };
-
-  const cssRule = buildButtonsStaticCss(buttons);
-  if (cssRule) {
-    config.staticCss ??= {};
-    config.staticCss.css ??= [];
-    config.staticCss.css.push(cssRule);
-  }
 
   return config;
 }

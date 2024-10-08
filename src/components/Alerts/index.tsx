@@ -1,24 +1,16 @@
-import type { ReactNode } from 'react';
 import { memo } from 'react';
-import {
-  ErrorOutline,
-  InfoOutlined,
-  ReportProblemOutlined,
-  type SvgIconComponent,
-} from '@material-ui/icons';
+import { ErrorOutline, InfoOutlined, ReportProblemOutlined } from '@material-ui/icons';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { alertRecipe } from './recipe';
+import type { AlertProps, AlertVariantProps } from './types';
 
-const useStyles = makeStyles(styles);
-
-export type AlertProps = {
-  IconComponent: SvgIconComponent;
-  children: ReactNode;
-  className?: string;
-};
-export const Alert = memo<AlertProps>(function Alert({ IconComponent, className, children }) {
-  const classes = useStyles();
+export const Alert = memo<AlertProps>(function Alert({
+  IconComponent,
+  className,
+  children,
+  variant,
+}) {
+  const classes = alertRecipe({ variant });
 
   return (
     <div className={clsx(classes.alert, className)}>
@@ -28,44 +20,17 @@ export const Alert = memo<AlertProps>(function Alert({ IconComponent, className,
   );
 });
 
-export const AlertWarning = memo<Omit<AlertProps, 'IconComponent'>>(function AlertWarning({
-  className,
-  children,
-}) {
-  const classes = useStyles();
-  return (
-    <Alert
-      IconComponent={ErrorOutline}
-      children={children}
-      className={clsx(classes.warning, className)}
-    />
-  );
-});
+function makeAlertVariant(staticProps: Pick<AlertProps, 'IconComponent' | 'variant'>) {
+  const component = function AlertVariant(props: AlertVariantProps) {
+    return <Alert {...staticProps} {...props} />;
+  };
+  component.displayName = `Alert.${staticProps.variant}`;
+  return memo(component);
+}
 
-export const AlertError = memo<Omit<AlertProps, 'IconComponent'>>(function AlertError({
-  className,
-  children,
-}) {
-  const classes = useStyles();
-  return (
-    <Alert
-      IconComponent={ReportProblemOutlined}
-      children={children}
-      className={clsx(classes.error, className)}
-    />
-  );
-});
-
-export const AlertInfo = memo<Omit<AlertProps, 'IconComponent'>>(function AlertWarning({
-  className,
-  children,
-}) {
-  const classes = useStyles();
-  return (
-    <Alert
-      IconComponent={InfoOutlined}
-      children={children}
-      className={clsx(classes.info, className)}
-    />
-  );
+export const AlertInfo = makeAlertVariant({ variant: 'info', IconComponent: InfoOutlined });
+export const AlertWarning = makeAlertVariant({ variant: 'warning', IconComponent: ErrorOutline });
+export const AlertError = makeAlertVariant({
+  variant: 'error',
+  IconComponent: ReportProblemOutlined,
 });

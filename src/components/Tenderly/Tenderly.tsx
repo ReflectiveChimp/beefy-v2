@@ -56,7 +56,7 @@ const TenderlyModal = memo<TenderlyModalProps>(function TenderlyModal({ mode, on
     <Card className={classes.card}>
       <CardHeader className={classes.cardHeader}>
         <img src={logoUrl} alt="" width={24} height={24} className={classes.cardIcon} />
-        <CardTitle title="Tenderly Simulation" titleClassName={classes.cardTitle} />
+        <CardTitle title="Tenderly Simulation" className={classes.cardTitle} />
         <IconButton onClick={onClose} aria-label="close" className={classes.closeButton}>
           <CloseIcon htmlColor="#999CB3" />
         </IconButton>

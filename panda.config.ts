@@ -182,6 +182,11 @@ const config = buildConfig(
             button: { value: '{colors.ai}' },
             contentLight: { value: '{colors.ak}' },
           },
+          alert: {
+            error: { value: '{colors.redOrange}' },
+            warning: { value: '{colors.orangeWarning}' },
+            info: { value: '{colors.ax}' },
+          },
           modal: {
             backdrop: { value: '{colors.white/20}' },
           },

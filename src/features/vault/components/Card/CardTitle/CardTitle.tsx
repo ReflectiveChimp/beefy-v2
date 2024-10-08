@@ -6,7 +6,7 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const CardTitle: FC<CardTitleProps> = ({ title, subtitle, titleClassName }) => {
+export const CardTitle: FC<CardTitleProps> = ({ title, subtitle, className }) => {
   const classes = useStyles();
 
   return (
@@ -14,7 +14,7 @@ export const CardTitle: FC<CardTitleProps> = ({ title, subtitle, titleClassName 
       {typeof title === 'object' ? (
         <>{title}</>
       ) : (
-        <h2 className={clsx(classes.title, titleClassName)}>{title}</h2>
+        <h2 className={clsx(classes.title, className)}>{title}</h2>
       )}
       {subtitle && <div className={classes.subtitle}>{subtitle}</div>}
     </>
