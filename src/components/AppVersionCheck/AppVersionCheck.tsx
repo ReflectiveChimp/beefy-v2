@@ -1,14 +1,11 @@
 import { memo, useCallback, useEffect, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { versionCheckRecipe } from './recipe';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { type BuildVersion, setUpdateAvailable } from '../../features/data/reducers/ui-version';
 import { selectAppVersionInfo } from '../../features/data/selectors/version';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../Button';
 import { featureFlag_simUpdate } from '../../features/data/utils/feature-flags';
-
-const useStyles = makeStyles(styles);
 
 declare global {
   interface Window {
@@ -23,7 +20,7 @@ declare global {
 
 export const AppVersionCheck = memo(function AppVersionCheck() {
   const { t } = useTranslation();
-  const classes = useStyles();
+  const classes = versionCheckRecipe();
   const dispatch = useAppDispatch();
   const app = useAppSelector(selectAppVersionInfo);
   const message = useMemo(() => {

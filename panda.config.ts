@@ -337,7 +337,8 @@ const config = buildConfig(
       },
     },
     zIndex: {
-      tooltip: 800,
+      tooltip: 700,
+      version: 800,
       modal: 900,
     },
   }
