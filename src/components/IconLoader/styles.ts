@@ -1,4 +1,4 @@
-import { DEFAULT_SIZE } from '../AssetsImage/styles';
+import { defaultSize } from '../AssetsImage/config';
 
 export const styles = () => ({
   '@keyframes scrollBackground': {
@@ -20,7 +20,7 @@ export const styles = () => ({
     animationIterationCount: 'infinite',
     animationTimingFunction: 'ease',
     borderRadius: '50%',
-    width: DEFAULT_SIZE,
-    height: DEFAULT_SIZE,
+    width: defaultSize,
+    height: defaultSize,
   },
 });

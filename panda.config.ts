@@ -166,6 +166,9 @@ const config = buildConfig(
           whiteOff: { value: '#f5f5f5', description: 'text light' },
           white: { value: '#ffffff', description: 'text lightest + txsModal.bg' },
         },
+        sizes: {
+          defaultAssetsImageSize: { value: '48px' },
+        },
       },
       semanticTokens: {
         colors: {
