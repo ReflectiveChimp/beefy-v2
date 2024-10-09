@@ -1,27 +1,12 @@
-import { memo, useCallback } from 'react';
-
-import { selectUserDepositedVaultIdsForAsset } from '../../../features/data/selectors/balance';
-import { useAppSelector } from '../../../store';
+import { memo } from 'react';
 import { AssetsImage } from '../../AssetsImage';
-import { selectVaultById } from '../../../features/data/selectors/vaults';
-import type { VaultEntity } from '../../../features/data/entities/vault';
-import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
-import { Banner } from '../Banner';
-import { ExternalLink } from '../Links/Links';
+import { DismissibleBanner } from '../Banner';
+import { ExternalLink } from '../Links/ExternalLink';
 
-const BusdBanner = memo(function BusdBanner() {
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideBusdBanner', false);
-
-  const closeBanner = useCallback(() => {
-    setHideBanner(true);
-  }, [setHideBanner]);
-
-  if (hideBanner) {
-    return null;
-  }
-
+export const BusdBanner = memo(function BusdBanner() {
   return (
-    <Banner
+    <DismissibleBanner
+      id={'busd-retirement'}
       icon={<AssetsImage chainId={'bsc'} assetSymbols={['BUSD']} size={24} />}
       text={
         <>
@@ -34,20 +19,6 @@ const BusdBanner = memo(function BusdBanner() {
           </ExternalLink>
         </>
       }
-      onClose={closeBanner}
     />
   );
-});
-
-export const BusdBannerHome = memo(function BusdBannerHome() {
-  const vaultIds = useAppSelector(state => selectUserDepositedVaultIdsForAsset(state, 'BUSD'));
-  return vaultIds.length ? <BusdBanner /> : null;
-});
-
-export type BusdBannerVaultProps = {
-  vaultId: VaultEntity['id'];
-};
-export const BusdBannerVault = memo<BusdBannerVaultProps>(function BusdBannerVault({ vaultId }) {
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  return vault.assetIds.includes('BUSD') ? <BusdBanner /> : null;
 });

@@ -1,19 +1,9 @@
-import type { ReactNode } from 'react';
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import clsx from 'clsx';
-import { styles } from './styles';
+import { bannerRecipe } from './styles';
+import type { BannerProps } from './types';
 
-const useStyles = makeStyles(styles);
-
-export type BannerProps = {
-  icon?: ReactNode;
-  text: ReactNode;
-  onClose?: () => void;
-  className?: string;
-  variant?: 'info' | 'warning' | 'error';
-};
 export const Banner = memo<BannerProps>(function Banner({
   icon,
   text,
@@ -21,10 +11,10 @@ export const Banner = memo<BannerProps>(function Banner({
   variant = 'info',
   className,
 }) {
-  const classes = useStyles();
+  const classes = bannerRecipe({ variant });
 
   return (
-    <div className={clsx(classes.banner, classes[variant || 'info'], className)}>
+    <div className={clsx(classes.banner, className)}>
       <div className={classes.box}>
         <div className={classes.content}>
           {icon ? <div className={classes.icon}>{icon}</div> : null}

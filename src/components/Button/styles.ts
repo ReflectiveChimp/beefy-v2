@@ -2,6 +2,7 @@ import { cva } from '@styles/css';
 
 export const buttonRecipe = cva({
   base: {
+    colorPalette: 'buttons.default',
     color: 'colorPalette.color',
     backgroundColor: 'colorPalette.background',
     borderColor: 'colorPalette.border',

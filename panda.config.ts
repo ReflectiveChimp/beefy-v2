@@ -184,6 +184,8 @@ const config = buildConfig(
             border: { value: '{colors.ai}' },
             button: { value: '{colors.ai}' },
             contentLight: { value: '{colors.ak}' },
+            header: { value: '{colors.blackOff}' },
+            footer: { value: '{colors.blackOff}' },
           },
           alert: {
             error: { value: '{colors.redOrange}' },

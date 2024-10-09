@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useMemo } from 'react';
-import { versionCheckRecipe } from './recipe';
+import { versionCheckRecipe } from './styles';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { type BuildVersion, setUpdateAvailable } from '../../features/data/reducers/ui-version';
 import { selectAppVersionInfo } from '../../features/data/selectors/version';

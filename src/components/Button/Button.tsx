@@ -1,4 +1,4 @@
 import { styled } from '@styles/jsx';
-import { buttonRecipe } from './recipe';
+import { buttonRecipe } from './styles';
 
 export const Button = styled('button', buttonRecipe);

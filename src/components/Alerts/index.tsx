@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { ErrorOutline, InfoOutlined, ReportProblemOutlined } from '@material-ui/icons';
 import clsx from 'clsx';
-import { alertRecipe } from './recipe';
+import { alertRecipe } from './styles';
 import type { AlertProps, AlertVariantProps } from './types';
 
 export const Alert = memo<AlertProps>(function Alert({

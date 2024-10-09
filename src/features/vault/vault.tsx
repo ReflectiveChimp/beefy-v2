@@ -23,10 +23,10 @@ import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
 import { VaultMeta } from '../../components/Meta/VaultMeta';
 import { PnLGraphIfWallet } from './components/PnLGraph/PnLGraphIfWallet';
 import { Explainer } from './components/Explainer/Explainer';
-import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
 import { featureFlag_disableRedirect } from '../data/utils/feature-flags';
 import { GamingCards } from './components/GamingCards';
 import { Container } from '../../components/Container/Container';
+import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner';
 import { Details } from './components/Details';
 
 const useStyles = makeStyles(styles);

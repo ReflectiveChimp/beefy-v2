@@ -1,6 +1,6 @@
 import type { SvgIconComponent } from '@material-ui/icons';
 import type { ReactNode } from 'react';
-import type { AlertRecipe } from './recipe';
+import type { AlertRecipe } from './styles';
 import type {
   RecipeVariantFn,
   RecipeVariantProps,
