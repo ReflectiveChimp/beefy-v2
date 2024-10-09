@@ -168,6 +168,12 @@ const config = buildConfig(
         },
         sizes: {
           defaultAssetsImageSize: { value: '48px' },
+          container: {
+            xs: { value: '444px' },
+            sm: { value: '600px' },
+            md: { value: '960px' },
+            lg: { value: '1296px' },
+          },
         },
       },
       semanticTokens: {
