@@ -67,7 +67,7 @@ const config = buildConfig(
         // '--global-font-mono': '',
         // '--global-color-border': '',
         // '--global-color-placeholder': '',
-        '&:has(.modal[data-open="true"])': {
+        '&:has(.disable-scroll)': {
           overflow: 'hidden',
           '& body': {
             paddingLeft: 'calc(100vw - 100%)',
@@ -109,6 +109,14 @@ const config = buildConfig(
       'wcm-modal, #cryptoconnect-extension': {
         position: 'relative!',
         zIndex: 'layer2.modal!',
+      },
+    },
+    // Extend condition helpers
+    conditions: {
+      extend: {
+        // React Router sets aria-current="page" on the active link
+        // Floating UI sets aria-expanded="true" on the button when open
+        active: '&:is(:active, [data-active], [aria-current="page"], [aria-expanded="true"])',
       },
     },
     // Theme variables
@@ -185,18 +193,24 @@ const config = buildConfig(
             dark: { value: '{colors.grayDark}' },
           },
           background: {
+            header: { value: '{colors.blackOff}' },
+            body: { value: '{colors.purpleDarkest}' },
+            footer: { value: '{colors.blackOff}' },
             contentDark: { value: '{colors.aa}' },
             contentPrimary: { value: '{colors.ab}' },
             border: { value: '{colors.ai}' },
             button: { value: '{colors.ai}' },
             contentLight: { value: '{colors.ak}' },
-            header: { value: '{colors.blackOff}' },
-            footer: { value: '{colors.blackOff}' },
           },
           alert: {
             error: { value: '{colors.redOrange}' },
             warning: { value: '{colors.orangeWarning}' },
             info: { value: '{colors.ax}' },
+          },
+          indicators: {
+            loading: { value: '{colors.yellow}' },
+            warning: { value: '{colors.orangeWarning}' },
+            success: { value: '{colors.green}' },
           },
           modal: {
             backdrop: { value: '{colors.white/20}' },
@@ -289,6 +303,12 @@ const config = buildConfig(
           },
         },
       }),
+      keyframes: {
+        loadingPulse: {
+          from: { transform: 'scale(0.5, 0.5)', opacity: '0.7' },
+          to: { transform: 'scale(3.0, 3.0)', opacity: '0' },
+        },
+      },
     },
   },
   // Custom config which gets merged with the base config
@@ -348,6 +368,7 @@ const config = buildConfig(
       },
     },
     zIndex: {
+      dropdown: 600,
       tooltip: 700,
       version: 800,
       modal: 900,

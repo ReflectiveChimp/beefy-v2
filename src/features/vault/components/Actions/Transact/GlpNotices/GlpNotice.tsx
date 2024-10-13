@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { memo, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useAsync } from '../../../../../../helpers/useAsync';
+import { useAsync } from '../../../../../../helpers/hooks/useAsync';
 import { AlertError, AlertWarning } from '../../../../../../components/Alerts';
 import { TimeUntil } from '../../../../../../components/TimeUntil';
 import type { UnlockTimeResult } from './types';

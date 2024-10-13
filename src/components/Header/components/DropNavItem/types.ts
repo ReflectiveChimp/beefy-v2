@@ -12,6 +12,11 @@ type BaseNavItemProps = {
 
 export type NavItemProps = BaseNavItemProps & {
   url: string;
+  mobile?: boolean;
+};
+
+export type NavItemInnerProps = Pick<NavItemProps, 'title' | 'Icon' | 'Badge'> & {
+  Arrow?: FunctionComponent<SVGProps<SVGSVGElement>>;
 };
 
 export type NavDropdownProps = BaseNavItemProps & {

@@ -1,25 +1,29 @@
-import { makeStyles } from '@material-ui/core';
 import { lazy, memo, Suspense, useRef } from 'react';
-
 import { NetworkStatus } from '../../../NetworkStatus';
-import { styles } from './styles';
+import { styled } from '@styles/jsx';
 
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = lazy(() => import(`../WalletContainer`));
 
-const useStyles = makeStyles(styles);
-
 export const ConnectionStatus = memo(function ConnectionStatus() {
-  const classes = useStyles();
   const anchorEl = useRef<HTMLDivElement>(null);
   return (
-    <div ref={anchorEl} className={classes.container}>
+    <Holder ref={anchorEl}>
       <NetworkStatus anchorEl={anchorEl} />
       <div>
         <Suspense>
           <WalletContainer />
         </Suspense>
       </div>
-    </div>
+    </Holder>
   );
+});
+
+const Holder = styled('div', {
+  base: {
+    display: 'flex',
+    backgroundColor: 'background.contentDark',
+    alignItems: 'center',
+    borderRadius: '8px',
+  },
 });

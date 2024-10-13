@@ -1,4 +1,4 @@
-import { Hidden, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { memo, useMemo } from 'react';
 import { PieChart } from '../../../../components/PieChart/PieChart';
 import { ExposureBar } from '../ExposureBar';
@@ -7,6 +7,7 @@ import { styles } from './styles';
 import type { GenericExposurePieChartProps } from '../../../../components/PieChart/types';
 import { getTopNArray } from '../../../data/utils/array-utils';
 import { BIG_ZERO } from '../../../../helpers/big-number';
+import { Visible } from '../../../../components/MediaQueries/Visible';
 
 const useStyles = makeStyles(styles);
 
@@ -27,12 +28,9 @@ export const TreasuryExposureChart = memo<TreasuryExposureChartProps>(
 
     return (
       <div className={classes.container}>
-        <Hidden xsDown>
+        <Visible from="md" else={<PieChart data={topSix} type={'generic'} formatter={formatter} />}>
           <ExposureBar data={topSix} />
-        </Hidden>
-        <Hidden smUp>
-          <PieChart data={topSix} type={'generic'} formatter={formatter} />
-        </Hidden>
+        </Visible>
         <ExposureLegend data={topSix} formatter={formatter} />
       </div>
     );

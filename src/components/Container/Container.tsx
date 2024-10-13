@@ -6,9 +6,9 @@ export const Container = styled('div', {
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
-    padding: '0px 16px',
+    paddingInline: '16px',
     sm: {
-      padding: '0px 24px',
+      paddingInline: '24px',
     },
   },
   variants: {

@@ -61,6 +61,11 @@ export const fetchAllBalanceAction = createAsyncThunk<
   const govVaults = selectAllGovVaultsByChainId(state, chain.id);
 
   const data = await api.fetchAllBalances(getState(), tokens, govVaults, boosts, walletAddress);
+
+  if (chainId === 'ethereum') {
+    await new Promise(resolve => setTimeout(resolve, 10000));
+  }
+
   return {
     chainId,
     walletAddress,

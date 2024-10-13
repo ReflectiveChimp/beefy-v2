@@ -1,6 +1,5 @@
 import { memo } from 'react';
-import type { Theme } from '@material-ui/core';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { ChainButtonFilter, ChainDropdownFilter } from './components/ChainFilters';
 import { UserCategoryButtonFilter } from './components/UserCategoryFilters';
 import { AssetTypeButtonFilter } from './components/AssetTypeFilters';
@@ -10,18 +9,19 @@ import { ClearFiltersButton } from './components/ClearFiltersButton';
 import clsx from 'clsx';
 import { VaultCategoryButtonFilter } from './components/VaultCategoryFilters';
 import { StrategyTypeButtonFilter } from './components/StrategyTypeFilters';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint';
 
 const useStyles = makeStyles(styles);
 
 export const Filters = memo(function Filters() {
   const classes = useStyles();
-  const desktopView = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
+  const isDesktop = useBreakpoint({ from: 'lg' });
 
   return (
     <div className={classes.filters}>
-      {desktopView ? <ChainButtonFilter className={classes.chain} /> : null}
+      {isDesktop ? <ChainButtonFilter className={classes.chain} /> : null}
       <UserCategoryButtonFilter className={classes.userCategory} />
-      {desktopView ? (
+      {isDesktop ? (
         <>
           <VaultCategoryButtonFilter className={classes.vaultCategory} />
           <AssetTypeButtonFilter className={classes.assetType} />
@@ -32,10 +32,7 @@ export const Filters = memo(function Filters() {
           <ChainDropdownFilter className={classes.chain} />
         </>
       )}
-      <ExtendedFiltersButton
-        className={clsx(classes.button, classes.extended)}
-        desktopView={desktopView}
-      />
+      <ExtendedFiltersButton view={isDesktop ? 'dropdown' : 'sidebar'} />
       <ClearFiltersButton className={clsx(classes.button, classes.clear)} />
     </div>
   );

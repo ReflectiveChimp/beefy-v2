@@ -15,7 +15,7 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import { useSelectedChainIds } from './hooks';
-import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge';
+import { ChainNewBadge } from './ChainNewBadge';
 
 const useStyles = makeStyles(styles);
 
@@ -34,7 +34,7 @@ const IconWithChain = memo<{ chainId: ChainEntity['id']; label: string; classNam
           className={classes.iconWithChainIcon}
         />
         {label}
-        {chain.new ? <NewBadge className={classes.badgeMobile} spacer={false} /> : null}
+        {chain.new ? <ChainNewBadge mobile={true} /> : null}
       </div>
     );
   }

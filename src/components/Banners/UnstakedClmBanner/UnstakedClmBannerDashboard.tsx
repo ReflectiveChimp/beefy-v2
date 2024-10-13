@@ -15,7 +15,7 @@ export const UnstakedClmBannerDashboard = memo<UnstakedClmBannerDashboardProps>(
     }
 
     return (
-      <div className={css({ backgroundColor: 'header' })}>
+      <div className={css({ backgroundColor: 'background.header' })}>
         <Container maxWidth="lg">
           <UnstakedClmBanner />
         </Container>

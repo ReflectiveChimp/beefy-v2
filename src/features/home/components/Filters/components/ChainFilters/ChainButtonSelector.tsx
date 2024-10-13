@@ -6,7 +6,7 @@ import { makeStyles, Tooltip } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { useAppSelector } from '../../../../../../store';
-import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge';
+import { ChainNewBadge } from './ChainNewBadge';
 
 const useStyles = makeStyles(styles);
 const networkIcons = import.meta.glob<FC<SVGProps<SVGSVGElement>>>(
@@ -43,7 +43,7 @@ const ChainButton = memo<ChainButtonProps>(function ChainButton({ id, selected, 
         onClick={handleChange}
         className={clsx(classes.button, { [classes.selected]: selected })}
       >
-        {chain.new ? <NewBadge className={classes.badge} /> : null}
+        {chain.new ? <ChainNewBadge /> : null}
         <Icon className={classes.icon} width={24} height={24} />
       </button>
     </Tooltip>
