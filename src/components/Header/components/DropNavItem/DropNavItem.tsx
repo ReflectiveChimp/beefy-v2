@@ -38,23 +38,21 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
       <DropdownNavButton onClick={handleToggle}>
         <NavItemInner title={title} Icon={Icon} Badge={Badge} Arrow={DownArrow} />
       </DropdownNavButton>
-      {isOpen && (
-        <DropdownItems>
-          {items.map(item => {
-            const NavItemComponent = item.Component ?? NavLinkItem;
-            return (
-              <NavItemComponent
-                key={item.title}
-                title={item.title}
-                url={item.url}
-                Icon={item.Icon}
-                Badge={item.Badge}
-                onClick={handleClose}
-              />
-            );
-          })}
-        </DropdownItems>
-      )}
+      <DropdownItems>
+        {items.map(item => {
+          const NavItemComponent = item.Component ?? NavLinkItem;
+          return (
+            <NavItemComponent
+              key={item.title}
+              title={item.title}
+              url={item.url}
+              Icon={item.Icon}
+              Badge={item.Badge}
+              onClick={handleClose}
+            />
+          );
+        })}
+      </DropdownItems>
     </FloatingProvider>
   );
 });

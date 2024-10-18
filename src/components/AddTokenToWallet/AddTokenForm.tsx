@@ -16,7 +16,7 @@ import { askForNetworkChange, askForWalletConnection } from '../../features/data
 import { CopyText } from './CopyText';
 import { Button } from '../Button';
 
-const useStyles = sva({
+const addTokenFormRecipe = sva({
   slots: ['details', 'label', 'buttons'],
   base: {
     details: {
@@ -34,7 +34,7 @@ const useStyles = sva({
 });
 
 export const AddTokenForm = memo(function AddTokenForm() {
-  const classes = useStyles();
+  const classes = addTokenFormRecipe();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const iconUrl = useAppSelector(selectAddToWalletIconUrl);

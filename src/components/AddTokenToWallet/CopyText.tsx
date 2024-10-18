@@ -8,7 +8,7 @@ type CopyTextProps = {
   value: string;
 };
 
-const useStyles = sva({
+const copyTextRecipe = sva({
   slots: ['root', 'input', 'button'],
   base: {
     root: {
@@ -48,7 +48,7 @@ const useStyles = sva({
 });
 
 export const CopyText = memo<CopyTextProps>(function CopyText({ className, value }) {
-  const classes = useStyles();
+  const classes = copyTextRecipe();
   const inputRef = useRef<HTMLInputElement>(null);
   const handleCopy = useCallback(() => {
     if (inputRef.current) {

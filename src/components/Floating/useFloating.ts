@@ -94,14 +94,15 @@ export function useFloating({
   return useMemo(
     () => ({
       isOpen: open,
+      isMounted: open, // future support for transitions
       setIsOpen: onOpenChange,
+      context: data.context,
       reference: {
         setRef: referenceRef ? undefined : data.refs.setReference,
         ref: referenceRef ?? data.refs.reference,
         getProps: interactions.getReferenceProps,
       },
       floating: {
-        context: data.context,
         styles: data.floatingStyles,
         getProps: interactions.getFloatingProps,
         setRef: data.refs.setFloating,

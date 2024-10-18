@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { AddTokenForm } from './AddTokenForm';
 import { sva } from '@styles/css';
 
-const useStyles = sva({
+const addTokenToWalletRecipe = sva({
   slots: ['card', 'cardHeader', 'cardIcon', 'cardTitle', 'closeButton', 'cardContent'],
   base: {
     card: {
@@ -70,7 +70,7 @@ const Rejected = memo(function Rejected() {
 });
 
 const FulfilledCardTitle = memo(function FulfilledCardTitle() {
-  const classes = useStyles();
+  const classes = addTokenToWalletRecipe();
   const { t } = useTranslation();
   const token = useAppSelector(selectAddToWalletToken);
   const iconUrl = useAppSelector(selectAddToWalletIconUrl);
@@ -87,7 +87,7 @@ const FulfilledCardTitle = memo(function FulfilledCardTitle() {
 });
 
 const PendingCardTitle = memo(function PendingCardTitle() {
-  const classes = useStyles();
+  const classes = addTokenToWalletRecipe();
   const { t } = useTranslation();
 
   return <CardTitle className={classes.cardTitle} title={t('Add-To-Wallet')} />;
@@ -95,7 +95,7 @@ const PendingCardTitle = memo(function PendingCardTitle() {
 
 export const AddTokenToWallet = memo(function AddTokenToWallet() {
   const dispatch = useAppDispatch();
-  const classes = useStyles();
+  const classes = addTokenToWalletRecipe();
   const status = useAppSelector(selectAddToWalletStatus);
   const isOpen = status !== 'idle';
 

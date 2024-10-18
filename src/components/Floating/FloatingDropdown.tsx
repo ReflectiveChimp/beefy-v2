@@ -10,19 +10,19 @@ export const FloatingDropdown = memo(function FloatingDropdown(props: FloatingDr
   if (!floatingContext) {
     throw new Error('FloatingDropdown must be used within a FloatingProvider');
   }
-  const { isOpen, floating } = floatingContext;
-  if (!isOpen) {
+  const { isMounted, floating, context } = floatingContext;
+  if (!isMounted) {
     return null;
   }
 
   return (
     <FloatingPortal>
-      <FloatingFocusManager context={floating.context} modal={false}>
+      <FloatingFocusManager context={context} modal={false}>
         <div {...floating.getProps()} ref={floating.setRef} style={floating.styles}>
           {floating.arrow && (
             <FloatingArrow
               ref={floating.arrow.ref}
-              context={floating.context}
+              context={context}
               className={floating.arrow.className}
             />
           )}

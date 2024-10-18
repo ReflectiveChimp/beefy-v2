@@ -39,6 +39,7 @@ const navItemRecipe = {
     textDecoration: 'none',
     color: 'text.dark',
     columnGap: '8px',
+    outline: 'none',
   },
   variants: {
     mobile: {
@@ -56,6 +57,9 @@ const navLinkRecipe = {
   base: {
     ...navItemRecipe.base,
     _hover: {
+      color: 'text.light',
+    },
+    _focus: {
       color: 'text.light',
     },
     _active: {
