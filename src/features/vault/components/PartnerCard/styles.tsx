@@ -5,7 +5,6 @@ export const styles = (theme: Theme) => ({
     textDecoration: 'none' as const,
   },
   container: {
-    marginTop: '16px',
     backgroundColor: theme.palette.background.contentLight,
     padding: '16px',
     borderRadius: '12px',

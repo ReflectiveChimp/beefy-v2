@@ -74,6 +74,21 @@ const config = buildConfig(
           },
         },
       },
+      h1: {
+        fontSize: '32px',
+        lineHeight: '40px',
+        fontWeight: 500,
+      },
+      h2: {
+        fontSize: '24px',
+        lineHeight: '32px',
+        fontWeight: 500,
+      },
+      h3: {
+        fontSize: '21px',
+        lineHeight: '24px',
+        fontWeight: 500,
+      },
       button: {
         color: 'inherit',
         background: 'none',

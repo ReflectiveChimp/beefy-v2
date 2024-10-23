@@ -1,49 +1,146 @@
-import { Collapse, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import clsx from 'clsx';
-import type { ReactNode } from 'react';
+import type { MouseEventHandler, ReactNode } from 'react';
 import { memo, useCallback, useState } from 'react';
-import { Button } from '../Button';
-import { styles } from './styles';
+import { css, cva, type RecipeVariantProps } from '@styles/css';
 
-interface CollapsableProps {
+type CollapsableProps = {
   openByDefault?: boolean;
   children: ReactNode;
-  containerClassName?: string;
-  titleClassName?: string;
-  title: string;
-}
-
-const useStyles = makeStyles(styles);
+  title: ReactNode;
+} & CollapseRecipeProps;
 
 export const Collapsable = memo<CollapsableProps>(function Collapsable({
   openByDefault = false,
   children,
-  containerClassName,
-  titleClassName,
   title,
+  variant,
 }) {
   const [open, setOpen] = useState<boolean>(openByDefault);
-
-  const classes = useStyles();
-
+  const collapsableStyles = collapseRecipe({ variant });
   const handleCollapse = useCallback(() => {
     setOpen(prevStatus => !prevStatus);
-  }, []);
+  }, [setOpen]);
 
   return (
-    <div className={clsx(containerClassName, classes.container)}>
-      <Button fullWidth={true} onClick={handleCollapse} className={classes.title}>
-        <div className={titleClassName}>{title}</div>
-        {open ? (
-          <ExpandLess className={classes.titleIcon} />
-        ) : (
-          <ExpandMore className={classes.titleIcon} />
-        )}
-      </Button>
-      <Collapse in={open} timeout="auto">
-        {children}
-      </Collapse>
+    <div className={collapsableStyles}>
+      <Header onClick={handleCollapse} variant={variant} open={open}>
+        {title}
+        {open ? <CloseIcon /> : <OpenIcon />}
+      </Header>
+      {open && <Content variant={variant} children={children} />}
     </div>
   );
+});
+
+const collapseRecipe = cva({
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+    padding: '16px',
+    borderRadius: '12px',
+  },
+  variants: {
+    variant: {
+      transparent: {},
+      light: {
+        background: 'background.contentLight',
+      },
+      primary: {
+        background: 'background.contentPrimary',
+      },
+      card: {
+        background: 'background.contentPrimary',
+        gap: '0',
+        padding: '0',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'transparent',
+  },
+});
+
+type CollapseRecipeProps = NonNullable<RecipeVariantProps<typeof collapseRecipe>>;
+
+const contentRecipe = cva({
+  base: {},
+  variants: {
+    variant: {
+      transparent: {},
+      light: {},
+      primary: {},
+      card: {
+        padding: '24px',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'transparent',
+  },
+});
+
+type ContentRecipeProps = NonNullable<RecipeVariantProps<typeof contentRecipe>>;
+
+const Content = memo(function Header({
+  variant,
+  ...props
+}: {
+  children: ReactNode;
+} & ContentRecipeProps) {
+  return <div className={contentRecipe({ variant })} {...props} />;
+});
+
+const headerRecipe = cva({
+  base: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    borderRadius: '12px',
+  },
+  variants: {
+    variant: {
+      transparent: {},
+      light: {},
+      primary: {},
+      card: {
+        backgroundColor: 'background.contentDark',
+        padding: '24px',
+      },
+    },
+    open: {
+      true: {
+        borderRadius: '12px 12px 0 0',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'transparent',
+  },
+});
+
+type HeaderRecipeProps = NonNullable<RecipeVariantProps<typeof headerRecipe>>;
+
+const Header = memo(function Header({
+  variant,
+  open,
+  ...props
+}: {
+  children: ReactNode;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+} & HeaderRecipeProps) {
+  return <button className={headerRecipe({ variant, open })} {...props} />;
+});
+
+const iconStyles = css({
+  fill: 'text.primary',
+});
+
+const CloseIcon = memo(function CloseIcon() {
+  return <ExpandLess className={iconStyles} />;
+});
+
+const OpenIcon = memo(function OpenIcon() {
+  return <ExpandMore className={iconStyles} />;
 });

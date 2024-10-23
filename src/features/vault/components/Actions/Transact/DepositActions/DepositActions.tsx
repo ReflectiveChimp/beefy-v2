@@ -51,14 +51,8 @@ const ActionDepositDisabled = memo<ActionButtonProps>(function ActionDepositDisa
   const classes = useStyles();
 
   return (
-    <div className={classes.feesContainer}>
-      <Button
-        variant="success"
-        disabled={true}
-        fullWidth={true}
-        borderless={true}
-        className={className}
-      >
+    <div className={clsx(classes.feesContainer, className)}>
+      <Button variant="success" disabled={true} fullWidth={true} borderless={true}>
         {t('Transact-Deposit')}
       </Button>
       <VaultFees />
