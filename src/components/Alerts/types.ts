@@ -1,5 +1,4 @@
-import type { SvgIconComponent } from '@material-ui/icons';
-import type { ReactNode } from 'react';
+import type { ComponentProps, FC, ReactNode } from 'react';
 import type { AlertRecipe } from './styles';
 import type {
   RecipeVariantFn,
@@ -7,7 +6,7 @@ import type {
   RecipeVariantRecord,
   SlotRecipeVariantFn,
   SlotRecipeVariantRecord,
-} from '@styles/types';
+} from '@repo/styles/types';
 
 type RecipeVariantProp<
   T extends
@@ -24,7 +23,7 @@ type RequiredRecipeVariantProp<
 > = Exclude<RecipeVariantProp<T, S>, undefined>;
 
 export type AlertProps = {
-  IconComponent: SvgIconComponent;
+  IconComponent: FC<ComponentProps<'svg'>>;
   children: ReactNode;
   variant: RequiredRecipeVariantProp<AlertRecipe, 'variant'>;
   className?: string;

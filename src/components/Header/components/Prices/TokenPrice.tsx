@@ -1,4 +1,4 @@
-import { cva, type RecipeVariantProps } from '@styles/css';
+import { cva, type RecipeVariantProps } from '@repo/styles/css';
 import type { Token } from './Tokens';
 import { memo } from 'react';
 import { useAppSelector } from '../../../../store';

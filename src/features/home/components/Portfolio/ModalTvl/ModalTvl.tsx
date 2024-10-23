@@ -1,7 +1,7 @@
 import { IconButton, makeStyles } from '@material-ui/core';
 import { memo, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../../vault/components/Card';
-import CloseIcon from '@material-ui/icons/Close';
+import { ReactComponent as CloseIcon } from '@repo/images/icons/mui/Close.svg';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { selectActiveChainIds, selectChainById } from '../../../../data/selectors/chains';
@@ -52,7 +52,7 @@ export const ModalTvl = memo<ModalTvlProps>(function ModalTvl({ close }: ModalTv
           aria-label="settings"
           disableRipple={true}
         >
-          <CloseIcon htmlColor="#D0D0DA" />
+          <CloseIcon color="#D0D0DA" />
         </IconButton>
       </CardHeader>
       <CardContent className={classes.content}>

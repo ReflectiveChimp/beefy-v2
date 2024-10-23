@@ -1,6 +1,6 @@
 import { memo, type ReactNode } from 'react';
 import clsx from 'clsx';
-import { cva } from '@styles/css';
+import { cva } from '@repo/styles/css';
 import { defaultSize } from './config';
 
 const recipe = cva({

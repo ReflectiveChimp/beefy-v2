@@ -1,4 +1,4 @@
-import { sva } from '@styles/css';
+import { sva } from '@repo/styles/css';
 
 export const layoutRecipe = sva({
   slots: ['wrapper', 'top', 'middle', 'bottom'],

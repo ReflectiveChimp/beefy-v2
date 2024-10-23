@@ -22,7 +22,8 @@
     "verbatimModuleSyntax": true,
     "strictNullChecks": true,
     "paths": {
-      "@styles/*": ["./build-tools/styles/generated/*"]
+      "@repo/styles/*": ["./build-tools/styles/generated/*"],
+      "@repo/images/*": ["./src/images/*"]
     }
   },
   "include": ["./src", "./build-tools/styles/generated"],

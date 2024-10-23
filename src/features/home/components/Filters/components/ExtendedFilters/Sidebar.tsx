@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { ExtendedFilters } from './ExtendedFilters';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
-import { CloseOutlined } from '@material-ui/icons';
+import { ReactComponent as CloseOutlined } from '@repo/images/icons/mui/CloseOutlined.svg';
 
 const useStyles = makeStyles(styles);
 

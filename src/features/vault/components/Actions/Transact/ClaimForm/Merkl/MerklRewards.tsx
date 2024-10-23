@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { ReactComponent as ExpandLess } from '@repo/images/icons/mui/ExpandLess.svg';
+import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { groupBy, keyBy } from 'lodash-es';

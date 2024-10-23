@@ -1,4 +1,4 @@
-import type { BreakpointToken } from '@styles/tokens';
+import type { BreakpointToken } from '@repo/styles/tokens';
 import type { ReactNode } from 'react';
 
 export type Breakpoint = 'xs' | BreakpointToken;

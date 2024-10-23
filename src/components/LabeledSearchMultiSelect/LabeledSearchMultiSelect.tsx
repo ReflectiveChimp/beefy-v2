@@ -11,7 +11,7 @@ import { Floating } from '../Floating';
 import { styles } from './styles';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import { ExpandMore } from '@material-ui/icons';
+import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import { Search } from '../Search';
 import { simplifySearchText, stringFoundAnywhere } from '../../helpers/string';
 import { useTranslation } from 'react-i18next';

@@ -1,4 +1,4 @@
-import { css } from '@styles/css';
+import { css } from '@repo/styles/css';
 
 export const baseClass = css({
   textDecoration: 'none',

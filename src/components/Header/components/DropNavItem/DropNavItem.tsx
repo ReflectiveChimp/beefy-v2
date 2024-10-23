@@ -1,11 +1,11 @@
 import { type FC, type FunctionComponent, memo, type SVGProps, useCallback, useState } from 'react';
-import { ExpandMore } from '@material-ui/icons';
+import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import { NavLinkItem } from '../NavItem';
 import type { BadgeComponent } from '../Badges/types';
 import type { NavItemConfig } from './types';
 import { DropdownNavButton } from '../NavItem/NavLink';
-import { styled } from '@styles/jsx';
-import type { RecipeVariantRecord } from '@styles/types';
+import { styled } from '@repo/styles/jsx';
+import type { RecipeVariantRecord } from '@repo/styles/types';
 import { FloatingDropdown } from '../../../Floating/FloatingDropdown';
 import { FloatingProvider } from '../../../Floating/FloatingProvider';
 import { NavItemInner } from '../NavItem/NavItemInner';

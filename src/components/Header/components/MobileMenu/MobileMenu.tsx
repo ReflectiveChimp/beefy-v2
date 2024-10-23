@@ -1,5 +1,6 @@
 import { Fragment, memo, useCallback, useState } from 'react';
-import { Close as CloseIcon, Menu as MenuIcon } from '@material-ui/icons';
+import { ReactComponent as CloseIcon } from '@repo/images/icons/mui/Close.svg';
+import { ReactComponent as MenuIcon } from '@repo/images/icons/mui/Menu.svg';
 import { NavLinkItem } from '../NavItem';
 import { MobileList } from '../../list';
 import type { NavConfig, NavDropdownConfig } from '../DropNavItem/types';
@@ -7,7 +8,7 @@ import { isNavDropdownConfig } from '../DropNavItem/types';
 import { Prices } from '../Prices';
 import { UnreadDots } from '../Badges/UnreadDots';
 import { Drawer } from '../../../Modal/Drawer';
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 import { NavItemInner } from '../NavItem/NavItemInner';
 import { NavItem } from '../NavItem/NavLink';
 

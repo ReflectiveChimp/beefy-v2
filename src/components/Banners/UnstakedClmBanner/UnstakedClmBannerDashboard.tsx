@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../store';
 import { selectUserUnstakedClms } from '../../../features/data/selectors/balance';
 import { Container } from '../../Container/Container';
 import { UnstakedClmBanner } from './UnstakedClmBanner';
-import { css } from '@styles/css';
+import { css } from '@repo/styles/css';
 
 export const UnstakedClmBannerDashboard = memo<UnstakedClmBannerDashboardProps>(
   function UnstakedClmBannerDashboard({ address }) {

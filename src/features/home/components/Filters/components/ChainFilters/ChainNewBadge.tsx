@@ -1,4 +1,4 @@
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 import { NewBadge } from '../../../../../../components/Badges/NewBadge';
 
 export const ChainNewBadge = styled(NewBadge, {

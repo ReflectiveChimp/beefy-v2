@@ -12,7 +12,7 @@ import { ErrorMessage } from '../Error/ErrorMessage';
 import { styles } from './styles';
 import { ExternalLink } from '../Links/ExternalLink';
 import { HorizontalLayout } from '../Layout/HorizontalLayout';
-import { InfoOutlined } from '@material-ui/icons';
+import { ReactComponent as InfoOutlined } from '@repo/images/icons/mui/InfoOutlined.svg';
 import { AlertInfo } from '../../Alerts';
 import logoUrl from '../logo.svg';
 

@@ -5,7 +5,7 @@ import { ItemInner } from './ItemInner';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { itemStyles } from './styles';
-import { ChevronRight } from '@material-ui/icons';
+import { ReactComponent as ChevronRight } from '@repo/images/icons/mui/ChevronRight.svg';
 
 const useStyles = makeStyles(itemStyles);
 

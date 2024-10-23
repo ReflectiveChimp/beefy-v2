@@ -11,7 +11,7 @@ import { fetchLastArticle } from '../../features/data/actions/articles';
 import { Container } from '../Container/Container';
 import { LogoLink } from './components/LogoLink/LogoLink';
 import { Hidden } from '../MediaQueries/Hidden';
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 import { Visible } from '../MediaQueries/Visible';
 import { MainMenu } from './components/MainMenu/MainMenu';
 import { RightMenu } from './components/RightMenu/RightMenu';

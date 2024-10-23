@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 
 type NotificationCountProps = {
   count: number;

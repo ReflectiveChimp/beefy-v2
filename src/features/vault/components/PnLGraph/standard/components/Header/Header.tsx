@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { HelpOutline } from '@material-ui/icons';
+import { ReactComponent as HelpOutline } from '@repo/images/icons/mui/HelpOutline.svg';
 import type BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';

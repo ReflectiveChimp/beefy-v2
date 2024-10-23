@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { styles } from './styles';
 import { ContentLoading } from '../ContentLoading';
 import { Tooltip } from '../Tooltip';
-import { HelpOutline } from '@material-ui/icons';
+import { ReactComponent as HelpOutline } from '@repo/images/icons/mui/HelpOutline.svg';
 
 const useStyles = makeStyles(styles);
 

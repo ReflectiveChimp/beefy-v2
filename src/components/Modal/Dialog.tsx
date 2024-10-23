@@ -1,4 +1,4 @@
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 
 export const Dialog = styled('div', {
   base: {

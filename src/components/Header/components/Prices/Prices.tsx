@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { PricesDropdown } from './PricesDropdown';
 import { PricesButton } from './PricesButton';
-import { css } from '@styles/css';
+import { css } from '@repo/styles/css';
 import { FloatingProvider } from '../../../Floating/FloatingProvider';
 
 export const Prices = memo(function Prices() {

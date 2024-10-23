@@ -1,5 +1,7 @@
 import { memo } from 'react';
-import { ErrorOutline, InfoOutlined, ReportProblemOutlined } from '@material-ui/icons';
+import { ReactComponent as ErrorOutline } from '@repo/images/icons/mui/ErrorOutline.svg';
+import { ReactComponent as InfoOutlined } from '@repo/images/icons/mui/InfoOutlined.svg';
+import { ReactComponent as ReportProblemOutlined } from '@repo/images/icons/mui/ReportProblemOutlined.svg';
 import clsx from 'clsx';
 import { alertRecipe } from './styles';
 import type { AlertProps, AlertVariantProps } from './types';

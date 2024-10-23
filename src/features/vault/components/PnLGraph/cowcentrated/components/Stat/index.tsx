@@ -2,7 +2,7 @@ import { makeStyles, type Theme } from '@material-ui/core';
 import clsx from 'clsx';
 import { memo, type ReactNode } from 'react';
 import { Tooltip } from '../../../../../../../components/Tooltip';
-import { HelpOutline } from '@material-ui/icons';
+import { ReactComponent as HelpOutline } from '@repo/images/icons/mui/HelpOutline.svg';
 
 interface StatProps {
   tooltipText: string;

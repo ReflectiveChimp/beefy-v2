@@ -1,5 +1,5 @@
-import { cva } from '@styles/css';
-import { styled } from '@styles/jsx';
+import { cva } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 
 const iconRecipe = cva({
   base: {

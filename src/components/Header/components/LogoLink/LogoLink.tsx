@@ -2,7 +2,7 @@ import headerLogoDesktop from '../../../../images/bifi-logos/header-logo.svg';
 import headerLogoMobile from '../../../../images/bifi-logos/header-logo-notext.svg';
 import { Link } from 'react-router-dom';
 import { memo } from 'react';
-import { css } from '@styles/css';
+import { css } from '@repo/styles/css';
 
 export const LogoLink = memo(function LogoLink() {
   const linkClass = css({ display: 'block' });

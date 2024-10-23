@@ -1,5 +1,5 @@
-import { styled } from '@styles/jsx';
-import type { StyledVariantProps } from '@styles/types';
+import { styled } from '@repo/styles/jsx';
+import type { StyledVariantProps } from '@repo/styles/types';
 import { memo, type MouseEvent, type ReactNode, useCallback, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -10,7 +10,7 @@ export type OverlayProps = BackdropProps & {
   children: ReactNode;
 };
 
-export const Overlay = memo(function ({ onClose, children, ...rest }: OverlayProps) {
+export const Overlay = memo(function Overlay({ onClose, children, ...rest }: OverlayProps) {
   const ref = useRef<HTMLDivElement>(null);
   const handleClick = useCallback(
     (e: MouseEvent<HTMLDivElement>) => {
@@ -22,16 +22,19 @@ export const Overlay = memo(function ({ onClose, children, ...rest }: OverlayPro
   );
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && e.target && e.target instanceof Element) {
-        if (!['INPUT', 'TEXTAREA', 'BUTTON', 'SELECT'].includes(e.target.nodeName)) {
-          e.stopImmediatePropagation();
-          onClose();
+    if (ref.current) {
+      const elm = ref.current;
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape' && e.target && e.target instanceof Element) {
+          if (!['INPUT', 'TEXTAREA', 'BUTTON', 'SELECT'].includes(e.target.nodeName)) {
+            e.stopImmediatePropagation();
+            onClose();
+          }
         }
-      }
-    };
-    ref.current?.addEventListener('keydown', handleKeyDown);
-    return () => ref.current?.removeEventListener('keydown', handleKeyDown);
+      };
+      elm.addEventListener('keydown', handleKeyDown);
+      return () => elm.removeEventListener('keydown', handleKeyDown);
+    }
   }, [onClose]);
 
   return createPortal(

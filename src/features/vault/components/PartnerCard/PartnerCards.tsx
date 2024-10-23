@@ -1,4 +1,4 @@
-import { css } from '@styles/css';
+import { css } from '@repo/styles/css';
 import { memo, type ReactNode } from 'react';
 import { Collapsable } from '../../../../components/Collapsable';
 

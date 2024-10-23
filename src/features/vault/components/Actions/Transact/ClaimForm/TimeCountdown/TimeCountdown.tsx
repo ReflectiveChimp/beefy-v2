@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef } from 'react';
-import { Timer } from '@material-ui/icons';
+import { ReactComponent as Timer } from '@repo/images/icons/mui/Timer.svg';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 

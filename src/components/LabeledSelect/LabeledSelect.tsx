@@ -3,7 +3,7 @@ import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import { orderBy } from 'lodash-es';
 import { styles } from './styles';
-import { ExpandMore } from '@material-ui/icons';
+import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import clsx from 'clsx';
 import { Floating } from '../Floating';
 import type { Placement } from '@floating-ui/react-dom';

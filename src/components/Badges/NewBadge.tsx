@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 import type { BadgeComponentProps } from './types';
 
 const NewText = memo<BadgeComponentProps>(function NewText({ className }) {

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Clear } from '@material-ui/icons';
+import { ReactComponent as Clear } from '@repo/images/icons/mui/Clear.svg';
 import clsx from 'clsx';
 import { bannerRecipe } from './styles';
 import type { BannerProps } from './types';

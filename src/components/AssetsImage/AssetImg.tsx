@@ -1,4 +1,4 @@
-import { css } from '@styles/css';
+import { css } from '@repo/styles/css';
 import { memo } from 'react';
 import clsx from 'clsx';
 

@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { tokens } from './Tokens';
 import { TokenPrice } from './TokenPrice';
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 
 import { FloatingTrigger } from '../../../Floating/FloatingTrigger';
 

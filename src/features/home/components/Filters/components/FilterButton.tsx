@@ -1,6 +1,6 @@
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 import { Button } from '../../../../../components/Button';
-import { cva } from '@styles/css';
+import { cva } from '@repo/styles/css';
 import { buttonRecipe } from '../../../../../components/Button/styles';
 import { FloatingTrigger } from '../../../../../components/Floating/FloatingTrigger';
 

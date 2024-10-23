@@ -5,7 +5,7 @@ import type { ChainEntity } from '../../features/data/entities/chain';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader';
 import type { BeefyState } from '../../redux-types';
 import { useAppDispatch, useAppSelector } from '../../store';
-import CloseIcon from '@material-ui/icons/Close';
+import { ReactComponent as CloseIcon } from '@repo/images/icons/mui/Close.svg';
 import type { DataLoaderState, LoaderState } from '../../features/data/reducers/data-loader-types';
 import {
   selectCurrentChainId,
@@ -20,8 +20,8 @@ import {
   isLoaderPending,
   isLoaderRejected,
 } from '../../features/data/selectors/data-loader-helpers';
-import { styled } from '@styles/jsx';
-import type { StyledVariantProps } from '@styles/types';
+import { styled } from '@repo/styles/jsx';
+import type { StyledVariantProps } from '@repo/styles/types';
 import { FloatingTrigger } from '../Floating/FloatingTrigger';
 import { FloatingDropdown } from '../Floating/FloatingDropdown';
 import { FloatingProvider } from '../Floating/FloatingProvider';

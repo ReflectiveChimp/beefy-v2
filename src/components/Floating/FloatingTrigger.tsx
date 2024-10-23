@@ -1,4 +1,4 @@
-import type { HTMLStyledProps } from '@styles/types';
+import type { HTMLStyledProps } from '@repo/styles/types';
 import { memo } from 'react';
 import { useFloatingContext } from './FloatingProvider';
 

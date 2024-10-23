@@ -1,7 +1,7 @@
 import { memo, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { Refresh } from '@material-ui/icons';
+import { ReactComponent as Refresh } from '@repo/images/icons/mui/Refresh.svg';
 import clsx from 'clsx';
 import { useAppDispatch } from '../../../../../../store';
 import { transactFetchQuotes } from '../../../../../data/actions/transact';

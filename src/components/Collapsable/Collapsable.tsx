@@ -1,7 +1,8 @@
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { ReactComponent as ExpandLess } from '@repo/images/icons/mui/ExpandLess.svg';
+import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import type { MouseEventHandler, ReactNode } from 'react';
 import { memo, useCallback, useState } from 'react';
-import { css, cva, type RecipeVariantProps } from '@styles/css';
+import { css, cva, type RecipeVariantProps } from '@repo/styles/css';
 
 type CollapsableProps = {
   openByDefault?: boolean;

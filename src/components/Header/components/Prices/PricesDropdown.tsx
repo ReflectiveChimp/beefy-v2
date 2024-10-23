@@ -3,7 +3,7 @@ import { useAppSelector } from '../../../../store';
 import { selectVaultExistsById } from '../../../../features/data/selectors/vaults';
 import { Tokens } from './Tokens';
 import { PricePerFullShare } from './PricePerFullShare';
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 
 import { FloatingDropdown } from '../../../Floating/FloatingDropdown';
 

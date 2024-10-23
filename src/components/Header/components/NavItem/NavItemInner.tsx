@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import type { NavItemInnerProps } from '../DropNavItem/types';
 import { useTranslation } from 'react-i18next';
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 
 export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
   title,

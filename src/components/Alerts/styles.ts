@@ -1,4 +1,4 @@
-import { sva } from '@styles/css';
+import { sva } from '@repo/styles/css';
 
 export const alertRecipe = sva({
   slots: ['alert', 'icon', 'content'],

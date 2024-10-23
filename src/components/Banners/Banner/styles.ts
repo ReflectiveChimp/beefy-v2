@@ -1,4 +1,4 @@
-import { sva } from '@styles/css';
+import { sva } from '@repo/styles/css';
 
 export const bannerRecipe = sva({
   slots: ['banner', 'box', 'content', 'icon', 'text', 'cross'],

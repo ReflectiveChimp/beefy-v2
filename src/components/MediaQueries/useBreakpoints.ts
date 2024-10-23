@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 import type { BreakpointMatches } from './types';
 import { createFactory } from '../../features/data/utils/factory-utils';
-import { type BreakpointToken, token } from '@styles/tokens';
+import { type BreakpointToken, token } from '@repo/styles/tokens';
 
 export const defaultBreakpointMatches: BreakpointMatches = {
   xs: true,

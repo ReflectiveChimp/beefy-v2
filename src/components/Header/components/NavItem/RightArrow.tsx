@@ -1,7 +1,7 @@
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 import type { FunctionComponent, SVGProps } from 'react';
-import type { RecipeVariantRecord } from '@styles/types';
-import { ArrowForwardIosRounded } from '@material-ui/icons';
+import type { RecipeVariantRecord } from '@repo/styles/types';
+import { ReactComponent as ArrowForwardIosRounded } from '@repo/images/icons/mui/ArrowForwardIosRounded.svg';
 
 export const RightArrow = styled<FunctionComponent<SVGProps<SVGSVGElement>>, RecipeVariantRecord>(
   ArrowForwardIosRounded,

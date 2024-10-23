@@ -21,7 +21,7 @@ import Discord from '../../../../images/icons/discord.svg';
 import { RewardTokenDetails } from '../RewardTokenDetails';
 import type { BoostEntity } from '../../../data/entities/boost';
 import type { TokenEntity } from '../../../data/entities/token';
-import { Link } from '@material-ui/icons';
+import { ReactComponent as Link } from '@repo/images/icons/mui/Link.svg';
 import type { BoostSocials } from '../../../data/apis/config-types';
 import {
   selectVaultActiveMerklBoostCampaigns,

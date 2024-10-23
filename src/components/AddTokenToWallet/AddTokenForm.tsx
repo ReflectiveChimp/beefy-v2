@@ -1,4 +1,4 @@
-import { sva } from '@styles/css';
+import { sva } from '@repo/styles/css';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../store';

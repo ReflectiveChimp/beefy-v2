@@ -1,4 +1,4 @@
-import ShareSvg from '@material-ui/icons/Share';
+import { ReactComponent as ShareSvg } from '@repo/images/icons/mui/Share.svg';
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import twitterIcon from '../../../../images/icons/share/twitter.svg';
@@ -32,7 +32,7 @@ import type {
   ShareServiceItemProps,
   VaultDetails,
 } from './types';
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 import { buttonRecipe } from '../../../../components/Button/styles';
 import { FloatingTrigger } from '../../../../components/Floating/FloatingTrigger';
 import { FloatingDropdown } from '../../../../components/Floating/FloatingDropdown';

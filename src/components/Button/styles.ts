@@ -1,4 +1,4 @@
-import { cva } from '@styles/css';
+import { cva } from '@repo/styles/css';
 
 export const buttonRecipe = cva({
   base: {

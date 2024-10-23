@@ -41,7 +41,7 @@ const config = buildConfig(
     // The output directory for your css system
     outdir: 'build-tools/styles/generated',
     // Tell panda we are importing generated code from @styles/* rather than {outdir}/*
-    importMap: '@styles',
+    importMap: '@repo/styles',
     // Base present only (excluding panda opinionated presets)
     presets: ['@pandacss/preset-base'],
     // Whether to use css reset
@@ -124,6 +124,14 @@ const config = buildConfig(
       'wcm-modal, #cryptoconnect-extension': {
         position: 'relative!',
         zIndex: 'layer2.modal!',
+      },
+      '.mui-svg': {
+        width: '1em',
+        height: '1em',
+        fill: 'currentColor',
+        fontSize: '1.5rem',
+        flexShrink: '0',
+        userSelect: 'none',
       },
     },
     // Extend condition helpers

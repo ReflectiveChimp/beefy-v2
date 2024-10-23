@@ -3,7 +3,7 @@ import {
   type NavLinkProps as RouterNavLinkProps,
 } from 'react-router-dom';
 import { memo } from 'react';
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 
 import { FloatingTrigger } from '../../../Floating/FloatingTrigger';
 

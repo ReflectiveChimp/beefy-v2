@@ -2,7 +2,7 @@ import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Sidebar } from './Sidebar';
 import { ExtendedFilters } from './ExtendedFilters';
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 import { FilterButton, FilterTriggerButton } from '../FilterButton';
 import { FloatingDropdown } from '../../../../../../components/Floating/FloatingDropdown';
 import { FloatingProvider } from '../../../../../../components/Floating/FloatingProvider';

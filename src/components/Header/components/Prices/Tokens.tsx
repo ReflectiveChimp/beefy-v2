@@ -12,7 +12,7 @@ import ethIcon from '../../../../images/networks/ethereum.svg';
 import mooIcon from '../../../../images/single-assets/mooBIFI.png';
 import opIcon from '../../../../images/networks/optimism.svg';
 import baseIcon from '../../../../images/networks/base.svg';
-import { css } from '@styles/css';
+import { css } from '@repo/styles/css';
 
 export type Token = {
   symbol: string;

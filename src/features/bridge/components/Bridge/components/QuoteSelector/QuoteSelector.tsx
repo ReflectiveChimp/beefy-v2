@@ -17,7 +17,9 @@ import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../h
 import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
 import clsx from 'clsx';
 import { getBridgeProviderIcon } from '../../../../../../helpers/bridgeProviderSrc';
-import { Lock, MonetizationOn, Timer } from '@material-ui/icons';
+import { ReactComponent as Lock } from '@repo/images/icons/mui/Lock.svg';
+import { ReactComponent as MonetizationOn } from '@repo/images/icons/mui/MonetizationOn.svg';
+import { ReactComponent as Timer } from '@repo/images/icons/mui/Timer.svg';
 import { styles } from './styles';
 import { TextLoader } from '../../../../../../components/TextLoader';
 import type { BeefyAnyBridgeConfig } from '../../../../../data/apis/config-types';

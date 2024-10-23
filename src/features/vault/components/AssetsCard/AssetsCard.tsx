@@ -3,7 +3,7 @@ import { useAppSelector } from '../../../../store';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { TokenCard } from '../DetailsCards';
-import { css } from '@styles/css';
+import { css } from '@repo/styles/css';
 
 interface AssetsCardProps {
   vaultId: VaultEntity['id'];

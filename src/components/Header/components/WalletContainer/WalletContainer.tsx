@@ -14,10 +14,10 @@ import { useAppDispatch, useAppSelector } from '../../../../store';
 import { formatAddressShort, formatDomain } from '../../../../helpers/format';
 import { useResolveAddress } from '../../../../features/data/hooks/resolver';
 import { isFulfilledStatus } from '../../../../features/data/reducers/wallet/resolver-types';
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 import { memo, useCallback } from 'react';
 
-export const WalletContainer = memo(function () {
+export const WalletContainer = memo(function WalletContainer() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
@@ -32,7 +32,7 @@ export const WalletContainer = memo(function () {
     } else {
       dispatch(askForWalletConnection());
     }
-  }, [walletAddress]);
+  }, [dispatch, walletAddress]);
 
   return (
     <Button

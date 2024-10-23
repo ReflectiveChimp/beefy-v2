@@ -1,6 +1,6 @@
 import { lazy, memo, Suspense, useRef } from 'react';
 import { NetworkStatus } from '../../../NetworkStatus';
-import { styled } from '@styles/jsx';
+import { styled } from '@repo/styles/jsx';
 
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = lazy(() => import(`../WalletContainer`));

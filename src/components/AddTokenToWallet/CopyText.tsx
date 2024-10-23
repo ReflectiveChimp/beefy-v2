@@ -1,7 +1,7 @@
 import { memo, useCallback, useRef } from 'react';
 import clsx from 'clsx';
-import { FileCopy } from '@material-ui/icons';
-import { sva } from '@styles/css';
+import { ReactComponent as FileCopy } from '@repo/images/icons/mui/FileCopy.svg';
+import { sva } from '@repo/styles/css';
 
 type CopyTextProps = {
   className?: string;

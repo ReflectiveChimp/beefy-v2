@@ -1,5 +1,5 @@
-import { styled } from '@styles/jsx';
-import { AccountBalanceWallet } from '@material-ui/icons';
+import { styled } from '@repo/styles/jsx';
+import { ReactComponent as AccountBalanceWallet } from '@repo/images/icons/mui/AccountBalanceWallet.svg';
 import { memo, useCallback } from 'react';
 import { useAppDispatch } from '../../../../store';
 import { addTokenToWalletAction } from '../../../../features/data/actions/add-to-wallet';

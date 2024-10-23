@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { css } from '@styles/css';
+import { css } from '@repo/styles/css';
 import { useAppSelector } from '../../../../store';
 import {
   selectVaultById,
