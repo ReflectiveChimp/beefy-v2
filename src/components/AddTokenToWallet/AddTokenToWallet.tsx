@@ -1,4 +1,3 @@
-import { IconButton } from '@material-ui/core';
 import { memo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { Modal } from '../Modal';
@@ -14,6 +13,8 @@ import { ReactComponent as CloseIcon } from '@repo/images/icons/mui/Close.svg';
 import { useTranslation } from 'react-i18next';
 import { AddTokenForm } from './AddTokenForm';
 import { sva } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
+import { CardIconButton } from '../../features/vault/components/Card/CardIconButton';
 
 const addTokenToWalletRecipe = sva({
   slots: ['card', 'cardHeader', 'cardIcon', 'cardTitle', 'closeButton', 'cardContent'],
@@ -76,26 +77,21 @@ const FulfilledCardTitle = memo(function FulfilledCardTitle() {
   const iconUrl = useAppSelector(selectAddToWalletIconUrl);
 
   return (
-    <>
-      {iconUrl && <img className={classes.cardIcon} src={iconUrl} alt={token.symbol} height={32} />}
-      <CardTitle
-        className={classes.cardTitle}
-        title={t('Add-Token-To-Wallet', { token: token.symbol })}
-      />
-    </>
+    <CardTitle>
+      {iconUrl && <img className={classes.cardIcon} src={iconUrl} alt={token.symbol} height={32} />}{' '}
+      {t('Add-Token-To-Wallet', { token: token.symbol })}
+    </CardTitle>
   );
 });
 
 const PendingCardTitle = memo(function PendingCardTitle() {
-  const classes = addTokenToWalletRecipe();
   const { t } = useTranslation();
 
-  return <CardTitle className={classes.cardTitle} title={t('Add-To-Wallet')} />;
+  return <CardTitle>{t('Add-To-Wallet')}</CardTitle>;
 });
 
 export const AddTokenToWallet = memo(function AddTokenToWallet() {
   const dispatch = useAppDispatch();
-  const classes = addTokenToWalletRecipe();
   const status = useAppSelector(selectAddToWalletStatus);
   const isOpen = status !== 'idle';
 
@@ -105,19 +101,27 @@ export const AddTokenToWallet = memo(function AddTokenToWallet() {
 
   return (
     <Modal open={isOpen} onClose={handleClose}>
-      <Card className={classes.card}>
-        <CardHeader className={classes.cardHeader}>
+      <Card>
+        <CardHeader>
           {status === 'fulfilled' ? <FulfilledCardTitle /> : <PendingCardTitle />}
-          <IconButton onClick={handleClose} aria-label="close" className={classes.closeButton}>
-            <CloseIcon color="#999CB3" />
-          </IconButton>
+          <CardIconButton onClick={handleClose} aria-label="close">
+            <CloseIcon />
+          </CardIconButton>
         </CardHeader>
-        <CardContent className={classes.cardContent}>
+        <StyledCardContent>
           {status === 'pending' && <Pending />}
           {status === 'rejected' && <Rejected />}
           {status === 'fulfilled' && <AddTokenForm />}
-        </CardContent>
+        </StyledCardContent>
       </Card>
     </Modal>
   );
+});
+
+const StyledCardContent = styled(CardContent, {
+  base: {
+    minHeight: '200px',
+    flexShrink: 1,
+    width: '510px',
+  },
 });

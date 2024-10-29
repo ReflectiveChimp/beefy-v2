@@ -4,8 +4,7 @@ import { forwardRef, memo, useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { BridgeEntity } from '../../../data/entities/bridge';
 import clsx from 'clsx';
-import type { TooltipProps } from '../../../../components/Tooltip';
-import { Tooltip, TRIGGERS } from '../../../../components/Tooltip';
+import { Tooltip, type TooltipProps } from '../../../../components/Tooltip';
 import { getAssetBridgeIcon } from '../../../../helpers/assetBridgeSrc';
 import type { ChainEntity } from '../../../data/entities/chain';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
@@ -108,15 +107,15 @@ type TagWithTooltipProps = {
 
 export const TagWithTooltip = memo(
   forwardRef<HTMLDivElement, TagWithTooltipProps>(function TagWithTooltip(
-    { children, className, triggerClass, ...rest },
+    { children, className, ...rest },
     ref
   ) {
     const classes = useStyles();
     return (
       <Tooltip
         placement="top"
-        triggerClass={clsx(classes.tag, className, triggerClass)}
-        triggers={TRIGGERS.CLICK}
+        className={clsx(classes.tag, className)}
+        disableHover={true}
         ref={ref}
         {...rest}
       >

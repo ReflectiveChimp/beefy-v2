@@ -34,7 +34,7 @@ import type {
 } from './types';
 import { styled } from '@repo/styles/jsx';
 import { buttonRecipe } from '../../../../components/Button/styles';
-import { FloatingTrigger } from '../../../../components/Floating/FloatingTrigger';
+import { FloatingButtonTrigger } from '../../../../components/Floating/FloatingTriggers';
 import { FloatingDropdown } from '../../../../components/Floating/FloatingDropdown';
 import { FloatingProvider } from '../../../../components/Floating/FloatingProvider';
 
@@ -121,7 +121,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   );
 
   return (
-    <FloatingProvider placement={placement || 'bottom-end'}>
+    <FloatingProvider placement={placement || 'bottom-end'} role="menu">
       <TriggerButton mobile={mobileAlternative} borderless={true}>
         {!hideText && <ShareText mobile={mobileAlternative}>{t('Vault-Share')}</ShareText>}
         <ShareIcon />
@@ -157,7 +157,7 @@ const ShareText = styled('span', {
 });
 
 const TriggerButton = styled(
-  styled(FloatingTrigger, buttonRecipe),
+  styled(FloatingButtonTrigger, buttonRecipe),
   {
     base: {
       display: 'flex',
@@ -269,6 +269,7 @@ const ItemButton = styled('button', {
     whiteSpace: 'nowrap',
     flexShrink: 0,
     textAlign: 'left',
+    justifyContent: 'flex-start',
     gap: '8px',
   },
 });

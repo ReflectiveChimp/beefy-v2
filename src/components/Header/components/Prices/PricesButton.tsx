@@ -1,19 +1,12 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { tokens } from './Tokens';
 import { TokenPrice } from './TokenPrice';
 import { styled } from '@repo/styles/jsx';
 
-import { FloatingTrigger } from '../../../Floating/FloatingTrigger';
+import { FloatingButtonTrigger } from '../../../Floating/FloatingTriggers';
 
-type PricesButtonProps = {
-  setOpen: (setter: (open: boolean) => boolean) => void;
-};
-
-export const PricesButton = memo(function PricesButton({ setOpen }: PricesButtonProps) {
+export const PricesButton = memo(function PricesButton() {
   const [current, setCurrent] = useState(0);
-  const handleToggle = useCallback(() => {
-    setOpen(open => !open);
-  }, [setOpen]);
   const next = current < tokens.length - 1 ? current + 1 : 0;
 
   useEffect(() => {
@@ -25,7 +18,7 @@ export const PricesButton = memo(function PricesButton({ setOpen }: PricesButton
   }, [setCurrent]);
 
   return (
-    <Trigger onClick={handleToggle}>
+    <Trigger>
       {tokens.map((token, i) => (
         <TokenPrice
           key={i}
@@ -38,7 +31,7 @@ export const PricesButton = memo(function PricesButton({ setOpen }: PricesButton
 });
 
 const Trigger = styled(
-  FloatingTrigger,
+  FloatingButtonTrigger,
   {
     base: {
       cursor: 'pointer',

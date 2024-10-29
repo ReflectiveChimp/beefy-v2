@@ -18,6 +18,7 @@ import { CallsForm } from './Calls/CallsForm';
 import logoUrl from './logo.svg';
 import { SimulateForm } from './Simulate/SimulateForm';
 import type { TenderlyState } from '../../features/data/reducers/tenderly-types';
+import { styled } from '@repo/styles/jsx';
 
 const useStyles = makeStyles(styles);
 
@@ -53,19 +54,27 @@ const TenderlyModal = memo<TenderlyModalProps>(function TenderlyModal({ mode, on
   const Component = modeToComponent[mode] || FallbackMode;
 
   return (
-    <Card className={classes.card}>
-      <CardHeader className={classes.cardHeader}>
+    <Card>
+      <CardHeader>
         <img src={logoUrl} alt="" width={24} height={24} className={classes.cardIcon} />
-        <CardTitle title="Tenderly Simulation" className={classes.cardTitle} />
+        <CardTitle>Tenderly Simulation</CardTitle>
         <IconButton onClick={onClose} aria-label="close" className={classes.closeButton}>
           <CloseIcon color="#999CB3" />
         </IconButton>
       </CardHeader>
-      <CardContent className={classes.cardContent}>
+      <StyledCardContent>
         <Component />
-      </CardContent>
+      </StyledCardContent>
     </Card>
   );
+});
+
+const StyledCardContent = styled(CardContent, {
+  base: {
+    minHeight: '200px',
+    overflowY: 'auto',
+    flexShrink: 1,
+  },
 });
 
 export const Tenderly = memo(function Tenderly() {

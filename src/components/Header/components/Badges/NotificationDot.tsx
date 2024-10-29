@@ -8,7 +8,7 @@ export const NotificationDot = styled('div', {
     height: '8px',
     width: '8px',
     position: 'absolute',
-    top: '4px',
+    top: '0px',
     right: '0',
     transform: 'translate(50%, -50%)',
     pointerEvents: 'none',

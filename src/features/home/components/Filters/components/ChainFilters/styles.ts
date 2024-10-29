@@ -28,6 +28,7 @@ export const styles = (theme: Theme) => ({
     border: `0`,
     borderRadius: '6px',
     cursor: 'pointer',
+    whiteSpace: 'nowrap' as const,
     '&::before': {
       content: '""',
       display: 'block',

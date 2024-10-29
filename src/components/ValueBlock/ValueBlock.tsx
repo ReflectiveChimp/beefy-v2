@@ -39,7 +39,7 @@ export const ValueBlock = memo(function ValueBlock({
       <div className={classes.tooltipLabel}>
         <div className={clsx(classes.label, labelClassName)}>{label}</div>
         {!loading && tooltip && (
-          <Tooltip content={tooltip} triggerClass={classes.tooltipHolder}>
+          <Tooltip content={tooltip} className={classes.tooltipHolder}>
             <HelpOutline className={classes.tooltipIcon} />
           </Tooltip>
         )}

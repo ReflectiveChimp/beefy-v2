@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { selectPriceWithChange } from '../../features/data/selectors/tokens';
 import { formatLargePercent, formatLargeUsd, formatUsd } from '../../helpers/format';
@@ -7,7 +7,7 @@ import { fetchHistoricalPrices } from '../../features/data/actions/historical';
 import { BIG_ZERO } from '../../helpers/big-number';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import { Tooltip, type TooltipProps } from '../Tooltip';
+import { Tooltip } from '../Tooltip';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
@@ -91,18 +91,11 @@ const WithChange = memo<WithChangeProps>(function WithChange({
     change: formatUsd(diffAbs, diffAbs.gte(0.01) ? 2 : 4),
     date: format(previousDate, 'MMM d, yyyy h:mm a'),
   });
-  const handleTooltipClick = useCallback<Exclude<TooltipProps['onTriggerClick'], undefined>>(e => {
-    if (e) {
-      // don't bubble up
-      e.preventDefault();
-    }
-  }, []);
 
   return (
     <Tooltip
       content={tooltipContent}
-      onTriggerClick={handleTooltipClick}
-      triggerClass={clsx(className, {
+      className={clsx(className, {
         [classes.priceWithChange]: true,
         [classes.tooltipTrigger]: true,
         [classes.positive]: isPositive,

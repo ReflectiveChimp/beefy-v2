@@ -12,8 +12,8 @@ import clsx from 'clsx';
 import { TokenImageFromEntity } from '../../../../../../../components/TokenImage/TokenImage';
 import { orderBy } from 'lodash-es';
 import { getNetworkSrc } from '../../../../../../../helpers/networkSrc';
-import { Tooltip } from '../../../../../../../components/Tooltip';
 import type { ChainEntity } from '../../../../../../data/entities/chain';
+import { Tooltip } from '../../../../../../../components/Tooltip';
 
 const useStyles = makeStyles(styles);
 

@@ -122,7 +122,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   };
 
   return (
-    <CardContent className={classes.cardContent}>
+    <CardContent>
       <div className={classes.content}>
         {t(contentKey, {
           mintedToken: minter.mintedToken.symbol,

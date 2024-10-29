@@ -14,21 +14,21 @@ export const Collapsable = memo<CollapsableProps>(function Collapsable({
   openByDefault = false,
   children,
   title,
-  variant,
+  ...recipeProps
 }) {
   const [open, setOpen] = useState<boolean>(openByDefault);
-  const collapsableStyles = collapseRecipe({ variant });
+  const collapsableStyles = collapseRecipe(recipeProps);
   const handleCollapse = useCallback(() => {
     setOpen(prevStatus => !prevStatus);
   }, [setOpen]);
 
   return (
     <div className={collapsableStyles}>
-      <Header onClick={handleCollapse} variant={variant} open={open}>
+      <Header onClick={handleCollapse} variant={recipeProps.variant} open={open}>
         {title}
         {open ? <CloseIcon /> : <OpenIcon />}
       </Header>
-      {open && <Content variant={variant} children={children} />}
+      {open && <Content variant={recipeProps.variant} children={children} />}
     </div>
   );
 });
@@ -38,10 +38,18 @@ const collapseRecipe = cva({
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
-    padding: '16px',
     borderRadius: '12px',
   },
   variants: {
+    padding: {
+      none: {},
+      sm: {
+        padding: '16px',
+      },
+      md: {
+        padding: '24px',
+      },
+    },
     variant: {
       transparent: {},
       light: {
@@ -53,12 +61,12 @@ const collapseRecipe = cva({
       card: {
         background: 'background.contentPrimary',
         gap: '0',
-        padding: '0',
       },
     },
   },
   defaultVariants: {
     variant: 'transparent',
+    padding: 'md',
   },
 });
 

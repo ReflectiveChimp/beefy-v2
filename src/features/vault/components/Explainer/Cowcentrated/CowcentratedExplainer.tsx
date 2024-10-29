@@ -87,7 +87,7 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
 
     return (
       <ExplainerCard
-        title={<CardTitle title={t('Vault-Strategy')} />}
+        title={<CardTitle>{t('Vault-Strategy')}</CardTitle>}
         links={links}
         description={<CowcentratedLikeDescription vaultId={vaultId} />}
         details={

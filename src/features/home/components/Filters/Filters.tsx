@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import { VaultCategoryButtonFilter } from './components/VaultCategoryFilters';
 import { StrategyTypeButtonFilter } from './components/StrategyTypeFilters';
 import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint';
+import { styled } from '@repo/styles/jsx';
 
 const useStyles = makeStyles(styles);
 
@@ -18,7 +19,7 @@ export const Filters = memo(function Filters() {
   const isDesktop = useBreakpoint({ from: 'lg' });
 
   return (
-    <div className={classes.filters}>
+    <Layout>
       {isDesktop ? <ChainButtonFilter className={classes.chain} /> : null}
       <UserCategoryButtonFilter className={classes.userCategory} />
       {isDesktop ? (
@@ -34,6 +35,15 @@ export const Filters = memo(function Filters() {
       )}
       <ExtendedFiltersButton view={isDesktop ? 'dropdown' : 'sidebar'} />
       <ClearFiltersButton className={clsx(classes.button, classes.clear)} />
-    </div>
+    </Layout>
   );
+});
+
+const Layout = styled('div', {
+  base: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    rowGap: '16px',
+    columnGap: '16px',
+  },
 });

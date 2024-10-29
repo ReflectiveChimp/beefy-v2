@@ -2,11 +2,14 @@ import type { FC, SVGProps } from 'react';
 import { memo, useCallback } from 'react';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import { selectActiveChainIds, selectChainById } from '../../../../../data/selectors/chains';
-import { makeStyles, Tooltip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { useAppSelector } from '../../../../../../store';
 import { ChainNewBadge } from './ChainNewBadge';
+import { Tooltip } from '../../../../../../components/Tooltip';
+import { styled } from '@repo/styles/jsx';
+import { cva } from '@repo/styles/css';
 
 const useStyles = makeStyles(styles);
 const networkIcons = import.meta.glob<FC<SVGProps<SVGSVGElement>>>(
@@ -23,7 +26,6 @@ type ChainButtonProps = {
   onChange: (selected: boolean, id: ChainEntity['id']) => void;
 };
 const ChainButton = memo<ChainButtonProps>(function ChainButton({ id, selected, onChange }) {
-  const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, id));
   const handleChange = useCallback(() => {
     onChange(!selected, id);
@@ -32,22 +34,65 @@ const ChainButton = memo<ChainButtonProps>(function ChainButton({ id, selected, 
     networkIcons[`../../../../../../images/networks/${id}.svg`];
 
   return (
-    <Tooltip
-      disableFocusListener
-      disableTouchListener
-      title={chain.name}
-      placement="top-start"
-      classes={{ tooltip: classes.tooltip }}
-    >
-      <button
-        onClick={handleChange}
-        className={clsx(classes.button, { [classes.selected]: selected })}
-      >
+    <Tooltip content={chain.name} placement="top" dark={true} onClick={handleChange} asChild={true}>
+      <StyledButton onClick={handleChange} selected={selected}>
         {chain.new ? <ChainNewBadge /> : null}
-        <Icon className={classes.icon} width={24} height={24} />
-      </button>
+        <Icon className={iconRecipe({ selected })} width={24} height={24} />
+      </StyledButton>
     </Tooltip>
   );
+});
+
+const iconRecipe = cva({
+  base: {},
+  variants: {
+    selected: {
+      true: {},
+      false: {
+        '& .bg': {
+          fill: '#2E324C',
+        },
+        '& .fg': {
+          fill: 'background.body',
+        },
+      },
+    },
+  },
+  defaultVariants: {
+    selected: false,
+  },
+});
+
+const StyledButton = styled('button', {
+  base: {
+    position: 'relative',
+    flexGrow: 1,
+    flexShrink: 0,
+    paddingBlock: '6px',
+    borderRadius: '6px',
+    whiteSpace: 'nowrap',
+    '&::before': {
+      content: '""',
+      display: 'block',
+      position: 'absolute' as const,
+      top: '50%',
+      left: '-1px',
+      marginTop: '-10px',
+      height: '20px',
+      width: '1px',
+      backgroundColor: 'background.border',
+    },
+    '&:first-child::before': {
+      display: 'none',
+    },
+  },
+  variants: {
+    selected: {
+      true: {
+        backgroundColor: 'background.contentDark',
+      },
+    },
+  },
 });
 
 export type ChainButtonSelectorProps = {

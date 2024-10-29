@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../../../../components/LinkButton';
-import { CardContent } from '../Card';
+import { Card, CardContent, CardHeader } from '../Card';
 import { styles } from './styles';
 import type { VaultEntity } from '../../../data/entities/vault';
 import {
@@ -28,6 +28,7 @@ import {
   selectVaultHasActiveMerklBoostCampaigns,
 } from '../../../data/selectors/rewards';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { styled } from '@repo/styles/jsx';
 
 const useStyles = makeStyles(styles);
 
@@ -117,8 +118,8 @@ const CampaignContent = memo<CampaignContentProps>(function CampaignContent({
   const { t } = useTranslation();
 
   return (
-    <div>
-      <div className={classes.header}>
+    <Card>
+      <CardHeader>
         <h2 className={classes.boostedBy}>
           {t('Vault-BoostedBy')}
           <span>{name}</span>
@@ -129,8 +130,8 @@ const CampaignContent = memo<CampaignContentProps>(function CampaignContent({
           {social.telegram && <LinkIcon alt="telegram" logo={Telegram} href={social.telegram} />}
           {social.discord && <LinkIcon alt="discord" logo={Discord} href={social.discord} />}
         </div>
-      </div>
-      <CardContent className={classes.content}>
+      </CardHeader>
+      <StyledCardContent>
         <div className={classes.campaignTitle}>{title}</div>
         <div className={classes.campaignText}>{description}</div>
         {partnerIds && partnerIds.length > 0 && (
@@ -147,9 +148,15 @@ const CampaignContent = memo<CampaignContentProps>(function CampaignContent({
             chainId={rewardToken.chainId}
           />
         ))}
-      </CardContent>
-    </div>
+      </StyledCardContent>
+    </Card>
   );
+});
+
+const StyledCardContent = styled(CardContent, {
+  base: {
+    gap: '16px',
+  },
 });
 
 type InnerBoostCardProps = {
@@ -216,8 +223,8 @@ const PartnerBoostCard = memo<InnerBoostCardProps>(function PartnerBoostCard({
   );
 
   return (
-    <div>
-      <div className={classes.header}>
+    <Card>
+      <CardHeader>
         <h2 className={classes.boostedBy}>
           {t('Vault-BoostedBy')}
           <span>{boost.name}</span>
@@ -228,8 +235,8 @@ const PartnerBoostCard = memo<InnerBoostCardProps>(function PartnerBoostCard({
           {social.telegram && <LinkIcon alt="telegram" logo={Telegram} href={social.telegram} />}
           {social.discord && <LinkIcon alt="discord" logo={Discord} href={social.discord} />}
         </div>
-      </div>
-      <CardContent className={classes.content}>
+      </CardHeader>
+      <StyledCardContent>
         <div>{text}</div>
         {rewardTokens.map(rewardToken => (
           <RewardTokenDetails
@@ -238,7 +245,7 @@ const PartnerBoostCard = memo<InnerBoostCardProps>(function PartnerBoostCard({
             chainId={rewardToken.chainId}
           />
         ))}
-      </CardContent>
-    </div>
+      </StyledCardContent>
+    </Card>
   );
 });

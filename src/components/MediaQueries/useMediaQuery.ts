@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from 'react';
 import { createCachedFactory } from '../../features/data/utils/factory-utils';
 
-function useMediaQueryServer(_query: string, defaultValue: boolean) {
+function useMediaQueryServer(_query: string, defaultValue: boolean = false) {
   return defaultValue;
 }
 
@@ -10,7 +10,7 @@ export const getMatchMedia = createCachedFactory(
   (query: string) => query
 );
 
-function useMediaQueryClient(query: string, _defaultValue: boolean) {
+function useMediaQueryClient(query: string, _defaultValue: boolean = false) {
   const [value, setValue] = useState<boolean>(() => getMatchMedia(query).matches);
 
   useLayoutEffect(() => {

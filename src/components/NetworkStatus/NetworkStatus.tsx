@@ -22,7 +22,7 @@ import {
 } from '../../features/data/selectors/data-loader-helpers';
 import { styled } from '@repo/styles/jsx';
 import type { StyledVariantProps } from '@repo/styles/types';
-import { FloatingTrigger } from '../Floating/FloatingTrigger';
+import { FloatingButtonTrigger } from '../Floating/FloatingTriggers';
 import { FloatingDropdown } from '../Floating/FloatingDropdown';
 import { FloatingProvider } from '../Floating/FloatingProvider';
 
@@ -60,10 +60,11 @@ export const NetworkStatus = memo(function NetworkStatus({
     <FloatingProvider
       open={isOpen}
       onChange={setOpen}
-      referenceRef={anchorEl}
+      triggerRef={anchorEl}
+      role="dialog"
       placement="bottom-end"
     >
-      <StatusButton onClick={handleToggle}>
+      <StatusButton>
         <Indicator
           status={hasAnyError ? 'warning' : !hasAnyLoading ? 'success' : undefined}
           loading={hasAnyLoading}
@@ -142,7 +143,7 @@ const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
 };
 
 const StatusButton = styled(
-  FloatingTrigger,
+  FloatingButtonTrigger,
   {
     base: {
       height: '40px',

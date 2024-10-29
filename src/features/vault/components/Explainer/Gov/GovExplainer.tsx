@@ -26,7 +26,7 @@ export const GovExplainer = memo<GovExplainerProps>(function GovExplainer({ vaul
 
   return (
     <ExplainerCard
-      title={<CardTitle title={t('Gov-Pool')} />}
+      title={<CardTitle>{t('Gov-Pool')}</CardTitle>}
       links={links}
       description={<GovDescription vaultId={vaultId} />}
     />

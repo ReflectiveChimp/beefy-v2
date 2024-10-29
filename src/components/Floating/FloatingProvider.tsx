@@ -10,33 +10,15 @@ const FloatingContext = createContext<FloatingContextValue | null>(null);
 
 export const useFloatingContext = () => useContext(FloatingContext);
 
-export type FloatingProviderProps = Omit<UseFloatingProps, 'arrowRef'> & {
-  arrow?: boolean | string;
-  referenceRef?: MutableRefObject<Element | null>;
+export type FloatingProviderProps = UseFloatingProps & {
   children: ReactNode;
-  autoHeight?: boolean;
-  hover?: boolean;
 };
 
 export const FloatingProvider = memo(function FloatingProvider({
-  open,
-  onChange,
-  placement = 'bottom-start',
-  arrow,
-  referenceRef,
   children,
-  autoHeight = false,
-  hover = false,
+  ...rest
 }: FloatingProviderProps) {
-  const value = useFloating({
-    open,
-    onChange,
-    placement,
-    arrow,
-    referenceRef,
-    autoHeight,
-    hover,
-  });
+  const value = useFloating(rest);
 
   return <FloatingContext.Provider value={value}>{children}</FloatingContext.Provider>;
 });

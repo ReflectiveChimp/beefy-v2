@@ -26,7 +26,7 @@ export const styles = (theme: Theme) => ({
   },
   tooltip: {},
   link: {
-    color: 'var(--tooltip-link-color)',
+    color: 'var(--colors-color-palette-text-link)',
     textDecoration: 'underline',
   },
 });

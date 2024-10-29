@@ -12,9 +12,10 @@ export const Prices = memo(function Prices() {
       open={open}
       onChange={setOpen}
       placement="bottom-end"
+      role="dialog"
       arrow={css({ fill: 'tooltip.dark.background' })}
     >
-      <PricesButton setOpen={setOpen} />
+      <PricesButton />
       {open && <PricesDropdown setOpen={setOpen} />}
     </FloatingProvider>
   );

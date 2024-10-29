@@ -7,7 +7,7 @@ import { ScrollToTop } from './components/ScrollToTop';
 import { theme } from './theme';
 import { initAppData } from './features/data/actions/scenarios';
 import { store } from './store';
-import { FullscreenTechLoader } from './components/TechLoader';
+import { TechLoader } from './components/TechLoader';
 import { Router } from './components/Router';
 import { DefaultMeta } from './components/Meta';
 import { HelmetProvider } from 'react-helmet-async';
@@ -32,7 +32,7 @@ type BoundariesProps = { children?: ReactNode };
 const Boundaries = memo<BoundariesProps>(function Boundaries({ children }) {
   return (
     <ErrorBoundary>
-      <Suspense fallback={<FullscreenTechLoader />}>{children}</Suspense>
+      <Suspense fallback={<TechLoader />}>{children}</Suspense>
     </ErrorBoundary>
   );
 });

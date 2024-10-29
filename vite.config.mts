@@ -106,6 +106,7 @@ export default defineConfig({
           'styled',
           'sva',
           'cva',
+          'createFloatingTrigger',
         ],
       },
       plugins: [RollupNodePolyFillPlugin()],

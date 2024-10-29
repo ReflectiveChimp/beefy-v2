@@ -1,5 +1,5 @@
 import type { Placement } from '@floating-ui/react-dom';
-import { type MutableRefObject, useMemo, useRef, useState } from 'react';
+import { type HTMLProps, type MutableRefObject, useMemo, useRef, useState } from 'react';
 import {
   arrow as arrowMiddleware,
   autoUpdate,
@@ -13,18 +13,24 @@ import {
   useHover,
   useInteractions,
   useRole,
+  type UseRoleProps,
 } from '@floating-ui/react';
 
 export type UseFloatingProps = {
   open?: boolean;
   onChange?: (open: boolean) => void;
+  disabled?: boolean;
   placement?: Placement;
   /** If provided will render an arrow SVG, if string will add as className to the element */
   arrow?: boolean | string;
   /** Reference to the element that the floating element should be positioned relative to, defaults to FloatingTrigger */
-  referenceRef?: MutableRefObject<Element | null>;
+  triggerRef?: MutableRefObject<Element | null>;
   autoHeight?: boolean;
-  hover?: boolean;
+  hoverEnabled?: boolean;
+  hoverCloseDelay?: number;
+  hoverTouchEnabled?: boolean;
+  clickEnabled?: boolean;
+  role?: UseRoleProps['role'];
 };
 
 export function useFloating({
@@ -32,17 +38,22 @@ export function useFloating({
   onChange: controlledOnChange,
   placement = 'bottom-start',
   arrow,
-  referenceRef,
+  triggerRef,
+  disabled = false,
   autoHeight = false,
-  hover = false,
+  clickEnabled = true,
+  hoverEnabled = false,
+  hoverTouchEnabled = false,
+  hoverCloseDelay = 0,
+  role,
 }: UseFloatingProps) {
   const [uncontrolledOpen, uncontrolledOnChange] = useState(false);
-  const open = controlledOpen ?? uncontrolledOpen;
+  const open = disabled ? false : controlledOpen ?? uncontrolledOpen;
   const onOpenChange = controlledOnChange ?? uncontrolledOnChange;
   const arrowRef = useRef<SVGSVGElement | null>(null);
   const middleware = useMemo(() => {
     const wares = [
-      offsetMiddleware(4 + (arrowRef ? 7 : 0)),
+      offsetMiddleware(/*4 +*/ arrowRef ? 7 : 0),
       flipMiddleware({
         crossAxis: placement.includes('-'),
         fallbackAxisSideDirection: 'end',
@@ -50,7 +61,7 @@ export function useFloating({
       shiftMiddleware(),
     ];
     if (arrow) {
-      wares.push(arrowMiddleware({ element: arrowRef }));
+      wares.push(arrowMiddleware({ element: arrowRef, padding: 10 }));
     }
     if (autoHeight) {
       wares.push(
@@ -70,26 +81,46 @@ export function useFloating({
     onOpenChange,
     middleware,
     whileElementsMounted: autoUpdate,
-    elements: referenceRef ? { reference: referenceRef.current } : undefined,
+    elements: triggerRef ? { reference: triggerRef.current } : undefined,
   });
   const clickInteraction = useClick(data.context, {
-    enabled: !controlledOnChange,
+    enabled: !disabled && clickEnabled,
   });
   const hoverInteraction = useHover(data.context, {
-    enabled: hover,
-    mouseOnly: true,
+    enabled: !disabled && hoverEnabled,
+    mouseOnly: !hoverTouchEnabled,
     delay: {
-      close: 200,
+      close: hoverCloseDelay,
     },
   });
-  const dismissInteraction = useDismiss(data.context);
-  const roleInteraction = useRole(data.context);
+  const dismissInteraction = useDismiss(data.context, {
+    enabled: !disabled,
+  });
+  const roleInteraction = useRole(data.context, {
+    enabled: !disabled && !!role,
+    role: role || 'tooltip',
+  });
   const interactions = useInteractions([
     clickInteraction,
     dismissInteraction,
     roleInteraction,
     hoverInteraction,
   ]);
+  const getReferenceProps = useMemo(() => {
+    if (!disabled && hoverEnabled && hoverTouchEnabled) {
+      return (userProps?: HTMLProps<Element> | undefined) =>
+        interactions.getReferenceProps({
+          ...(userProps || {}),
+          onClick(e) {
+            // prevent parent click events when "hovering" via touch
+            e.stopPropagation();
+            e.preventDefault();
+            userProps?.onClick?.(e);
+          },
+        });
+    }
+    return interactions.getReferenceProps;
+  }, [interactions.getReferenceProps, disabled, hoverEnabled, hoverTouchEnabled]);
 
   return useMemo(
     () => ({
@@ -97,10 +128,10 @@ export function useFloating({
       isMounted: open, // future support for transitions
       setIsOpen: onOpenChange,
       context: data.context,
-      reference: {
-        setRef: referenceRef ? undefined : data.refs.setReference,
-        ref: referenceRef ?? data.refs.reference,
-        getProps: interactions.getReferenceProps,
+      trigger: {
+        setRef: triggerRef ? undefined : data.refs.setReference,
+        ref: triggerRef ?? data.refs.reference,
+        getProps: getReferenceProps,
       },
       floating: {
         styles: data.floatingStyles,
@@ -112,6 +143,6 @@ export function useFloating({
           : undefined,
       },
     }),
-    [open, onOpenChange, interactions, data, arrowRef, arrow, referenceRef]
+    [open, onOpenChange, interactions, data, arrowRef, arrow, triggerRef, getReferenceProps]
   );
 }

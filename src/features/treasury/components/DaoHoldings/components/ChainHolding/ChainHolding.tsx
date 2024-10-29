@@ -15,9 +15,9 @@ import clsx from 'clsx';
 import { ExplorerLinks } from '../../../ExplorerLinks';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import { getPartnerSrc } from '../../../../../../helpers/partnerSrc';
-import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { useTranslation } from 'react-i18next';
+import { Tooltip } from '../../../../../../components/Tooltip';
 
 const useStyles = makeStyles(styles);
 

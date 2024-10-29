@@ -29,13 +29,15 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
     setIsOpen(false);
   }, [setIsOpen]);
 
-  const handleToggle = useCallback(() => {
-    setIsOpen(open => !open);
-  }, [setIsOpen]);
-
   return (
-    <FloatingProvider open={isOpen} onChange={setIsOpen} hover={true}>
-      <DropdownNavButton onClick={handleToggle}>
+    <FloatingProvider
+      open={isOpen}
+      onChange={setIsOpen}
+      hoverEnabled={true}
+      hoverCloseDelay={200}
+      role="menu"
+    >
+      <DropdownNavButton>
         <NavItemInner title={title} Icon={Icon} Badge={Badge} Arrow={DownArrow} />
       </DropdownNavButton>
       <DropdownItems>

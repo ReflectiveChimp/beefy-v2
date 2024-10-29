@@ -24,14 +24,10 @@ export const ExtendedFiltersButton = memo<ExtendedFiltersButtonProps>(
       setIsOpen(true);
     }, [setIsOpen]);
 
-    const handleToggle = useCallback(() => {
-      setIsOpen(open => !open);
-    }, [setIsOpen]);
-
     if (view === 'dropdown') {
       return (
-        <FloatingProvider open={isOpen} onChange={setIsOpen} placement="bottom-end">
-          <FilterTriggerButton onClick={handleToggle}>{t('Filter-Btn')}</FilterTriggerButton>
+        <FloatingProvider open={isOpen} onChange={setIsOpen} placement="bottom-end" role="dialog">
+          <FilterTriggerButton>{t('Filter-Btn')}</FilterTriggerButton>
           {isOpen && (
             <Dropdown>
               <ExtendedFilters desktopView={true} />

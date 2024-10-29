@@ -10,7 +10,7 @@ import {
   selectTransactShouldShowClaimsNotification,
 } from '../../../../../data/selectors/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import { CardsTabs } from '../../../Card/CardTabs';
+import { CardHeaderTabs } from '../../../Card';
 import { transactFetchOptions } from '../../../../../data/actions/transact';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
@@ -62,7 +62,7 @@ export const FormStep = memo(function FormStep() {
 
   return (
     <div className={classes.container}>
-      <CardsTabs
+      <CardHeaderTabs
         selected={TransactMode[mode]}
         options={modeOptions}
         onChange={handleModeChange}

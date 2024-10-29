@@ -2,7 +2,7 @@ import { styled } from '@repo/styles/jsx';
 import { Button } from '../../../../../components/Button';
 import { cva } from '@repo/styles/css';
 import { buttonRecipe } from '../../../../../components/Button/styles';
-import { FloatingTrigger } from '../../../../../components/Floating/FloatingTrigger';
+import { FloatingButtonTrigger } from '../../../../../components/Floating/FloatingTriggers';
 
 const filterButtonRecipe = cva({
   base: {
@@ -23,7 +23,7 @@ export const FilterButton = styled(Button, filterButtonRecipe, {
 });
 
 export const FilterTriggerButton = styled(
-  styled(FloatingTrigger, buttonRecipe),
+  styled(FloatingButtonTrigger, buttonRecipe),
   filterButtonRecipe,
   {
     defaultProps: { variant: 'filter', size: 'sm' },

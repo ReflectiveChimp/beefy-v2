@@ -7,19 +7,12 @@ import { ReactComponent as VaultsIcon } from '../../../../images/icons/navigatio
 import { ReactComponent as DashboardIcon } from '../../../../images/icons/navigation/dashboard.svg';
 import { ReactComponent as DaoIcon } from '../../../../images/icons/navigation/dao.svg';
 import { ReactComponent as ResourcesIcon } from '../../../../images/icons/navigation/resources.svg';
-import { NewBadge } from '../Badges/NewBadge';
 
 export const MainMenu = memo(function MainMenu() {
   return (
     <>
       <NavLinkItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
-      <NavLinkItem
-        exact={false}
-        title={'Header-Dashboard'}
-        url="/dashboard"
-        Icon={DashboardIcon}
-        Badge={NewBadge}
-      />
+      <NavLinkItem exact={false} title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
       <DropNavItem
         title={'Header-Dao'}
         Icon={DaoIcon}

@@ -14,6 +14,7 @@ import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData';
 import { Card, CardContent, CardHeader, CardTitle } from '../../Card';
 import { useTranslation } from 'react-i18next';
 import { StatSwitcher } from '../../StatSwitcher';
+import { styled } from '@repo/styles/jsx';
 
 export const useStyles = makeStyles(styles);
 
@@ -63,14 +64,14 @@ export const StandardPnLGraph = memo<PnLGraphProps>(function StandardPnLGraph({
   }, [t]);
 
   return (
-    <Card className={classes.card}>
-      <CardHeader className={classes.header}>
-        <CardTitle title={t('Graph-PositionPerformance')} />
+    <Card>
+      <CardHeader>
+        <CardTitle>{t('Graph-PositionPerformance')}</CardTitle>
         {Object.keys(options).length > 1 ? (
           <StatSwitcher stat={stat} options={options} onChange={setStat as (v: string) => void} />
         ) : null}
       </CardHeader>
-      <CardContent className={classes.content}>
+      <StyledCardContent>
         <Header vaultId={vaultId} />
         <div className={classes.graphContainer}>
           {canShowGraph ? (
@@ -82,9 +83,16 @@ export const StandardPnLGraph = memo<PnLGraphProps>(function StandardPnLGraph({
         {canShowGraph ? (
           <Footer labels={labels} vaultId={vaultId} period={period} handlePeriod={setPeriod} />
         ) : null}
-      </CardContent>
+      </StyledCardContent>
     </Card>
   );
+});
+
+const StyledCardContent = styled(CardContent, {
+  base: {
+    gap: '1px',
+    padding: 0,
+  },
 });
 
 export const DashboardPnLGraph = memo<PnLGraphProps>(function DashboardPnLGraph({

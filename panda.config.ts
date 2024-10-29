@@ -100,7 +100,6 @@ const config = buildConfig(
         display: 'inline-flex',
         justifyContent: 'center',
         alignItems: 'center',
-        width: 'fit-content',
         cursor: 'pointer',
         userSelect: 'none',
         boxShadow: 'none',
@@ -234,6 +233,7 @@ const config = buildConfig(
             loading: { value: '{colors.yellow}' },
             warning: { value: '{colors.orangeWarning}' },
             success: { value: '{colors.green}' },
+            error: { value: '{colors.redOrange}' },
           },
           modal: {
             backdrop: { value: '{colors.white/20}' },
@@ -245,7 +245,7 @@ const config = buildConfig(
                 DEFAULT: { value: '{colors.aa}' },
                 title: { value: '{colors.aa}' },
                 content: { value: '{colors.aa}' },
-                // value: { value: '{colors.ab}' },
+                item: { value: '{colors.ab}' },
                 label: { value: '{colors.aa}' },
                 link: { value: '{colors.aa}' },
               },
@@ -256,7 +256,7 @@ const config = buildConfig(
                 DEFAULT: { value: '{colors.whiteOff}' },
                 title: { value: '{colors.white}' },
                 content: { value: '{colors.whiteOff}' },
-                // value: { value: '{colors.gray}' },
+                item: { value: '{colors.gray}' },
                 label: { value: '{colors.whiteOff}' },
                 link: { value: '{colors.white}' },
               },
@@ -267,29 +267,75 @@ const config = buildConfig(
             text: { value: '{colors.gray}' },
           },
         },
+        sizes: {
+          containerInner: {
+            xs: {
+              value: {
+                base: 'calc({sizes.container.xs} - 32px)',
+                sm: 'calc({sizes.container.xs} - 48px)',
+              },
+            },
+            sm: {
+              value: {
+                base: 'calc({sizes.container.sm} - 32px)',
+                sm: 'calc({sizes.container.sm} - 48px)',
+              },
+            },
+            md: {
+              value: {
+                base: 'calc({sizes.container.md} - 32px)',
+                sm: 'calc({sizes.container.md} - 48px)',
+              },
+            },
+            lg: {
+              value: {
+                base: 'calc({sizes.container.lg} - 32px)',
+                sm: 'calc({sizes.container.lg} - 48px)',
+              },
+            },
+          },
+        },
       },
       textStyles: defineTextStyles({
+        h1: {
+          value: {
+            fontSize: '32px',
+            lineHeight: '40px',
+            fontWeight: 500,
+          },
+        },
+        h2: {
+          value: {
+            fontSize: '24px',
+            lineHeight: '32px',
+            fontWeight: 500,
+          },
+        },
+        h3: {
+          value: {
+            fontSize: '21px',
+            lineHeight: '24px',
+            fontWeight: 500,
+          },
+        },
         'body-lg': {
           value: {
-            // fontFamily: '{fonts.body}',
             fontSize: '16px',
             lineHeight: '24px',
-            textTransform: 'none' as const,
+            textTransform: 'none',
             fontWeight: 400,
           },
         },
         'body-lg-med': {
           value: {
-            // fontFamily: '{fonts.body}',
             fontSize: '16px',
             lineHeight: '24px',
-            textTransform: 'none' as const,
+            textTransform: 'none',
             fontWeight: 500,
           },
         },
         'body-sm': {
           value: {
-            // fontFamily: '{fonts.body}',
             fontSize: '12px',
             lineHeight: '20px',
             textTransform: 'none',
@@ -298,7 +344,6 @@ const config = buildConfig(
         },
         'body-sm-med': {
           value: {
-            // fontFamily: '{fonts.body}',
             fontSize: '12px',
             lineHeight: '20px',
             textTransform: 'none',
@@ -307,7 +352,6 @@ const config = buildConfig(
         },
         'subline-lg': {
           value: {
-            // fontFamily: '{fonts.body}',
             fontSize: '15px',
             lineHeight: '24px',
             fontWeight: 500,
@@ -317,7 +361,6 @@ const config = buildConfig(
         },
         'subline-sm': {
           value: {
-            // fontFamily: '{fonts.body}',
             fontSize: '12px',
             lineHeight: '20px',
             fontWeight: 500,

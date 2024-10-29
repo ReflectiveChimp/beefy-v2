@@ -5,7 +5,7 @@ import {
 import { memo } from 'react';
 import { styled } from '@repo/styles/jsx';
 
-import { FloatingTrigger } from '../../../Floating/FloatingTrigger';
+import { FloatingButtonTrigger } from '../../../Floating/FloatingTriggers';
 
 type NavLinkProps = {
   onClick?: RouterNavLinkProps['onClick'];
@@ -79,7 +79,7 @@ const ExternalNavLink = styled('a', navLinkRecipe, {
 
 const InternalNavLink = styled(RouterNavLink, navLinkRecipe);
 
-export const DropdownNavButton = styled(FloatingTrigger, navLinkRecipe, {
+export const DropdownNavButton = styled(FloatingButtonTrigger, navLinkRecipe, {
   defaultProps: {
     type: 'button',
   },
