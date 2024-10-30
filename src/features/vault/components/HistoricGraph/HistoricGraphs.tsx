@@ -63,5 +63,6 @@ const StyledCardContent = styled(CardContent, {
   base: {
     padding: 0,
     gap: '1px',
+    backgroundColor: 'background.contentDark',
   },
 });

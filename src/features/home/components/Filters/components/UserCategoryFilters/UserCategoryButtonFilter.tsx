@@ -35,7 +35,8 @@ export const UserCategoryButtonFilter = memo<UserCategoryButtonFilterProps>(
         value={value}
         options={options}
         onChange={handleChange}
-        buttonsClass={className}
+        variant="filter"
+        fullWidth={true}
       />
     );
   }

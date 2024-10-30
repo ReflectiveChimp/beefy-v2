@@ -22,7 +22,7 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     gridTemplateColumns: '35fr 35fr 30fr',
     padding: '16px 24px',
-    borderBottom: `solid 2px ${theme.palette.background.border}`,
+    borderBottom: `solid 1px ${theme.palette.background.contentDark}`,
     alignItems: 'center',
     columnGap: '16px',
     '&:last-child': {

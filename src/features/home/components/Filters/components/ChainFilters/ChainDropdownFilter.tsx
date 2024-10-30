@@ -111,6 +111,7 @@ export const ChainDropdownFilter = memo<ChainDropdownFilterProps>(function Chain
       selectClass={className}
       SelectedItemComponent={SelectedChain}
       DropdownItemLabelComponent={ChainDropdownItemLabel}
+      fullWidth={true}
     />
   );
 });

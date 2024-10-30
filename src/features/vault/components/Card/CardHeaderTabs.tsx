@@ -2,14 +2,14 @@ import { memo, useCallback } from 'react';
 import { CardHeader } from './CardHeader';
 import { styled } from '@repo/styles/jsx';
 
-export type CardTabProps = {
+export type CardHeaderTabsProps = {
   selected: string;
   options: { value: string; label: string }[];
   onChange: (value: string) => void;
   highlight?: string;
 };
 
-export const CardHeaderTabs = memo<CardTabProps>(function CardsTabs({
+export const CardHeaderTabs = memo<CardHeaderTabsProps>(function CardHeaderTabs({
   selected,
   options,
   onChange,
@@ -66,6 +66,9 @@ const StyledButton = styled('button', {
     flexShrink: 0,
     color: 'text.dark',
     paddingBlock: '16px',
+    _hover: {
+      color: 'text.middle',
+    },
     '&::before': {
       content: '""',
       position: 'absolute',
@@ -104,6 +107,7 @@ const StyledButton = styled('button', {
           height: '8px',
           width: '8px',
           pointerEvents: 'none',
+          transform: 'translate(0, -0.4em)',
         },
       },
     },

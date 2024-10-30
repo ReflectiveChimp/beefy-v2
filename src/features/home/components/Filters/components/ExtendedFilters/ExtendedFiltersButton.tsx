@@ -39,7 +39,9 @@ export const ExtendedFiltersButton = memo<ExtendedFiltersButtonProps>(
 
     return (
       <>
-        <FilterButton onClick={handleOpen}>{t('Filter-Btn')}</FilterButton>
+        <FilterButton onClick={handleOpen} fullWidth={true}>
+          {t('Filter-Btn')}
+        </FilterButton>
         <Sidebar open={isOpen} onClose={handleClose} />
       </>
     );

@@ -40,9 +40,9 @@ export const StrategyTypeButtonFilter = memo<StrategyTypeButtonFilterProps>(
         value={value}
         options={options}
         onChange={handleChange}
-        buttonsClass={className}
         fullWidth={false}
         untoggleValue={allKey}
+        variant="filter"
       />
     );
   }

@@ -11,29 +11,25 @@ import {
   DropdownItemLabel,
   type DropdownItemLabelProps,
 } from '../../../../../../components/LabeledSelect';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
 import {
   LabeledMultiSelect,
   type LabeledMultiSelectProps,
 } from '../../../../../../components/LabeledMultiSelect';
-
-const useStyles = makeStyles(styles);
+import { Highlight, HighlightHolder } from './Highlight';
 
 const CategoryDropdownLabel = memo<DropdownItemLabelProps>(function CategoryDropdownLabel(props) {
-  const classes = useStyles();
   const { value, label: originalLabel } = props;
   const label = useMemo(() => {
     const option = TYPE_OPTIONS[value];
     if (option && option.highlight) {
       return (
-        <div className={classes.holder}>
-          {originalLabel} <span className={classes.highlight}>{option.highlight}</span>
-        </div>
+        <HighlightHolder>
+          {originalLabel} <Highlight>{option.highlight}</Highlight>
+        </HighlightHolder>
       );
     }
     return originalLabel;
-  }, [value, originalLabel, classes]);
+  }, [value, originalLabel]);
 
   return <DropdownItemLabel {...props} label={label} />;
 });

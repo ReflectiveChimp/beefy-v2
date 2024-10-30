@@ -39,7 +39,6 @@ export const NetworkStatus = memo(function NetworkStatus({
     [dispatch]
   );
   const handleClose = useCallback(() => dispatch(dataLoaderActions.closeIndicator()), [dispatch]);
-  const handleToggle = useCallback(() => dispatch(dataLoaderActions.toggleIndicator()), [dispatch]);
 
   const chainsById = useAppSelector(state => state.entities.chains.byId);
   const isWalletConnected = useAppSelector(selectIsWalletConnected);

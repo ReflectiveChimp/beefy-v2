@@ -6,12 +6,14 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     columnGap: '24px',
     alignItems: 'center',
+    borderBottom: `solid 1px ${theme.palette.background.contentDark}`,
     [theme.breakpoints.up('sm')]: {
       columnGap: '48px',
     },
     [theme.breakpoints.up('lg')]: {
       flexDirection: 'column' as const,
-      borderRight: 'solid 2px #363B63',
+      bottomBorder: 0,
+      borderRight: `solid 1px ${theme.palette.background.contentDark}`,
     },
   },
   legend: {

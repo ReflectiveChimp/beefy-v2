@@ -98,6 +98,7 @@ const config = buildConfig(
         padding: 0,
         margin: 0,
         display: 'inline-flex',
+        whiteSpace: 'nowrap',
         justifyContent: 'center',
         alignItems: 'center',
         cursor: 'pointer',
@@ -205,6 +206,21 @@ const config = buildConfig(
             lg: { value: '1296px' },
           },
         },
+        fontSizes: {
+          h1: { value: '32px' },
+          h2: { value: '24px' },
+          h3: { value: '21px' },
+          body: {
+            DEFAULT: { value: '16px' },
+            lg: { value: '16px' },
+            sm: { value: '12px' },
+          },
+          subline: {
+            DEFAULT: { value: '15px' },
+            lg: { value: '15px' },
+            sm: { value: '12px' },
+          },
+        },
       },
       semanticTokens: {
         colors: {
@@ -223,6 +239,12 @@ const config = buildConfig(
             border: { value: '{colors.ai}' },
             button: { value: '{colors.ai}' },
             contentLight: { value: '{colors.ak}' },
+          },
+          tags: {
+            clm: {
+              background: { value: '{colors.ax}' },
+              text: { value: '{colors.whiteOff}' },
+            },
           },
           alert: {
             error: { value: '{colors.redOrange}' },
@@ -368,6 +390,15 @@ const config = buildConfig(
             letterSpacing: '0.5px',
           },
         },
+        inherit: {
+          value: {
+            fontSize: 'inherit',
+            lineHeight: 'inherit',
+            fontWeight: 'inherit',
+            textTransform: 'inherit',
+            letterSpacing: 'inherit',
+          },
+        },
       }),
       keyframes: {
         loadingPulse: {
@@ -430,6 +461,19 @@ const config = buildConfig(
         disabled: {
           color: '{colors.text.middle}',
           border: '{colors.background.contentPrimary}',
+        },
+      },
+      range: {
+        base: {
+          color: '{colors.text.dark}',
+          background: 'transparent',
+          border: 'transparent',
+        },
+        hover: {
+          color: '{colors.text.middle}',
+        },
+        active: {
+          color: '{colors.text.light}',
         },
       },
     },

@@ -35,6 +35,7 @@ export const ClearFiltersButton = memo<ClearFiltersButtonProps>(function ClearFi
       size="sm"
       disabled={!active}
       onClick={handleReset}
+      fullWidth={true}
     >
       {count > 0 ? (
         <span className={classes.badge} data-count={count} />
