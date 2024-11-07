@@ -15,14 +15,9 @@ import { Highlight } from './Highlight';
 export const AssetTypeButtonFilter = memo(function AssetTypeButtonFilter() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const allKey = 'all';
   const options: Record<string, string> = useMemo(
     () =>
-      Object.fromEntries(
-        Object.entries(TYPE_OPTIONS)
-          .filter(([key]) => key !== allKey)
-          .map(([key, cat]) => [key, t(cat.i18nKey)])
-      ),
+      Object.fromEntries(Object.entries(TYPE_OPTIONS).map(([key, cat]) => [key, t(cat.i18nKey)])),
     [t]
   );
   const value = useAppSelector(selectFilterAssetType);
@@ -46,7 +41,6 @@ export const AssetTypeButtonFilter = memo(function AssetTypeButtonFilter() {
       options={options}
       onChange={handleChange}
       fullWidth={false}
-      untoggleValue={allKey}
       ButtonComponent={CategoryToggleButton}
       variant="filter"
     />

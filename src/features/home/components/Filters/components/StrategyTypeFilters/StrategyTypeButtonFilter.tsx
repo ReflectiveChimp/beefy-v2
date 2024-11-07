@@ -8,42 +8,35 @@ import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { TYPE_OPTIONS } from './type-options';
 
-export type StrategyTypeButtonFilterProps = {
-  className?: string;
-};
-export const StrategyTypeButtonFilter = memo<StrategyTypeButtonFilterProps>(
-  function StrategyTypeButtonFilter({ className }) {
-    const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const allKey = 'all';
-    const options: Record<string, string> = useMemo(
-      () =>
-        Object.fromEntries(
-          Object.entries(TYPE_OPTIONS)
-            .filter(([key]) => key !== allKey)
-            .map(([key, label]) => [key, t(label)])
-        ),
-      [t]
-    );
-    const value = useAppSelector(selectFilterStrategyType);
-    const handleChange = useCallback<ToggleButtonsProps['onChange']>(
-      value => {
-        dispatch(
-          filteredVaultsActions.setStrategyType(value as FilteredVaultsState['strategyType'])
-        );
-      },
-      [dispatch]
-    );
+export const StrategyTypeButtonFilter = memo(function StrategyTypeButtonFilter() {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const allKey = 'all';
+  const options: Record<string, string> = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(TYPE_OPTIONS)
+          .filter(([key]) => key !== allKey)
+          .map(([key, label]) => [key, t(label)])
+      ),
+    [t]
+  );
+  const value = useAppSelector(selectFilterStrategyType);
+  const handleChange = useCallback<ToggleButtonsProps['onChange']>(
+    value => {
+      dispatch(filteredVaultsActions.setStrategyType(value as FilteredVaultsState['strategyType']));
+    },
+    [dispatch]
+  );
 
-    return (
-      <ToggleButtons
-        value={value}
-        options={options}
-        onChange={handleChange}
-        fullWidth={false}
-        untoggleValue={allKey}
-        variant="filter"
-      />
-    );
-  }
-);
+  return (
+    <ToggleButtons
+      value={value}
+      options={options}
+      onChange={handleChange}
+      fullWidth={false}
+      untoggleValue={allKey}
+      variant="filter"
+    />
+  );
+});

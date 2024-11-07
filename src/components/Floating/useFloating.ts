@@ -25,12 +25,16 @@ export type UseFloatingProps = {
   arrow?: boolean | string;
   /** Reference to the element that the floating element should be positioned relative to, defaults to FloatingTrigger */
   triggerRef?: MutableRefObject<Element | null>;
+  /** Will grow to use all vertical room in page */
   autoHeight?: boolean;
+  /** Will grow to same width as trigger reference element */
+  autoWidth?: boolean;
   hoverEnabled?: boolean;
   hoverCloseDelay?: number;
   hoverTouchEnabled?: boolean;
   clickEnabled?: boolean;
   role?: UseRoleProps['role'];
+  layer?: 0 | 1 | 2;
 };
 
 export function useFloating({
@@ -41,11 +45,13 @@ export function useFloating({
   triggerRef,
   disabled = false,
   autoHeight = false,
+  autoWidth = false,
   clickEnabled = true,
   hoverEnabled = false,
   hoverTouchEnabled = false,
   hoverCloseDelay = 0,
   role,
+  layer = 0,
 }: UseFloatingProps) {
   const [uncontrolledOpen, uncontrolledOnChange] = useState(false);
   const open = disabled ? false : controlledOpen ?? uncontrolledOpen;
@@ -57,24 +63,32 @@ export function useFloating({
       flipMiddleware({
         crossAxis: placement.includes('-'),
         fallbackAxisSideDirection: 'end',
+        padding: 24,
       }),
       shiftMiddleware(),
     ];
     if (arrow) {
       wares.push(arrowMiddleware({ element: arrowRef, padding: 10 }));
     }
-    if (autoHeight) {
+    if (autoHeight || autoWidth) {
       wares.push(
         sizeMiddleware({
           padding: 16,
-          apply({ availableHeight, elements }) {
-            elements.floating.style.maxHeight = availableHeight + 'px';
+          apply({ availableHeight, availableWidth, elements }) {
+            if (autoWidth) {
+              elements.floating.style.width =
+                elements.reference.getBoundingClientRect().width + 'px';
+              elements.floating.style.maxWidth = availableWidth + 'px';
+            }
+            if (autoHeight) {
+              elements.floating.style.maxHeight = availableHeight + 'px';
+            }
           },
         })
       );
     }
     return wares;
-  }, [placement, arrowRef, arrow, autoHeight]);
+  }, [placement, arrowRef, arrow, autoHeight, autoWidth]);
   const data = useFloatingBase({
     placement,
     open,
@@ -120,7 +134,7 @@ export function useFloating({
         });
     }
     return interactions.getReferenceProps;
-  }, [interactions.getReferenceProps, disabled, hoverEnabled, hoverTouchEnabled]);
+  }, [interactions, disabled, hoverEnabled, hoverTouchEnabled]);
 
   return useMemo(
     () => ({
@@ -141,8 +155,9 @@ export function useFloating({
         arrow: arrow
           ? { ref: arrowRef, className: typeof arrow === 'string' ? arrow : undefined }
           : undefined,
+        layer,
       },
     }),
-    [open, onOpenChange, interactions, data, arrowRef, arrow, triggerRef, getReferenceProps]
+    [open, onOpenChange, interactions, data, arrowRef, arrow, triggerRef, getReferenceProps, layer]
   );
 }

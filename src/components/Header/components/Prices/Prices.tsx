@@ -13,6 +13,7 @@ export const Prices = memo(function Prices() {
       onChange={setOpen}
       placement="bottom-end"
       role="dialog"
+      layer={1}
       arrow={css({ fill: 'tooltip.dark.background' })}
     >
       <PricesButton />

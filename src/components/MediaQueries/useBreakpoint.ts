@@ -4,15 +4,25 @@ import type { Breakpoint, BreakpointMatches, FromOrToProp } from './types';
 
 export function useBreakpoint(opts: FromOrToProp) {
   const breakpoints = useBreakpoints();
+  const { mode, breakpoint } = getModeBreakpoint(opts);
   return useMemo(() => {
-    if ('from' in opts && opts.from) {
-      return isFrom(opts.from, breakpoints);
-    } else if ('to' in opts && opts.to) {
-      return isUpTo(opts.to, breakpoints);
-    } else {
-      throw new Error('up or down prop is required');
+    switch (mode) {
+      case 'from':
+        return isFrom(breakpoint, breakpoints);
+      case 'to':
+        return isUpTo(breakpoint, breakpoints);
     }
-  }, [breakpoints, opts]);
+  }, [breakpoints, mode, breakpoint]);
+}
+
+function getModeBreakpoint(opts: FromOrToProp) {
+  if ('from' in opts && opts.from) {
+    return { mode: 'from', breakpoint: opts.from };
+  } else if ('to' in opts && opts.to) {
+    return { mode: 'to', breakpoint: opts.to };
+  } else {
+    throw new Error('up or down prop is required');
+  }
 }
 
 export const breakpointKeys = ['xs', 'sm', 'md', 'lg', 'xl'] as const satisfies Breakpoint[];

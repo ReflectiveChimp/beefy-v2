@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => ({
   },
   label: {
     ...theme.typography['subline-sm'],
-    fontWeight: 700,
+    fontWeight: 500,
     color: 'inherit',
     flex: '1 1 40%',
   },

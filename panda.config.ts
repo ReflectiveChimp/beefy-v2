@@ -107,7 +107,7 @@ const config = buildConfig(
         textAlign: 'center',
         textDecoration: 'none',
         outline: 'none',
-        '&:focus': {
+        '&:focus,&:focus-visible': {
           outline: 'none',
         },
         '&:disabled,&:hover:disabled,&:active:disabled,&:focus:disabled': {
@@ -420,6 +420,13 @@ const config = buildConfig(
         hover: {
           background: '{colors.al}',
           border: '{colors.al}',
+        },
+      },
+      light: {
+        base: {
+          color: '{colors.text.light}',
+          background: '{colors.ak}',
+          border: '{colors.ak}',
         },
       },
       success: {

@@ -10,13 +10,10 @@ import { CATEGORY_OPTIONS } from './category-options';
 export const VaultCategoryButtonFilter = memo(function VaultCategoryButtonFilter() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const allKey = 'all';
   const options: Record<string, string> = useMemo(
     () =>
       Object.fromEntries(
-        Object.entries(CATEGORY_OPTIONS)
-          .filter(([key]) => key !== allKey)
-          .map(([key, cat]) => [key, t(cat.i18nKey)])
+        Object.entries(CATEGORY_OPTIONS).map(([key, cat]) => [key, t(cat.i18nKey)])
       ),
     [t]
   );
@@ -42,7 +39,6 @@ export const VaultCategoryButtonFilter = memo(function VaultCategoryButtonFilter
       onChange={handleChange}
       variant="filter"
       fullWidth={false}
-      untoggleValue={allKey}
     />
   );
 });

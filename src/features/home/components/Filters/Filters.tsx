@@ -18,12 +18,18 @@ export const Filters = memo(function Filters() {
 const MobileLayout = memo(function MobileLayout() {
   return (
     <Layout>
-      <UserCategoryButtonFilter />
-      <ChainDropdownFilter />
-      <HalfHalf>
-        <ExtendedFiltersButton view="sidebar" />
-        <ClearFiltersButton />
-      </HalfHalf>
+      <Top>
+        <UserCategoryButtonFilter />
+      </Top>
+      <Bottom>
+        <Left>
+          <ChainDropdownFilter />
+        </Left>
+        <Right>
+          <ExtendedFiltersButton view="sidebar" />
+          <ClearFiltersButton />
+        </Right>
+      </Bottom>
     </Layout>
   );
 });
@@ -68,35 +74,44 @@ const Top = styled('div', {
 const Bottom = styled('div', {
   base: {
     display: 'flex',
-    flexWrap: 'nowrap',
+    flexDirection: 'column',
     width: '100%',
     gap: 'inherit',
+    md: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(0px, 1fr))',
+    },
+    lg: {
+      display: 'flex',
+      flexDirection: 'row',
+    },
   },
 });
 
 const Left = styled('div', {
   base: {
-    marginRight: 'auto',
     display: 'flex',
     flexDirection: 'inherit',
     gap: 'inherit',
+    lg: {
+      marginRight: 'auto',
+    },
   },
 });
 
 const Right = styled('div', {
   base: {
-    marginLeft: 'auto',
-    display: 'flex',
-    flexDirection: 'inherit',
-    gap: 'inherit',
-  },
-});
-
-const HalfHalf = styled('div', {
-  base: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(0px, 1fr))',
     gap: 'inherit',
     width: '100%',
+    md: {},
+    lg: {
+      marginLeft: 'auto',
+      display: 'flex',
+      flexDirection: 'inherit',
+      gap: 'inherit',
+      width: 'auto',
+    },
   },
 });

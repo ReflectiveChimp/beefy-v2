@@ -1,15 +1,14 @@
 import type { FC, MouseEventHandler, ReactNode } from 'react';
-import { memo, useCallback, useMemo, useRef, useState } from 'react';
-import { ClickAwayListener, makeStyles } from '@material-ui/core';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { orderBy } from 'lodash-es';
-import { styles } from './styles';
 import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
-import clsx from 'clsx';
-import { Floating } from '../Floating';
 import type { Placement } from '@floating-ui/react-dom';
 import { entries } from '../../helpers/object';
-
-const useStyles = makeStyles(styles);
+import { styled } from '@repo/styles/jsx';
+import { FloatingButtonTrigger } from '../Floating/FloatingTriggers';
+import { FloatingDropdown } from '../Floating/FloatingDropdown';
+import { FloatingProvider } from '../Floating/FloatingProvider';
+import type { StyledVariantProps } from '@repo/styles/types';
 
 export type LabeledSelectCommonProps<V extends string = string> = {
   label?: string;
@@ -32,7 +31,6 @@ export type LabeledSelectCommonProps<V extends string = string> = {
   dropdownItemSelectedClass?: string;
   dropdownAutoWidth?: boolean;
   dropdownAutoHeight?: boolean;
-  dropdownAutoHide?: boolean;
   dropdownFlip?: boolean;
   dropdownShift?: boolean;
 };
@@ -44,16 +42,18 @@ export type LabeledSelectProps<V extends string = string> = LabeledSelectCommonP
   SelectedItemComponent?: FC<SelectedItemProps<V>>;
   DropdownItemComponent?: FC<DropdownItemProps<V>>;
   DropdownItemLabelComponent?: FC<DropdownItemLabelProps<V>>;
-
+  layer?: 0 | 1 | 2;
   showArrow?: boolean;
+  variant?: SelectButtonVariants['variant'];
 };
 
 type DropdownItemProps<V extends string = string> = {
   label: string;
   value: V;
   onChange: (value: V) => void;
-  className?: string;
+  selected: boolean;
   DropdownItemLabelComponent?: FC<DropdownItemLabelProps<V>>;
+  tabIndex?: number;
 };
 
 export type DropdownItemLabelProps<V extends string = string> = {
@@ -87,10 +87,11 @@ const DropdownItem = memo(function DropdownItem<V extends string = string>({
   label,
   value,
   onChange,
-  className,
+  selected,
   DropdownItemLabelComponent = DropdownItemLabel<V>,
+  tabIndex,
 }: DropdownItemProps<V>) {
-  const handleChange = useCallback<MouseEventHandler<HTMLDivElement>>(
+  const handleChange = useCallback<MouseEventHandler<HTMLButtonElement>>(
     e => {
       e.stopPropagation();
       onChange(value);
@@ -99,9 +100,9 @@ const DropdownItem = memo(function DropdownItem<V extends string = string>({
   );
 
   return (
-    <div onClick={handleChange} className={className}>
+    <SelectOption onClick={handleChange} tabIndex={tabIndex ?? -1} selected={selected}>
       <DropdownItemLabelComponent value={value} label={label} />
-    </div>
+    </SelectOption>
   );
 });
 
@@ -131,70 +132,15 @@ export const LabeledSelect = memo(function LabeledSelect<V extends string = stri
   SelectedItemComponent = SelectedItem<V>,
   DropdownItemComponent = DropdownItem<V>,
   DropdownItemLabelComponent = DropdownItemLabel<V>,
-  selectClass,
-  selectCurrentClass,
-  selectLabelClass,
-  selectValueClass,
-  selectIconClass,
-  selectFullWidthClass,
-  selectBorderlessClass,
-  selectOpenClass,
-  dropdownClass,
-  dropdownItemClass,
-  dropdownItemSelectedClass,
   dropdownAutoWidth = true,
   dropdownAutoHeight = true,
-  dropdownAutoHide = true,
   placement = 'bottom-start',
   showArrow = true,
+  layer = 0,
+  variant = 'default',
 }: LabeledSelectProps<V>) {
-  const baseClasses = useStyles();
   const [isOpen, setIsOpen] = useState(false);
-  const anchorEl = useRef<HTMLButtonElement>(null);
   const optionsList = useSortedOptions<V>(options, sortOptions, defaultValue);
-  const classes = useMemo<typeof baseClasses>(
-    () => ({
-      ...baseClasses,
-      select: clsx(baseClasses.select, selectClass),
-      selectCurrent: clsx(baseClasses.selectCurrent, selectCurrentClass),
-      selectLabel: clsx(baseClasses.selectLabel, selectLabelClass),
-      selectValue: clsx(baseClasses.selectValue, selectValueClass),
-      selectIcon: clsx(baseClasses.selectIcon, selectIconClass),
-      selectFullWidth: clsx(baseClasses.selectFullWidth, selectFullWidthClass),
-      selectBorderless: clsx(baseClasses.selectBorderless, selectBorderlessClass),
-      selectOpen: clsx(baseClasses.selectOpen, selectOpenClass),
-      dropdown: clsx(baseClasses.dropdown, dropdownClass),
-      dropdownItem: clsx(baseClasses.dropdownItem, dropdownItemClass),
-      dropdownItemSelected: clsx(baseClasses.dropdownItemSelected, dropdownItemSelectedClass),
-    }),
-    [
-      baseClasses,
-      selectClass,
-      selectCurrentClass,
-      selectLabelClass,
-      selectValueClass,
-      selectIconClass,
-      selectFullWidthClass,
-      selectBorderlessClass,
-      selectOpenClass,
-      dropdownClass,
-      dropdownItemClass,
-      dropdownItemSelectedClass,
-    ]
-  );
-
-  const handleToggle = useCallback<MouseEventHandler<HTMLButtonElement>>(
-    e => {
-      e.stopPropagation();
-      setIsOpen(open => !open);
-    },
-    [setIsOpen]
-  );
-
-  const handleClose = useCallback(() => {
-    setIsOpen(false);
-  }, [setIsOpen]);
-
   const handleChange = useCallback<LabeledSelectProps<V>['onChange']>(
     value => {
       setIsOpen(false);
@@ -204,47 +150,181 @@ export const LabeledSelect = memo(function LabeledSelect<V extends string = stri
   );
 
   return (
-    <ClickAwayListener onClickAway={handleClose} mouseEvent="onMouseDown" touchEvent="onTouchStart">
-      <button
-        onClick={disabled ? undefined : handleToggle}
-        ref={anchorEl}
-        className={clsx(classes.select, {
-          [classes.selectBorderless]: borderless,
-          [classes.selectFullWidth]: fullWidth,
-          [classes.selectOpen]: isOpen,
-          [classes.selectDisabled]: disabled,
-        })}
-      >
-        <div className={classes.selectCurrent}>
-          {label ? <div className={classes.selectLabel}>{label}</div> : null}
-          <div className={classes.selectValue}>
-            <SelectedItemComponent options={options} value={value} />
-          </div>
-          {showArrow && <ExpandMore className={classes.selectIcon} />}
-        </div>
-        <Floating
-          open={isOpen}
-          anchorEl={anchorEl}
-          placement={placement}
-          className={classes.dropdown}
-          autoWidth={dropdownAutoWidth}
-          autoHeight={dropdownAutoHeight}
-          autoHide={dropdownAutoHide}
-        >
-          {optionsList.map(({ value: optionValue, label }) => (
-            <DropdownItemComponent
-              key={optionValue}
-              onChange={handleChange}
-              label={label}
-              value={optionValue}
-              DropdownItemLabelComponent={DropdownItemLabelComponent}
-              className={clsx(classes.dropdownItem, {
-                [classes.dropdownItemSelected]: optionValue === value,
-              })}
-            />
-          ))}
-        </Floating>
-      </button>
-    </ClickAwayListener>
+    <FloatingProvider
+      open={isOpen}
+      onChange={setIsOpen}
+      disabled={disabled}
+      autoHeight={dropdownAutoHeight}
+      autoWidth={dropdownAutoWidth}
+      placement={placement}
+      role="select"
+      layer={layer}
+    >
+      <SelectButton fullWidth={fullWidth} borderless={borderless} variant={variant}>
+        {label ? <SelectLabel>{label}</SelectLabel> : null}
+        <SelectItem>
+          <SelectedItemComponent options={options} value={value} />
+        </SelectItem>
+        {showArrow && <SelectArrow open={isOpen} />}
+      </SelectButton>
+      <SelectDropdown>
+        {optionsList.map(({ value: optionValue, label }, index) => (
+          <DropdownItemComponent
+            key={optionValue}
+            onChange={handleChange}
+            label={label}
+            value={optionValue}
+            DropdownItemLabelComponent={DropdownItemLabelComponent}
+            selected={optionValue === value}
+            tabIndex={index + 1}
+          />
+        ))}
+      </SelectDropdown>
+    </FloatingProvider>
   );
 });
+
+const SelectLabel = styled('div', {
+  base: {
+    color: 'text.dark',
+    flexShrink: '0',
+    flexGrow: '0',
+  },
+});
+
+const SelectItem = styled('div', {
+  base: {
+    flexShrink: 1,
+    flexGrow: 0,
+    minWidth: 0,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+});
+
+const SelectArrow = styled(ExpandMore, {
+  base: {
+    color: 'text.light',
+    marginLeft: 'auto',
+  },
+  variants: {
+    open: {
+      true: {
+        transform: 'rotateX(180deg)',
+      },
+    },
+  },
+});
+
+type SelectButtonVariants = StyledVariantProps<typeof SelectButton>;
+
+export const SelectButton = styled(
+  FloatingButtonTrigger,
+  {
+    base: {
+      textStyle: 'body-lg-med',
+      colorPalette: 'buttons.default',
+      color: 'colorPalette.color',
+      backgroundColor: 'colorPalette.background',
+      borderColor: 'colorPalette.border',
+      borderRadius: '8px',
+      textAlign: 'left',
+      justifyContent: 'flex-start',
+      width: 'min-content',
+      gap: '4px',
+    },
+    variants: {
+      open: {
+        true: {
+          color: 'text.light',
+        },
+      },
+      borderless: {
+        false: {
+          borderStyle: 'solid',
+          borderWidth: '2px',
+          padding: '6px 14px',
+        },
+        true: {
+          padding: '8px 16px',
+        },
+      },
+      fullWidth: {
+        false: {},
+        true: {
+          width: '100%',
+        },
+      },
+      variant: {
+        default: {
+          colorPalette: 'buttons.default',
+        },
+        light: {
+          colorPalette: 'buttons.light',
+        },
+        search: {
+          backgroundColor: 'purpleDarkest',
+        },
+      },
+    },
+    defaultVariants: {
+      borderless: false,
+      fullWidth: false,
+      open: false,
+      variant: 'light',
+    },
+  },
+  {
+    defaultProps: {
+      type: 'button',
+    },
+  }
+);
+
+const SelectDropdown = styled(FloatingDropdown, {
+  base: {
+    textStyle: 'body-lg-med',
+    backgroundColor: 'background.contentPrimary',
+    borderStyle: 'solid',
+    borderWidth: '2px',
+    borderColor: 'background.contentLight',
+    borderRadius: '8px',
+    color: 'text.middle',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    minHeight: '100px',
+  },
+});
+
+const SelectOption = styled(
+  'button',
+  {
+    base: {
+      display: 'flex',
+      textAlign: 'left',
+      justifyContent: 'flex-start',
+      padding: '8px 14px',
+      width: '100%',
+      '&:hover': {
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      },
+      '&:focus-visible': {
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      },
+    },
+    variants: {
+      selected: {
+        true: {
+          backgroundColor: 'transparent',
+          color: 'text.light',
+        },
+      },
+    },
+  },
+  {
+    defaultProps: {
+      type: 'button',
+    },
+  }
+);

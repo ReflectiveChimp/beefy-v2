@@ -7,6 +7,7 @@
     "eslint-config-prettier",
     "plugin:react-hooks/recommended"
   ],
+  "plugins": ["react-refresh"],
   "settings": {
     "paths": ["src"],
     "files": ["src/**/*.ts", "src/**/*.tsx"],
@@ -69,7 +70,6 @@
       }
     ],
     "@typescript-eslint/no-non-null-assertion": "off",
-    // TODO fix
     "react/jsx-no-target-blank": [
       "error",
       {
@@ -80,6 +80,7 @@
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/no-children-prop": "off",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "react-refresh/only-export-components": "warn"
   }
 }

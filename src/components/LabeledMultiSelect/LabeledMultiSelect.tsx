@@ -32,7 +32,6 @@ export type DropdownItemProps<V extends string = string> = {
   value: V;
   selected: boolean;
   onChange: (value: V) => void;
-  className?: string;
   DropdownItemLabelComponent?: FC<DropdownItemLabelProps<V>>;
 };
 
@@ -68,7 +67,6 @@ export const DropdownMultiSelectItem = memo(function DropdownItem<V extends stri
   label,
   value,
   onChange,
-  className,
   selected,
   DropdownItemLabelComponent = DropdownMultiSelectItemLabel<V>,
 }: DropdownItemProps<V | 'all'>) {
@@ -79,7 +77,6 @@ export const DropdownMultiSelectItem = memo(function DropdownItem<V extends stri
   return (
     <LabelledCheckbox
       label={<DropdownItemLabelComponent label={label} value={value} />}
-      checkboxClass={className}
       onChange={handleChange}
       checked={selected}
     />
