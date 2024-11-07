@@ -1,4 +1,4 @@
-import { type ThunkDispatch, type AnyAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { type AnyAction, createAsyncThunk, type ThunkDispatch } from '@reduxjs/toolkit';
 import type { AbstractProvider } from 'web3-core';
 import type { Step } from '../reducers/wallet/stepper';
 import type { BeefyState } from '../../../redux-types';

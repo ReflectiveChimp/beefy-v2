@@ -1,1 +1,1 @@
-export * from './StatLoader';
+export { StatLoader } from './StatLoader';

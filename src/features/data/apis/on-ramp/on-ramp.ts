@@ -1,11 +1,11 @@
 import { getJson, postJson, postText } from '../../../../helpers/http';
 import type {
-  IOnRampApi,
   ApiQuoteRequest,
   ApiQuoteResponse,
   ApiSupportedResponse,
   ApiUrlRequest,
   ApiUrlResponse,
+  IOnRampApi,
 } from './on-ramp-types';
 
 export class OnRampApi implements IOnRampApi {

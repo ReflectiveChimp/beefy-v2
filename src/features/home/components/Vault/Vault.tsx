@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import {
   isCowcentratedGovVault,
-  isCowcentratedVault,
   isCowcentratedLikeVault,
   isCowcentratedStandardVault,
+  isCowcentratedVault,
   isGovVault,
   isVaultRetired,
   type VaultEntity,

@@ -1,1 +1,1 @@
-export * from './LeverageCards';
+export { LeverageCards } from './LeverageCards';

@@ -1,1 +1,1 @@
-export * from './DepositTokenSelectList';
+export { DepositTokenSelectList } from './DepositTokenSelectList';

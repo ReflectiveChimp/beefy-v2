@@ -1,1 +1,1 @@
-export * from './NetworkStep';
+export { NetworkStep } from './NetworkStep';

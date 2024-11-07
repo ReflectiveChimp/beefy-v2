@@ -1,1 +1,1 @@
-export * from './ProviderSelect';
+export { ProviderSelect } from './ProviderSelect';

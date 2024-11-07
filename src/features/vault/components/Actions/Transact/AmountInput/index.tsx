@@ -1,1 +1,1 @@
-export * from './AmountInput';
+export { AmountInput, type AmountInputProps } from './AmountInput';

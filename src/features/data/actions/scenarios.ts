@@ -21,10 +21,10 @@ import { fetchPlatforms } from './platforms';
 import { selectAllChainIds } from '../selectors/chains';
 import { fetchBridges } from './bridges';
 import {
-  fetchZapSwapAggregatorsAction,
-  fetchZapConfigsAction,
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
+  fetchZapConfigsAction,
+  fetchZapSwapAggregatorsAction,
 } from './zap';
 import { fetchOffChainCampaignsAction } from './rewards';
 

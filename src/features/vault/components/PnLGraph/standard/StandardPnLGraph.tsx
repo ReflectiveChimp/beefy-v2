@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { StatSwitcher } from '../../StatSwitcher';
 import { styled } from '@repo/styles/jsx';
 
-export const useStyles = makeStyles(styles);
+const useStyles = makeStyles(styles);
 
 interface PnLGraphLoaderProps {
   vaultId: VaultEntity['id'];

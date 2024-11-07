@@ -1,1 +1,1 @@
-export * from './QuoteArrowDivider';
+export { QuoteArrowDivider } from './QuoteArrowDivider';

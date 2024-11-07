@@ -1,1 +1,1 @@
-export * from './MinTvlFilter';
+export { MinTvlFilter } from './MinTvlFilter';

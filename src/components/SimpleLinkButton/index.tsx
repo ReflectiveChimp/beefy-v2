@@ -1,1 +1,1 @@
-export * from './SimpleLinkButton';
+export { SimpleLinkButton } from './SimpleLinkButton';

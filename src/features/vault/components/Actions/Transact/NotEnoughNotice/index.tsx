@@ -1,1 +1,1 @@
-export * from './NotEnoughNotice';
+export { NotEnoughNotice } from './NotEnoughNotice';

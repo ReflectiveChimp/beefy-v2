@@ -1,1 +1,1 @@
-export * from './ChainListItem';
+export { ChainListItem } from './ChainListItem';

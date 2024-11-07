@@ -1,1 +1,1 @@
-export * from './SaveButton';
+export { SaveButton } from './SaveButton';

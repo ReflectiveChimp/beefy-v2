@@ -1,10 +1,10 @@
 import type {
   ApiChartData,
-  IBeefyDataApi,
+  ApiCowcentratedChartData,
   ApiRanges,
   ApiStat,
   ApiTimeBucket,
-  ApiCowcentratedChartData,
+  IBeefyDataApi,
 } from './beefy-data-api-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { TokenEntity } from '../../entities/token';

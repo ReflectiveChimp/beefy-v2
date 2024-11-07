@@ -1,1 +1,1 @@
-export * from './ContentLoading';
+export { ContentLoading } from './ContentLoading';

@@ -1,1 +1,1 @@
-export * from './ChartWithLegend';
+export { ChartWithLegend } from './ChartWithLegend';

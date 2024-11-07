@@ -18,7 +18,7 @@ import { selectSwapAggregatorForChainType } from '../../../../selectors/zap';
 import type { KyberSwapSwapConfig } from '../../../config-types';
 import type { VaultEntity } from '../../../../entities/vault';
 import { slipBy } from '../../helpers/amounts';
-import type { RouteSummary, QuoteRequest as KyberQuoteRequest } from '../../../kyber/kyber-types';
+import type { QuoteRequest as KyberQuoteRequest, RouteSummary } from '../../../kyber/kyber-types';
 
 export class KyberSwapProvider implements ISwapProvider {
   getId(): string {

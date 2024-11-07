@@ -1,7 +1,6 @@
 import type { FC, MouseEventHandler } from 'react';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
-import { sortBy } from 'lodash-es';
 import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import clsx from 'clsx';
 import { Floating } from '../Floating';
@@ -10,7 +9,8 @@ import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import type { LabelledCheckboxProps } from '../LabelledCheckbox';
 import { LabelledCheckbox } from '../LabelledCheckbox';
-import { entries, keys } from '../../helpers/object';
+import { keys } from '../../helpers/object';
+import { useMultiSelectSortedOptions } from './hooks';
 
 const useStyles = makeStyles(styles);
 
@@ -47,21 +47,6 @@ export type SelectedItemProps<V extends string = string> = {
   allSelectedLabel: LabeledMultiSelectProps<V>['allSelectedLabel'];
   countSelectedLabel: LabeledMultiSelectProps<V>['countSelectedLabel'];
 };
-
-export function useMultiSelectSortedOptions<V extends string = string>(
-  options: LabeledMultiSelectProps<V>['options'],
-  sort: LabeledMultiSelectProps<V>['sortOptions']
-) {
-  return useMemo(() => {
-    const values = entries(options as Record<V, string>).map(([value, label]) => ({
-      value,
-      label,
-    }));
-    return sort !== 'default' && sort !== undefined
-      ? sortBy(values, value => value[sort].toLowerCase())
-      : values;
-  }, [options, sort]);
-}
 
 export const DropdownMultiSelectItem = memo(function DropdownItem<V extends string = string>({
   label,
@@ -134,7 +119,6 @@ export const LabeledMultiSelect = memo(function LabeledMultiSelect<V extends str
   dropdownItemSelectedClass,
   dropdownAutoWidth = true,
   dropdownAutoHeight = true,
-  dropdownAutoHide = true,
 }: LabeledMultiSelectProps<V>) {
   const baseClasses = useStyles();
   const allKey = 'all';
@@ -232,7 +216,6 @@ export const LabeledMultiSelect = memo(function LabeledMultiSelect<V extends str
           className={classes.dropdown}
           autoWidth={dropdownAutoWidth}
           autoHeight={dropdownAutoHeight}
-          autoHide={dropdownAutoHide}
         >
           {allOptionEnabled ? (
             <DropdownItemComponent

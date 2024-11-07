@@ -1,4 +1,4 @@
-import { type Action, type ThunkAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { type Action, createAsyncThunk, type ThunkAction } from '@reduxjs/toolkit';
 import { isEmpty } from '../../../helpers/utils';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';

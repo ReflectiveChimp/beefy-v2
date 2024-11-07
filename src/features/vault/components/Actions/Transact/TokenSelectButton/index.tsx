@@ -1,1 +1,1 @@
-export * from './TokenSelectButton';
+export { TokenSelectButton } from './TokenSelectButton';

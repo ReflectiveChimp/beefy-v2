@@ -1,2 +1,2 @@
-export * from './UserStats';
-export * from './VaultsStats';
+export { UserStats } from './UserStats';
+export { VaultsStats } from './VaultsStats';

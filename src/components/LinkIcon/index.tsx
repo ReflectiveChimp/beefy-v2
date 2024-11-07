@@ -1,1 +1,1 @@
-export * from './LinkIcon';
+export { LinkIcon } from './LinkIcon';

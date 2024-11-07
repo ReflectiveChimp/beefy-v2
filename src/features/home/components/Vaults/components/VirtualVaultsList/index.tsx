@@ -1,1 +1,1 @@
-export * from './VirtualVaultsList';
+export { VirtualVaultsList } from './VirtualVaultsList';

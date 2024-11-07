@@ -1,5 +1,6 @@
 import type { MutableRefObject, ReactNode } from 'react';
 import { memo, useLayoutEffect, useMemo } from 'react';
+import type { Placement } from '@floating-ui/react-dom';
 import {
   autoUpdate,
   flip as flipFloating,
@@ -9,7 +10,6 @@ import {
   size,
   useFloating,
 } from '@floating-ui/react-dom';
-import type { Placement } from '@floating-ui/react-dom';
 import type { Middleware } from '@floating-ui/react';
 
 export type FloatingProps = {

@@ -1,1 +1,1 @@
-export * from './UnsupportedCountryStep';
+export { UnsupportedCountryStep } from './UnsupportedCountryStep';

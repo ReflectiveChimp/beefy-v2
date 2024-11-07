@@ -1,1 +1,1 @@
-export * from './ExposureLegend';
+export { ExposureLegend } from './ExposureLegend';

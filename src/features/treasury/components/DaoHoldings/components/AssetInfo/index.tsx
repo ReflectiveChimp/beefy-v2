@@ -1,1 +1,1 @@
-export * from './AssetInfo';
+export { AssetInfo, AssetInfoMM } from './AssetInfo';

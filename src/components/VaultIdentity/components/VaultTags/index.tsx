@@ -1,1 +1,1 @@
-export * from './VaultTags';
+export { VaultTags, VaultClmLikeTag } from './VaultTags';

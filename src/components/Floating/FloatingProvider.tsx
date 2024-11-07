@@ -1,14 +1,6 @@
-import { createContext, memo, type MutableRefObject, type ReactNode, useContext } from 'react';
+import { memo, type ReactNode } from 'react';
 import { useFloating, type UseFloatingProps } from './useFloating';
-
-export type FloatingContextValue = ReturnType<typeof useFloating> & {
-  arrowClass?: string;
-  referenceRef?: MutableRefObject<Element | null>;
-};
-
-const FloatingContext = createContext<FloatingContextValue | null>(null);
-
-export const useFloatingContext = () => useContext(FloatingContext);
+import { FloatingContext } from './useFloatingContext';
 
 export type FloatingProviderProps = UseFloatingProps & {
   children: ReactNode;

@@ -1,1 +1,1 @@
-export * from './FiatStep';
+export { FiatStep } from './FiatStep';

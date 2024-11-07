@@ -2,9 +2,9 @@ import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
 import type {
   ByAddressByChainDataEntity,
+  ByAddressGlobalDataEntity,
   ByChainDataEntity,
   DataLoaderState,
-  ByAddressGlobalDataEntity,
   LoaderState,
   LoaderStateFulfilled,
   LoaderStateIdle,

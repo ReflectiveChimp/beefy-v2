@@ -1,1 +1,1 @@
-export * from './Assets';
+export { Assets, MMAssets } from './Assets';

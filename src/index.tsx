@@ -9,7 +9,7 @@ import { MinimalFallback } from './components/ErrorBoundary/MinimalFallback';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { I18nextProvider } from 'react-i18next';
 import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core';
+import { jssPreset, StylesProvider } from '@material-ui/core';
 
 const jss = create(jssPreset());
 jss.use({

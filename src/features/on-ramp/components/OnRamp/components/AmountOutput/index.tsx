@@ -1,1 +1,1 @@
-export * from './AmountOutput';
+export { AmountOutput } from './AmountOutput';

@@ -1,6 +1,5 @@
 import { IconButton, makeStyles } from '@material-ui/core';
-import { type ReactNode, useCallback } from 'react';
-import { memo } from 'react';
+import { memo, type ReactNode, useCallback } from 'react';
 import { ReactComponent as CloseRoundedIcon } from '@repo/images/icons/mui/CloseRounded.svg';
 
 import { useAppDispatch } from '../../../../store';

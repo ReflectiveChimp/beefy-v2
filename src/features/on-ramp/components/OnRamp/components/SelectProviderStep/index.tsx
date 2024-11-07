@@ -1,1 +1,1 @@
-export * from './SelectProviderStep';
+export { SelectProviderStep } from './SelectProviderStep';

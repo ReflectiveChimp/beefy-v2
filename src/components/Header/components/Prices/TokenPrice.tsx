@@ -1,10 +1,10 @@
 import { cva, type RecipeVariantProps } from '@repo/styles/css';
-import type { Token } from './Tokens';
 import { memo } from 'react';
 import { useAppSelector } from '../../../../store';
 import { selectTokenPriceByTokenOracleId } from '../../../../features/data/selectors/tokens';
 import { Icon } from './Icon';
 import { formatLargeUsd } from '../../../../helpers/format';
+import type { Token } from './config';
 
 const tokenPriceRecipe = cva({
   base: {

@@ -1,1 +1,1 @@
-export * from './DaoExposure';
+export { DaoExposure } from './DaoExposure';

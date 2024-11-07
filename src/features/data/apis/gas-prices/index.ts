@@ -1,1 +1,1 @@
-export * from './gas-prices';
+export { createGasPricer } from './gas-prices';

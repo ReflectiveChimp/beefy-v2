@@ -1,1 +1,1 @@
-export * from './InterestTooltipContent';
+export { InterestTooltipContent } from './InterestTooltipContent';

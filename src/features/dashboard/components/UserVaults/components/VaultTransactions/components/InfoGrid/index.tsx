@@ -1,1 +1,1 @@
-export * from './InfoGrid';
+export { InfoGrid } from './InfoGrid';

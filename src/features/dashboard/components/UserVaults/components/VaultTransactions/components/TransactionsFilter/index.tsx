@@ -1,1 +1,1 @@
-export * from './TransactionsFilter';
+export { TransactionsFilter } from './TransactionsFilter';

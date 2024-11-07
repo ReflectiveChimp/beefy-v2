@@ -1,8 +1,8 @@
 import type { HTMLStyledProps } from '@repo/styles/types';
 import { memo } from 'react';
-import { useFloatingContext } from './FloatingProvider';
 import { FloatingArrow, FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
 import { styled } from '@repo/styles/jsx';
+import { useFloatingContext } from './useFloatingContext';
 
 type FloatingDropdownProps = HTMLStyledProps<'div'>;
 

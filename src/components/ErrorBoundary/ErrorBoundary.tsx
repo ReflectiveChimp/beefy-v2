@@ -5,6 +5,8 @@ import { DevDefaultFallback } from './DevDefaultFallback';
 import type { ErrorBoundaryHasErrorState, ErrorBoundaryProps, ErrorBoundaryState } from './types';
 import { isError } from '../../helpers/error';
 
+/* eslint-disable react-refresh/only-export-components -- plugin does not support class components */
+
 const DefaultFallbackComponent: FC<ErrorBoundaryHasErrorState> = import.meta.env.DEV
   ? DevDefaultFallback
   : DefaultFallback;

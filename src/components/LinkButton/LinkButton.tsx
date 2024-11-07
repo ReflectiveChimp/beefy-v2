@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
 import { ReactComponent as OpenInNewRoundedIcon } from '@repo/images/icons/mui/OpenInNewRounded.svg';
@@ -6,7 +7,6 @@ import { ReactComponent as CodeRoundedIcon } from '@repo/images/icons/mui/CodeRo
 import { ReactComponent as InsertIcon } from '@repo/images/icons/mui/InsertLink.svg';
 import type { LinkButtonProps } from './LinkButtonProps';
 import clsx from 'clsx';
-import type { Theme } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 

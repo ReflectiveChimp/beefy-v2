@@ -1,1 +1,1 @@
-export * from './SafetyScore';
+export { SafetyScore, type SafetyScoreProps } from './SafetyScore';

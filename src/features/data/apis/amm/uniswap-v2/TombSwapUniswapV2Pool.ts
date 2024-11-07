@@ -1,7 +1,7 @@
 import type {
-  MintFeeParams,
   FactoryData as BaseFactoryData,
   FactoryDataResponse as BaseFactoryDataResponse,
+  MintFeeParams,
 } from './UniswapV2Pool';
 import { UniswapV2Pool } from './UniswapV2Pool';
 import type { ShapeWithLabel } from 'eth-multicall';

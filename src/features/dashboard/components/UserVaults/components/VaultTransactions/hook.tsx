@@ -8,9 +8,9 @@ import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens'
 import { isBefore, subDays } from 'date-fns';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import {
-  type TimelineEntryCowcentratedPool,
   isTimelineEntryCowcentratedPool,
   isTimelineEntryStandard,
+  type TimelineEntryCowcentratedPool,
   type TimelineEntryStandard,
 } from '../../../../../data/entities/analytics';
 

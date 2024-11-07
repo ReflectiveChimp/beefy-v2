@@ -1,1 +1,1 @@
-export * from './MobileCollapseContent';
+export { MobileCollapseContent } from './MobileCollapseContent';

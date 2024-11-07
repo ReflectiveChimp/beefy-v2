@@ -1,1 +1,1 @@
-export * from './DefaultMeta';
+export { DefaultMeta } from './DefaultMeta';

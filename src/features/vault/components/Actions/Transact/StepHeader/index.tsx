@@ -1,1 +1,1 @@
-export * from './StepHeader';
+export { StepHeader } from './StepHeader';

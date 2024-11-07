@@ -1,1 +1,1 @@
-export * from './CurrencyFlag';
+export { CurrencyFlag } from './CurrencyFlag';

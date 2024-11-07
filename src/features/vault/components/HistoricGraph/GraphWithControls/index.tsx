@@ -1,1 +1,1 @@
-export * from './GraphWithControls';
+export { GraphWithControls } from './GraphWithControls';

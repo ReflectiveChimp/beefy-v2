@@ -1,1 +1,1 @@
-export * from './ChainIcon';
+export { ChainIcon } from './ChainIcon';

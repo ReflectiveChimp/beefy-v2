@@ -1,2 +1,2 @@
-export * from './ExtendedFiltersButton';
+export { ExtendedFiltersButton } from './ExtendedFiltersButton';
 export { FilterButton } from '../FilterButton';

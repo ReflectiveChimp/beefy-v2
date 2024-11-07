@@ -1,1 +1,1 @@
-export * from './VaultsSearch';
+export { VaultsSearch } from './VaultsSearch';

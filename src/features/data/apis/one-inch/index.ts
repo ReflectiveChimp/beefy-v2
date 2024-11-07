@@ -1,1 +1,1 @@
-export * from './one-inch';
+export { OneInchApi } from './one-inch';

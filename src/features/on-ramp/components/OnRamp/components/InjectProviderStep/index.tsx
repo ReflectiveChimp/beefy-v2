@@ -1,1 +1,1 @@
-export * from './InjectProviderStep';
+export { InjectProviderStep } from './InjectProviderStep';

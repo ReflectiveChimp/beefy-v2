@@ -5,9 +5,9 @@ import clsx from 'clsx';
 import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { formatTokenInput, formatLargeUsd } from '../../../../../../helpers/format';
+import { formatLargeUsd, formatTokenInput } from '../../../../../../helpers/format';
 
-export const useStyles = makeStyles(styles);
+const useStyles = makeStyles(styles);
 
 function isValidNumberInputString(value: string): boolean {
   const regex = new RegExp(`^[0-9]*\\.?[0-9]*$`);

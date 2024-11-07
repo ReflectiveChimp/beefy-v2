@@ -1,1 +1,1 @@
-export * from './MobileStat';
+export { MobileStat } from './MobileStat';

@@ -1,9 +1,9 @@
 import { memo, useEffect, useState } from 'react';
-import { tokens } from './Tokens';
 import { TokenPrice } from './TokenPrice';
 import { styled } from '@repo/styles/jsx';
 
 import { FloatingButtonTrigger } from '../../../Floating/FloatingTriggers';
+import { tokens } from './config';
 
 export const PricesButton = memo(function PricesButton() {
   const [current, setCurrent] = useState(0);

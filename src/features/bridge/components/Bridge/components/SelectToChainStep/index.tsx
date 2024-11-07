@@ -1,1 +1,1 @@
-export * from './SelectToChainStep';
+export { SelectToChainStep } from './SelectToChainStep';

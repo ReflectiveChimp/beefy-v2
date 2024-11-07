@@ -1,1 +1,1 @@
-export * from './IconLoader';
+export { IconLoader } from './IconLoader';

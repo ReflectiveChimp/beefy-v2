@@ -1,5 +1,5 @@
-export * from './Card';
-export * from './CardHeader';
-export * from './CardHeaderTabs';
-export * from './CardTitle';
-export * from './CardContent';
+export { Card } from './Card';
+export { CardHeader } from './CardHeader';
+export { CardHeaderTabs } from './CardHeaderTabs';
+export { CardTitle } from './CardTitle';
+export { CardContent } from './CardContent';

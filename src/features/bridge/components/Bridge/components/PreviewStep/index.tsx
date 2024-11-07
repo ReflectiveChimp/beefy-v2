@@ -1,1 +1,1 @@
-export * from './PreviewStep';
+export { PreviewStep } from './PreviewStep';

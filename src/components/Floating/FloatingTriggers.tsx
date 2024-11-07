@@ -1,6 +1,7 @@
 import type { HTMLStyledProps } from '@repo/styles/types';
 import { createElement, memo, type ReactHTML } from 'react';
-import { useFloatingContext } from './FloatingProvider';
+
+import { useFloatingContext } from './useFloatingContext';
 
 export const FloatingButtonTrigger = createFloatingTrigger('button');
 export const FloatingDivTrigger = createFloatingTrigger('div');

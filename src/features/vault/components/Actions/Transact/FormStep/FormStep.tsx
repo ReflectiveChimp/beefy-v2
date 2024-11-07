@@ -4,10 +4,10 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectTransactShouldShowClaims,
   selectTransactMode,
-  selectTransactVaultId,
+  selectTransactShouldShowClaims,
   selectTransactShouldShowClaimsNotification,
+  selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { CardHeaderTabs } from '../../../Card';

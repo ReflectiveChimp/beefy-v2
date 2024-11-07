@@ -1,4 +1,5 @@
 import type { Theme } from '@material-ui/core';
+
 export const styles = (theme: Theme) => ({
   shortAddress: {
     ...theme.typography['h3'],

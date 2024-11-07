@@ -1,1 +1,1 @@
-export * from './ActionInputButton';
+export { ActionInputButton } from './ActionInputButton';
