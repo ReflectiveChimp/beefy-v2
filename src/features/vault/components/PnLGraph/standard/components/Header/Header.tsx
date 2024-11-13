@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import { memo } from 'react';

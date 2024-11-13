@@ -151,5 +151,4 @@ const Zap = memo<ZapProps>(function Zap({ aggregatorSupportedTokens, vault, zap 
   );
 });
 
-// eslint-disable-next-line no-restricted-syntax
 export default CurveZap;

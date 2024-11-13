@@ -38,4 +38,3 @@ createRoot(document.getElementById('root') as HTMLElement).render(
     </StylesProvider>
   </ErrorBoundary>
 );
-export { VisibleAbove } from './components/MediaQueries/VisibleAbove';

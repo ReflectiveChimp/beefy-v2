@@ -65,7 +65,7 @@ export const NetworkStatus = memo(function NetworkStatus({
     >
       <StatusButton>
         <Indicator
-          status={hasAnyError ? 'warning' : !hasAnyLoading ? 'success' : undefined}
+          status={hasAnyError ? 'warning' : !hasAnyLoading ? 'success' : 'loading'}
           loading={hasAnyLoading}
         />
         {isWalletConnected && <ActiveChain chainId={currentChainId} />}
@@ -132,14 +132,26 @@ const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
   return (
     <>
       <Line />
-      <img
-        alt={chainId ?? ''}
-        src={chainId ? getNetworkSrc(chainId) : iconUnsupportedChain}
-        height={24}
-      />
+      <ChainImg alt={chainId ?? ''} src={chainId ? getNetworkSrc(chainId) : iconUnsupportedChain} />
     </>
   );
 };
+
+const ChainImg = styled(
+  'img',
+  {
+    base: {
+      width: '24px',
+      height: '24px',
+    },
+  },
+  {
+    defaultProps: {
+      width: '24',
+      height: '24',
+    },
+  }
+);
 
 const StatusButton = styled(
   FloatingButtonTrigger,

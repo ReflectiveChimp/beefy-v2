@@ -1,5 +1,5 @@
 import type { ChainEntity } from '../../../../data/entities/chain';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { memo } from 'react';
 import { useAppSelector } from '../../../../../store';
 import { selectChainById } from '../../../../data/selectors/chains';

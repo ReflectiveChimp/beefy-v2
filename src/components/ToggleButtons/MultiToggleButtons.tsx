@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { type FC, memo, useCallback, useMemo } from 'react';
 import type { ToggleButtonProps, ToggleButtonsProps } from './ToggleButtons';
 import { Buttons } from './Buttons';
 import { Button } from './Button';
@@ -7,7 +7,7 @@ export type MultiToggleButtonProps = Omit<ToggleButtonProps, 'onClick'> & {
   onClick: (isSelected: boolean, value: string) => void;
 };
 
-export const MultiToggleButton = memo<MultiToggleButtonProps>(function ToggleButton({
+export const MultiToggleButton = memo<MultiToggleButtonProps>(function MultiToggleButton({
   value,
   label,
   onClick,
@@ -28,6 +28,7 @@ export const MultiToggleButton = memo<MultiToggleButtonProps>(function ToggleBut
 type MultiToggleButtonsProps = Omit<ToggleButtonsProps, 'value' | 'onChange' | 'untoggleValue'> & {
   value: string[];
   onChange: (value: string[]) => void;
+  ButtonComponent: FC<MultiToggleButtonProps>;
 };
 
 export const MultiToggleButtons = memo<MultiToggleButtonsProps>(function MultiToggleButtons({
@@ -36,6 +37,7 @@ export const MultiToggleButtons = memo<MultiToggleButtonsProps>(function MultiTo
   fullWidth,
   onChange,
   variant,
+  ButtonComponent = MultiToggleButton,
 }) {
   const optionsList = useMemo(
     () => Object.entries(options).map(([value, label]) => ({ value, label })),
@@ -52,7 +54,7 @@ export const MultiToggleButtons = memo<MultiToggleButtonsProps>(function MultiTo
   return (
     <Buttons fullWidth={fullWidth} variant={variant} noBackground={true}>
       {optionsList.map(({ value: optionValue, label }) => (
-        <MultiToggleButton
+        <ButtonComponent
           key={optionValue}
           value={optionValue}
           label={label}
