@@ -59,7 +59,7 @@ export default ts.config(
         'error',
         {
           selector: 'ExportDefaultDeclaration',
-          message: 'Prefer named exports',
+          message: 'Use named exports only',
         },
       ],
       'no-restricted-imports': [

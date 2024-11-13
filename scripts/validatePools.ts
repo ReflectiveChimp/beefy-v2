@@ -39,6 +39,8 @@ const overrides = {
   'swapbased-usd+-usdbc': { harvestOnDeposit: undefined },
   'swapbased-dai+-usd+': { harvestOnDeposit: undefined },
   'aero-cow-eurc-cbbtc-vault': { harvestOnDeposit: undefined },
+  'pendle-eqb-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
+  'pendle-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
@@ -198,7 +200,7 @@ const validatePools = async () => {
   let promises = chainIds.map(chainId => validateSingleChain(chainId, uniquePoolId));
   let results = await Promise.all(promises);
 
-  exitCode = results.reduce((acum, cur) => (acum + cur.exitCode > 0 ? 1 : 0), 0);
+  exitCode = results.reduce((acum, cur) => (acum + cur.exitCode > 0 ? 1 : 0), exitCode);
   results.forEach(res => {
     if (!isEmpty(res.updates)) {
       updates[res.chainId] = res.updates;
