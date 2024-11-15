@@ -1,8 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { BIG_ZERO } from '../../../../helpers/big-number';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { BreakdownTable } from './components/BreakdownTable';
 import type { BreakdownMode } from './types';
@@ -18,15 +16,13 @@ import { isCowcentratedLikeVault, type VaultEntity } from '../../../data/entitie
 import { selectShouldInitAddressBook } from '../../../data/selectors/data-loader';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
 import { StatSwitcher } from '../StatSwitcher';
-
-const useStyles = makeStyles(styles);
+import { styled } from '@repo/styles/jsx';
 
 export type LiquidityPoolBreakdownProps = {
   vaultId: VaultEntity['id'];
 };
 export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
   function LiquidityPoolBreakdown({ vaultId }) {
-    const classes = useStyles();
     const { t } = useTranslation();
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const breakdown = useAppSelector(state => selectLpBreakdownForVault(state, vault));
@@ -68,18 +64,28 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
 
     return (
       <Card>
-        <CardHeader className={classes.header}>
-          <CardTitle title={'LP Breakdown'} />
+        <CardHeader>
+          <CardTitle>{'LP Breakdown'}</CardTitle>
           <StatSwitcher onChange={onTabChange} options={tabs} stat={tab} />
         </CardHeader>
-        <CardContent disableDefaultClass={true} className={classes.layout}>
+        <StyledCardContent>
           <ChartWithLegend breakdown={calculatedBreakdown} tab={tab} />
           <BreakdownTable mode={tab} breakdown={calculatedBreakdown} />
-        </CardContent>
+        </StyledCardContent>
       </Card>
     );
   }
 );
+
+const StyledCardContent = styled(CardContent, {
+  base: {
+    padding: 0,
+    lg: {
+      display: 'grid',
+      gridTemplateColumns: '232fr 484fr',
+    },
+  },
+});
 
 type LiquidityPoolBreakdownLoaderProps = {
   vaultId: VaultEntity['id'];

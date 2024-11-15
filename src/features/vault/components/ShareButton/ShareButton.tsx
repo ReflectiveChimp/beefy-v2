@@ -1,17 +1,5 @@
-import { Dropdown } from '../../../../components/Dropdown';
-import ShareIcon from '@material-ui/icons/Share';
-import { Button } from '../../../../components/Button';
-import {
-  memo,
-  type MutableRefObject,
-  type RefObject,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { ReactComponent as ShareSvg } from '@repo/images/icons/mui/Share.svg';
+import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import twitterIcon from '../../../../images/icons/share/twitter.svg';
 import lensterIcon from '../../../../images/icons/share/lenster.svg';
@@ -44,9 +32,11 @@ import type {
   ShareServiceItemProps,
   VaultDetails,
 } from './types';
-import clsx from 'clsx';
-
-const useStyles = makeStyles(styles);
+import { styled } from '@repo/styles/jsx';
+import { buttonRecipe } from '../../../../components/Button/styles';
+import { FloatingButtonTrigger } from '../../../../components/Floating/FloatingTriggers';
+import { FloatingDropdown } from '../../../../components/Floating/FloatingDropdown';
+import { FloatingProvider } from '../../../../components/Floating/FloatingProvider';
 
 export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   vaultId,
@@ -55,9 +45,6 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   hideText = false,
 }) {
   const { t } = useTranslation();
-  const classes = useStyles();
-  const anchorEl = useRef<HTMLButtonElement>();
-  const [isOpen, setIsOpen] = useState(false);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const apys = useAppSelector(state => selectVaultTotalApy(state, vault.id));
@@ -133,44 +120,75 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
     [commonVaultDetails, additionalVaultDetails]
   );
 
-  const handleClose = useCallback(() => {
-    setIsOpen(false);
-  }, [setIsOpen]);
-
-  const handleOpen = useCallback(() => {
-    setIsOpen(true);
-  }, [setIsOpen]);
-
   return (
-    <>
-      <Button
-        className={clsx(classes.shareButton, {
-          active: isOpen,
-          [classes.mobileAlternative]: mobileAlternative,
-        })}
-        ref={anchorEl as RefObject<HTMLButtonElement>}
-        onClick={handleOpen}
-        active={isOpen}
-        borderless={true}
-      >
-        {!hideText && <span className={classes.shareText}>{t('Vault-Share')}</span>}
-        <ShareIcon className={classes.shareIcon} />
-      </Button>
-      <Dropdown
-        anchorEl={anchorEl as MutableRefObject<HTMLElement>}
-        open={isOpen}
-        onClose={handleClose}
-        placement={placement || 'bottom-end'}
-        dropdownClassName={classes.dropdown}
-        innerClassName={classes.dropdownInner}
-      >
+    <FloatingProvider placement={placement || 'bottom-end'} role="menu">
+      <TriggerButton mobile={mobileAlternative} borderless={true}>
+        {!hideText && <ShareText mobile={mobileAlternative}>{t('Vault-Share')}</ShareText>}
+        <ShareIcon />
+      </TriggerButton>
+      <DropdownItems>
         <TwitterItem details={vaultDetails} />
         <LensterItem details={vaultDetails} />
         <TelegramItem details={vaultDetails} />
         <CopyLinkItem details={vaultDetails} />
-      </Dropdown>
-    </>
+      </DropdownItems>
+    </FloatingProvider>
   );
+});
+
+const ShareIcon = styled(ShareSvg, {
+  base: {
+    flexShrink: 0,
+    flexGrow: 0,
+    fontSize: '16px',
+  },
+});
+
+const ShareText = styled('span', {
+  variants: {
+    mobile: {
+      true: {
+        mdDown: {
+          display: 'none',
+        },
+      },
+    },
+  },
+});
+
+const TriggerButton = styled(
+  styled(FloatingButtonTrigger, buttonRecipe),
+  {
+    base: {
+      display: 'flex',
+      gap: '8px',
+    },
+    variants: {
+      mobile: {
+        true: {
+          mdDown: {
+            padding: '10px',
+          },
+        },
+      },
+    },
+  },
+  { defaultProps: { borderless: true, fullWidth: true } }
+);
+
+const DropdownItems = styled(FloatingDropdown, {
+  base: {
+    zIndex: 'dropdown',
+    width: 'auto',
+    maxWidth: 'calc(100vw - 32px)',
+    backgroundColor: 'background.contentPrimary',
+    borderRadius: '8px',
+    boxShadow: '0px 4px 24px 24px rgba(19, 17, 34, 0.16), 0px 2px 8px rgba(20, 18, 33, 0.2)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+    padding: '16px',
+  },
 });
 
 const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }) {
@@ -226,9 +244,9 @@ const TelegramItem = memo<ShareServiceItemProps>(function TelegramItem({ details
 
 const CopyLinkItem = memo<ShareServiceItemProps>(function CopyLinkItem({ details }) {
   const { t } = useTranslation();
-  const onClick = useCallback(() => {
+  const onClick = useCallback(async () => {
     try {
-      navigator.clipboard.writeText(details.vaultUrl);
+      await navigator.clipboard.writeText(details.vaultUrl);
     } catch (e) {
       console.error('Failed to copy to clipboard', e);
     }
@@ -238,11 +256,20 @@ const CopyLinkItem = memo<ShareServiceItemProps>(function CopyLinkItem({ details
 });
 
 const ShareItem = memo<ShareItemProps>(function ShareItem({ text, icon, onClick }) {
-  const classes = useStyles();
-
   return (
-    <button className={classes.shareItem} onClick={onClick}>
+    <ItemButton onClick={onClick}>
       <img src={icon} width={24} height={24} alt="" aria-hidden={true} /> {text}
-    </button>
+    </ItemButton>
   );
+});
+
+const ItemButton = styled('button', {
+  base: {
+    display: 'flex',
+    whiteSpace: 'nowrap',
+    flexShrink: 0,
+    textAlign: 'left',
+    justifyContent: 'flex-start',
+    gap: '8px',
+  },
 });

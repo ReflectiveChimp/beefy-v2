@@ -1,3 +1,4 @@
+import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +10,6 @@ import { Section } from '../../../../components/Section';
 import { styles } from './styles';
 import iconEmptyState from '../../../../images/empty-state.svg';
 import { AddressInput } from '../AddressInput';
-import type { Theme } from '@material-ui/core';
 import { isValidAddress } from '../../../../helpers/addresses';
 import { formatAddressShort } from '../../../../helpers/format';
 

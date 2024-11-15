@@ -1,7 +1,8 @@
-import { memo, useCallback, useRef, useState, type MutableRefObject, type RefObject } from 'react';
+import { memo, type MutableRefObject, type RefObject, useCallback, useRef, useState } from 'react';
 import { Button } from '../../../../../components/Button';
 import { useTranslation } from 'react-i18next';
-import { ExpandMore, OpenInNewRounded } from '@material-ui/icons';
+import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
+import { ReactComponent as OpenInNewRounded } from '@repo/images/icons/mui/OpenInNewRounded.svg';
 import { ClickAwayListener, makeStyles, type Theme } from '@material-ui/core';
 import { Floating } from '../../../../../components/Floating';
 import clsx from 'clsx';

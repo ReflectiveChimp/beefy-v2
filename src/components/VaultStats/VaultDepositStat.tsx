@@ -23,7 +23,8 @@ import { type BigNumber } from 'bignumber.js';
 import type { TokenEntity } from '../../features/data/entities/token';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { ErrorOutline, InfoOutlined } from '@material-ui/icons';
+import { ReactComponent as ErrorOutline } from '@repo/images/icons/mui/ErrorOutline.svg';
+import { ReactComponent as InfoOutlined } from '@repo/images/icons/mui/InfoOutlined.svg';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);

@@ -1,4 +1,5 @@
 import type { Theme } from '@material-ui/core';
+
 export const styles = (theme: Theme) => ({
   container: {
     backgroundColor: '#FFF',
@@ -25,7 +26,7 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     ...theme.typography['body-lg-med'],
-    color: 'var(--tooltip-title-color)',
+    color: 'var(--colors-color-palette-text-title)',
     textTransform: 'uppercase' as const,
     textOverflow: 'ellipsis',
     width: '90%',
@@ -38,11 +39,11 @@ export const styles = (theme: Theme) => ({
   },
   value: {
     ...theme.typography['body-sm'],
-    color: 'var(--tooltip-value-color)',
+    color: 'var(--colors-color-palette-text-item)',
   },
   label: {
     ...theme.typography['body-sm-med'],
-    color: 'var(--tooltip-title-color)',
+    color: 'var(--colors-color-palette-text-title)',
   },
   triangle: {
     width: 0,

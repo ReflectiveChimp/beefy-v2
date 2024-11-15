@@ -1,1 +1,1 @@
-export * from './BoostPastActionCard';
+export { BoostPastActionCard } from './BoostPastActionCard';

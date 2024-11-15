@@ -1,1 +1,1 @@
-export * from './PlatformsCard';
+export { PlatformsCard } from './PlatformsCard';

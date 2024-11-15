@@ -1,1 +1,1 @@
-export * from './StakeCountdown';
+export { StakeCountdown } from './StakeCountdown';

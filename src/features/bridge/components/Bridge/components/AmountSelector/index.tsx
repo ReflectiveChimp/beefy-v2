@@ -1,1 +1,1 @@
-export * from './AmountSelector';
+export { AmountSelector } from './AmountSelector';

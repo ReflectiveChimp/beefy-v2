@@ -36,8 +36,8 @@ export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
       </span>
     ) : (
       <Tooltip
-        onTriggerClick={onClick}
-        triggerClass={clsx(classes.withTooltip, className, { [classes.withOnClick]: onClick })}
+        onClick={onClick}
+        className={clsx(classes.withTooltip, className, { [classes.withOnClick]: onClick })}
         content={<BasicTooltipContent title={fullAmount} />}
       >
         {shortAmount}

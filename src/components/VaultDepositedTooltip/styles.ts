@@ -9,10 +9,10 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: '1fr auto',
   },
   label: {
-    color: 'var(--tooltip-title-color)',
+    color: 'var(--colors-color-palette-text-title)',
   },
   details: {
-    color: 'var(--tooltip-title-color)',
+    color: 'var(--colors-color-palette-text-title)',
     textAlign: 'right' as const,
   },
   amount: {},

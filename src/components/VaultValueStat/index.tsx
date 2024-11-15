@@ -1,1 +1,1 @@
-export * from './VaultValueStat';
+export { VaultValueStat, type VaultValueStatProps } from './VaultValueStat';

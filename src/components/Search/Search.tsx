@@ -3,7 +3,8 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { InputBaseProps } from '@material-ui/core';
 import { InputBase, makeStyles } from '@material-ui/core';
-import { CloseRounded, Search as SearchIcon } from '@material-ui/icons';
+import { ReactComponent as CloseRounded } from '@repo/images/icons/mui/CloseRounded.svg';
+import { ReactComponent as SearchIcon } from '@repo/images/icons/mui/Search.svg';
 import { styles } from './styles';
 import clsx from 'clsx';
 

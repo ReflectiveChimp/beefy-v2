@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
-import { type ReactNode, useCallback } from 'react';
-import { memo, useMemo } from 'react';
+import { memo, type ReactNode, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { Step } from '../../../../features/data/reducers/wallet/stepper';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';

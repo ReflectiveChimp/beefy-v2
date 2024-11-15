@@ -1,1 +1,1 @@
-export * from './Scrollable';
+export { Scrollable } from './Scrollable';

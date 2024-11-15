@@ -8,7 +8,7 @@ import chunk from 'lodash/chunk';
 import { BeefyV2AppMulticallAbi } from '../src/config/abi/BeefyV2AppMulticallAbi';
 import type { GovVaultMultiContractDataResponse } from '../src/features/data/apis/contract-data/contract-data-types';
 import type { AsWeb3Result } from '../src/features/data/utils/types-utils';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { AbiItem } from 'web3-utils';
 import { saveJson } from './common/files';
 

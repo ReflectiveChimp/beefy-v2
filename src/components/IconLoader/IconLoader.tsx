@@ -2,7 +2,7 @@ import { memo } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { DEFAULT_SIZE } from '../AssetsImage/styles';
+import { defaultSize } from '../AssetsImage/config';
 
 const useStyles = makeStyles(styles);
 
@@ -12,7 +12,7 @@ export type IconLoaderProps = {
 };
 
 export const IconLoader = memo<IconLoaderProps>(function IconLoader({
-  size = DEFAULT_SIZE,
+  size = defaultSize,
   className,
 }) {
   const classes = useStyles();
@@ -20,7 +20,7 @@ export const IconLoader = memo<IconLoaderProps>(function IconLoader({
   return (
     <div
       className={clsx(classes.holder, className)}
-      style={size !== DEFAULT_SIZE ? { width: size, height: size } : undefined}
+      style={size !== defaultSize ? { width: size, height: size } : undefined}
     />
   );
 });

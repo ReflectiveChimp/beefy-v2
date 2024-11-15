@@ -9,7 +9,7 @@ import { Modal } from '../Modal';
 import { tenderlyClose } from '../../features/data/reducers/tenderly';
 import { Card, CardContent, CardHeader, CardTitle } from '../../features/vault/components/Card';
 import { IconButton, makeStyles } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { ReactComponent as CloseIcon } from '@repo/images/icons/mui/Close.svg';
 import { styles } from './styles';
 import { ResultForm } from './Result/ResultForm';
 import { RequestForm } from './Request/RequestForm';
@@ -18,6 +18,7 @@ import { CallsForm } from './Calls/CallsForm';
 import logoUrl from './logo.svg';
 import { SimulateForm } from './Simulate/SimulateForm';
 import type { TenderlyState } from '../../features/data/reducers/tenderly-types';
+import { styled } from '@repo/styles/jsx';
 
 const useStyles = makeStyles(styles);
 
@@ -53,21 +54,27 @@ const TenderlyModal = memo<TenderlyModalProps>(function TenderlyModal({ mode, on
   const Component = modeToComponent[mode] || FallbackMode;
 
   return (
-    <div className={classes.cardHolder}>
-      <Card className={classes.card}>
-        <CardHeader className={classes.cardHeader}>
-          <img src={logoUrl} alt="" width={24} height={24} className={classes.cardIcon} />
-          <CardTitle title="Tenderly Simulation" titleClassName={classes.cardTitle} />
-          <IconButton onClick={onClose} aria-label="close" className={classes.closeButton}>
-            <CloseIcon htmlColor="#999CB3" />
-          </IconButton>
-        </CardHeader>
-        <CardContent className={classes.cardContent}>
-          <Component />
-        </CardContent>
-      </Card>
-    </div>
+    <Card>
+      <CardHeader>
+        <img src={logoUrl} alt="" width={24} height={24} className={classes.cardIcon} />
+        <CardTitle>Tenderly Simulation</CardTitle>
+        <IconButton onClick={onClose} aria-label="close" className={classes.closeButton}>
+          <CloseIcon color="#999CB3" />
+        </IconButton>
+      </CardHeader>
+      <StyledCardContent>
+        <Component />
+      </StyledCardContent>
+    </Card>
   );
+});
+
+const StyledCardContent = styled(CardContent, {
+  base: {
+    minHeight: '200px',
+    overflowY: 'auto',
+    flexShrink: 1,
+  },
 });
 
 export const Tenderly = memo(function Tenderly() {
@@ -80,7 +87,7 @@ export const Tenderly = memo(function Tenderly() {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      {open ? <TenderlyModal mode={mode} onClose={handleClose} /> : <></>}
+      {open ? <TenderlyModal mode={mode} onClose={handleClose} /> : null}
     </Modal>
   );
 });

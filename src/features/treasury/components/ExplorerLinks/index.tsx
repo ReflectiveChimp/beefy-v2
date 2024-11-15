@@ -1,1 +1,1 @@
-export * from './ExplorerLinks';
+export { ExplorerLinks } from './ExplorerLinks';

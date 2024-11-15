@@ -1,1 +1,1 @@
-export * from './AmountLabel';
+export { AmountLabel } from './AmountLabel';

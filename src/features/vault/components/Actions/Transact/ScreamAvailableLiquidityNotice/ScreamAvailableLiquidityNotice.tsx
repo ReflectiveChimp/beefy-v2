@@ -13,7 +13,7 @@ import { MultiCall } from 'eth-multicall';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import type { TokenEntity } from '../../../../../data/entities/token';
 import { BigNumber } from 'bignumber.js';
-import { useAsync } from '../../../../../../helpers/useAsync';
+import { useAsync } from '../../../../../../helpers/hooks/useAsync';
 
 const strategyABI: AbiItem[] = [
   {

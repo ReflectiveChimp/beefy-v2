@@ -1,1 +1,1 @@
-export * from './DesktopCollapseContent';
+export { DesktopCollapseContent } from './DesktopCollapseContent';

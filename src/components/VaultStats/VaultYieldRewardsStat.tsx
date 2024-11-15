@@ -79,7 +79,7 @@ export const VaultYieldRewardsStat = memo<VaultYieldRewardsStatProps>(
             <>
               <Tooltip
                 content={<RewardsTooltipContent compounded={true} claimed={true} rewards={data} />}
-                triggerClass={clsx(classes.tooltipTrigger, classes.textGreen, classes.textOverflow)}
+                className={clsx(classes.tooltipTrigger, classes.textGreen, classes.textOverflow)}
               >
                 {received.depositToken
                   ? formatTokenDisplayCondensed(

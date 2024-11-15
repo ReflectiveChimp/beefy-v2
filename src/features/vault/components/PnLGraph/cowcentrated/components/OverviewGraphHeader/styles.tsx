@@ -34,11 +34,11 @@ export const styles = (theme: Theme) => ({
   },
   label: {
     ...theme.typography['body-sm'],
-    color: 'var(--tooltip-label-color)',
+    color: 'var(--colors-color-palette-text-label)',
   },
   value: {
     ...theme.typography['subline-sm'],
-    color: 'var(--tooltip-value-color)',
+    color: 'var(--colors-color-palette-text-item)',
     textAlign: 'right' as const,
   },
   tooltip: {

@@ -1,1 +1,1 @@
-export * from './ConfirmStep';
+export { ConfirmStep } from './ConfirmStep';

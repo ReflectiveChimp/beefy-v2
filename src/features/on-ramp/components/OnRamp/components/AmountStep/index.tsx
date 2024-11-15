@@ -1,1 +1,1 @@
-export * from './AmountStep';
+export { AmountStep } from './AmountStep';

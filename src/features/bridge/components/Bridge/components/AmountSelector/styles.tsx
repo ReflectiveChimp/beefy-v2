@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => ({
   },
   label: {
     ...theme.typography['subline-sm'],
-    fontWeight: 700,
+    fontWeight: 500,
     color: theme.palette.text.dark,
     flex: '1 1 40%',
   },

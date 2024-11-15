@@ -9,18 +9,18 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: '1fr auto',
   },
   label: {
-    color: 'var(--tooltip-label-color)',
+    color: 'var(--colors-color-palette-text-label)',
     '&:nth-last-child(2)': {
       fontWeight: theme.typography['body-lg-med'].fontWeight,
-      color: 'var(--tooltip-title-color)',
+      color: 'var(--colors-color-palette-text-title)',
     },
   },
   value: {
-    color: 'var(--tooltip-value-color)',
+    color: 'var(--colors-color-palette-text-item)',
     textAlign: 'right' as const,
     '&:last-child': {
       fontWeight: theme.typography['body-lg-med'].fontWeight,
-      color: 'var(--tooltip-label-color)',
+      color: 'var(--colors-color-palette-text-label)',
     },
   },
 });

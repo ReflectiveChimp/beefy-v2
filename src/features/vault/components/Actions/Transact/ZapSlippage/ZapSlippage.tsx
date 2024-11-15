@@ -14,7 +14,10 @@ import clsx from 'clsx';
 import { formatPercent } from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectTransactSlippage } from '../../../../../data/selectors/transact';
-import { ErrorOutline, ExpandLess, ExpandMore, ReportProblemOutlined } from '@material-ui/icons';
+import { ReactComponent as ErrorOutline } from '@repo/images/icons/mui/ErrorOutline.svg';
+import { ReactComponent as ExpandLess } from '@repo/images/icons/mui/ExpandLess.svg';
+import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
+import { ReactComponent as ReportProblemOutlined } from '@repo/images/icons/mui/ReportProblemOutlined.svg';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { IconWithTooltip } from '../../../../../../components/Tooltip';
@@ -222,7 +225,7 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ classNa
         <div className={classes.title}>
           {t('Transact-Slippage')}
           <IconWithTooltip
-            iconSize={16}
+            size={16}
             content={<BasicTooltipContent title={t('Transact-Slippage-Explainer')} />}
           />
         </div>
@@ -235,7 +238,7 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ classNa
           >
             {slippage >= SLIPPAGE_WARNING ? (
               <IconWithBasicTooltip
-                iconSize={16}
+                size={16}
                 title={t(
                   `Transact-Slippage-Explainer-${
                     slippage >= SLIPPAGE_DANGER ? 'Danger' : 'Warning'

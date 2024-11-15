@@ -1,234 +1,179 @@
 import {
+  cloneElement,
   forwardRef,
+  isValidElement,
   memo,
-  type MouseEvent,
-  type MouseEventHandler,
+  type PropsWithoutRef,
+  type ReactHTML,
   type ReactNode,
-  type TouchEvent as ReactTouchEvent,
-  type TouchEventHandler,
+  type Ref,
   useCallback,
   useId,
-  useMemo,
-  useState,
 } from 'react';
-import type { PopperPlacementType } from '@material-ui/core';
-import { makeStyles, Popper, setRef } from '@material-ui/core';
-import clsx from 'clsx';
-import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { selectTooltipIsOpen } from '../../features/data/selectors/tooltips';
-import { closeTooltip, openTooltip, toggleTooltip } from '../../features/data/reducers/tooltips';
-import { useClickAway } from './useClickAway';
+import { closeTooltip, openTooltip } from '../../features/data/reducers/tooltips';
+import { type FloatingProviderProps } from '../Floating/FloatingProvider';
+import { FloatingArrow, FloatingPortal, useMergeRefs } from '@floating-ui/react';
+import { type HTMLStyledProps, styled } from '@repo/styles/jsx';
+import { useFloating } from '../Floating/useFloating';
+import type { BeefyState } from '../../redux-types';
 
-const useStyles = makeStyles(styles);
-
-export enum TRIGGERS {
-  CLICK = 1 << 0,
-  HOVER = 1 << 1,
-}
-
-export type TooltipProps = {
-  children: ReactNode;
+type BaseTooltipProps = Pick<FloatingProviderProps, 'placement' | 'disabled'> & {
   content: ReactNode;
-  placement?: PopperPlacementType;
-  /** no event for touch devices as react adds the touch event passively */
-  onTriggerClick?: (e: MouseEvent<HTMLDivElement> | undefined) => void;
-  propagateTriggerClick?:
-    | boolean
-    | ((e: MouseEvent<HTMLDivElement> | ReactTouchEvent<HTMLDivElement>) => boolean);
-  onTooltipClick?: MouseEventHandler<HTMLDivElement>;
-  propagateTooltipClick?: boolean | ((e: MouseEvent<HTMLDivElement>) => boolean);
-  triggerClass?: string;
-  tooltipClass?: string;
-  arrowClass?: string;
-  contentClass?: string;
-  disabled?: boolean;
-  triggers?: number;
-  group?: string;
-  /** reduces padding/margins */
   compact?: boolean;
   dark?: boolean;
+  TriggerComponent?: typeof TooltipTrigger;
+  ContentComponent?: typeof TooltipContent;
+  ArrowComponent?: typeof TooltipArrow;
+  /** Pass exactly one child that can hold a ref and that element will be used as the trigger instead of a wrapping div */
+  asChild?: boolean;
+  disableHover?: boolean;
 };
 
+export type TooltipProps<T extends keyof ReactHTML = 'div'> = BaseTooltipProps &
+  Omit<PropsWithoutRef<HTMLStyledProps<T>>, keyof BaseTooltipProps>;
+
 export const Tooltip = memo(
-  forwardRef<HTMLDivElement, TooltipProps>(function Tooltip(
+  forwardRef(function TooltipProvider(
     {
       content,
-      children,
-      triggerClass,
-      tooltipClass,
-      arrowClass,
-      contentClass,
       placement = 'top-end',
       disabled = false,
-      onTriggerClick,
-      onTooltipClick,
-      propagateTriggerClick = false,
-      propagateTooltipClick = false,
-      triggers = TRIGGERS.CLICK | TRIGGERS.HOVER,
-      group = 'default',
-      compact = false,
       dark = false,
-    },
+      compact = false,
+      TriggerComponent = TooltipTrigger,
+      ContentComponent = TooltipContent,
+      ArrowComponent = TooltipArrow,
+      asChild = false,
+      disableHover = false,
+      children,
+      ...triggerProps
+    }: TooltipProps,
     ref
   ) {
-    const id = useId();
-    const baseClasses = useStyles();
-    const dispatch = useAppDispatch();
-    const isOpen = useAppSelector(state => selectTooltipIsOpen(state, id, group));
-    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
-    const [arrowRef, setArrowRef] = useState<HTMLDivElement | null>(null);
-
-    const setIsOpen = useCallback(
-      (isOpen: boolean) => {
-        if (isOpen) {
-          dispatch(openTooltip({ id, group }));
-        } else {
-          dispatch(closeTooltip({ id, group }));
-        }
-      },
-      [dispatch, id, group]
-    );
-
-    const toggleOpen = useCallback(() => {
-      dispatch(toggleTooltip({ id, group }));
-    }, [dispatch, id, group]);
-
-    const handleMouseEnter = useCallback(() => {
-      if (!disabled && triggers & TRIGGERS.HOVER) {
-        setIsOpen(true);
-      }
-    }, [setIsOpen, disabled, triggers]);
-
-    const handleMouseLeave = useCallback(() => {
-      if (triggers & TRIGGERS.HOVER) {
-        setIsOpen(false);
-      }
-    }, [setIsOpen, triggers]);
-
-    const handleClickAway = useCallback(() => {
-      setIsOpen(false);
-    }, [setIsOpen]);
-
-    const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
-      e => {
-        if (
-          !(typeof propagateTriggerClick === 'function'
-            ? propagateTriggerClick(e)
-            : propagateTriggerClick)
-        ) {
-          e.stopPropagation();
-        }
-
-        if (!disabled) {
-          if (onTriggerClick) {
-            onTriggerClick(e);
-          }
-
-          if (!e.defaultPrevented && triggers & TRIGGERS.CLICK) {
-            toggleOpen();
-          }
-        }
-      },
-      [disabled, onTriggerClick, triggers, toggleOpen, propagateTriggerClick]
-    );
-
-    const handleTouch = useCallback<TouchEventHandler<HTMLDivElement>>(
-      e => {
-        if (
-          !(typeof propagateTriggerClick === 'function'
-            ? propagateTriggerClick(e)
-            : propagateTriggerClick)
-        ) {
-          e.stopPropagation();
-        }
-
-        if (!disabled) {
-          if (onTriggerClick) {
-            onTriggerClick(undefined);
-          }
-
-          if (triggers & TRIGGERS.CLICK) {
-            toggleOpen();
-          }
-        }
-      },
-      [disabled, onTriggerClick, triggers, toggleOpen, propagateTriggerClick]
-    );
-
-    const handlePopperClick = useCallback<MouseEventHandler<HTMLDivElement>>(
-      e => {
-        if (
-          !(typeof propagateTooltipClick === 'function'
-            ? propagateTooltipClick(e)
-            : propagateTooltipClick)
-        ) {
-          e.stopPropagation();
-        }
-
-        if (onTooltipClick) {
-          onTooltipClick(e);
-        }
-      },
-      [onTooltipClick, propagateTooltipClick]
-    );
-
-    const modifiers = useMemo(
-      () => ({
-        arrow: {
-          enabled: true,
-          element: arrowRef,
-        },
-      }),
-      [arrowRef]
-    );
-
-    const { clickAwayRef, tooltipRef } = useClickAway<HTMLDivElement>(handleClickAway);
-
-    const setTriggerRef = useCallback(
-      (element: HTMLDivElement) => {
-        setRef(ref, element);
-        setRef(clickAwayRef, element);
-        setAnchorEl(element);
-        if (element) {
-          element.addEventListener('touchstart', (e: TouchEvent) => e.preventDefault());
-        }
-      },
-      [setAnchorEl, ref, clickAwayRef]
-    );
+    const [open, setOpen] = useTooltipOpen();
+    const { isMounted, floating, trigger, context } = useFloating({
+      open,
+      onChange: setOpen,
+      placement,
+      disabled,
+      clickEnabled: true,
+      hoverEnabled: !disableHover,
+      hoverTouchEnabled: !disableHover,
+      arrow: true,
+      role: 'tooltip',
+    });
+    const triggerRef = useMergeRefs([
+      trigger.setRef,
+      ref,
+      isValidElement(children) && 'ref' in children ? (children.ref as Ref<unknown>) : null,
+    ]);
 
     return (
       <>
-        <div
-          className={clsx(baseClasses.trigger, triggerClass)}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onTouchStart={handleTouch}
-          onClick={handleClick}
-          ref={setTriggerRef}
-        >
-          {children}
-        </div>
-        <Popper
-          open={isOpen}
-          className={clsx(
-            baseClasses.tooltip,
-            tooltipClass,
-            compact ? baseClasses.compact : undefined,
-            dark ? baseClasses.dark : undefined
-          )}
-          anchorEl={anchorEl}
-          modifiers={modifiers}
-          placement={placement}
-          onClick={handlePopperClick}
-          ref={tooltipRef}
-          data-compact={compact ? 'true' : undefined}
-          data-dark={dark ? 'true' : undefined}
-        >
-          <div className={clsx(baseClasses.arrow, arrowClass)} ref={setArrowRef} />
-          <div className={clsx(baseClasses.content, contentClass)}>{content}</div>
-        </Popper>
+        {asChild && isValidElement(children) ? (
+          cloneElement(children, trigger.getProps({ ref: triggerRef, ...(children.props || {}) }))
+        ) : (
+          <TriggerComponent
+            {...trigger.getProps(triggerProps)}
+            ref={triggerRef}
+            children={children}
+          />
+        )}
+        {isMounted && (
+          <FloatingPortal>
+            <TooltipSizer {...floating.getProps()} ref={floating.setRef} style={floating.styles}>
+              {floating.arrow && (
+                <ArrowComponent ref={floating.arrow.ref} context={context} dark={dark} />
+              )}
+              <ContentComponent dark={dark} compact={compact}>
+                {content}
+              </ContentComponent>
+            </TooltipSizer>
+          </FloatingPortal>
+        )}
       </>
     );
   })
 );
+
+const TooltipTrigger = styled('div', {
+  base: {},
+});
+
+const TooltipArrow = styled(FloatingArrow, {
+  base: {
+    colorPalette: 'tooltip.light',
+    fill: 'colorPalette.background',
+  },
+  variants: {
+    dark: {
+      true: {
+        colorPalette: 'tooltip.dark',
+      },
+    },
+  },
+});
+
+const TooltipContent = styled(
+  'div',
+  {
+    base: {
+      colorPalette: 'tooltip.light',
+      textStyle: 'body-lg',
+      backgroundColor: 'colorPalette.background',
+      color: 'colorPalette.text',
+      paddingBlock: 'var(--tooltip-content-vertical-padding, 12px)',
+      paddingInline: 'var(--tooltip-content-horizontal-padding, 16px)',
+      borderRadius: 'var(--tooltip-content-border-radius, 8px)',
+      columnGap: 'var(--tooltip-content-horizontal-gap, 16px)',
+      rowGap: 'var(--tooltip-content-vertical-gap, 8px)',
+      minWidth: '50px',
+    },
+    variants: {
+      dark: {
+        true: {
+          colorPalette: 'tooltip.dark',
+        },
+      },
+      compact: {
+        true: {
+          '--tooltip-content-vertical-padding': '8px',
+          '--tooltip-content-horizontal-padding': '8px',
+          '--tooltip-content-vertical-gap': '4px',
+          '--tooltip-content-horizontal-gap': '12px',
+          '--tooltip-content-border-radius': '4px',
+          textStyle: 'body-sm',
+        },
+      },
+    },
+  },
+  {
+    dataAttr: true,
+  }
+);
+
+const TooltipSizer = styled('div', {
+  base: {
+    zIndex: 'tooltip',
+    maxWidth: 'min(calc(100% - 16px), 440px)',
+  },
+});
+
+function useTooltipOpen(group: string = 'default') {
+  const id = useId();
+  const selector = useCallback(
+    (state: BeefyState) => selectTooltipIsOpen(state, id, group),
+    [id, group]
+  );
+  const dispatch = useAppDispatch();
+  const isOpen = useAppSelector(selector);
+  const setIsOpen = useCallback(
+    (open: boolean) => {
+      dispatch(open ? openTooltip({ id, group }) : closeTooltip({ id, group }));
+    },
+    [dispatch, id, group]
+  );
+  return [isOpen, setIsOpen] as const;
+}

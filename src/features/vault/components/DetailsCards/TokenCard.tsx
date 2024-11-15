@@ -19,7 +19,8 @@ import { BridgeTag, NativeTag } from '../BridgeTag';
 import { explorerTokenUrl } from '../../../../helpers/url';
 import { PriceWithChange } from '../../../../components/PriceWithChange/PriceWithChange';
 import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink';
-import { Code, Link } from '@material-ui/icons';
+import { ReactComponent as Code } from '@repo/images/icons/mui/Code.svg';
+import { ReactComponent as Link } from '@repo/images/icons/mui/Link.svg';
 import { ReactComponent as DocsIcon } from '../../../../images/icons/navigation/docs.svg';
 import { memo, useEffect } from 'react';
 

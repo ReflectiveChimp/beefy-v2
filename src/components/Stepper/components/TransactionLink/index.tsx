@@ -1,1 +1,1 @@
-export * from './TransactionLink';
+export { TransactionLink } from './TransactionLink';

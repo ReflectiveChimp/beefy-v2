@@ -134,7 +134,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   };
 
   return (
-    <CardContent className={classes.cardContent}>
+    <CardContent>
       <div className={classes.content}>
         {t(
           [

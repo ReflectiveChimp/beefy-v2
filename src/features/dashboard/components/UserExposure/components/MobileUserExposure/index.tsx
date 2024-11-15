@@ -1,1 +1,1 @@
-export * from './MobileUserExposure';
+export { MobileUserExposure } from './MobileUserExposure';

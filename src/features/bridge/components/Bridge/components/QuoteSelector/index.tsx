@@ -1,1 +1,1 @@
-export * from './QuoteSelector';
+export { QuoteSelector } from './QuoteSelector';

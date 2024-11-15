@@ -1,1 +1,1 @@
-export * from './DepositSummary';
+export { DepositSummary } from './DepositSummary';

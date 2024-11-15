@@ -1,1 +1,1 @@
-export * from './LiquidityPoolBreakdown';
+export { LiquidityPoolBreakdownLoader } from './LiquidityPoolBreakdown';

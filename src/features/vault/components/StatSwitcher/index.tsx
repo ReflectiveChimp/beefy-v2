@@ -1,1 +1,1 @@
-export * from './StatSwitcher';
+export { StatSwitcher } from './StatSwitcher';

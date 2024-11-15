@@ -1,1 +1,1 @@
-export * from './CheckboxFilter';
+export { CheckboxFilter } from './CheckboxFilter';

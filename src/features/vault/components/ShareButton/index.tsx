@@ -1,1 +1,1 @@
-export * from './ShareButton';
+export { ShareButton } from './ShareButton';

@@ -1,1 +1,1 @@
-export * from './PnLTooltip';
+export { PnLTooltip } from './PnLTooltip';

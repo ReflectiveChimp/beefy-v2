@@ -1,1 +1,1 @@
-export * from './SearchableList';
+export { SearchableList } from './SearchableList';

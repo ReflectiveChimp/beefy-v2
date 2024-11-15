@@ -1,1 +1,1 @@
-export * from './TokenSelectStep';
+export { TokenSelectStep } from './TokenSelectStep';

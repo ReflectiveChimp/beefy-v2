@@ -4,7 +4,7 @@ import { selectSelectedQuote } from '../../../../../data/selectors/on-ramp';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet';
-import { useAsync } from '../../../../../../helpers/useAsync';
+import { useAsync } from '../../../../../../helpers/hooks/useAsync';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 import { PROVIDERS } from '../../providers';
 import { ErrorIndicator } from '../ErrorIndicator';

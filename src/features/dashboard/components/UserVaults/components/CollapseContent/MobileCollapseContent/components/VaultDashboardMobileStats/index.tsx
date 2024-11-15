@@ -1,1 +1,1 @@
-export * from './VaultDashboardMobileStats';
+export { VaultDashboardMobileStats } from './VaultDashboardMobileStats';

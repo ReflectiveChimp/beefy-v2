@@ -3,8 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import type { ReactNode } from 'react';
 import { forwardRef, memo } from 'react';
 import clsx from 'clsx';
-import type { TooltipProps } from '../../../Tooltip';
-import { Tooltip } from '../../../Tooltip';
+import { Tooltip, type TooltipProps } from '../../../Tooltip';
 
 const useStyles = makeStyles(styles);
 
@@ -25,7 +24,10 @@ export const VaultTag = memo(
   })
 );
 
-export type VaultTagWithTooltipProps = VaultTagProps & Omit<TooltipProps, 'children'>;
+export type VaultTagWithTooltipProps = VaultTagProps &
+  Omit<TooltipProps, 'children'> & {
+    triggerClass?: string; // TODO rename
+  };
 
 export const VaultTagWithTooltip = memo(
   forwardRef<HTMLDivElement, VaultTagWithTooltipProps>(function VaultTagWithTooltip(
@@ -34,7 +36,7 @@ export const VaultTagWithTooltip = memo(
   ) {
     const classes = useStyles();
     return (
-      <Tooltip triggerClass={clsx(classes.vaultTag, className, triggerClass)} ref={ref} {...rest}>
+      <Tooltip className={clsx(classes.vaultTag, className, triggerClass)} ref={ref} {...rest}>
         {icon ? <div className={classes.vaultTagIcon}>{icon}</div> : null}
         {text ? <div className={classes.vaultTagText}>{text}</div> : null}
       </Tooltip>

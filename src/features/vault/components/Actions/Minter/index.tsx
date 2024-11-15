@@ -1,1 +1,1 @@
-export * from './Minters';
+export { Minters } from './Minters';

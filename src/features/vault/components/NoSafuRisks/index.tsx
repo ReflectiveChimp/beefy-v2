@@ -1,1 +1,1 @@
-export * from './NoSafuRisks';
+export { NoSafuRisks } from './NoSafuRisks';

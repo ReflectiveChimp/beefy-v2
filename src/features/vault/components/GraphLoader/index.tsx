@@ -1,1 +1,1 @@
-export * from './Loader';
+export { GraphLoader } from './Loader';

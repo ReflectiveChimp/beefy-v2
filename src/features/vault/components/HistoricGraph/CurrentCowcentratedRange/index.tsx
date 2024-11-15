@@ -1,1 +1,1 @@
-export * from './CurrentCowcentratedRange';
+export { CurrentCowcentratedRangeIfAvailable } from './CurrentCowcentratedRange';

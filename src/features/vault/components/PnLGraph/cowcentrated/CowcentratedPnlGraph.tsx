@@ -31,6 +31,7 @@ import { CLMFeesGraph } from './components/FeesGraph';
 import { useVaultPeriodsFeesGraph } from './components/FeesGraph/hooks';
 import { ErrorBoundary } from '../../../../../components/ErrorBoundary/ErrorBoundary';
 import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData';
+import { styled } from '@repo/styles/jsx';
 
 const useStyles = makeStyles(styles);
 
@@ -87,7 +88,7 @@ export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGr
   const canShowGraph = labels.length > 0;
 
   return (
-    <CardContent className={classes.content}>
+    <StyledCardContent>
       <OverviewGraphHeader vaultId={vaultId} />
       <div className={classes.graphContainer}>
         {canShowGraph ? (
@@ -106,8 +107,16 @@ export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGr
           position={isCowcentratedStandardVault(vault)}
         />
       ) : null}
-    </CardContent>
+    </StyledCardContent>
   );
+});
+
+const StyledCardContent = styled(CardContent, {
+  base: {
+    gap: '1px',
+    padding: '0',
+    backgroundColor: 'background.contentDark',
+  },
 });
 
 export const FeesGraph = memo<CowcentratedPnlGraphProps>(function FeesGraph({ vaultId, address }) {
@@ -117,7 +126,7 @@ export const FeesGraph = memo<CowcentratedPnlGraphProps>(function FeesGraph({ va
   const canShowGraph = labels.length > 0;
 
   return (
-    <CardContent className={classes.content}>
+    <StyledCardContent>
       <FeesGraphHeader vaultId={vaultId} address={address} />
       <div className={classes.graphContainer}>
         {canShowGraph ? (
@@ -129,7 +138,7 @@ export const FeesGraph = memo<CowcentratedPnlGraphProps>(function FeesGraph({ va
       {canShowGraph ? (
         <FeesFooter labels={labels} vaultId={vaultId} period={period} handlePeriod={setPeriod} />
       ) : null}
-    </CardContent>
+    </StyledCardContent>
   );
 });
 
@@ -147,7 +156,6 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
   const dispatch = useAppDispatch();
   const [stat, setStat] = useState<ChartType>('overview');
   const { t } = useTranslation();
-  const classes = useStyles();
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
   const compounds = vault.strategyTypeId === 'compounds' && isCowcentratedGovVault(vault); // TODO implement for CLM vaults || isCowcentratedStandardVault(vault);
 
@@ -168,9 +176,9 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
   const GraphComponent = chartToComponent[stat];
 
   return (
-    <Card className={classes.card}>
-      <CardHeader className={classes.header}>
-        <CardTitle title={t('Graph-PositionPerformance')} />
+    <Card>
+      <CardHeader>
+        <CardTitle>{t('Graph-PositionPerformance')}</CardTitle>
         {Object.keys(options).length > 1 ? (
           <StatSwitcher stat={stat} options={options} onChange={setStat as (v: string) => void} />
         ) : null}

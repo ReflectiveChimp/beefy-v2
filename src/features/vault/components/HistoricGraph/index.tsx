@@ -1,1 +1,1 @@
-export * from './HistoricGraphsLoader';
+export { HistoricGraphsLoader } from './HistoricGraphsLoader';

@@ -1,5 +1,5 @@
-import { createTheme } from '@material-ui/core/styles';
 import type { ThemeOptions } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import type { TypographyStyleOptions } from '@material-ui/core/styles/createTypography';
 import { featureFlag_breakpoints } from './features/data/utils/feature-flags';
 
@@ -297,18 +297,6 @@ const theme = createTheme(
           },
           body: {
             backgroundColor: '#121420',
-          },
-          'onboard-v2': {
-            // @ts-ignore need to force above other modals
-            position: 'relative !important' as PositionProperty,
-            // @ts-ignore need to force above other modals
-            zIndex: '1400 !important' as ZIndexProperty,
-          },
-          'wcm-modal, #cryptoconnect-extension': {
-            // @ts-ignore need to force above other modals
-            position: 'relative !important' as PositionProperty,
-            // @ts-ignore need to force above other modals
-            zIndex: '1500 !important' as ZIndexProperty,
           },
         },
       },

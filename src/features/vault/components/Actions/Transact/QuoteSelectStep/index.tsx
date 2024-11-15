@@ -1,1 +1,1 @@
-export * from './QuoteSelectStep';
+export { QuoteSelectStep } from './QuoteSelectStep';

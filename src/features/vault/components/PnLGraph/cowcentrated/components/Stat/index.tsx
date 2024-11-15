@@ -1,8 +1,7 @@
 import { makeStyles, type Theme } from '@material-ui/core';
 import clsx from 'clsx';
 import { memo, type ReactNode } from 'react';
-import { Tooltip } from '../../../../../../../components/Tooltip';
-import { HelpOutline } from '@material-ui/icons';
+import { IconWithTooltip } from '../../../../../../../components/Tooltip';
 
 interface StatProps {
   tooltipText: string;
@@ -84,9 +83,7 @@ export const Stat = memo<StatProps>(function Stat({
     <div className={classes.container}>
       <div className={classes.labelContainer}>
         <div className={classes.label}>{label}</div>
-        <Tooltip triggerClass={classes.center} content={tooltipText}>
-          <HelpOutline />
-        </Tooltip>
+        <IconWithTooltip size={16} color="text.dark" content={tooltipText} />
       </div>
       <div className={classes.value}>
         {value0}

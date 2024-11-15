@@ -11,3 +11,6 @@ madge.svg
 yarn-error.log
 /analyze.html
 /scripts/.cache/
+
+## Panda
+/build-tools/styles/generated/

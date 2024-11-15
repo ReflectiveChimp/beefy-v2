@@ -19,7 +19,7 @@ import { Toggle } from '../../../../../../components/Toggle';
 import clsx from 'clsx';
 import buildLpIcon from '../../../../../../images/icons/build-lp.svg';
 import type { VaultEntity } from '../../../../../data/entities/vault';
-import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
+import { ReactComponent as OpenInNewRoundedIcon } from '@repo/images/icons/mui/OpenInNewRounded.svg';
 
 const useStyles = makeStyles(styles);
 const DUST_HIDDEN_THRESHOLD = new BigNumber('0.01');

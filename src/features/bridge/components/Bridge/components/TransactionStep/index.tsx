@@ -1,1 +1,1 @@
-export * from './TransactionStep';
+export { TransactionStep } from './TransactionStep';

@@ -1,1 +1,1 @@
-export * from './InputSwitcher';
+export { InputSwitcher } from './InputSwitcher';

@@ -6,8 +6,8 @@ import { selectVaultById } from '../../features/data/selectors/vaults';
 import { VaultValueStat } from '../VaultValueStat';
 import type { SafetyScoreProps } from '../SafetyScore';
 import { SafetyScore } from '../SafetyScore';
-import { useMediaQuery } from '@material-ui/core';
 import type { Theme } from '@material-ui/core';
+import { useMediaQuery } from '@material-ui/core';
 
 export type VaultSafetyStatProps = {
   vaultId: VaultEntity['id'];

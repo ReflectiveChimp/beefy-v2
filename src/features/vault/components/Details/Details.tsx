@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState, type FC } from 'react';
+import { type FC, memo, useCallback, useMemo, useState } from 'react';
 import { StatSwitcher } from '../StatSwitcher';
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { useTranslation } from 'react-i18next';

@@ -1,1 +1,1 @@
-export * from './odos';
+export { OdosApi } from './odos';

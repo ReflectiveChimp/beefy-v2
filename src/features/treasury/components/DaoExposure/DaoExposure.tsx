@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import { type FC, useState } from 'react';
-import { memo, useMemo } from 'react';
+import { type FC, memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Section } from '../../../../components/Section';
 import { TreasuryAvailabilityExposure } from '../TreasuryAvailabilityExposure';

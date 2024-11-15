@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'nowrap' as const,
     columnGap: '0',
     rowGap: '16px',
-    width: 'fit-content',
+    width: '100%',
     border: `solid 2px ${theme.palette.background.contentPrimary}`,
     borderRadius: '8px',
     backgroundColor: theme.palette.background.contentDark,
@@ -28,6 +28,7 @@ export const styles = (theme: Theme) => ({
     border: `0`,
     borderRadius: '6px',
     cursor: 'pointer',
+    whiteSpace: 'nowrap' as const,
     '&::before': {
       content: '""',
       display: 'block',

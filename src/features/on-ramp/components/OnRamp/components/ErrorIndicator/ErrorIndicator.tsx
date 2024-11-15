@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { memo } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
-import { ReportProblemOutlined } from '@material-ui/icons';
+import { ReactComponent as ReportProblemOutlined } from '@repo/images/icons/mui/ReportProblemOutlined.svg';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);

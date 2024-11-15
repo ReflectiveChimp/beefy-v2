@@ -50,7 +50,6 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
         placement={placement}
         dropdownFlip={dropDownFlip}
         dropdownShift={dropDownShift}
-        dropdownAutoHide={false}
       />
     );
   }

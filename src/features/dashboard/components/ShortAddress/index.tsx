@@ -1,1 +1,1 @@
-export * from './ShortAddress';
+export { ShortAddress } from './ShortAddress';

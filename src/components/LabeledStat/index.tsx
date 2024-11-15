@@ -1,1 +1,1 @@
-export * from './LabeledStat';
+export { LabeledStat } from './LabeledStat';

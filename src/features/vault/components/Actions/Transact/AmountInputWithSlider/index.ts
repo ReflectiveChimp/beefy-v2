@@ -1,1 +1,1 @@
-export * from './AmountInputWithSlider';
+export { AmountInputWithSlider } from './AmountInputWithSlider';

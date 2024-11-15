@@ -52,10 +52,8 @@ export const ReceiverSelector = memo<ReceiverSelectorProps>(function ReceiverSel
   return (
     <div className={clsx(classes.group, className)}>
       <LabelledCheckbox
-        checkboxClass={classes.checkbox}
-        labelClass={classes.label}
-        iconClass={classes.check}
-        checkedClass={classes.checked}
+        variant="dark"
+        size="small"
         label={`My ${chain.name} address is different`}
         checked={receiverIsDifferent}
         onChange={handleReceiverToggle}

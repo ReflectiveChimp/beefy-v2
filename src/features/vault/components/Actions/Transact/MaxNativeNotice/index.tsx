@@ -1,1 +1,1 @@
-export * from './MaxNativeNotice';
+export { MaxNativeNotice } from './MaxNativeNotice';

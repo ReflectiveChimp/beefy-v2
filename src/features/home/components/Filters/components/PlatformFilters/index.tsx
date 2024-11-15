@@ -1,1 +1,1 @@
-export * from './PlatformDropdownFilter';
+export { PlatformDropdownFilter } from './PlatformDropdownFilter';

@@ -1,1 +1,1 @@
-export * from './ChainHolding';
+export { ChainHolding, MMHolding } from './ChainHolding';

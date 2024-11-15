@@ -1,1 +1,1 @@
-export * from './RewardTokenDetails';
+export { RewardTokenDetails } from './RewardTokenDetails';

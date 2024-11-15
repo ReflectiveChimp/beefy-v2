@@ -8,7 +8,7 @@ import type { VaultGov, VaultStandard } from '../entities/vault';
 import { isGovVault, isStandardVault } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectVaultIdsByChainIdIncludingHidden, selectVaultById } from '../selectors/vaults';
+import { selectVaultById, selectVaultIdsByChainIdIncludingHidden } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 
 interface ActionParams {

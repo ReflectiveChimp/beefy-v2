@@ -1,1 +1,1 @@
-export * from './PriceImpactNotice';
+export { PriceImpactNotice } from './PriceImpactNotice';

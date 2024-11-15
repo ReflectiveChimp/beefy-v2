@@ -36,6 +36,7 @@ export const DesktopCollapseContent = memo<VaultCollapseContentProps>(
               value={toggleTab}
               onChange={setToggleTab as (v: string) => void}
               options={options}
+              variant="filter"
             />
           </div>
         ) : null}

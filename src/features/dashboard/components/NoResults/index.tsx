@@ -1,1 +1,1 @@
-export * from './NoResults';
+export { InvalidAddress, InvalidDomain, NoResults, NotConnected } from './NoResults';

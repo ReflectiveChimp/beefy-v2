@@ -2,8 +2,9 @@ import { type FC, memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { AlertError, AlertInfo, type AlertProps, AlertWarning } from '../Alerts';
+import { AlertError, AlertInfo, AlertWarning } from '../Alerts';
 import { useTranslation } from 'react-i18next';
+import type { AlertProps } from '../Alerts/types';
 
 const useStyles = makeStyles(styles);
 

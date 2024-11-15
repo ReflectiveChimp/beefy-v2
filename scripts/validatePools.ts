@@ -1,7 +1,7 @@
 import { MultiCall } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { isEmpty, isValidChecksumAddress, maybeChecksumAddress, sleep } from './common/utils';
 import { getVaultsIntegrity } from './common/exclude';
 import {

@@ -17,6 +17,10 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.up('sm')]: {
       gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
     },
+    [theme.breakpoints.up('md')]: {
+      gridTemplateColumns: 'minmax(0, calc(50% - 12px)) minmax(200px, auto)',
+      justifyContent: 'space-between',
+    },
     [theme.breakpoints.up('lg')]: {
       gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
     },

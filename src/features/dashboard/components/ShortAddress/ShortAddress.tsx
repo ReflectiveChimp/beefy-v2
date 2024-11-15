@@ -55,11 +55,10 @@ export const ShortAddress = memo<ShortAddressProps>(function ShortAddress({
   if (address) {
     return (
       <Tooltip
-        onTriggerClick={handleCopyAddressToClipboard}
-        propagateTriggerClick={false}
-        contentClass={classes.longAddress}
-        triggerClass={classes.triggerClass}
-        tooltipClass={classes.tooltipContent}
+        onClick={handleCopyAddressToClipboard}
+        // contentClass={classes.longAddress}
+        className={classes.triggerClass}
+        // tooltipClass={classes.tooltipContent}
         children={<div className={classes.shortAddress}>{`(${shortAddressLabel})`}</div>}
         content={showCopied ? t('Clipboard-Copied') : address}
       />

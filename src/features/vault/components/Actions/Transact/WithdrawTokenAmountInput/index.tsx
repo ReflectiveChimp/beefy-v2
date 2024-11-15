@@ -1,1 +1,1 @@
-export * from './WithdrawTokenAmountInput';
+export { WithdrawTokenAmountInput } from './WithdrawTokenAmountInput';

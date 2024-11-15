@@ -1,7 +1,5 @@
 import type { Theme } from '@material-ui/core';
 
-export const AUTO_REFRESH_SECONDS = 15;
-
 export const styles = (theme: Theme) => ({
   holder: {
     display: 'flex',

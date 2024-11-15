@@ -1,1 +1,1 @@
-export * from './ButtonAdornment';
+export { ButtonAdornment } from './ButtonAdornment';

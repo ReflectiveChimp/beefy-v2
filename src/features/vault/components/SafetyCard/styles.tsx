@@ -36,7 +36,6 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   notes: {
-    marginTop: '16px',
     '& p': {
       margin: '0 0 12px 0',
       color: theme.palette.text.middle,

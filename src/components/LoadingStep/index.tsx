@@ -1,1 +1,1 @@
-export * from './LoadingStep';
+export { LoadingStep } from './LoadingStep';

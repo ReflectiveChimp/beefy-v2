@@ -1,1 +1,6 @@
-export * from './CommonActions';
+export {
+  ActionConnect,
+  ActionSwitch,
+  ActionConnectSwitch,
+  type ActionButtonProps,
+} from './CommonActions';

@@ -59,7 +59,7 @@ export const StandardExplainer = memo<StandardExplainerProps>(function StandardE
 
   return (
     <ExplainerCard
-      title={<CardTitle title={t('Vault-Strategy')} />}
+      title={<CardTitle>{t('Vault-Strategy')}</CardTitle>}
       links={links}
       description={<StandardDescription vaultId={vaultId} />}
       details={

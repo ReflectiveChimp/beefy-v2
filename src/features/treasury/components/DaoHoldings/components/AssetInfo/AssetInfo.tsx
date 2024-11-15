@@ -1,4 +1,4 @@
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import type { PropsWithChildren } from 'react';
 import { memo, useMemo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
@@ -17,6 +17,7 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { styles } from './styles';
 import { TokenImage } from '../../../../../../components/TokenImage/TokenImage';
 import { selectVaultTokenSymbols } from '../../../../../data/selectors/tokens';
+import { useMediaQuery } from '../../../../../../components/MediaQueries/useMediaQuery';
 
 const useStyles = makeStyles(styles);
 
@@ -136,7 +137,7 @@ interface AssetNameProps {
 }
 
 export const AssetName = memo<AssetNameProps>(function AssetName({ name }) {
-  const isMobile = useMediaQuery('(max-width: 600px)', { noSsr: true });
+  const isMobile = useMediaQuery('(max-width: 600px)', false);
   const needTooltip = isMobile && name.length > 12;
 
   if (needTooltip) {

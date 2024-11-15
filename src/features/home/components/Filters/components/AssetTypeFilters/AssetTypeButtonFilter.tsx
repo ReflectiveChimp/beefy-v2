@@ -1,8 +1,8 @@
 import { memo, useCallback, useMemo } from 'react';
 import {
   MultiToggleButton,
-  MultiToggleButtons,
   type MultiToggleButtonProps,
+  MultiToggleButtons,
 } from '../../../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
@@ -10,76 +10,56 @@ import { selectFilterAssetType } from '../../../../../data/selectors/filtered-va
 import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { TYPE_OPTIONS } from './type-options';
-import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
+import { Highlight } from './Highlight';
 
-const useStyles = makeStyles(styles);
+export const AssetTypeButtonFilter = memo(function AssetTypeButtonFilter() {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const options: Record<string, string> = useMemo(
+    () =>
+      Object.fromEntries(Object.entries(TYPE_OPTIONS).map(([key, cat]) => [key, t(cat.i18nKey)])),
+    [t]
+  );
+  const value = useAppSelector(selectFilterAssetType);
 
-export type AssetTypeButtonFilterProps = {
-  className?: string;
-};
+  const handleChange = useCallback(
+    (selected: string[]) => {
+      dispatch(
+        filteredVaultsActions.setAssetType(
+          selected.length === Object.values(options).length
+            ? []
+            : (selected as FilteredVaultsState['assetType'])
+        )
+      );
+    },
+    [dispatch, options]
+  );
+
+  return (
+    <MultiToggleButtons
+      value={value}
+      options={options}
+      onChange={handleChange}
+      fullWidth={false}
+      ButtonComponent={CategoryToggleButton}
+      variant="filter"
+    />
+  );
+});
 
 const CategoryToggleButton = memo<MultiToggleButtonProps>(function CategoryToggleButton(props) {
-  const classes = useStyles();
-  const { value, label: originalLabel, onClick } = props;
+  const { value, label: originalLabel } = props;
   const label = useMemo(() => {
     const option = TYPE_OPTIONS[value];
     if (option && option.highlight) {
       return (
         <>
-          {originalLabel} <span className={classes.highlight}>{option.highlight}</span>
+          {originalLabel} <Highlight>{option.highlight}</Highlight>
         </>
       );
     }
     return originalLabel;
-  }, [value, originalLabel, classes]);
+  }, [value, originalLabel]);
 
-  const handleClick = (isSelected: boolean, value: string) => {
-    onClick(isSelected, value);
-  };
-
-  return <MultiToggleButton {...props} label={label} onClick={handleClick} />;
+  return <MultiToggleButton {...props} label={label} />;
 });
-
-export const AssetTypeButtonFilter = memo<AssetTypeButtonFilterProps>(
-  function AssetTypeButtonFilter({ className }) {
-    const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const allKey = 'all';
-    const options: Record<string, string> = useMemo(
-      () =>
-        Object.fromEntries(
-          Object.entries(TYPE_OPTIONS)
-            .filter(([key]) => key !== allKey)
-            .map(([key, cat]) => [key, t(cat.i18nKey)])
-        ),
-      [t]
-    );
-    const value = useAppSelector(selectFilterAssetType);
-
-    const handleChange = useCallback(
-      selected => {
-        dispatch(
-          filteredVaultsActions.setAssetType(
-            selected.length === Object.values(options).length
-              ? []
-              : (selected as FilteredVaultsState['assetType'])
-          )
-        );
-      },
-      [dispatch, options]
-    );
-
-    return (
-      <MultiToggleButtons
-        value={value}
-        options={options}
-        onChange={handleChange}
-        buttonsClass={className}
-        fullWidth={false}
-        untoggleValue={allKey}
-        ButtonComponent={CategoryToggleButton}
-      />
-    );
-  }
-);

@@ -11,7 +11,7 @@ import {
 } from '../../../../../data/selectors/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import clsx from 'clsx';
-import { ExpandMore } from '@material-ui/icons';
+import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import { TokenImage, TokensImage } from '../../../../../../components/TokenImage/TokenImage';
 import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types';
 import zapIcon from '../../../../../../images/icons/zap.svg';

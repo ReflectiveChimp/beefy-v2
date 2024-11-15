@@ -1,4 +1,9 @@
-import type { ActionReducerMapBuilder, AsyncThunk, SerializedError } from '@reduxjs/toolkit';
+import type {
+  ActionReducerMapBuilder,
+  AsyncThunk,
+  PayloadAction,
+  SerializedError,
+} from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
@@ -465,6 +470,12 @@ export const dataLoaderSlice = createSlice({
     },
     openIndicator(sliceState) {
       sliceState.statusIndicator.open = true;
+    },
+    toggleIndicator(sliceState) {
+      sliceState.statusIndicator.open = !sliceState.statusIndicator.open;
+    },
+    setIndicatorOpen(sliceState, action: PayloadAction<{ open: boolean }>) {
+      sliceState.statusIndicator.open = action.payload.open;
     },
   },
   extraReducers: builder => {

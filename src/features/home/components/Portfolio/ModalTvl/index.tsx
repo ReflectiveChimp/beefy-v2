@@ -1,1 +1,1 @@
-export * from './ModalTvl';
+export { ModalTvl } from './ModalTvl';

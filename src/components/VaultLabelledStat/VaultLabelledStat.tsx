@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
-import { Tooltip, type TooltipProps } from '../Tooltip';
+import { Tooltip } from '../Tooltip';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
@@ -36,12 +36,6 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
 }) {
   const classes = useStyles();
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
-  const handleTooltipClick = useCallback<Exclude<TooltipProps['onTriggerClick'], undefined>>(e => {
-    // don't bubble up to the link on whole row
-    if (e) {
-      e.preventDefault();
-    }
-  }, []);
 
   return (
     <div className={className}>
@@ -52,11 +46,7 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
       ) : null}
       {tooltip ? (
         <div className={contentClassName}>
-          <Tooltip
-            triggerClass={triggerClassName}
-            content={tooltip}
-            onTriggerClick={handleTooltipClick}
-          >
+          <Tooltip className={triggerClassName} content={tooltip}>
             {children}
           </Tooltip>
           {subValue && (

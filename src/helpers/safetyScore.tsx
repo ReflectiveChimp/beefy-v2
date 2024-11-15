@@ -1,4 +1,4 @@
-import { MAX_SCORE, RISKS, CATEGORIES } from '../config/risk';
+import { CATEGORIES, MAX_SCORE, RISKS } from '../config/risk';
 
 const calcRisk = (arr: string[]) => {
   const categories = {};

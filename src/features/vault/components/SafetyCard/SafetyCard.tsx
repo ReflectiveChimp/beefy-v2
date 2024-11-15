@@ -25,7 +25,7 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   return (
     <Card id="SafetyCard">
-      <CardHeader className={classes.header}>
+      <CardHeader>
         <div className={classes.safetyLabel}>{t('Safety-Score1')}</div>
       </CardHeader>
       <CardContent>
@@ -53,8 +53,8 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                       <div className={classes.moreInfoContainer}>
                         <div className={classes.risk}>{t(RISKS[risk].title, { ns: 'risks' })}</div>
                         <IconWithBasicTooltip
-                          iconSize={16}
-                          iconClassName={classes.tooltipIcon}
+                          size={16}
+                          color="text.dark"
                           title={t(RISKS[risk].title, { ns: 'risks' })}
                           content={t(RISKS[risk].explanation, { ns: 'risks' })}
                         />
@@ -69,11 +69,7 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
             </Fragment>
           ))}
         </div>
-        <Collapsable
-          titleClassName={classes.titleClassName}
-          containerClassName={classes.howItWorksContainer}
-          title={t('How-It-Works')}
-        >
+        <Collapsable title={t('How-It-Works')} variant="light" padding="sm">
           <div className={classes.notes}>
             <p>{t('Safety-HigherSafer')}</p>
             <p>{t('Safety-BeefySecure')}</p>

@@ -1,1 +1,1 @@
-export * from './BridgeTag';
+export { BridgeTag, NativeTag, TagTooltip, TagWithTooltip } from './BridgeTag';

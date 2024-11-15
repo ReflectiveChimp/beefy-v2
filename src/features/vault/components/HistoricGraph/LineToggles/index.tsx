@@ -1,1 +1,1 @@
-export * from './LineToggles';
+export { LineToggles, type LineTogglesState } from './LineToggles';

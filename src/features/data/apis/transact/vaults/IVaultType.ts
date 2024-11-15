@@ -1,8 +1,8 @@
 import type {
+  VaultCowcentrated,
   VaultEntity,
   VaultGov,
   VaultStandard,
-  VaultCowcentrated,
 } from '../../../entities/vault';
 import type { BeefyStateFn } from '../../../../../redux-types';
 import type {

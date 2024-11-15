@@ -4,7 +4,7 @@ import { BasicTooltipContent } from './BasicTooltipContent';
 import { IconWithTooltip, type IconWithTooltipProps } from './IconWithTooltip';
 
 export type IconWithBasicTooltipProps = BasicTooltipContentProps &
-  Omit<IconWithTooltipProps, 'title' | 'content'>;
+  Omit<IconWithTooltipProps, keyof BasicTooltipContentProps>;
 
 export const IconWithBasicTooltip = memo<IconWithBasicTooltipProps>(function IconWithBasicTooltip({
   title,

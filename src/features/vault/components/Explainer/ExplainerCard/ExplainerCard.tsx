@@ -3,11 +3,11 @@ import { makeStyles } from '@material-ui/core';
 import { Card, CardContent, CardHeader } from '../../Card';
 import { styles } from './styles';
 import { ContractsDropdown } from '../ContractsDropdown';
+import { styled } from '@repo/styles/jsx';
 
 const useStyles = makeStyles(styles);
 
 type ExplainerCardProps = {
-  className?: string;
   title: ReactElement;
   links?: { label: string; link: string }[];
   description: ReactElement;
@@ -19,20 +19,25 @@ export const ExplainerCard = memo<ExplainerCardProps>(function ExplainerCard({
   links,
   description,
   details,
-  className,
 }) {
   const classes = useStyles();
 
   return (
-    <Card className={className}>
-      <CardHeader className={classes.header}>
+    <Card>
+      <CardHeader>
         <div className={classes.title}>{title}</div>
         {links ? <ContractsDropdown links={links} /> : null}
       </CardHeader>
-      <CardContent className={classes.content}>
+      <StyledCardContent>
         <div className={classes.description}>{description}</div>
         {details ? <div className={classes.details}>{details}</div> : null}
-      </CardContent>
+      </StyledCardContent>
     </Card>
   );
+});
+
+const StyledCardContent = styled(CardContent, {
+  base: {
+    gap: '32px',
+  },
 });

@@ -1,1 +1,1 @@
-export * from './ZapSlippage';
+export { ZapSlippage } from './ZapSlippage';

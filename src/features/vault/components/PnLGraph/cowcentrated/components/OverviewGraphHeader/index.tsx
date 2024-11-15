@@ -11,12 +11,12 @@ import {
   formatTokenDisplayCondensed,
 } from '../../../../../../../helpers/format';
 import { BIG_ZERO } from '../../../../../../../helpers/big-number';
-import { Tooltip } from '../../../../../../../components/Tooltip';
-import { HelpOutline } from '@material-ui/icons';
+import { ReactComponent as HelpOutline } from '@repo/images/icons/mui/HelpOutline.svg';
 import { styles } from './styles';
 import { ClmPnlTooltipContent } from '../../../../../../../components/PnlTooltip/ClmPnlTooltipContent';
 import { showClmPnlTooltip } from '../../../../../../../components/PnlTooltip/helpers';
 import { selectCowcentratedLikeVaultById } from '../../../../../../data/selectors/vaults';
+import { Tooltip } from '../../../../../../../components/Tooltip';
 
 interface OverviewGraphHeaderProps {
   vaultId: VaultEntity['id'];
@@ -107,7 +107,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
                 </div>
               }
               content={<ClmPnlTooltipContent userPnl={userPnl} />}
-              contentClass={classes.tooltipContent}
+              // className={classes.tooltipContent}
               compact={true}
               dark={true}
             />
@@ -135,7 +135,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
                 </div>
               </div>
             }
-            contentClass={classes.tooltipContent}
+            // className={classes.tooltipContent}
             compact={true}
             dark={true}
           />

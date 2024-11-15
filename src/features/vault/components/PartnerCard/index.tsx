@@ -1,1 +1,1 @@
-export * from './PartnerCard';
+export { PartnerCard } from './PartnerCard';

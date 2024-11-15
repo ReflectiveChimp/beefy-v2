@@ -1,1 +1,1 @@
-export * from './TokenAmount';
+export { TokenAmount, TokenAmountFromEntity } from './TokenAmount';

@@ -1,5 +1,6 @@
 import type { MutableRefObject, ReactNode } from 'react';
 import { memo, useLayoutEffect, useMemo } from 'react';
+import type { Placement } from '@floating-ui/react-dom';
 import {
   autoUpdate,
   flip as flipFloating,
@@ -9,8 +10,7 @@ import {
   size,
   useFloating,
 } from '@floating-ui/react-dom';
-import type { Placement } from '@floating-ui/react-dom';
-import type { Middleware } from '@floating-ui/core/src/types';
+import type { Middleware } from '@floating-ui/react';
 
 export type FloatingProps = {
   open: boolean;
@@ -65,7 +65,7 @@ export const Floating = memo<FloatingProps>(function Floating({
     }
     return middlewares;
   }, [autoHide, flip, shift, autoWidth, autoHeight]);
-  const { x, y, reference, floating, strategy, middlewareData } = useFloating({
+  const { x, y, refs, strategy, middlewareData } = useFloating({
     whileElementsMounted: autoUpdate,
     placement,
     middleware,
@@ -73,13 +73,13 @@ export const Floating = memo<FloatingProps>(function Floating({
 
   const anchorElCurrent = anchorEl.current;
   useLayoutEffect(() => {
-    reference(anchorElCurrent);
-  }, [reference, anchorElCurrent]);
+    refs.setReference(anchorElCurrent);
+  }, [refs, anchorElCurrent]);
 
   return open ? (
     <div
       className={className}
-      ref={floating}
+      ref={refs.setFloating}
       style={{
         position: strategy,
         top: y ?? '',

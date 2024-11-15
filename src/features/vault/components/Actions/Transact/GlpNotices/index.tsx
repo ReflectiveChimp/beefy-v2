@@ -4,7 +4,7 @@ import { GlpDepositNoticeImpl } from './GlpDepositNoticeImpl';
 import { GlpWithdrawNoticeImpl } from './GlpWithdrawNoticeImpl';
 import type { GlpLikeConfig } from './types';
 
-export const enableForVaults: Record<VaultEntity['id'], GlpLikeConfig> = {
+const enableForVaults: Record<VaultEntity['id'], GlpLikeConfig> = {
   'opx-olp': { managerMethod: 'glpManager' },
   'mvx-mvlp': { managerMethod: 'mvlpManager' },
   'kinetix-klp': { managerMethod: 'klpManager' },

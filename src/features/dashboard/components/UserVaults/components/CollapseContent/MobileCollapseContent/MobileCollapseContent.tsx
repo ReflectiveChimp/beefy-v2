@@ -45,6 +45,7 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
               value={toggleTab}
               onChange={setToggleTab as (v: string) => void}
               options={options}
+              variant="filter"
             />
           )}
         </div>

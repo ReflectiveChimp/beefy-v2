@@ -1,1 +1,1 @@
-export * from './TabletStats';
+export { TabletStats } from './TabletStats';

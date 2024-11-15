@@ -1,18 +1,17 @@
 import { makeStyles } from '@material-ui/core';
-import { HelpOutline } from '@material-ui/icons';
 import { type BigNumber } from 'bignumber.js';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Tooltip } from '../../../../../../../components/Tooltip';
+import { IconWithTooltip, Tooltip } from '../../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../../components/Tooltip/BasicTooltipContent';
 import {
-  formatLargeUsd,
-  formatTokenDisplayCondensed,
-  formatTokenDisplay,
   formatLargePercent,
+  formatLargeUsd,
   formatPositiveOrNegative,
+  formatTokenDisplay,
+  formatTokenDisplayCondensed,
 } from '../../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../../store';
 import type { VaultEntity } from '../../../../../../data/entities/vault';
@@ -113,9 +112,7 @@ const HeaderItem = memo<HeaderItemProps>(function HeaderItem({
     <div className={clsx(classes.itemContainer, className)}>
       <div className={classes.labelContainer}>
         <div className={classes.label}>{label}</div>
-        <Tooltip triggerClass={classes.center} content={tooltipText}>
-          <HelpOutline />
-        </Tooltip>
+        <IconWithTooltip size={16} content={tooltipText} />
       </div>
       {children}
       {subValue && <div className={classes.subValue}>{subValue}</div>}
@@ -142,11 +139,14 @@ const SharesValue = memo<SharesValueProps>(function SharesValue({
   const shortAmount = formatTokenDisplayCondensed(amount, decimals);
 
   return (
-    <Tooltip content={<BasicTooltipContent title={fullAmount} />}>
-      <div className={clsx(classes.value, className)}>
-        <div className={clsx(classes.withTooltip, classes.textOverflow)}>{shortAmount}</div>
-        {percentage && <span>({formatLargePercent(percentage)})</span>}
-      </div>
-    </Tooltip>
+    <div className={clsx(classes.value, className)}>
+      <Tooltip
+        content={<BasicTooltipContent title={fullAmount} />}
+        className={clsx(classes.withTooltip, classes.textOverflow)}
+      >
+        {shortAmount}
+      </Tooltip>
+      {percentage && <span>({formatLargePercent(percentage)})</span>}
+    </div>
   );
 });

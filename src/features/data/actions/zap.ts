@@ -7,8 +7,8 @@ import { selectAllVisibleVaultIds, selectVaultById } from '../selectors/vaults';
 import { isFulfilledResult } from '../../../helpers/promises';
 import type { VaultEntity } from '../entities/vault';
 import {
-  featureFlag_OdosSwapSupport,
   featureFlag_kyberSwapSupport,
+  featureFlag_OdosSwapSupport,
   featureFlag_oneInchSupport,
 } from '../utils/feature-flags';
 import type { ChainEntity } from '../entities/chain';

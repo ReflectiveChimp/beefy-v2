@@ -1,1 +1,1 @@
-export * from './VaultLabelledStat';
+export { VaultLabelledStat } from './VaultLabelledStat';

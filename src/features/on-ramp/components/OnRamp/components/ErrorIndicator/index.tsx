@@ -1,1 +1,1 @@
-export * from './ErrorIndicator';
+export { ErrorIndicator } from './ErrorIndicator';

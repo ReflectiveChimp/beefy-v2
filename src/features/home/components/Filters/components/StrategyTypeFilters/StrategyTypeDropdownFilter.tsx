@@ -9,10 +9,11 @@ import { LabeledSelect } from '../../../../../../components/LabeledSelect';
 import { TYPE_OPTIONS } from './type-options';
 
 export type StrategyTypeDropdownFilterProps = {
-  className?: string;
+  layer?: 0 | 1 | 2;
 };
+
 export const StrategyTypeDropdownFilter = memo<StrategyTypeDropdownFilterProps>(
-  function StrategyTypeDropdownFilter({ className }) {
+  function StrategyTypeDropdownFilter({ layer = 0 }) {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const options: Record<string, string> = useMemo(
@@ -35,8 +36,8 @@ export const StrategyTypeDropdownFilter = memo<StrategyTypeDropdownFilterProps>(
         value={value}
         options={options}
         onChange={handleChange}
-        selectClass={className}
         fullWidth={true}
+        layer={layer}
       />
     );
   }

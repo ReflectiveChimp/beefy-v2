@@ -1,38 +1,19 @@
 import type { ChangeEvent, MouseEventHandler } from 'react';
-import { memo, useCallback, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useRef, useState } from 'react';
 import type { DropdownItemProps, LabeledMultiSelectProps } from '../LabeledMultiSelect';
 import {
-  SelectedMultiSelectItem,
   DropdownMultiSelectItem,
   DropdownMultiSelectItemLabel,
-  useMultiSelectSortedOptions,
+  SelectedMultiSelectItem,
 } from '../LabeledMultiSelect';
 import { Floating } from '../Floating';
 import { styles } from './styles';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import { ExpandMore } from '@material-ui/icons';
+import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import { Search } from '../Search';
-import { simplifySearchText, stringFoundAnywhere } from '../../helpers/string';
 import { useTranslation } from 'react-i18next';
-
-function useFilteredSortedOptions(
-  options: LabeledMultiSelectProps['options'],
-  sort: LabeledMultiSelectProps['sortOptions'],
-  inputText: string
-) {
-  const sortedValues = useMultiSelectSortedOptions(options, sort);
-  return useMemo(() => {
-    if (inputText.length > 2) {
-      return sortedValues.filter(option => {
-        if (stringFoundAnywhere(simplifySearchText(option.label), inputText)) {
-          return option;
-        }
-      });
-    }
-    return sortedValues;
-  }, [inputText, sortedValues]);
-}
+import { useFilteredSortedOptions } from './hooks';
 
 const useStyles = makeStyles(styles);
 
@@ -54,7 +35,6 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
     borderless = false,
     dropdownShift = true,
     dropdownFlip = true,
-    dropdownAutoHide = true,
     selectClass,
   }) {
     const { t } = useTranslation();
@@ -147,7 +127,6 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
             className={classes.dropdown}
             flip={dropdownFlip}
             shift={dropdownShift}
-            autoHide={dropdownAutoHide}
           >
             <div className={classes.inputContainer}>
               <Search

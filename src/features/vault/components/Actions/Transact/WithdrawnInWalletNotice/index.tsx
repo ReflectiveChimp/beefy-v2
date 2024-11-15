@@ -1,1 +1,1 @@
-export * from './WithdrawnInWalletNotice';
+export { WithdrawnInWalletNotice } from './WithdrawnInWalletNotice';

@@ -1,1 +1,5 @@
-export * from './CowcentratedPnlGraph';
+export {
+  CowcentratedPnlGraphLoader,
+  DashboardFeesGraph,
+  DashboardOverviewGraph,
+} from './CowcentratedPnlGraph';

@@ -1,1 +1,1 @@
-export * from './DepositBuyLinks';
+export { DepositBuyLinks } from './DepositBuyLinks';
