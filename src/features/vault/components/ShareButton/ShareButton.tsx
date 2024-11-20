@@ -1,5 +1,5 @@
 import { Dropdown } from '../../../../components/Dropdown';
-import ShareIcon from '@material-ui/icons/Share';
+import { ReactComponent as ShareIcon } from '@repo/images/icons/mui/Share.svg';
 import { Button } from '../../../../components/Button';
 import {
   memo,

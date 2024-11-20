@@ -1,12 +1,11 @@
-import type { FC } from 'react';
+import type { FC, SVGProps } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import type { SvgIconComponent } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
 interface LinkIconProps {
-  logo: string | SvgIconComponent;
+  logo: string | FC<SVGProps<SVGSVGElement>>;
   alt: string;
   href: string;
 }

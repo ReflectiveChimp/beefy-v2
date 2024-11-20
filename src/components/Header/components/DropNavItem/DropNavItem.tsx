@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import type { FC, MouseEventHandler } from 'react';
 import { memo, useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ExpandMore } from '@material-ui/icons';
+import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import { Floating } from '../../../Floating';
 import { styles } from './styles';
 import { NavItem } from '../NavItem';

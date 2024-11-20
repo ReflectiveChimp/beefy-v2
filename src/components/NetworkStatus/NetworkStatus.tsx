@@ -9,7 +9,7 @@ import type { BeefyState } from '../../redux-types';
 import { styles } from './styles';
 import { Floating } from '../Floating';
 import { useAppDispatch, useAppSelector } from '../../store';
-import CloseIcon from '@material-ui/icons/Close';
+import { ReactComponent as CloseIcon } from '@repo/images/icons/mui/Close.svg';
 import type { DataLoaderState, LoaderState } from '../../features/data/reducers/data-loader-types';
 import {
   selectCurrentChainId,

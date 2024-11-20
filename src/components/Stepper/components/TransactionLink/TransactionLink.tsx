@@ -1,6 +1,6 @@
 import { Button, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
+import { ReactComponent as OpenInNewRoundedIcon } from '@repo/images/icons/mui/OpenInNewRounded.svg';
 import { selectChainById } from '../../../../features/data/selectors/chains';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../store';
@@ -37,7 +37,7 @@ export function TransactionLink() {
       href={explorerTxUrl(chain, hash)}
       target="_blank"
     >
-      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#4DB258" fontSize="inherit" />}
+      {t('Transactn-View')} {<OpenInNewRoundedIcon color="#4DB258" fontSize="inherit" />}
     </Button>
   );
 }

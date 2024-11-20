@@ -4,7 +4,8 @@ import { selectIsPlatformsAvailable } from '../../../data/selectors/data-loader'
 import { styles } from './styles';
 import { useAppSelector } from '../../../../store';
 import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink';
-import { Link, Twitter } from '@material-ui/icons';
+import { ReactComponent as Link } from '@repo/images/icons/mui/Link.svg';
+import { ReactComponent as Twitter } from '@repo/images/icons/mui/Twitter.svg';
 import { ReactComponent as DocsIcon } from '../../../../images/icons/navigation/docs.svg';
 import { memo } from 'react';
 import type { PlatformEntity } from '../../../data/entities/platform';

@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { ChevronRight } from '@material-ui/icons';
+import { ReactComponent as ChevronRight } from '@repo/images/icons/mui/ChevronRight.svg';
 
 const useStyles = makeStyles(styles);
 

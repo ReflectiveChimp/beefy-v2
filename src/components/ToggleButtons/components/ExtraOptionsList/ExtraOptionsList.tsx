@@ -7,7 +7,7 @@ import { Floating } from '../../../Floating';
 import { styles } from '../../styles';
 import type { ToggleButtonProps } from '../../ToggleButtons';
 import { ToggleButton } from '../../ToggleButtons';
-import { MoreVertRounded } from '@material-ui/icons';
+import { ReactComponent as MoreVertRounded } from '@repo/images/icons/mui/MoreVertRounded.svg';
 
 const useStyles = makeStyles(styles);
 

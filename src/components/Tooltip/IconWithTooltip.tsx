@@ -1,8 +1,7 @@
-import { type CSSProperties, memo, useMemo } from 'react';
+import { type CSSProperties, type FC, memo, type SVGProps, useMemo } from 'react';
 import type { TooltipProps } from './Tooltip';
 import { Tooltip } from './Tooltip';
-import type { SvgIconComponent } from '@material-ui/icons';
-import { HelpOutline } from '@material-ui/icons';
+import { ReactComponent as HelpOutline } from '@repo/images/icons/mui/HelpOutline.svg';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -10,7 +9,7 @@ import { styles } from './styles';
 const useStyles = makeStyles(styles);
 
 export type IconWithTooltipProps = {
-  Icon?: SvgIconComponent;
+  Icon?: FC<SVGProps<SVGSVGElement>>;
   iconClassName?: string;
   iconSize?: number;
 } & Omit<TooltipProps, 'children'>;

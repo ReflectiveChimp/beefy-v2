@@ -1,7 +1,7 @@
 import { IconButton, makeStyles } from '@material-ui/core';
 import { forwardRef, memo, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../../vault/components/Card';
-import CloseIcon from '@material-ui/icons/Close';
+import { ReactComponent as CloseIcon } from '@repo/images/icons/mui/Close.svg';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { selectActiveChainIds, selectChainById } from '../../../../data/selectors/chains';
@@ -48,7 +48,7 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ 
         <CardHeader className={classes.header}>
           <CardTitle titleClassName={classes.title} title={t('TVL-bychain')} />
           <IconButton className={classes.closeIcon} onClick={close} aria-label="settings">
-            <CloseIcon htmlColor="#D0D0DA" />
+            <CloseIcon color="#D0D0DA" />
           </IconButton>
         </CardHeader>
         <CardContent className={classes.content}>

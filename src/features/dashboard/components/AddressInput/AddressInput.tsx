@@ -1,5 +1,6 @@
 import { CircularProgress, InputBase, makeStyles } from '@material-ui/core';
-import { CloseRounded, Search } from '@material-ui/icons';
+import { ReactComponent as CloseRounded } from '@repo/images/icons/mui/CloseRounded.svg';
+import { ReactComponent as Search } from '@repo/images/icons/mui/Search.svg';
 import {
   type ChangeEvent,
   type KeyboardEvent,

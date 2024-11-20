@@ -310,6 +310,14 @@ const theme = createTheme(
             // @ts-ignore need to force above other modals
             zIndex: '1500 !important' as ZIndexProperty,
           },
+          '.mui-svg': {
+            width: '1em',
+            height: '1em',
+            fill: 'currentColor',
+            fontSize: '1.5rem',
+            flexShrink: 0,
+            userSelect: 'none',
+          },
         },
       },
       MuiInputBase: {

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { Clear } from '@material-ui/icons';
+import { ReactComponent as Clear } from '@repo/images/icons/mui/Clear.svg';
 import clsx from 'clsx';
 import { styles } from './styles';
 

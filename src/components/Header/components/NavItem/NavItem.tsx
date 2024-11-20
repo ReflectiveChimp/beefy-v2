@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import type { NavLinkProps } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { styles } from './styles';
-import { ArrowForwardIosRounded as RightArrow } from '@material-ui/icons';
+import { ReactComponent as RightArrow } from '@repo/images/icons/mui/ArrowForwardIosRounded.svg';
 import type { NavItemProps } from '../DropNavItem/types';
 
 const useStyles = makeStyles(styles);

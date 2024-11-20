@@ -1,11 +1,8 @@
-import type { ReactNode } from 'react';
+import type { FC, ReactNode, SVGProps } from 'react';
 import { memo } from 'react';
-import {
-  ErrorOutline,
-  InfoOutlined,
-  ReportProblemOutlined,
-  type SvgIconComponent,
-} from '@material-ui/icons';
+import { ReactComponent as ErrorOutline } from '@repo/images/icons/mui/ErrorOutline.svg';
+import { ReactComponent as InfoOutlined } from '@repo/images/icons/mui/InfoOutlined.svg';
+import { ReactComponent as ReportProblemOutlined } from '@repo/images/icons/mui/ReportProblemOutlined.svg';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -13,7 +10,7 @@ import { styles } from './styles';
 const useStyles = makeStyles(styles);
 
 export type AlertProps = {
-  IconComponent: SvgIconComponent;
+  IconComponent: FC<SVGProps<SVGSVGElement>>;
   children: ReactNode;
   className?: string;
 };

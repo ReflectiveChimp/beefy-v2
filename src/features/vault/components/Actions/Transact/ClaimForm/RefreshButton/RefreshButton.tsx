@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { Refresh, ErrorOutline } from '@material-ui/icons';
+import { ReactComponent as Refresh } from '@repo/images/icons/mui/Refresh.svg';
+import { ReactComponent as ErrorOutline } from '@repo/images/icons/mui/ErrorOutline.svg';
 import { styles } from './styles';
 import { Tooltip, TRIGGERS } from '../../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../../components/Tooltip/BasicTooltipContent';

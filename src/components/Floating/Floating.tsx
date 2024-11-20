@@ -8,9 +8,9 @@ import {
   shift as shiftFloating,
   size,
   useFloating,
+  type Placement,
+  type Middleware,
 } from '@floating-ui/react-dom';
-import type { Placement } from '@floating-ui/react-dom';
-import type { Middleware } from '@floating-ui/core/src/types';
 
 export type FloatingProps = {
   open: boolean;
@@ -65,7 +65,13 @@ export const Floating = memo<FloatingProps>(function Floating({
     }
     return middlewares;
   }, [autoHide, flip, shift, autoWidth, autoHeight]);
-  const { x, y, reference, floating, strategy, middlewareData } = useFloating({
+  const {
+    x,
+    y,
+    refs: { setReference, setFloating },
+    strategy,
+    middlewareData,
+  } = useFloating({
     whileElementsMounted: autoUpdate,
     placement,
     middleware,
@@ -73,13 +79,13 @@ export const Floating = memo<FloatingProps>(function Floating({
 
   const anchorElCurrent = anchorEl.current;
   useLayoutEffect(() => {
-    reference(anchorElCurrent);
-  }, [reference, anchorElCurrent]);
+    setReference(anchorElCurrent);
+  }, [setReference, anchorElCurrent]);
 
   return open ? (
     <div
       className={className}
-      ref={floating}
+      ref={setFloating}
       style={{
         position: strategy,
         top: y ?? '',

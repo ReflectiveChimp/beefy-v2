@@ -3,7 +3,8 @@ import { memo, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { CheckBoxOutlineBlank, CheckBoxOutlined } from '@material-ui/icons';
+import { ReactComponent as CheckBoxOutlineBlank } from '@repo/images/icons/mui/CheckBoxOutlineBlank.svg';
+import { ReactComponent as CheckBoxOutlined } from '@repo/images/icons/mui/CheckBoxOutlined.svg';
 
 const useStyles = makeStyles(styles);
 

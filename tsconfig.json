@@ -20,8 +20,12 @@
     "jsx": "react-jsx",
     "noErrorTruncation": true,
     "verbatimModuleSyntax": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "paths": {
+      "@repo/styles/*": ["./build-tools/styles/generated/*"],
+      "@repo/images/*": ["./src/images/*"]
+    }
   },
-  "include": ["src"],
-  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "node_modules"]
+  "include": ["./src", "./build-tools/styles/generated"],
+  "exclude": ["./src/**/*.test.ts", "./src/**/*.test.tsx", "./node_modules"]
 }

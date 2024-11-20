@@ -2,7 +2,7 @@ import { memo, type ReactNode } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
-import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
+import { ReactComponent as OpenInNewRoundedIcon } from '@repo/images/icons/mui/OpenInNewRounded.svg';
 
 const useStyles = makeStyles(styles);
 

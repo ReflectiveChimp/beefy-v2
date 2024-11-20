@@ -26,7 +26,8 @@ import { AlertError } from '../../../../../../components/Alerts';
 import { TechLoader } from '../../../../../../components/TechLoader';
 import clsx from 'clsx';
 import { getBridgeProviderLogo } from '../../../../../../helpers/bridgeProviderSrc';
-import { MonetizationOn, Timer } from '@material-ui/icons';
+import { ReactComponent as MonetizationOn } from '@repo/images/icons/mui/MonetizationOn.svg';
+import { ReactComponent as Timer } from '@repo/images/icons/mui/Timer.svg';
 import { formatMinutesDuration } from '../../../../../../helpers/date';
 import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
 

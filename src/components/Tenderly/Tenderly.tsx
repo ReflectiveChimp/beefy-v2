@@ -9,7 +9,7 @@ import { Modal } from '../Modal';
 import { tenderlyClose } from '../../features/data/reducers/tenderly';
 import { Card, CardContent, CardHeader, CardTitle } from '../../features/vault/components/Card';
 import { IconButton, makeStyles } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { ReactComponent as CloseIcon } from '@repo/images/icons/mui/Close.svg';
 import { styles } from './styles';
 import { ResultForm } from './Result/ResultForm';
 import { RequestForm } from './Request/RequestForm';
@@ -59,7 +59,7 @@ const TenderlyModal = memo<TenderlyModalProps>(function TenderlyModal({ mode, on
           <img src={logoUrl} alt="" width={24} height={24} className={classes.cardIcon} />
           <CardTitle title="Tenderly Simulation" titleClassName={classes.cardTitle} />
           <IconButton onClick={onClose} aria-label="close" className={classes.closeButton}>
-            <CloseIcon htmlColor="#999CB3" />
+            <CloseIcon color="#999CB3" />
           </IconButton>
         </CardHeader>
         <CardContent className={classes.cardContent}>

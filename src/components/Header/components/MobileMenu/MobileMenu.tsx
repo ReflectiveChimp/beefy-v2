@@ -1,6 +1,7 @@
 import { Fragment, memo, useState } from 'react';
 import { Divider, Drawer, makeStyles } from '@material-ui/core';
-import { Close, Menu } from '@material-ui/icons';
+import { ReactComponent as Close } from '@repo/images/icons/mui/Close.svg';
+import { ReactComponent as Menu } from '@repo/images/icons/mui/Menu.svg';
 import { styles } from './styles';
 // import { BifiPrice } from '../BifiPrice';
 import { NavItemMobile } from '../NavItem';

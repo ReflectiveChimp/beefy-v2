@@ -30,7 +30,7 @@ import {
 } from '../../../../features/data/selectors/vaults';
 import type { ChainEntity } from '../../../../features/data/entities/chain';
 import { addTokenToWalletAction } from '../../../../features/data/actions/add-to-wallet';
-import { AccountBalanceWallet } from '@material-ui/icons';
+import { ReactComponent as AccountBalanceWallet } from '@repo/images/icons/mui/AccountBalanceWallet.svg';
 
 const useStyles = makeStyles(styles);
 

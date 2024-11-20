@@ -1,9 +1,10 @@
 import type { FC } from 'react';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
-import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
-import CodeRoundedIcon from '@material-ui/icons/CodeRounded';
-import InsertIcon from '@material-ui/icons/InsertLink';
+import { ReactComponent as OpenInNewRoundedIcon } from '@repo/images/icons/mui/OpenInNewRounded.svg';
+import { ReactComponent as CodeRoundedIcon } from '@repo/images/icons/mui/CodeRounded.svg';
+import { ReactComponent as InsertIcon } from '@repo/images/icons/mui/InsertLink.svg';
+
 import type { LinkButtonProps } from './LinkButtonProps';
 import clsx from 'clsx';
 import type { Theme } from '@material-ui/core';

@@ -2,11 +2,12 @@ import { defineConfig, type Plugin } from 'vite';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import RollupNodePolyFillPlugin from 'rollup-plugin-polyfill-node';
 import react from '@vitejs/plugin-react';
-import svgrPlugin from 'vite-plugin-svgr';
 import eslint from 'vite-plugin-eslint';
 import { visualizer } from 'rollup-plugin-visualizer';
 import * as path from 'node:path';
-import versionPlugin from './version-plugin';
+import versionPlugin from './build-tools/bundle/version-plugin';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import { muiCompatSvgrPlugin, standardSvgrPlugin } from './build-tools/bundle/svgr';
 
 const optionalPlugins: Plugin[] = [];
 
@@ -37,11 +38,10 @@ export default defineConfig({
     open: true,
   },
   plugins: [
+    tsconfigPaths(),
     react(),
-    {
-      ...svgrPlugin(),
-      enforce: 'post',
-    },
+    standardSvgrPlugin(),
+    muiCompatSvgrPlugin(),
     versionPlugin(),
     ...optionalPlugins,
   ],
@@ -103,6 +103,10 @@ export default defineConfig({
           'createAddressDataSelector',
           'createAddressChainDataSelector',
           'createAddressVaultDataSelector',
+          'styled',
+          'sva',
+          'cva',
+          'createFloatingTrigger',
         ],
       },
       plugins: [RollupNodePolyFillPlugin()],

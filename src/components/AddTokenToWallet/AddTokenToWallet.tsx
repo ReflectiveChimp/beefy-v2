@@ -11,10 +11,10 @@ import {
 } from '../../features/data/selectors/add-to-wallet';
 import { addToWalletActions } from '../../features/data/reducers/add-to-wallet';
 import { Card, CardContent, CardHeader, CardTitle } from '../../features/vault/components/Card';
-import CloseIcon from '@material-ui/icons/Close';
+import { ReactComponent as CloseIcon } from '@repo/images/icons/mui/Close.svg';
+import { ReactComponent as FileCopy } from '@repo/images/icons/mui/FileCopy.svg';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
-import { FileCopy } from '@material-ui/icons';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
@@ -182,7 +182,7 @@ export const AddTokenToWallet = memo(function AddTokenToWallet() {
             <CardHeader className={classes.cardHeader}>
               {status === 'fulfilled' ? <FulfilledCardTitle /> : <PendingCardTitle />}
               <IconButton onClick={handleClose} aria-label="close" className={classes.closeButton}>
-                <CloseIcon htmlColor="#999CB3" />
+                <CloseIcon color="#999CB3" />
               </IconButton>
             </CardHeader>
             <CardContent className={classes.cardContent}>

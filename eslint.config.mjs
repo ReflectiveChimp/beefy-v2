@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 import ts from 'typescript-eslint';
 import reactPlugin from 'eslint-plugin-react';
+import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import importPlugin from 'eslint-plugin-import';
 import prettierConfigPlugin from 'eslint-config-prettier';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
@@ -23,6 +24,8 @@ export default ts.config(
     plugins: {
       // JSX parsing
       react: reactPlugin,
+      // ensure only components are exported from .tsx files
+      'react-refresh': reactRefreshPlugin,
       // ensure all hook dependencies are listed in the dependency array
       'react-hooks': reactHooksPlugin,
     },
@@ -110,6 +113,7 @@ export default ts.config(
       'react/react-in-jsx-scope': 'off',
       'react/no-children-prop': 'off',
       'react-hooks/exhaustive-deps': 'warn',
+      'react-refresh/only-export-components': 'warn',
     },
   },
   {
@@ -119,6 +123,8 @@ export default ts.config(
       '.idea/',
       '.vscode/',
       'build/',
+      'build-tools/**/*',
+      '!build-tools/styles/generated/**/*.ts',
       'node_modules/',
       'public/',
       'scripts/',

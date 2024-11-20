@@ -12,7 +12,7 @@ import {
 } from '../../../../../../../helpers/format';
 import { BIG_ZERO } from '../../../../../../../helpers/big-number';
 import { Tooltip } from '../../../../../../../components/Tooltip';
-import { HelpOutline } from '@material-ui/icons';
+import { ReactComponent as HelpOutline } from '@repo/images/icons/mui/HelpOutline.svg';
 import { styles } from './styles';
 import { ClmPnlTooltipContent } from '../../../../../../../components/PnlTooltip/ClmPnlTooltipContent';
 import { showClmPnlTooltip } from '../../../../../../../components/PnlTooltip/helpers';

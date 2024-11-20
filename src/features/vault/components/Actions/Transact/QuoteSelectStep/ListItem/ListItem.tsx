@@ -2,7 +2,7 @@ import { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { ChevronRight } from '@material-ui/icons';
+import { ReactComponent as ChevronRight } from '@repo/images/icons/mui/ChevronRight.svg';
 import { ListJoin } from '../../../../../../../components/ListJoin';
 import { useAppSelector } from '../../../../../../../store';
 import { selectTransactQuoteById } from '../../../../../../data/selectors/transact';

@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { UserStats } from './UserStats';
 import { VaultsStats } from './VaultsStats';
 import { styles } from './styles';
-import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import { ReactComponent as VisibilityOffOutlinedIcon } from '@repo/images/icons/mui/VisibilityOffOutlined.svg';
+import { ReactComponent as VisibilityOutlinedIcon } from '@repo/images/icons/mui/VisibilityOutlined.svg';
 import { useTheme } from '@material-ui/core/styles';
 import { selectIsBalanceHidden } from '../../../data/selectors/wallet';
 import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet';
@@ -34,9 +34,9 @@ export const Portfolio = () => {
               {t('Portfolio-Portfolio')}{' '}
               <Button size="small" className={classes.btnHide} onClick={updateHideBalance}>
                 {hideBalance ? (
-                  <VisibilityOutlinedIcon htmlColor={`${theme.palette.primary.main}`} />
+                  <VisibilityOutlinedIcon color={`${theme.palette.primary.main}`} />
                 ) : (
-                  <VisibilityOffOutlinedIcon htmlColor={`${theme.palette.primary.main}`} />
+                  <VisibilityOffOutlinedIcon color={`${theme.palette.primary.main}`} />
                 )}
               </Button>
             </div>

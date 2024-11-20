@@ -1,8 +1,8 @@
-import type { SvgIconComponent } from '@material-ui/icons';
+import type { FC, SVGProps } from 'react';
 
 export interface SimpleLinkButtonProps {
   href?: string;
   text?: string;
   className?: string;
-  IconComponent?: SvgIconComponent;
+  IconComponent?: FC<SVGProps<SVGSVGElement>>;
 }
