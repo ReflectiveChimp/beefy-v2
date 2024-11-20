@@ -1,4 +1,5 @@
-import { type Config, type SemanticTokens, type Tokens } from '@pandacss/types';
+import type { Config, SemanticTokens, Tokens, TextStyle, TextStyles } from '@pandacss/types';
+import { defineTextStyles } from '@pandacss/dev';
 import { defaults, mapValues } from 'lodash';
 
 export type ButtonColors = { color: string; background: string; border: string };
@@ -84,7 +85,42 @@ function addZIndex(config: Config, zIndex: Record<string, number>): Config {
 export type BuilderConfig = {
   buttons?: Record<string, Button>;
   zIndex?: Record<string, number>;
+  textStyles?: Record<string, TextStyle>;
 };
+
+function addTextStyles(config: Config, textStyles: Record<string, TextStyle>): Config {
+  config.theme ??= {};
+
+  // dot notation to nested object
+  const keys = Object.keys(textStyles).sort((a, b) => a.length - b.length);
+  const tree: TextStyles = {};
+  for (const key of keys) {
+    if (!key.includes('.')) {
+      tree[key] = { value: textStyles[key] };
+      continue;
+    }
+    const parts = key.split('.');
+    let parent = tree;
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+      const child = parent[part];
+      if (child?.value) {
+        child['DEFAULT'] = { value: child.value };
+
+        parent = child as TextStyles;
+        delete parent.value;
+      } else if (i === parts.length - 1) {
+        parent[part] = { value: textStyles[key] };
+      } else {
+        parent = child as TextStyles;
+      }
+    }
+  }
+
+  config.theme.textStyles = defineTextStyles(tree);
+
+  return config;
+}
 
 /** @dev mutates the config */
 export function buildConfig(config: Config, builderConfig: BuilderConfig): Config {
@@ -93,6 +129,9 @@ export function buildConfig(config: Config, builderConfig: BuilderConfig): Confi
   }
   if (builderConfig.zIndex) {
     addZIndex(config, builderConfig.zIndex);
+  }
+  if (builderConfig.textStyles) {
+    addTextStyles(config, builderConfig.textStyles);
   }
   return config;
 }
