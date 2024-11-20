@@ -1,2 +1,2 @@
-export * from './ChainButtonFilter';
-export * from './ChainDropdownFilter';
+export { ChainButtonFilter } from './ChainButtonFilter';
+export { ChainDropdownFilter } from './ChainDropdownFilter';

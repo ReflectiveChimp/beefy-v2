@@ -1,1 +1,1 @@
-export * from './DisplacedBalances';
+export { DisplacedBalances } from './DisplacedBalances';

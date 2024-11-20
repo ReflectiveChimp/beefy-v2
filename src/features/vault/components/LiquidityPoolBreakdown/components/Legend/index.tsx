@@ -1,1 +1,1 @@
-export * from './Legend';
+export { Legend } from './Legend';

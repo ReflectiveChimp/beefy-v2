@@ -1,1 +1,1 @@
-export * from './ExposureBar';
+export { ExposureBar } from './ExposureBar';

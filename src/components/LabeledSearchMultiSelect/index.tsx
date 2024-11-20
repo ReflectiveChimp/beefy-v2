@@ -1,1 +1,1 @@
-export * from './LabeledSearchMultiSelect';
+export { LabeledSearchMultiSelect } from './LabeledSearchMultiSelect';

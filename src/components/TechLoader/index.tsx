@@ -1,1 +1,1 @@
-export * from './TechLoader';
+export { TechLoader, FullscreenTechLoader } from './TechLoader';

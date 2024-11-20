@@ -1,1 +1,1 @@
-export * from './TokenStep';
+export { TokenStep } from './TokenStep';

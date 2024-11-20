@@ -1,68 +1,23 @@
-import type { FC, MouseEventHandler } from 'react';
+import type { MouseEventHandler } from 'react';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
-import { sortBy } from 'lodash-es';
 import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import clsx from 'clsx';
 import { Floating } from '../Floating';
-import type { LabeledSelectCommonProps } from '../LabeledSelect';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import type { LabelledCheckboxProps } from '../LabelledCheckbox';
 import { LabelledCheckbox } from '../LabelledCheckbox';
-import { entries, keys } from '../../helpers/object';
+import { keys } from '../../helpers/object';
+import type {
+  DropdownItemLabelProps,
+  DropdownItemProps,
+  LabeledMultiSelectProps,
+  SelectedItemProps,
+} from './types';
+import { useMultiSelectSortedOptions } from './hooks';
 
 const useStyles = makeStyles(styles);
-
-export type LabeledMultiSelectProps<V extends string = string> = LabeledSelectCommonProps<V> & {
-  value: V[];
-  /** If provided will insert an all checkbox as first option */
-  allLabel?: string;
-  allSelectedLabel?: string;
-  countSelectedLabel?: string;
-  noOptionsMessage?: string;
-  onChange: (value: V[]) => void;
-  SelectedItemComponent?: FC<SelectedItemProps<V>>;
-  DropdownItemComponent?: FC<DropdownItemProps<V | 'all'>>;
-  DropdownItemLabelComponent?: FC<DropdownItemLabelProps<V | 'all'>>;
-};
-
-export type DropdownItemProps<V extends string = string> = {
-  label: string;
-  value: V;
-  selected: boolean;
-  onChange: (value: V) => void;
-  className?: string;
-  DropdownItemLabelComponent?: FC<DropdownItemLabelProps<V>>;
-};
-
-export type DropdownItemLabelProps<V extends string = string> = {
-  label: string;
-  value: V;
-};
-
-export type SelectedItemProps<V extends string = string> = {
-  value: LabeledMultiSelectProps<V>['value'];
-  options: LabeledMultiSelectProps<V>['options'];
-  allSelected: boolean;
-  allSelectedLabel: LabeledMultiSelectProps<V>['allSelectedLabel'];
-  countSelectedLabel: LabeledMultiSelectProps<V>['countSelectedLabel'];
-};
-
-export function useMultiSelectSortedOptions<V extends string = string>(
-  options: LabeledMultiSelectProps<V>['options'],
-  sort: LabeledMultiSelectProps<V>['sortOptions']
-) {
-  return useMemo(() => {
-    const values = entries(options as Record<V, string>).map(([value, label]) => ({
-      value,
-      label,
-    }));
-    return sort !== 'default' && sort !== undefined
-      ? sortBy(values, value => value[sort].toLowerCase())
-      : values;
-  }, [options, sort]);
-}
 
 export const DropdownMultiSelectItem = memo(function DropdownItem<V extends string = string>({
   label,

@@ -1,1 +1,1 @@
-export * from './ExtendedFiltersButton';
+export { ExtendedFiltersButton } from './ExtendedFiltersButton';

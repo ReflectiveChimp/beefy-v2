@@ -1,1 +1,1 @@
-export * from './DepositTokenAmountInput';
+export { DepositTokenAmountInput } from './DepositTokenAmountInput';

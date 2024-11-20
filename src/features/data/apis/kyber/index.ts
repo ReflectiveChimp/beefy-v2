@@ -1,1 +1,1 @@
-export * from './kyber';
+export { KyberSwapApi } from './kyber';

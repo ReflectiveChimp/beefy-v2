@@ -1,1 +1,1 @@
-export * from './AppVersionCheck';
+export { AppVersionCheck } from './AppVersionCheck';

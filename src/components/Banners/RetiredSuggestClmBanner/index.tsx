@@ -1,1 +1,1 @@
-export * from './RetiredSuggestClmBanner';
+export { RetiredSuggestClmBanner } from './RetiredSuggestClmBanner';

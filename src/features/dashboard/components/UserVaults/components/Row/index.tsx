@@ -1,1 +1,1 @@
-export * from './Row';
+export { Row, RowMobile } from './Row';

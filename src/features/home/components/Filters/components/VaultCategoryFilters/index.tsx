@@ -1,2 +1,2 @@
-export * from './VaultCategoryDropdownFilter';
-export * from './VaultCategoryButtonFilter';
+export { VaultCategoryDropdownFilter } from './VaultCategoryDropdownFilter';
+export { VaultCategoryButtonFilter } from './VaultCategoryButtonFilter';

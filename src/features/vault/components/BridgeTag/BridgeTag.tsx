@@ -5,11 +5,12 @@ import { Trans, useTranslation } from 'react-i18next';
 import type { BridgeEntity } from '../../../data/entities/bridge';
 import clsx from 'clsx';
 import type { TooltipProps } from '../../../../components/Tooltip';
-import { Tooltip, TRIGGERS } from '../../../../components/Tooltip';
+import { Tooltip } from '../../../../components/Tooltip';
 import { getAssetBridgeIcon } from '../../../../helpers/assetBridgeSrc';
 import type { ChainEntity } from '../../../data/entities/chain';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
 import { styles } from './styles';
+import { TRIGGERS } from '../../../../components/Tooltip/constants';
 
 const useStyles = makeStyles(styles);
 

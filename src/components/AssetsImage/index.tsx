@@ -1,1 +1,1 @@
-export * from './AssetsImage';
+export { AssetsImage, MissingAssetsImage, type AssetsImageProps } from './AssetsImage';

@@ -1,1 +1,1 @@
-export * from './ApyStats';
+export { ApyStats } from './ApyStats';

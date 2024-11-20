@@ -1,1 +1,1 @@
-export * from './FloatingError';
+export { FloatingError } from './FloatingError';

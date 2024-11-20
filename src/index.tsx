@@ -19,5 +19,3 @@ createRoot(document.getElementById('root') as HTMLElement).render(
     </Provider>
   </ErrorBoundary>
 );
-export { useXAxis } from './helpers/graph/hooks';
-export { useYAxis } from './helpers/graph/hooks';

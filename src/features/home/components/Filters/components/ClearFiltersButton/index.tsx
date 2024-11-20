@@ -1,1 +1,1 @@
-export * from './ClearFiltersButton';
+export { ClearFiltersButton } from './ClearFiltersButton';

@@ -1,1 +1,1 @@
-export * from './Dividier';
+export { Divider } from './Divider';

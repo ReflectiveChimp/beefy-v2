@@ -1,1 +1,1 @@
-export * from './CardTabs';
+export { CardsTabs } from './CardTabs';

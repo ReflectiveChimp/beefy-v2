@@ -1,1 +1,1 @@
-export * from './PieChartTooltip';
+export { PieChartTooltip } from './PieChartTooltip';

@@ -1,1 +1,1 @@
-export * from './ConfirmNotice';
+export { ConfirmNotice } from './ConfirmNotice';

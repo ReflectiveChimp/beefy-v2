@@ -1,1 +1,1 @@
-export * from './StablesExposure';
+export { StablesExposure } from './StablesExposure';

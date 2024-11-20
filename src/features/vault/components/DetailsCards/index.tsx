@@ -1,2 +1,2 @@
-export * from './TokenCard';
-export * from './PlatformCard';
+export { TokenCard } from './TokenCard';
+export { PlatformCard } from './PlatformCard';

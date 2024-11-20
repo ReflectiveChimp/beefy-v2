@@ -1,1 +1,1 @@
-export * from './ScreamAvailableLiquidityNotice';
+export { ScreamAvailableLiquidityNotice } from './ScreamAvailableLiquidityNotice';

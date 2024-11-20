@@ -1,1 +1,1 @@
-export * from './VaultIdentity';
+export { VaultIdentity, VaultNetwork } from './VaultIdentity';

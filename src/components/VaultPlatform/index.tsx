@@ -1,1 +1,1 @@
-export * from './VaultPlatform';
+export { VaultPlatform } from './VaultPlatform';

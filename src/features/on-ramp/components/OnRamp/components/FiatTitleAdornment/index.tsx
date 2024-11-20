@@ -1,1 +1,1 @@
-export * from './FiatTitleAdornment';
+export { FiatTitleAdornment } from './FiatTitleAdornment';

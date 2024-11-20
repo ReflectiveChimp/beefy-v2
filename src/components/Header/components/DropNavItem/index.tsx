@@ -1,1 +1,1 @@
-export * from './DropNavItem';
+export { DropNavItem } from './DropNavItem';

@@ -1,1 +1,1 @@
-export * from './ExtraOptionsList';
+export { ExtraOptionsList } from './ExtraOptionsList';

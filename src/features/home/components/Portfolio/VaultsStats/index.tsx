@@ -1,1 +1,1 @@
-export * from './VaultsStats';
+export { VaultsStats } from './VaultsStats';

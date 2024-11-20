@@ -1,1 +1,1 @@
-export * from './XAxisTick';
+export { XAxisTick } from './XAxisTick';

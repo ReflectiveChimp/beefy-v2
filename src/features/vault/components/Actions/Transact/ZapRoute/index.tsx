@@ -1,1 +1,1 @@
-export * from './ZapRoute';
+export { ZapRoute } from './ZapRoute';

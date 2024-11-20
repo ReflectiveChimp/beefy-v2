@@ -1,1 +1,1 @@
-export * from './UserVaults';
+export { UserVaults } from './UserVaults';

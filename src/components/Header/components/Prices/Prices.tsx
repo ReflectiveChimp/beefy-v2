@@ -21,7 +21,7 @@ import opIcon from '../../../../images/networks/optimism.svg';
 import baseIcon from '../../../../images/networks/base.svg';
 import ethIcon from '../../../../images/networks/ethereum.svg';
 import llamaSwapIcon from '../../../../images/icons/llama-swap.png';
-import { Tooltip, TRIGGERS } from '../../../Tooltip';
+import { Tooltip } from '../../../Tooltip';
 import clsx from 'clsx';
 import {
   selectVaultById,
@@ -31,6 +31,7 @@ import {
 import type { ChainEntity } from '../../../../features/data/entities/chain';
 import { addTokenToWalletAction } from '../../../../features/data/actions/add-to-wallet';
 import { ReactComponent as AccountBalanceWallet } from '@repo/images/icons/mui/AccountBalanceWallet.svg';
+import { TRIGGERS } from '../../../Tooltip/constants';
 
 const useStyles = makeStyles(styles);
 

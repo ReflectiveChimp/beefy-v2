@@ -1,1 +1,1 @@
-export * from './NoResults';
+export { NoResults } from './NoResults';

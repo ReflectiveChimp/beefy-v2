@@ -15,7 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../Card';
 import { useTranslation } from 'react-i18next';
 import { StatSwitcher } from '../../StatSwitcher';
 
-export const useStyles = makeStyles(styles);
+const useStyles = makeStyles(styles);
 
 interface PnLGraphLoaderProps {
   vaultId: VaultEntity['id'];

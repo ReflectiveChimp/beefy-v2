@@ -1,1 +1,1 @@
-export * from './BalanceEndAdornment';
+export { BalanceEndAdornment } from './BalanceEndAdornment';

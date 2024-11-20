@@ -1,1 +1,1 @@
-export * from './UserExposure';
+export { UserExposure } from './UserExposure';

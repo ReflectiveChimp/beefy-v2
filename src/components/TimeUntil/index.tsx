@@ -1,1 +1,1 @@
-export * from './TimeUntil';
+export { TimeUntil } from './TimeUntil';

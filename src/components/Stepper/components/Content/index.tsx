@@ -1,1 +1,7 @@
-export * from './Content';
+export {
+  ErrorContent,
+  StepsCountContent,
+  StepsStartContent,
+  SuccessContent,
+  WaitingContent,
+} from './Content';

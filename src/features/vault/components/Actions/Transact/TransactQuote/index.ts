@@ -1,1 +1,1 @@
-export * from './TransactQuote';
+export { TransactQuote } from './TransactQuote';

@@ -1,1 +1,1 @@
-export * from './VaultsHeader';
+export { VaultsHeader } from './VaultsHeader';

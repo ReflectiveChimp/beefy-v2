@@ -1,1 +1,1 @@
-export * from './SortColumnHeader';
+export { SortColumnHeader } from './SortColumnHeader';

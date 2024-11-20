@@ -5,7 +5,6 @@ import {
   SelectedMultiSelectItem,
   DropdownMultiSelectItem,
   DropdownMultiSelectItemLabel,
-  useMultiSelectSortedOptions,
 } from '../LabeledMultiSelect';
 import { Floating } from '../Floating';
 import { styles } from './styles';
@@ -15,6 +14,7 @@ import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.
 import { Search } from '../Search';
 import { simplifySearchText, stringFoundAnywhere } from '../../helpers/string';
 import { useTranslation } from 'react-i18next';
+import { useMultiSelectSortedOptions } from '../LabeledMultiSelect/hooks';
 
 function useFilteredSortedOptions(
   options: LabeledMultiSelectProps['options'],

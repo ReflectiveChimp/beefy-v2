@@ -1,1 +1,1 @@
-export * from './on-ramp';
+export { OnRampApi } from './on-ramp';

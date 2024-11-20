@@ -1,1 +1,1 @@
-export * from './ReceiverSelector';
+export { ReceiverSelector } from './ReceiverSelector';

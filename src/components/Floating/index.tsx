@@ -1,1 +1,1 @@
-export * from './Floating';
+export { Floating, type FloatingProps } from './Floating';

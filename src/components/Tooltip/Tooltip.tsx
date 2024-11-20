@@ -19,13 +19,9 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { selectTooltipIsOpen } from '../../features/data/selectors/tooltips';
 import { closeTooltip, openTooltip, toggleTooltip } from '../../features/data/reducers/tooltips';
 import { useClickAway } from './useClickAway';
+import { TRIGGERS } from './constants';
 
 const useStyles = makeStyles(styles);
-
-export enum TRIGGERS {
-  CLICK = 1 << 0,
-  HOVER = 1 << 1,
-}
 
 export type TooltipProps = {
   children: ReactNode;

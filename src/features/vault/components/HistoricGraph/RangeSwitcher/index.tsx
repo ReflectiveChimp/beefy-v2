@@ -1,1 +1,1 @@
-export * from './RangeSwitcher';
+export { RangeSwitcher } from './RangeSwitcher';

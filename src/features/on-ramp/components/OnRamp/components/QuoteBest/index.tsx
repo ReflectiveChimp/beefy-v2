@@ -1,1 +1,1 @@
-export * from './QuoteBest';
+export { QuoteBest } from './QuoteBest';

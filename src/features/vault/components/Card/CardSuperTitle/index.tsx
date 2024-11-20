@@ -1,1 +1,1 @@
-export * from './CardSuperTitle';
+export { CardSuperTitle } from './CardSuperTitle';

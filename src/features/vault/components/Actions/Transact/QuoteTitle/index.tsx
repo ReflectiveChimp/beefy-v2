@@ -1,1 +1,1 @@
-export * from './QuoteTitle';
+export { QuoteTitle } from './QuoteTitle';

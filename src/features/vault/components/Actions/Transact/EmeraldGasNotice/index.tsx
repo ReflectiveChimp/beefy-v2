@@ -1,1 +1,1 @@
-export * from './EmeraldGasNotice';
+export { EmeraldGasNotice } from './EmeraldGasNotice';

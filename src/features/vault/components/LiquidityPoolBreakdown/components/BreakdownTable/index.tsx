@@ -1,1 +1,1 @@
-export * from './BreakdownTable';
+export { BreakdownTable } from './BreakdownTable';

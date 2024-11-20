@@ -1,1 +1,1 @@
-export * from './TokenAmount';
+export { TokenAmount } from './TokenAmount';
