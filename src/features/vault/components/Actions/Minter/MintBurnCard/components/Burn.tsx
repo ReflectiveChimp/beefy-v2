@@ -69,8 +69,8 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   const isStepping = useAppSelector(selectIsStepperStepping);
 
   const { handleMax, handleChange, formData } = useInputForm(
-    depositedTokenBalance,
-    depositToken.decimals
+    mintedTokenBalance,
+    mintedToken.decimals
   );
 
   const outputAmount = useMemo(() => {
@@ -79,12 +79,12 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
       const outputWei = inputWei
         .times(reserves)
         .div(totalSupply)
-        .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
-      return fromWei(outputWei, depositToken.decimals);
+        .decimalPlaces(mintedToken.decimals, BigNumber.ROUND_FLOOR);
+      return fromWei(outputWei, mintedToken.decimals);
     }
 
     return formData.amount;
-  }, [minter.canBurn, formData.amount, reserves, totalSupply, depositToken, mintedToken]);
+  }, [minter.canBurn, formData.amount, reserves, totalSupply, mintedToken]);
 
   const handleWithdraw = () => {
     if (!isWalletConnected) {
@@ -208,7 +208,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         </div>
         <AmountInput
           value={outputAmount}
-          maxValue={depositedTokenBalance}
+          maxValue={mintedTokenBalance}
           onChange={handleChange}
           disabled={true}
           startAdornment={
