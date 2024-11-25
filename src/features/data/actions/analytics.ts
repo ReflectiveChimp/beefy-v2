@@ -4,7 +4,7 @@ import { getClmApi, getDatabarnApi } from '../apis/instances';
 import {
   type AnyTimelineEntity,
   type AnyTimelineEntry,
-  isTimelineEntityCowcentratedPool,
+  isTimelineEntityCowcentrated,
   type TimelineEntryCowcentratedPool,
   type TimelineEntryCowcentratedVault,
   type TimelineEntryStandard,
@@ -23,6 +23,7 @@ import type {
 } from '../apis/databarn/databarn-types';
 import {
   getCowcentratedPool,
+  getCowcentratedVault,
   isCowcentratedLikeVault,
   isCowcentratedStandardVault,
   isStandardVault,
@@ -866,7 +867,10 @@ export const fetchClmHarvestsForVaultsOfUserOnChain = createAsyncThunk<
           selectUserFirstDepositDateByVaultId(state, vault.id, walletAddress) || oneHourAgo;
         const items = [
           {
-            id: getCowcentratedPool(vault) || vault.cowcentratedIds.clm,
+            ids: [
+              getCowcentratedPool(vault) || vault.cowcentratedIds.clm,
+              getCowcentratedVault(vault),
+            ].filter(isDefined),
             address: getCowcentratedAddressFromCowcentratedLikeVault(vault),
             chainId: vault.chainId,
             since,
@@ -875,7 +879,7 @@ export const fetchClmHarvestsForVaultsOfUserOnChain = createAsyncThunk<
         ];
         if (isCowcentratedStandardVault(vault)) {
           items.push({
-            id: vault.id,
+            ids: [vault.id],
             address: vault.contractAddress,
             chainId: vault.chainId,
             since,
@@ -897,22 +901,23 @@ export const fetchClmHarvestsForVaultsOfUserOnChain = createAsyncThunk<
     );
     const harvests = await api.getHarvestsForVaultsSince(chainId, vaultAddresses, earliest);
 
-    return harvests.map(({ vaultAddress, harvests }): FetchClmHarvestsForUserResult => {
+    return harvests.flatMap(({ vaultAddress, harvests }): FetchClmHarvestsForUserResult[] => {
       const req = requestsByAddress[vaultAddress.toLowerCase()];
-      if (req.type === 'clm') {
-        return {
-          vaultId: req.id,
+      const type = req.type;
+      if (type === 'clm') {
+        return req.ids.map(id => ({
+          vaultId: id,
           chainId: req.chainId,
-          type: req.type,
+          type,
           harvests: harvests as ApiClmHarvestRow[],
-        };
+        }));
       }
-      return {
-        vaultId: req.id,
+      return req.ids.map(id => ({
+        vaultId: id,
         chainId: req.chainId,
-        type: req.type,
+        type,
         harvests: harvests as ApiClassicHarvestRow[],
-      };
+      }));
     });
   },
   {
@@ -989,8 +994,8 @@ export const recalculateClmPoolHarvestsForUserVaultId = createAsyncThunk<
       return result;
     }
 
-    if (!isTimelineEntityCowcentratedPool(timeline)) {
-      console.warn(`Non CLM Pool timeline found for vault ${vaultId}`);
+    if (!isTimelineEntityCowcentrated(timeline)) {
+      console.warn(`Non CLM-like timeline found for vault ${vaultId}`);
       return result;
     }
 
@@ -1023,10 +1028,12 @@ export const recalculateClmPoolHarvestsForUserVaultId = createAsyncThunk<
         currentDeposit = timeline.current[++timelineIdx];
       }
 
-      const token0share = currentDeposit.shareBalance
+      // TODO for CLM Vaults, this is takes the # of LP at their last deposit in to account, not the # of LP at the time of the harvest
+      // need to fetch mooToken->LP (ppfs) timeline to implement correctly
+      const token0share = currentDeposit.underlyingBalance
         .multipliedBy(harvest.compoundedAmount0)
         .dividedBy(harvest.totalSupply);
-      const token1share = currentDeposit.shareBalance
+      const token1share = currentDeposit.underlyingBalance
         .multipliedBy(harvest.compoundedAmount1)
         .dividedBy(harvest.totalSupply);
 

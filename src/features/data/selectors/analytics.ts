@@ -20,6 +20,7 @@ import {
   selectGovVaultPendingRewardsWithPrice,
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
+  selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
   selectUserVaultBalanceInShareTokenIncludingBoostsBridged,
 } from './balance';
 import { selectWalletAddress } from './wallet';
@@ -657,22 +658,24 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
     totalPending: BIG_ZERO,
   };
   const pendingRewards = selectClmPendingRewardsByVaultId(state, vaultId);
-  const currentMooTokenBalance = selectUserVaultBalanceInShareTokenIncludingBoostsBridged(
+  // We want # of CLM LP for both (not # of mooTokens for CLM Vaults)
+  // Since pending rewards total supply is total supply of CLM
+  const currentClmBalance = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
     state,
     vaultId,
     walletAddress
   );
 
-  if (pendingRewards && currentMooTokenBalance.gt(BIG_ZERO)) {
+  if (pendingRewards && currentClmBalance.gt(BIG_ZERO)) {
     const { fees0, fees1, totalSupply } = pendingRewards;
     const vaultFees = selectFeesByVaultId(state, vaultId);
     const afterFeesRatio = BIG_ONE.minus(vaultFees?.total || 0);
-    pendingYield.pendingRewards0 = currentMooTokenBalance
+    pendingYield.pendingRewards0 = currentClmBalance
       .times(fees0)
       .times(afterFeesRatio)
       .dividedBy(totalSupply)
       .decimalPlaces(token0.decimals, BigNumber.ROUND_FLOOR);
-    pendingYield.pendingRewards1 = currentMooTokenBalance
+    pendingYield.pendingRewards1 = currentClmBalance
       .times(fees1)
       .times(afterFeesRatio)
       .dividedBy(totalSupply)
