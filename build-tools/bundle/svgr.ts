@@ -14,22 +14,26 @@ export function standardSvgrPlugin() {
 export function muiCompatSvgrPlugin() {
   return svgrPlugin({
     include: 'src/images/icons/mui/*.svg',
+    esbuildOptions: {
+      loader: 'tsx',
+    },
     svgrOptions: {
       expandProps: 'end',
+      typescript: true,
       memo: true,
       svgProps: {
         focusable: 'false',
         'aria-hidden': 'true',
       },
       template: (variables, { tpl }) => {
-        variables.props[0].name = 'tmpProps';
-        const tmpProps = variables.props[0];
+        const tmpProps = variables.props[0] as t.Identifier;
+        tmpProps.name = 'tmpProps';
         const props = t.identifier('props');
-        const clsx = t.identifier('clsx');
+        const cx = t.identifier('cx');
         const className = t.identifier('className');
         const importClsx = t.importDeclaration(
-          [t.importDefaultSpecifier(clsx)],
-          t.stringLiteral('clsx')
+          [t.importSpecifier(cx, cx)],
+          t.stringLiteral('@repo/styles/css')
         );
         const mergeClassNameProp = t.variableDeclaration('const', [
           t.variableDeclarator(
@@ -38,7 +42,7 @@ export function muiCompatSvgrPlugin() {
               t.spreadElement(tmpProps),
               t.objectProperty(
                 className,
-                t.callExpression(clsx, [
+                t.callExpression(cx, [
                   t.stringLiteral('mui-svg'),
                   t.memberExpression(tmpProps, className),
                 ])

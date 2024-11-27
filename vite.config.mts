@@ -38,7 +38,9 @@ export default defineConfig({
     open: true,
   },
   plugins: [
-    tsconfigPaths(),
+    tsconfigPaths({
+      loose: true
+    }),
     react(),
     standardSvgrPlugin(),
     muiCompatSvgrPlugin(),
