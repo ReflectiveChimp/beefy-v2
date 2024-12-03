@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
 export interface CardTitleProps {
-  title: string;
+  title: string | ReactNode;
   subtitle?: string;
-  titleClassName?: ReactNode;
+  titleClassName?: string;
 }
