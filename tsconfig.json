@@ -23,7 +23,8 @@
     "strictNullChecks": true,
     "paths": {
       "@repo/styles/*": ["./build-tools/styles/generated/*"],
-      "@repo/images/*": ["./src/images/*"]
+      "@repo/images/*": ["./src/images/*"],
+      "@repo/helpers/*": ["./src/helpers/*"]
     }
   },
   "include": ["./src", "./build-tools/styles/generated"],
