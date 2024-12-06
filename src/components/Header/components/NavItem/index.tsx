@@ -1,1 +1,1 @@
-export { NavItem, NavItemMobile } from './NavItem';
+export { NavLinkItem } from './NavLinkItem';

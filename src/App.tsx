@@ -14,7 +14,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Redirects } from './components/Redirects';
 import { Stepper } from './components/Stepper';
 import { Layout } from './components/Layout';
-import { AddTokenToWallet } from './components/AddTokenToWallet';
+import { AddTokenToWallet } from './components/AddTokenToWallet/AddTokenToWallet';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { AppVersionCheck } from './components/AppVersionCheck';
 import { Tenderly } from './components/Tenderly/Tenderly';

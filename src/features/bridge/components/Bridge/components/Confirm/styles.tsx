@@ -32,7 +32,7 @@ export const styles = {
       borderStyle: 'solid',
       borderWidth: '20px 40px 0 40px',
       borderColor: '{colors.background.content.light} transparent transparent transparent',
-      zIndex: '1',
+      zIndex: 1,
     },
   }),
   stepFrom: css.raw({}),

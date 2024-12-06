@@ -1,8 +1,5 @@
 import { memo, type ReactNode } from 'react';
-import { legacyMakeStyles } from '@repo/helpers/mui';
-import { styles } from './styles';
-
-const useStyles = legacyMakeStyles(styles);
+import { layoutRecipe } from './styles';
 
 export type LayoutProps = {
   header: ReactNode;
@@ -10,8 +7,8 @@ export type LayoutProps = {
   children: ReactNode;
 };
 
-export const Layout = memo(function Layout({ header, footer, children }: LayoutProps) {
-  const classes = useStyles();
+export const Layout = memo<LayoutProps>(function Layout({ header, footer, children }) {
+  const classes = layoutRecipe();
 
   return (
     <div className={classes.wrapper}>

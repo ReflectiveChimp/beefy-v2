@@ -13,10 +13,8 @@ import { ReactComponent as DaoIcon } from '../../images/icons/navigation/dao.svg
 import { ReactComponent as PartnersIcon } from '../../images/icons/navigation/partners.svg';
 import { ReactComponent as AnalyticsIcon } from '../../images/icons/navigation/analytics.svg';
 import { ProposalsNavItem } from './components/NavItem/ProposalsNavItem';
-import type { NavConfig, NavItemConfig } from './components/DropNavItem/types';
-import { ProposalsMobileNavItem } from './components/NavItem/ProposalsMobileNavItem';
 import { ArticlesNavItem } from './components/NavItem/ArticlesNavItem';
-import { ArticlesMobileNavItem } from './components/NavItem/ArticlesMobileNavItem';
+import type { NavConfig, NavItemConfig } from './components/DropNavItem/types';
 
 export const DaoNavItems: NavItemConfig[] = [
   {
@@ -24,7 +22,6 @@ export const DaoNavItems: NavItemConfig[] = [
     Icon: ProposalsIcon,
     url: 'https://vote.beefy.finance/#/',
     Component: ProposalsNavItem,
-    MobileComponent: ProposalsMobileNavItem,
   },
   {
     title: 'Header-Treasury',
@@ -40,7 +37,6 @@ export const ResourcesNavItems: NavItemConfig[] = [
     Icon: NewsIcon,
     url: 'https://beefy.com/articles/',
     Component: ArticlesNavItem,
-    MobileComponent: ArticlesMobileNavItem,
   },
   { title: 'Header-MediaKit', Icon: MediaKitIcon, url: 'https://beefy.com/media-kit/' },
   { title: 'Header-Audit', Icon: AuditIcon, url: 'https://github.com/beefyfinance/beefy-audits' },
@@ -50,7 +46,12 @@ export const ResourcesNavItems: NavItemConfig[] = [
 
 export const MobileList: NavConfig[] = [
   { title: 'Header-Vaults', Icon: VaultsIcon, url: '/' },
-  { title: 'Header-Dashboard', Icon: DashboardIcon, url: '/dashboard', exact: false },
+  {
+    title: 'Header-Dashboard',
+    Icon: DashboardIcon,
+    url: '/dashboard',
+    exact: false,
+  },
   { title: 'Header-Dao', Icon: DaoIcon, items: DaoNavItems },
   { title: 'Header-Resources', Icon: ResourcesIcon, items: ResourcesNavItems },
   { title: 'Header-BuyCrypto', Icon: BuyCryptoIcon, url: '/onramp' },

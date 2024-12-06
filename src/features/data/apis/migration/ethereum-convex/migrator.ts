@@ -16,7 +16,7 @@ function getStakingAddress(vault: VaultEntity, web3: Web3, state: BeefyState): P
   const strategyAddress = selectVaultStrategyAddress(state, vault.id);
   const strategy = new web3.eth.Contract(ConvexStrategyAbi, strategyAddress);
   if (vault.assetIds.length === 1) {
-    if (vault.assetIds[0] == 'cvxCRV') {
+    if (vault.assetIds[0] === 'cvxCRV') {
       return strategy.methods.stakedCvxCrv().call();
     } else {
       return strategy.methods.staking().call();
@@ -44,7 +44,7 @@ async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, st
   const convexStaking = new web3.eth.Contract(ConvexAbi, stakingAddress);
 
   if (vault.assetIds.length === 1) {
-    if (vault.assetIds[0] == 'CVX') {
+    if (vault.assetIds[0] === 'CVX') {
       return convexStaking.methods.withdraw(amountInWei.toString(10), false);
     }
     return convexStaking.methods.withdraw(amountInWei.toString(10));

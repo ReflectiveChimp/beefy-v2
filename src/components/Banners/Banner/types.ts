@@ -5,7 +5,6 @@ export type BannerProps = {
   text: ReactNode;
   onClose?: () => void;
   variant?: 'info' | 'warning' | 'error';
-  children?: ReactNode;
 };
 
 export type DismissibleBannerProps = Exclude<BannerProps, 'onClose'> & {

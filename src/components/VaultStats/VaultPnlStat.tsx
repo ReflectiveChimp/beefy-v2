@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import { formatLargePercent, formatLargeUsd } from '../../helpers/format';
-import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
+import { VaultValueStat } from '../VaultValueStat';
 import {
   selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,

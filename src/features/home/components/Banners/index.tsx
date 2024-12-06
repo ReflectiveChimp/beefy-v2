@@ -1,26 +1,26 @@
 import { memo } from 'react';
 import { BusdBannerHome } from '../../../../components/Banners/BusdBanner';
 // import { AnnouncementBanner } from '../../../../components/Banners/AnnouncementBanner';
-import { UnstakedClmBanner } from '../../../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
-import { Container } from '../../../../components/Container/Container';
-import { css } from '@repo/styles/css';
+import { UnstakedClmBanner } from '../../../../components/Banners/UnstakedClmBanner';
+import { styled } from '@repo/styles/jsx';
 
-const bannersCss = css.raw({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '24px',
-  '& > :last-child': {
-    marginBottom: '24px',
-  },
-});
-
-export type BannersProps = object;
-export const Banners = memo<BannersProps>(function Banners() {
+export const Banners = memo(function Banners() {
   return (
-    <Container maxWidth="lg" css={bannersCss}>
+    <BannerList>
       {/* <AnnouncementBanner /> */}
       <UnstakedClmBanner />
       <BusdBannerHome />
-    </Container>
+    </BannerList>
   );
+});
+
+const BannerList = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+    '& > :last-child': {
+      marginBottom: '24px',
+    },
+  },
 });

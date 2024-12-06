@@ -7,7 +7,6 @@ import {
 import type { BeefyState } from '../../../redux-types';
 import { isDefined } from '../../../features/data/utils/array-utils';
 import { useAppSelector } from '../../../store';
-import { InternalLink } from '../Links/Links';
 import { getIcon } from '../../../helpers/iconSrc';
 import { Trans, useTranslation } from 'react-i18next';
 import { ListJoin } from '../../ListJoin';
@@ -25,6 +24,7 @@ import { selectVaultTvl } from '../../../features/data/selectors/tvl';
 import { DismissibleBanner } from '../Banner/DismissibleBanner';
 import { selectVaultTotalApy } from '../../../features/data/selectors/apy';
 import { formatLargePercent } from '../../../helpers/format';
+import { InternalLink } from '../Links/InternalLink';
 
 type RetiredSuggestClmBannerProps = {
   vaultId: VaultEntity['id'];
@@ -114,7 +114,7 @@ const VaultLink = memo(function VaultLink({ vaultId }: { vaultId: VaultEntity['i
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
   const apy = useAppSelector(state => selectVaultTotalApy(state, vaultId));
-  const apyLabel = vault.type == 'gov' && vault.strategyTypeId !== 'compounds' ? 'APR' : 'APY';
+  const apyLabel = vault.type === 'gov' && vault.strategyTypeId !== 'compounds' ? 'APR' : 'APY';
 
   return (
     <Trans

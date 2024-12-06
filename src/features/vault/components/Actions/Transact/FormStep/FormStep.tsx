@@ -1,7 +1,5 @@
 import { type ComponentType, lazy, memo, Suspense, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { legacyMakeStyles } from '@repo/helpers/mui';
-import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectTransactMode,
@@ -10,12 +8,10 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import { CardsTabs } from '../../../Card/CardTabs';
+import { CardHeaderTabs } from '../../../Card';
 import { transactFetchOptions } from '../../../../../data/actions/transact';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
-
-const useStyles = legacyMakeStyles(styles);
 
 const DepositFormLoader = lazy(() => import('../DepositForm'));
 const ClaimFormLoader = lazy(() => import('../ClaimForm'));
@@ -30,7 +26,6 @@ const modeToComponent: Record<TransactMode, ComponentType> = {
 export const FormStep = memo(function FormStep() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const classes = useStyles();
   const mode = useAppSelector(selectTransactMode);
   const vaultId = useAppSelector(selectTransactVaultId);
   const showClaim = useAppSelector(state => selectTransactShouldShowClaims(state, vaultId));
@@ -61,8 +56,8 @@ export const FormStep = memo(function FormStep() {
   }, [dispatch, mode, vaultId]);
 
   return (
-    <div className={classes.container}>
-      <CardsTabs
+    <div>
+      <CardHeaderTabs
         selected={TransactMode[mode]}
         options={modeOptions}
         onChange={handleModeChange}

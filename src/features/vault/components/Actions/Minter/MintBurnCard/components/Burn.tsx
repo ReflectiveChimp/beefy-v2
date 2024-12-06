@@ -1,5 +1,4 @@
 import { memo, useMemo } from 'react';
-import { Button } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card';
@@ -37,6 +36,7 @@ import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
 import { isTokenErc20 } from '../../../../../../data/entities/token';
 import { useInputForm } from '../../../../../../data/hooks/input';
 import { AmountInput } from '../../../Transact/AmountInput';
+import { Button } from '../../../../../../../components/Button';
 
 const useStyles = legacyMakeStyles(styles);
 export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) {

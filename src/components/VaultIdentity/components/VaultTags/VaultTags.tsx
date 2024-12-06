@@ -1,5 +1,4 @@
 import { memo, useMemo } from 'react';
-import { useMediaQuery } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { VaultTag, VaultTagWithTooltip } from './VaultTag';
@@ -46,6 +45,7 @@ import {
   selectVaultHasActiveMerklBoostCampaigns,
 } from '../../../../features/data/selectors/rewards';
 import { useBreakpoint } from '../../../MediaQueries/useBreakpoint';
+import { useMediaQuery } from '../../../MediaQueries/useMediaQuery';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -386,7 +386,7 @@ export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
     selectVaultHasActiveMerklBoostCampaigns(state, vaultId)
   );
 
-  const isSmallDevice = useMediaQuery('(max-width: 450px)', { noSsr: true });
+  const isSmallDevice = useMediaQuery('(max-width: 450px)', false);
 
   const isClmAndBoostedAndSmallDevice =
     isSmallDevice && isCowcentratedLike && (!!boostId || hasBaseActiveMerklCampaigns);

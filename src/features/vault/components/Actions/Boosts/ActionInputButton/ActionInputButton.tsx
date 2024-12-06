@@ -1,4 +1,3 @@
-import { Collapse, IconButton } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { ReactComponent as ExpandLess } from '@repo/images/icons/mui/ExpandLess.svg';
 import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
@@ -20,6 +19,7 @@ import { useInputForm } from '../../../../../data/hooks/input';
 import { type BigNumber } from 'bignumber.js';
 import { TokenAmount } from '../../../../../../components/TokenAmount';
 import { ActionButton } from '../ActionButton/ActionButton';
+import { Collapse } from '../../../../../../components/Collapse';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -86,15 +86,13 @@ export const ActionInputButton = memo(function ActionInputButton({
   return (
     <div className={classes.container}>
       <div className={classes.title} onClick={onToggle}>
-        <IconButton className={classes.iconButton}>
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </IconButton>
+        <button className={classes.iconButton}>{open ? <ExpandLess /> : <ExpandMore />}</button>
         <div className={classes.text}>{title}</div>
         <div className={classes.balance}>
           {balanceLabel} <TokenAmount amount={balance} decimals={mooToken.decimals} />
         </div>
       </div>
-      <Collapse in={open} timeout="auto">
+      <Collapse in={open}>
         <div className={classes.actions}>
           <AmountInput
             value={formData.amount}

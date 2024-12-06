@@ -1,1 +1,0 @@
-export { CardSuperTitle } from './CardSuperTitle';

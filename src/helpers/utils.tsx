@@ -9,12 +9,12 @@ export function isEmpty(key) {
     return key === '' || key === null || key === 'null' || key === undefined || key === 'undefined';
   } else if (typeof key === 'undefined') {
     return true;
-  } else if (typeof key == 'object') {
+  } else if (typeof key === 'object') {
     for (const i in key) {
       return false;
     }
     return true;
-  } else if (typeof key == 'boolean') {
+  } else if (typeof key === 'boolean') {
     return false;
   }
 }

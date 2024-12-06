@@ -9,7 +9,7 @@ type ListJoinProps = {
 export const ListJoin = memo(function ListJoin({ items, mode = 'and' }: ListJoinProps) {
   const { t } = useTranslation();
   const comma = t('List-Join-Comma');
-  const and = t(mode == 'or' ? 'List-Join-Or' : 'List-Join-And');
+  const and = t(mode === 'or' ? 'List-Join-Or' : 'List-Join-And');
 
   if (items.length === 0) {
     return <></>;

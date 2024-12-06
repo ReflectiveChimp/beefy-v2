@@ -1,4 +1,3 @@
-import { Button } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as OpenInNewRoundedIcon } from '@repo/images/icons/mui/OpenInNewRounded.svg';
@@ -33,12 +32,13 @@ export function TransactionLink() {
   }
 
   return (
-    <Button
+    <a
       className={classes.redirectLinkSuccess}
       href={explorerTxUrl(chain, hash)}
       target="_blank"
+      rel="noopener"
     >
       {t('Transactn-View')} {<OpenInNewRoundedIcon color="#4DB258" fontSize="inherit" />}
-    </Button>
+    </a>
   );
 }

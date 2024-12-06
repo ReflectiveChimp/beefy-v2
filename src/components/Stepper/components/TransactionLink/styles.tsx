@@ -12,8 +12,7 @@ export const styles = {
     textDecoration: 'none',
     marginTop: '16px',
     justifyContent: 'flex-start',
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiSvgIcon-root': {
+    '& .mui-svg': {
       marginLeft: '4px',
     },
   }),

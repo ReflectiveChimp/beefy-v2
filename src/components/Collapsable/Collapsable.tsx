@@ -1,4 +1,3 @@
-import { Collapse } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { ReactComponent as ExpandLess } from '@repo/images/icons/mui/ExpandLess.svg';
 import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
@@ -7,6 +6,7 @@ import type { ReactNode } from 'react';
 import { memo, useCallback, useState } from 'react';
 import { Button } from '../Button';
 import { styles } from './styles';
+import { Collapse } from '../Collapse';
 
 interface CollapsableProps {
   openByDefault?: boolean;
@@ -43,9 +43,7 @@ export const Collapsable = memo(function Collapsable({
           <ExpandMore className={classes.titleIcon} />
         )}
       </Button>
-      <Collapse in={open} timeout="auto">
-        {children}
-      </Collapse>
+      <Collapse in={open}>{children}</Collapse>
     </div>
   );
 });

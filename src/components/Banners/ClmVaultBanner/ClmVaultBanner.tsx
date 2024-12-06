@@ -8,16 +8,16 @@ import {
   type VaultGovCowcentrated,
   type VaultStandardCowcentrated,
 } from '../../../features/data/entities/vault';
-import { InternalLink } from '../Links/Links';
 import { selectVaultById } from '../../../features/data/selectors/vaults';
 import { selectHasUserDepositInVault } from '../../../features/data/selectors/balance';
-import { DismissibleBanner } from '../Banner/DismissibleBanner';
+import { DismissibleBanner } from '../Banner';
+import { InternalLink } from '../Links/InternalLink';
 
 export type ClmVaultBannerProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const ClmVaultBanner = memo(function ClmVaultBanner({ vaultId }: ClmVaultBannerProps) {
+export const ClmVaultBanner = memo<ClmVaultBannerProps>(function ClmVaultBanner({ vaultId }) {
   const maybeClmPool = useAppSelector(state => selectVaultById(state, vaultId));
 
   if (!isCowcentratedGovVault(maybeClmPool) || !maybeClmPool.cowcentratedIds.vault) {
@@ -32,10 +32,10 @@ export type ClmVaultBannerImplProps = {
   vaultId: VaultStandardCowcentrated['id'];
 };
 
-const ClmVaultBannerImpl = memo(function ClmVaultBannerImpl({
+const ClmVaultBannerImpl = memo<ClmVaultBannerImplProps>(function ClmVaultBannerImpl({
   pool,
   vaultId,
-}: ClmVaultBannerImplProps) {
+}) {
   const { t } = useTranslation();
   const isDeposited = useAppSelector(state => selectHasUserDepositInVault(state, pool.id));
   const components = useMemo(
@@ -47,7 +47,7 @@ const ClmVaultBannerImpl = memo(function ClmVaultBannerImpl({
 
   return (
     <DismissibleBanner
-      id={`clm-pool-vault.${pool.id}`}
+      id={`clm-vault.${pool.id}`}
       icon={<img src={clmIcon} alt="" width={24} height={24} />}
       text={
         <Trans

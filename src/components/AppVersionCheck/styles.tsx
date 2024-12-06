@@ -10,7 +10,7 @@ export const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: '100',
+    zIndex: 'version',
     pointerEvents: 'none',
     smDown: {
       padding: '0 16px 16px 16px',

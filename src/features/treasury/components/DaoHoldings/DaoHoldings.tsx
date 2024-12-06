@@ -6,8 +6,8 @@ import { useAppSelector } from '../../../../store';
 import { selectTreasurySorted } from '../../../data/selectors/treasury';
 import { ChainHolding, MMHolding } from './components/ChainHolding';
 import { styles } from './styles';
-import { useMediaQuery } from '@material-ui/core';
 import type { ChainEntity } from '../../../data/entities/chain';
+import { useMediaQuery } from '../../../../components/MediaQueries/useMediaQuery';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -50,8 +50,8 @@ function useTreasuryColumns(numColumns: number) {
 }
 
 function useNumColumns() {
-  const isDesktop = useMediaQuery('(min-width: 1296px)', { noSsr: true });
-  const isTablet = useMediaQuery('(min-width: 960px)', { noSsr: true });
+  const isDesktop = useMediaQuery('(min-width: 1296px)', false);
+  const isTablet = useMediaQuery('(min-width: 960px)', false);
   return useMemo(() => (isDesktop ? 3 : isTablet ? 2 : 1), [isDesktop, isTablet]);
 }
 

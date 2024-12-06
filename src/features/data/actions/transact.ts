@@ -189,7 +189,7 @@ export const transactFetchQuotes = createAsyncThunk<
     }
 
     const quoteInputAmounts: InputTokenAmount[] = [];
-    if (mode == TransactMode.Deposit) {
+    if (mode === TransactMode.Deposit) {
       // For deposit, user enters number of the selected token(s) to deposit
       selection.tokens.forEach((token, index) => {
         quoteInputAmounts.push({

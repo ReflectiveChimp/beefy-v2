@@ -1,6 +1,5 @@
-import { css } from '@repo/styles/css';
+import { css, cx } from '@repo/styles/css';
 import { memo } from 'react';
-import clsx from 'clsx';
 
 const baseClass = css({
   width: '100%',
@@ -20,7 +19,7 @@ export const AssetImg = memo<AssetImgProps>(function AssetImg({ src, className }
       src={src}
       alt=""
       role="presentation"
-      className={clsx(baseClass, className)}
+      className={cx(baseClass, className)}
       width={48}
       height={48}
     />

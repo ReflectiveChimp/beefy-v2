@@ -35,7 +35,7 @@ async function getBalance(
   state: BeefyState
 ): Promise<string> {
   const stakingAddress = await getStakingAddress(vault, web3, state);
-  if (stakingAddress == ZERO_ADDRESS) return '0';
+  if (stakingAddress === ZERO_ADDRESS) return '0';
   const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], stakingAddress);
   return staking.methods.balanceOf(walletAddress).call();
 }

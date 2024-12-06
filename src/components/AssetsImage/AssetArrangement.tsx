@@ -1,5 +1,4 @@
 import { memo, type ReactNode } from 'react';
-import clsx from 'clsx';
 import { css, type CssStyles, cva } from '@repo/styles/css';
 import { defaultSize } from './config';
 

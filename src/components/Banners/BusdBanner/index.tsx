@@ -1,1 +1,2 @@
-export { BusdBannerHome, BusdBannerVault } from './BusdBanner';
+export { BusdBannerHome } from './BusdBannerHome';
+export { BusdBannerVault } from './BusdBannerVault';

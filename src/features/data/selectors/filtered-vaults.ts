@@ -168,7 +168,7 @@ export function selectFilterPlatformIdsForVault(state: BeefyState, vault: VaultE
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   if (depositToken.providerId) {
     const depositTokenPlatform = selectPlatformIdForFilter(state, depositToken.providerId);
-    if (depositTokenPlatform !== 'other' && depositTokenPlatform != vaultPlatform) {
+    if (depositTokenPlatform !== 'other' && depositTokenPlatform !== vaultPlatform) {
       vaultPlatforms.push(depositTokenPlatform);
     }
   }

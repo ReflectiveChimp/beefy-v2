@@ -708,7 +708,7 @@ export abstract class UniswapLikeStrategy<
       const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
       const buildQuote = quote.steps.find(isZapQuoteStepBuild);
 
-      if (!buildQuote || swapQuotes.length == 0 || swapQuotes.length > 2) {
+      if (!buildQuote || swapQuotes.length === 0 || swapQuotes.length > 2) {
         throw new Error('Invalid quote');
       }
 

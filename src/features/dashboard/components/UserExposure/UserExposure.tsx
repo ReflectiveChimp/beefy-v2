@@ -1,4 +1,3 @@
-import { Hidden } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +8,7 @@ import { StablesExposure } from '../StablesExposure';
 import { TokenExposureLoader } from '../TokenExposure';
 import { styles } from './styles';
 import { MobileUserExposure } from './components/MobileUserExposure';
+import { Hidden } from '../../../../components/MediaQueries/Hidden';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -23,19 +23,19 @@ export const UserExposure = memo(function UserExposure({ address }: UserExposure
   return (
     <Section title={t('Overview')}>
       <div className={classes.pieChartsContainer}>
-        <Hidden smDown>
+        <Hidden to="sm">
           <ChainExposureLoader address={address} title={t('Exposure-Chain')} />
           <PlatformExposureLoader address={address} title={t('Exposure-Platform')} />
           <TokenExposureLoader address={address} title={t('Exposure-Tokens')} />
         </Hidden>
-        <Hidden mdUp>
+        <Hidden from="md">
           <MobileUserExposure address={address} />
         </Hidden>
-        <Hidden lgUp>
+        <Hidden from="lg">
           <StablesExposure address={address} />
         </Hidden>
       </div>
-      <Hidden mdDown>
+      <Hidden to="md">
         <StablesExposure address={address} />
       </Hidden>
     </Section>

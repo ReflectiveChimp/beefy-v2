@@ -1,8 +1,9 @@
 import { type FC, memo } from 'react';
 import { styles } from './styles';
 import { css, type CssStyles } from '@repo/styles/css';
-import { AlertError, AlertInfo, type AlertProps, AlertWarning } from '../Alerts';
+import { AlertError, AlertInfo, AlertWarning } from '../Alerts';
 import { useTranslation } from 'react-i18next';
+import type { AlertProps } from '../Alerts/types';
 
 export type NoGraphDataReason = 'error' | 'error-retry' | 'wait-collect';
 

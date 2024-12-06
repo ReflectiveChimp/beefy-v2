@@ -7,7 +7,7 @@ import {
   formatTokenDisplay,
   formatTokenDisplayCondensed,
 } from '../../helpers/format';
-import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
+import { VaultValueStat } from '../VaultValueStat';
 import {
   selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,

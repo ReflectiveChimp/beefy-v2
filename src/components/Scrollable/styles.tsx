@@ -7,7 +7,7 @@ export const styles = {
   thumb: css.raw({
     background: 'background.content.dark',
     borderRadius: '4',
-    zIndex: '10',
+    zIndex: 10,
   }),
   horizontalThumb: css.raw({}),
   verticalThumb: css.raw({}),

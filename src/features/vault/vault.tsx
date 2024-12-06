@@ -1,4 +1,3 @@
-import { Hidden } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import type { PropsWithChildren } from 'react';
 import { lazy, memo } from 'react';
@@ -24,12 +23,13 @@ import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
 import { VaultMeta } from '../../components/Meta/VaultMeta';
 import { PnLGraphIfWallet } from './components/PnLGraph/PnLGraphIfWallet';
 import { Explainer } from './components/Explainer/Explainer';
-import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
 import { featureFlag_disableRedirect } from '../data/utils/feature-flags';
 import { GamingCards } from './components/GamingCards';
 import { Container } from '../../components/Container/Container';
 import { Details } from './components/Details';
 import { RetiredSuggestClmBanner } from '../../components/Banners/RetiredSuggestClmBanner';
+import { Hidden } from '../../components/MediaQueries/Hidden';
+import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner';
 
 const useStyles = legacyMakeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -98,7 +98,7 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
         <div className={classes.contentColumns}>
           <div className={classes.columnActions}>
             <Actions vaultId={vaultId} />
-            <Hidden smDown>
+            <Hidden to="sm">
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />
               <GamingCards vaultId={vaultId} />
@@ -112,7 +112,7 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
             <SafetyCard vaultId={vaultId} />
             <Explainer vaultId={vaultId} />
             <Details vaultId={vaultId} />
-            <Hidden mdUp>
+            <Hidden from="md">
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />
               <GamingCards vaultId={vaultId} />

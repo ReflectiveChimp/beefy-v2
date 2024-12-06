@@ -497,7 +497,7 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
       }
 
       // Swaps
-      if (swapQuotes.length == 0 || swapQuotes.length > 2) {
+      if (swapQuotes.length === 0 || swapQuotes.length > 2) {
         throw new Error('Invalid swap quote');
       }
       const insertBalance = allTokensAreDistinct(

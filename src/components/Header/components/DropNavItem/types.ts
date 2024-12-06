@@ -1,22 +1,22 @@
 import type { FC, FunctionComponent, SVGProps } from 'react';
 import type { BadgeComponent } from '../Badges/types';
-import { type CssStyles } from '@repo/styles/css';
 
 type BaseNavItemProps = {
   title: string;
-  Icon: FunctionComponent<
-    SVGProps<SVGSVGElement> & {
-      title?: string;
-    }
-  >;
+  Icon: FunctionComponent<SVGProps<SVGSVGElement> & { title?: string }>;
   Badge?: BadgeComponent;
   onClick?: () => void;
-  css?: CssStyles;
+  className?: string;
   exact?: boolean;
 };
 
 export type NavItemProps = BaseNavItemProps & {
   url: string;
+  mobile?: boolean;
+};
+
+export type NavItemInnerProps = Pick<NavItemProps, 'title' | 'Icon' | 'Badge'> & {
+  Arrow?: FunctionComponent<SVGProps<SVGSVGElement>>;
 };
 
 export type NavDropdownProps = BaseNavItemProps & {

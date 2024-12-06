@@ -34,7 +34,7 @@ export const ApyStats = memo(function ApyStats({ vaultId, type }: ApyStatsProps)
   const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
   const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
 
-  if (data.status == 'loading') {
+  if (data.status === 'loading') {
     return <ValueBlock label={label} value="-" loading={true} />;
   }
 

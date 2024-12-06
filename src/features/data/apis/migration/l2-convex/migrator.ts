@@ -20,7 +20,7 @@ const crvFactory = (chainId: ChainEntity['id']) =>
 async function getStakingAddress(vault: VaultEntity, web3: Web3, _: BeefyState): Promise<string> {
   const factory = new web3.eth.Contract(CurveAbi, crvFactory(vault.chainId));
   const gauge = await factory.methods.get_gauge_from_lp_token(vault.depositTokenAddress).call();
-  if (gauge == ZERO_ADDRESS) return gauge;
+  if (gauge === ZERO_ADDRESS) return gauge;
   const Gauge = new web3.eth.Contract(CurveAbi, gauge);
   return Gauge.methods.rewards_receiver(convexVoterProxy).call();
 }
@@ -32,7 +32,7 @@ async function getBalance(
   state: BeefyState
 ): Promise<string> {
   const stakingAddress = await getStakingAddress(vault, web3, state);
-  if (stakingAddress == ZERO_ADDRESS) return '0';
+  if (stakingAddress === ZERO_ADDRESS) return '0';
   const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], stakingAddress);
   return staking.methods.balanceOf(walletAddress).call();
 }

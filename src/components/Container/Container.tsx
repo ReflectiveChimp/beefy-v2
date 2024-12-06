@@ -1,45 +1,36 @@
-import { css, type CssStyles } from '@repo/styles/css';
-import { memo, type ReactNode } from 'react';
+import { styled } from '@repo/styles/jsx';
 
-const styles = {
-  root: css.raw({
+export const Container = styled('div', {
+  base: {
     width: '100%',
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
-    paddingInline: '24px',
-  }),
-  'width-xl': css.raw({}),
-  'width-lg': css.raw({
-    lg: {
-      maxWidth: '1296px',
-    },
-  }),
-  'width-md': css.raw({
-    md: {
-      maxWidth: '960px',
-    },
-  }),
-  'width-sm': css.raw({
+    paddingInline: '16px',
     sm: {
-      maxWidth: '600px',
+      paddingInline: '24px',
     },
-  }),
-  'width-xs': css.raw({
-    maxWidth: '444px',
-  }),
-};
-
-interface ContainerProps {
-  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  children: ReactNode;
-  css?: CssStyles;
-}
-
-export const Container = memo(function Container({
-  maxWidth = 'xl',
-  children,
-  css: cssProp,
-}: ContainerProps) {
-  return <div className={css(styles.root, cssProp, styles[`width-${maxWidth}`])}>{children}</div>;
+  },
+  variants: {
+    maxWidth: {
+      xl: {
+        maxWidth: '100%',
+      },
+      lg: {
+        maxWidth: 'container.lg',
+      },
+      md: {
+        maxWidth: 'container.md',
+      },
+      sm: {
+        maxWidth: 'container.sm',
+      },
+      xs: {
+        maxWidth: 'container.xs',
+      },
+    },
+  },
+  defaultVariants: {
+    maxWidth: 'xl',
+  },
 });

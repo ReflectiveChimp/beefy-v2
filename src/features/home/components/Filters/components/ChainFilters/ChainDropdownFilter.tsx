@@ -15,7 +15,7 @@ import { styles } from './styles';
 import { css, type CssStyles } from '@repo/styles/css';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import { useSelectedChainIds } from './hooks';
-import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge';
+import { ChainNewBadge } from './ChainNewBadge';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -41,7 +41,7 @@ const IconWithChain = memo(function IconWithChain({
         className={classes.iconWithChainIcon}
       />
       {label}
-      {chain.new ? <NewBadge css={styles.badgeMobile} spacer={false} /> : null}
+      {chain.new ? <ChainNewBadge mobile={true} /> : null}
     </div>
   );
 });

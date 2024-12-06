@@ -1,1 +1,0 @@
-export { AddTokenToWallet } from './AddTokenToWallet';

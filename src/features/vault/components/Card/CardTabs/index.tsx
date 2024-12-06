@@ -1,1 +1,0 @@
-export { CardsTabs } from './CardTabs';

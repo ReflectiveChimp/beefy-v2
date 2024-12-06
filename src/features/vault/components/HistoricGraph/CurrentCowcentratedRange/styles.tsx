@@ -38,7 +38,7 @@ export const styles = {
     },
   }),
   fullWidth: css.raw({
-    widht: '100%',
+    width: '100%',
     marginBottom: '1px',
   }),
   inverted: css.raw({

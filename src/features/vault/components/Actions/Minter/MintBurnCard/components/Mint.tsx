@@ -1,5 +1,4 @@
 import { memo, useMemo } from 'react';
-import { Button } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card';
@@ -29,6 +28,7 @@ import { startStepper } from '../../../../../../data/actions/stepper';
 import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
 import { AmountInput } from '../../../Transact/AmountInput';
 import { useInputForm } from '../../../../../../data/hooks/input';
+import { Button } from '../../../../../../../components/Button';
 
 const useStyles = legacyMakeStyles(styles);
 

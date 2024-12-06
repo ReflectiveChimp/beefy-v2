@@ -106,7 +106,7 @@ export class StackEntry {
       ? Object.fromEntries(trace.decoded_input.map(d => [d.soltype.name, d.value]))
       : undefined;
 
-    const output = trace.output && trace.output != '0x' ? trace.output : undefined;
+    const output = trace.output && trace.output !== '0x' ? trace.output : undefined;
     const outputLabels = trace.decoded_output?.length
       ? Object.fromEntries(trace.decoded_output.map(d => [d.soltype.name, d.value]))
       : undefined;

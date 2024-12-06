@@ -1,9 +1,4 @@
-import type {
-  CodegenPrepareHookArgs,
-  CssProperties,
-  LoggerInterface,
-  PandaPlugin,
-} from '@pandacss/types';
+import type { CodegenPrepareHookArgs, LoggerInterface, PandaPlugin } from '@pandacss/types';
 import type { PandaContext } from '@pandacss/node';
 
 export const pluginMoreTypes = (): PandaPlugin => {
@@ -19,24 +14,54 @@ export const pluginMoreTypes = (): PandaPlugin => {
         ctx = context.ctx.processor.context;
       },
       'codegen:prepare': args => {
-        return transformPropTypes(args, ctx, logger);
+        return applyTransforms(args, ctx, logger);
       },
     },
   };
 };
 
-export const transformPropTypes = (
-  args: CodegenPrepareHookArgs,
+const transforms = {
+  'css-fn': {
+    'css.d.ts': (content: string) => {
+      return content + `\n\nexport type CssStyles = Styles | Styles[];`;
+    },
+  },
+  'types-gen-system': {
+    'system-types.d.ts': (content: string) => {
+      return content
+        .replace(
+          'interface WithCss {',
+          'type Styles = SystemStyleObject | undefined | null | false;\n\ninterface WithCss {'
+        )
+        .replace('css?: SystemStyleObject | SystemStyleObject[]', 'css?: Styles | Styles[]');
+    },
+  },
+} as const;
+
+export const applyTransforms = (
+  { artifacts }: CodegenPrepareHookArgs,
   ctx: PandaContext,
   logger?: LoggerInterface
 ) => {
-  const artifact = args.artifacts.find(x => x.id === 'css-fn');
-  const content = artifact?.files.find(x => x.file === 'css.d.ts');
-  if (!content?.code) {
-    return args.artifacts;
+  for (const artifact of artifacts) {
+    const transform = transforms[artifact.id];
+    if (!transform) {
+      continue;
+    }
+
+    for (const file of artifact.files) {
+      if (!file.code) {
+        continue;
+      }
+
+      const transformFn = transform[file.file];
+      if (!transformFn) {
+        continue;
+      }
+
+      file.code = transformFn(file.code);
+    }
   }
 
-  content.code += `\n\nexport type CssStyles = Styles | Styles[];`;
-
-  return args.artifacts;
+  return artifacts;
 };

@@ -1,5 +1,4 @@
 import { memo, useMemo, useState } from 'react';
-import { useMediaQuery } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { VaultDashboardMobileStats } from './components/VaultDashboardMobileStats';
@@ -9,6 +8,7 @@ import { styles } from './styles';
 import { LabeledSelect } from '../../../../../../../components/LabeledSelect';
 import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
 import { useChartOptions } from '../useChartOptions';
+import { useMediaQuery } from '../../../../../../../components/MediaQueries/useMediaQuery';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -21,7 +21,7 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
   const classes = useStyles();
   const { t } = useTranslation();
   const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('stats');
-  const useDropdown = useMediaQuery('(max-width: 700px)', { noSsr: true });
+  const useDropdown = useMediaQuery('(max-width: 700px)', false);
   const { PositionGraph, CompoundsGraph, availableCharts } = useChartOptions(vaultId, address);
 
   const options = useMemo(

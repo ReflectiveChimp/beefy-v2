@@ -1,1 +1,0 @@
-export { VaultsStats } from './VaultsStats';

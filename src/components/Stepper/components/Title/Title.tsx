@@ -1,4 +1,3 @@
-import { IconButton } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, type ReactNode, useCallback } from 'react';
 import { ReactComponent as CloseRoundedIcon } from '@repo/images/icons/mui/CloseRounded.svg';
@@ -22,9 +21,9 @@ export const Title = memo(function Title({ text }: TitleProps) {
   return (
     <div className={classes.titleContainer}>
       <div className={classes.title}>{text}</div>
-      <IconButton className={classes.closeIcon} onClick={handleClose}>
+      <button className={classes.closeIcon} onClick={handleClose}>
         <CloseRoundedIcon fontSize="small" color="#D0D0DA" />
-      </IconButton>
+      </button>
     </div>
   );
 });

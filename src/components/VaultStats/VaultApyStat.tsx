@@ -35,7 +35,7 @@ export const VaultApyStat = memo(function VaultApyStat({
   const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
   const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
 
-  if (data.status == 'loading') {
+  if (data.status === 'loading') {
     return <VaultValueStat label={label} value="-" blur={false} loading={true} {...rest} />;
   }
 

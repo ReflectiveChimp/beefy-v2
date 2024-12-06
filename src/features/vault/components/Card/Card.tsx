@@ -1,17 +1,48 @@
-import type { PropsWithChildren } from 'react';
-import { memo } from 'react';
-import { Paper } from '@material-ui/core';
-import { css, type CssStyles } from '@repo/styles/css';
-import { styles } from './styles';
+import { styled } from '@repo/styles/jsx';
 
-export type CardProps = PropsWithChildren<{
-  css?: CssStyles;
-  id?: string;
-}>;
-export const Card = memo(function Card({ css: cssProp, children, id }: CardProps) {
-  return (
-    <Paper id={id} className={css(styles.container, cssProp)}>
-      {children}
-    </Paper>
-  );
+export const Card = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    outline: 'none',
+    borderRadius: '12px',
+    backgroundColor: 'background.contentPrimary',
+  },
+  variants: {
+    width: {
+      lg: {
+        width: 'containerInner.lg',
+      },
+      md: {
+        width: 'containerInner.md',
+      },
+      sm: {
+        width: 'containerInner.sm',
+      },
+      xs: {
+        width: 'containerInner.xs',
+      },
+    },
+    maxWidth: {
+      xl: {
+        maxWidth: '100%',
+      },
+      lg: {
+        maxWidth: 'container.lg',
+      },
+      md: {
+        maxWidth: 'container.md',
+      },
+      sm: {
+        maxWidth: 'container.sm',
+      },
+      xs: {
+        maxWidth: 'container.xs',
+      },
+    },
+  },
+  defaultVariants: {
+    maxWidth: 'xl',
+  },
 });
