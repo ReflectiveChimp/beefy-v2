@@ -1,21 +1,21 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  rewards: {
-    ...theme.typography['body-lg-med'],
+export const styles = {
+  rewards: css.raw({
+    textStyle: 'body.med',
     display: 'grid',
     gridTemplateColumns: 'auto minmax(0, 1fr) auto',
     gap: '8px',
-    color: theme.palette.text.middle,
+    color: 'text.middle',
     padding: '0',
-  },
-  icon: {
+  }),
+  icon: css.raw({
     width: '24px',
     height: '24px',
-  },
-  amount: {
+  }),
+  amount: css.raw({
     display: 'inline-flex',
     gap: '4px',
-  },
-  value: {},
-});
+  }),
+  value: css.raw({}),
+};

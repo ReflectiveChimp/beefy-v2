@@ -53,7 +53,9 @@ export type FetchBridgeChainPayload = {
 export const fetchBridgeConfig = createAsyncThunk<
   FetchBridgeChainPayload,
   FetchBridgeConfigParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('bridge/fetchBridgeConfig', async () => {
   const api = await getConfigApi();
   return { config: await api.fetchBeefyBridgeConfig() };
@@ -70,7 +72,9 @@ type InitBridgeFormPayload = {
 export const initiateBridgeForm = createAsyncThunk<
   InitBridgeFormPayload,
   InitBridgeFormParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('bridge/initiateBridgeForm', async ({ walletAddress }, { getState, dispatch }) => {
   if (selectShouldLoadBridgeConfig(getState())) {
     await dispatch(fetchBridgeConfig());
@@ -131,7 +135,9 @@ type ValidateBridgeFormPayload = void;
 export const validateBridgeForm = createAsyncThunk<
   ValidateBridgeFormPayload,
   ValidateBridgeFormParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('bridge/validateBridgeForm', async (_, { getState, dispatch }) => {
   const state = getState();
 
@@ -168,7 +174,11 @@ export const quoteBridgeForm = createAsyncThunk<
   {
     state: BeefyState;
     rejectValue: 'AllQuotesRateLimitedError';
-    rejectedMeta: { current: BigNumber; max: BigNumber; canWait: boolean };
+    rejectedMeta: {
+      current: BigNumber;
+      max: BigNumber;
+      canWait: boolean;
+    };
   }
 >('bridge/quoteBridgeForm', async (_, { getState, rejectWithValue }) => {
   const state = getState();
@@ -234,12 +244,16 @@ export const quoteBridgeForm = createAsyncThunk<
 
 type ConfirmBridgeFormParams = void;
 
-type ConfirmBridgeFormPayload = { quote: IBridgeQuote<BeefyAnyBridgeConfig> };
+type ConfirmBridgeFormPayload = {
+  quote: IBridgeQuote<BeefyAnyBridgeConfig>;
+};
 
 export const confirmBridgeForm = createAsyncThunk<
   ConfirmBridgeFormPayload,
   ConfirmBridgeFormParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('bridge/confirmBridgeForm', async (_, { getState, dispatch }) => {
   const state = getState();
   const quoteId = selectBridgeQuoteSelectedId(state);
@@ -285,14 +299,18 @@ export const confirmBridgeForm = createAsyncThunk<
   };
 });
 
-type PerformBridgeParams = { t: TFunction<Namespace> };
+type PerformBridgeParams = {
+  t: TFunction<Namespace>;
+};
 
 type PerformBridgePayload = void;
 
 export const performBridge = createAsyncThunk<
   PerformBridgePayload,
   PerformBridgeParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('bridge/performBridge', async ({ t }, { getState, dispatch }) => {
   const state = getState();
   const quote = selectBridgeConfirmQuote(state);

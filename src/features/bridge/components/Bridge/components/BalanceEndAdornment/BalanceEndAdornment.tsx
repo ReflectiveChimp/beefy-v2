@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo } from 'react';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { formatTokenDisplayCondensed } from '../../../../../../helpers/format';
@@ -9,7 +9,7 @@ import { selectIsWalletConnected } from '../../../../../data/selectors/wallet';
 import { styles } from './styles';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface BalanceEndAdornmentProps<V extends string = string> {
   value: V;

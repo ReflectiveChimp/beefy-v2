@@ -13,7 +13,7 @@ type ClaimProps = {
   vaultId: VaultGov['id'];
 };
 
-export const Claim = memo<ClaimProps>(function Claim({ vaultId }) {
+export const Claim = memo(function Claim({ vaultId }: ClaimProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));

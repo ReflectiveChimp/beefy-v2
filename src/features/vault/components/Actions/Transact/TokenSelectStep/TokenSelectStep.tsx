@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
@@ -10,7 +10,7 @@ import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/
 import { selectTransactMode } from '../../../../../data/selectors/transact';
 import { WithdrawTokenSelectList } from '../TokenSelectList/WithdrawTokenSelectList';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const TokenSelectStep = memo(function TokenSelectStep() {
   const { t } = useTranslation();

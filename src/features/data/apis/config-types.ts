@@ -62,7 +62,11 @@ export interface VaultConfig {
   /** Map of chain->address of bridged receipt tokens */
   bridged?: Record<ChainEntity['id'], string>;
   /* Oracle can be ChainLink | Pyth, then the oracle address*/
-  lendingOracle?: { provider: string; address?: string; loops?: number };
+  lendingOracle?: {
+    provider: string;
+    address?: string;
+    loops?: number;
+  };
   pointStructureIds?: string[];
   feeTier?: string;
   /** tmp: exclude from being loaded */
@@ -210,7 +214,11 @@ export type ChainConfig = {
   multicall3Address: Address;
   appMulticallContractAddress: string;
   providerName: string;
-  native: { symbol: string; oracleId: string; decimals: number };
+  native: {
+    symbol: string;
+    oracleId: string;
+    decimals: number;
+  };
   gas: GasConfig;
   stableCoins: string[];
   new?: boolean;
@@ -510,7 +518,9 @@ export type BeefyAnyBridgeConfig =
 
 export type BeefyBridgeIdToConfig<T extends BeefyAnyBridgeConfig['id']> = Extract<
   BeefyAnyBridgeConfig,
-  { id: T }
+  {
+    id: T;
+  }
 >;
 
 export type BeefyBridgeConfig = Readonly<{

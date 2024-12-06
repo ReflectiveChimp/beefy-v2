@@ -8,17 +8,18 @@ import {
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as Clear } from '@repo/images/icons/mui/Clear.svg';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
+import { type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ClearFiltersButtonProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const ClearFiltersButton = memo<ClearFiltersButtonProps>(function ClearFiltersButton({
-  className,
-}) {
+export const ClearFiltersButton = memo(function ClearFiltersButton({
+  css: cssProp,
+}: ClearFiltersButtonProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -29,13 +30,7 @@ export const ClearFiltersButton = memo<ClearFiltersButtonProps>(function ClearFi
   }, [dispatch]);
 
   return (
-    <Button
-      className={className}
-      variant="filter"
-      size="sm"
-      disabled={!active}
-      onClick={handleReset}
-    >
+    <Button css={cssProp} variant="filter" size="sm" disabled={!active} onClick={handleReset}>
       {count > 0 ? (
         <span className={classes.badge} data-count={count} />
       ) : (

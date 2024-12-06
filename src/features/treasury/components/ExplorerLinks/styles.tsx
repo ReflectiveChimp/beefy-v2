@@ -1,33 +1,33 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  center: {
+export const styles = {
+  center: css.raw({
     display: 'flex',
     alignItems: 'center',
     '&:hover': {
       cursor: 'pointer',
     },
-  },
-  icon: {
+  }),
+  icon: css.raw({
     height: '16px',
     width: '16px',
-  },
-  dropdown: {
+  }),
+  dropdown: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '12px',
-    padding: `${8 - 2}px`,
-    border: '2px solid #363A61',
-    backgroundColor: '#373C63',
+    padding: '6px',
+    border: '2px solid extracted271',
+    backgroundColor: 'extracted3248',
     borderRadius: '4px',
-  },
-  item: {
-    ...theme.typography['body-lg'],
-    fontWeight: 500,
+  }),
+  item: css.raw({
+    textStyle: 'body',
+    fontWeight: '500',
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
-    color: theme.palette.text.middle,
+    color: 'text.middle',
     textDecoration: 'none',
     '& img': {
       height: '12px',
@@ -35,7 +35,7 @@ export const styles = (theme: Theme) => ({
     },
     '&:hover': {
       cursor: 'pointer',
-      color: theme.palette.text.light,
+      color: 'text.light',
     },
-  },
-});
+  }),
+};

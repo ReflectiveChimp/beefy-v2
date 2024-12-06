@@ -10,45 +10,50 @@ import type {
 } from '../../../../../../components/LabeledMultiSelect';
 import { LabeledMultiSelect } from '../../../../../../components/LabeledMultiSelect';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import { useSelectedChainIds } from './hooks';
 import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-const IconWithChain = memo<{ chainId: ChainEntity['id']; label: string; className?: string }>(
-  function IconWithChain({ chainId, label, className }) {
-    const classes = useStyles();
-    const chain = useAppSelector(state => selectChainById(state, chainId));
+const IconWithChain = memo(function IconWithChain({
+  chainId,
+  label,
+  css: cssProp,
+}: {
+  chainId: ChainEntity['id'];
+  label: string;
+  css?: CssStyles;
+}) {
+  const classes = useStyles();
+  const chain = useAppSelector(state => selectChainById(state, chainId));
 
-    return (
-      <div className={clsx(classes.iconWithChain, className)}>
-        <img
-          alt=""
-          src={getNetworkSrc(chainId)}
-          width={24}
-          height={24}
-          className={classes.iconWithChainIcon}
-        />
-        {label}
-        {chain.new ? <NewBadge className={classes.badgeMobile} spacer={false} /> : null}
-      </div>
-    );
-  }
-);
+  return (
+    <div className={css(styles.iconWithChain, cssProp)}>
+      <img
+        alt=""
+        src={getNetworkSrc(chainId)}
+        width={24}
+        height={24}
+        className={classes.iconWithChainIcon}
+      />
+      {label}
+      {chain.new ? <NewBadge css={styles.badgeMobile} spacer={false} /> : null}
+    </div>
+  );
+});
 
-const SelectedChain = memo<SelectedItemProps<ChainEntity['id']>>(function SelectedChain({
+const SelectedChain = memo(function SelectedChain({
   value,
   options,
   allSelected,
   allSelectedLabel,
   countSelectedLabel,
-}) {
+}: SelectedItemProps<ChainEntity['id']>) {
   const { t } = useTranslation();
-  const classes = useStyles();
   let label: string | ReactNode;
 
   if (allSelected && allSelectedLabel) {
@@ -59,7 +64,7 @@ const SelectedChain = memo<SelectedItemProps<ChainEntity['id']>>(function Select
       <IconWithChain
         chainId={chainId}
         label={options[chainId]!}
-        className={classes.iconWithChainSelected}
+        css={styles.iconWithChainSelected}
       />
     );
   } else if (countSelectedLabel) {
@@ -71,18 +76,19 @@ const SelectedChain = memo<SelectedItemProps<ChainEntity['id']>>(function Select
   return <>{label}</>;
 });
 
-const ChainDropdownItemLabel = memo<DropdownItemLabelProps<ChainEntity['id']>>(
-  function DropdownItem({ label, value }) {
-    return <IconWithChain chainId={value} label={label} />;
-  }
-);
+const ChainDropdownItemLabel = memo(function DropdownItem({
+  label,
+  value,
+}: DropdownItemLabelProps<ChainEntity['id']>) {
+  return <IconWithChain chainId={value} label={label} />;
+});
 
 export type ChainDropdownFilterProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const ChainDropdownFilter = memo<ChainDropdownFilterProps>(function ChainDropdownFilter({
-  className,
-}) {
+export const ChainDropdownFilter = memo(function ChainDropdownFilter({
+  css: cssProp,
+}: ChainDropdownFilterProps) {
   const dispatch = useAppDispatch();
   const activeChains = useAppSelector(selectActiveChains);
   const selectedChainIds = useSelectedChainIds();
@@ -108,7 +114,7 @@ export const ChainDropdownFilter = memo<ChainDropdownFilterProps>(function Chain
       value={selectedChainIds}
       options={options}
       sortOptions="label"
-      selectClass={className}
+      selectCss={cssProp}
       SelectedItemComponent={SelectedChain}
       DropdownItemLabelComponent={ChainDropdownItemLabel}
     />

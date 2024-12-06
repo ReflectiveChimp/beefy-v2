@@ -1,133 +1,127 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-const arrowWidth = 12;
-const arrowHeight = 8;
-
-export const styles = (theme: Theme) => ({
-  trigger: {
+export const styles = {
+  trigger: css.raw({
     display: 'inline-flex',
-  },
-  tooltip: {
-    minWidth: `${arrowWidth * 3}px`,
+  }),
+  tooltip: css.raw({
+    minWidth: '36px',
     maxWidth: 'min(calc(100% - 16px), 440px)',
-    zIndex: 1301, // Modal is 1300
+    zIndex: 'tooltip', // Modal is 1300
     '&[x-placement*="top"]': {
-      marginBottom: `${arrowHeight}px`,
-      '& $arrow': {
-        bottom: `-${arrowHeight}px`,
+      marginBottom: '8px',
+      '& .tooltipArrow': {
+        bottom: '-8px',
         '&::before': {
-          borderWidth: `${arrowHeight}px ${arrowWidth / 2}px 0 ${arrowWidth / 2}px`,
+          borderWidth: '8px 6px 0 6px',
           borderColor: 'currentColor transparent transparent transparent',
         },
       },
     },
     '&[x-placement*="bottom"]': {
-      marginTop: `${arrowHeight}px`,
-      '& $arrow': {
-        top: `-${arrowHeight}px`,
+      marginTop: '8px',
+      '& .tooltipArrow': {
+        top: '-8px',
         '&::before': {
-          borderWidth: `0 ${arrowWidth / 2}px ${arrowHeight}px ${arrowWidth / 2}px`,
+          borderWidth: '0 6px 8px 6px',
           borderColor: 'transparent transparent currentColor transparent',
         },
       },
     },
     '&[x-placement*="left"]': {
-      marginRight: `${arrowHeight}px`,
-      '& $arrow': {
-        right: `-${arrowHeight}px`,
+      marginRight: '8px',
+      '& .tooltipArrow': {
+        right: '-8px',
         '&::before': {
-          borderWidth: `${arrowWidth / 2}px 0 ${arrowWidth / 2}px ${arrowHeight}px`,
+          borderWidth: '6px 0 6px 8px',
           borderColor: ' transparent transparent transparent currentColor',
         },
       },
     },
     '&[x-placement*="right"]': {
-      marginLeft: `${arrowHeight}px`,
-      '& $arrow': {
-        left: `-${arrowHeight}px`,
+      marginLeft: '8px',
+      '& .tooltipArrow': {
+        left: '-8px',
         '&::before': {
-          borderWidth: `${arrowWidth / 2}px ${arrowHeight}px ${arrowWidth / 2}px 0`,
+          borderWidth: '6px 8px 6px 0',
           borderColor: 'transparent currentColor transparent transparent',
         },
       },
     },
     '&[x-placement*="top"], &[x-placement*="bottom"]': {
-      '&[x-placement*="-start"] $content': {
-        marginLeft: `-${arrowWidth / 2}px`,
+      '&[x-placement*="-start"] .tooltipContent': {
+        marginLeft: '-6px',
       },
-      '&[x-placement*="-end"] $content': {
-        marginRight: `-${arrowWidth / 2}px`,
+      '&[x-placement*="-end"] .tooltipContent': {
+        marginRight: '-6px',
       },
     },
     '&[x-placement*="left"], &[x-placement*="right"]': {
-      '&[x-placement*="-start"] $content': {
-        marginTop: `-${arrowWidth / 2}px`,
+      '&[x-placement*="-start"] .tooltipContent': {
+        marginTop: '-6px',
       },
-      '&[x-placement*="-end"] $content': {
-        marginBottom: `-${arrowWidth / 2}px`,
+      '&[x-placement*="-end"] .tooltipContent': {
+        marginBottom: '-6px',
       },
     },
-  },
-  arrow: {
-    position: 'absolute' as const,
-    zIndex: 15,
-    color: 'var(--tooltip-background-color, #fff)',
+  }),
+  arrow: css.raw({
+    position: 'absolute',
+    zIndex: 'tooltip',
+    color: 'var(--tooltip-background-color, white)',
     '&::before': {
       content: '""',
       display: 'block',
-      width: 0,
-      height: 0,
+      width: '0',
+      height: '0',
       borderStyle: 'solid',
     },
-  },
-  content: {
-    ...theme.typography['body-lg'],
-    color: 'var(--tooltip-title-color, #000)',
-    background: 'var(--tooltip-background-color, #fff)',
+  }),
+  content: css.raw({
+    textStyle: 'body',
+    color: 'var(--tooltip-title-color, black)',
+    background: 'var(--tooltip-background-color, white)',
     padding:
       'var(--tooltip-content-vertical-padding, 12px) var(--tooltip-content-horizontal-padding, 16px)',
     borderRadius: 'var(--tooltip-content-border-radius, 8px)',
-    textAlign: 'left' as const,
-    boxShadow: '0px 4px 8px 8px rgba(0, 0, 0, 0.2)',
-  },
-  basicTitle: {
-    ...theme.typography['body-lg-med'],
-    fontSize: `var(--tooltip-body-font-size, ${theme.typography['body-lg-med'].fontSize})`,
-    color: 'var(--tooltip-title-color, #000)',
-    '& + $basicContent': {
-      marginTop: 'var(--tooltip-content-vertical-gap, 8px)',
-    },
-  },
-  basicContent: {
-    ...theme.typography['body-lg'],
-    fontSize: `var(--tooltip-body-font-size, ${theme.typography['body-lg'].fontSize})`,
-    color: 'var(--tooltip-content-color, #000)',
-  },
-  icon: {
+    textAlign: 'left',
+    boxShadow: '0px 4px 8px 8px blacko20',
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: 'var(--tooltip-content-vertical-gap, 8px)',
+  }),
+  basicTitle: css.raw({
+    textStyle: 'body.med',
+    fontSize: 'var(--tooltip-body-font-size, {fontSizes.body})',
+    color: 'var(--tooltip-title-color, black)',
+  }),
+  basicContent: css.raw({
+    textStyle: 'body',
+    fontSize: 'var(--tooltip-body-font-size, {fontSizes.body})',
+    color: 'var(--tooltip-content-color, black)',
+  }),
+  icon: css.raw({
     color: 'var(--tooltip-icon-color, inherit)',
     fontSize: 'var(--tooltip-icon-size, 20px)',
     width: 'var(--tooltip-icon-size, 20px)',
     height: 'var(--tooltip-icon-size, 20px)',
-    '& .MuiSvgIcon-root': {
-      fontSize: 'inherit',
-      display: 'block',
-    },
-  },
-  dark: {
-    '--tooltip-background-color': theme.palette.tooltip.dark.background,
-    '--tooltip-title-color': theme.palette.tooltip.dark.text.title,
-    '--tooltip-content-color': theme.palette.tooltip.dark.text.content,
-    '--tooltip-value-color': theme.palette.tooltip.dark.text.value,
-    '--tooltip-label-color': theme.palette.tooltip.dark.text.label,
-    '--tooltip-link-color': theme.palette.tooltip.dark.text.link,
-  },
-  compact: {
+    display: 'block',
+  }),
+  dark: css.raw({
+    '--tooltip-background-color': 'tooltip.dark.background',
+    '--tooltip-title-color': 'tooltip.dark.text.title',
+    '--tooltip-content-color': 'tooltip.dark.text.content',
+    '--tooltip-value-color': 'tooltip.dark.text.item',
+    '--tooltip-label-color': 'tooltip.dark.text.label',
+    '--tooltip-link-color': 'tooltip.dark.text.link',
+  }),
+  compact: css.raw({
     '--tooltip-content-vertical-padding': '8px',
     '--tooltip-content-horizontal-padding': '8px',
     '--tooltip-content-vertical-gap': '4px',
     '--tooltip-content-horizontal-gap': '12px',
     '--tooltip-content-border-radius': '4px',
-    '--tooltip-body-font-size': theme.typography['body-sm'].fontSize,
-    '--tooltip-subline-font-size': theme.typography['subline-sm'].fontSize,
-  },
-});
+    '--tooltip-body-font-size': 'body.sm',
+    '--tooltip-subline-font-size': 'subline.sm',
+  }),
+};

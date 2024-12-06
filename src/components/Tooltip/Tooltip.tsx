@@ -12,16 +12,14 @@ import {
   useState,
 } from 'react';
 import type { PopperPlacementType } from '@material-ui/core';
-import { makeStyles, Popper, setRef } from '@material-ui/core';
-import clsx from 'clsx';
-import { styles } from './styles';
+import { Popper, setRef } from '@material-ui/core';
+import { css, type CssStyles, cx } from '@repo/styles/css';
+import { styles as baseStyles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { selectTooltipIsOpen } from '../../features/data/selectors/tooltips';
 import { closeTooltip, openTooltip, toggleTooltip } from '../../features/data/reducers/tooltips';
 import { useClickAway } from './useClickAway';
 import { TRIGGERS } from './constants';
-
-const useStyles = makeStyles(styles);
 
 export type TooltipProps = {
   children: ReactNode;
@@ -34,10 +32,10 @@ export type TooltipProps = {
     | ((e: MouseEvent<HTMLDivElement> | ReactTouchEvent<HTMLDivElement>) => boolean);
   onTooltipClick?: MouseEventHandler<HTMLDivElement>;
   propagateTooltipClick?: boolean | ((e: MouseEvent<HTMLDivElement>) => boolean);
-  triggerClass?: string;
-  tooltipClass?: string;
-  arrowClass?: string;
-  contentClass?: string;
+  triggerCss?: CssStyles;
+  tooltipCss?: CssStyles;
+  arrowCss?: CssStyles;
+  contentCss?: CssStyles;
   disabled?: boolean;
   triggers?: number;
   group?: string;
@@ -51,10 +49,10 @@ export const Tooltip = memo(
     {
       content,
       children,
-      triggerClass,
-      tooltipClass,
-      arrowClass,
-      contentClass,
+      triggerCss,
+      tooltipCss,
+      arrowCss,
+      contentCss,
       placement = 'top-end',
       disabled = false,
       onTriggerClick,
@@ -69,7 +67,6 @@ export const Tooltip = memo(
     ref
   ) {
     const id = useId();
-    const baseClasses = useStyles();
     const dispatch = useAppDispatch();
     const isOpen = useAppSelector(state => selectTooltipIsOpen(state, id, group));
     const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
@@ -196,7 +193,7 @@ export const Tooltip = memo(
     return (
       <>
         <div
-          className={clsx(baseClasses.trigger, triggerClass)}
+          className={css(baseStyles.trigger, triggerCss)}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onTouchStart={handleTouch}
@@ -207,11 +204,11 @@ export const Tooltip = memo(
         </div>
         <Popper
           open={isOpen}
-          className={clsx(
-            baseClasses.tooltip,
-            tooltipClass,
-            compact ? baseClasses.compact : undefined,
-            dark ? baseClasses.dark : undefined
+          className={css(
+            baseStyles.tooltip,
+            tooltipCss,
+            compact ? baseStyles.compact : undefined,
+            dark ? baseStyles.dark : undefined
           )}
           anchorEl={anchorEl}
           modifiers={modifiers}
@@ -221,8 +218,8 @@ export const Tooltip = memo(
           data-compact={compact ? 'true' : undefined}
           data-dark={dark ? 'true' : undefined}
         >
-          <div className={clsx(baseClasses.arrow, arrowClass)} ref={setArrowRef} />
-          <div className={clsx(baseClasses.content, contentClass)}>{content}</div>
+          <div className={cx('tooltipArrow', css(baseStyles.arrow, arrowCss))} ref={setArrowRef} />
+          <div className={cx('tooltipContent', css(baseStyles.content, contentCss))}>{content}</div>
         </Popper>
       </>
     );

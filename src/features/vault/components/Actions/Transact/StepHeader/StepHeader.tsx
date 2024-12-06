@@ -1,16 +1,16 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { ReactComponent as BackArrow } from '../../../../../../images/back-arrow.svg';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type StepHeaderProps = {
   onBack?: () => void;
   children: ReactNode;
 };
-export const StepHeader = memo<StepHeaderProps>(function StepHeader({ onBack, children }) {
+export const StepHeader = memo(function StepHeader({ onBack, children }: StepHeaderProps) {
   const classes = useStyles();
 
   return (

@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
@@ -11,7 +11,7 @@ import { Scrollable } from '../../../../../../components/Scrollable';
 import type { ListItemProps } from './ListItem';
 import { ListItem } from './ListItem';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const QuoteSelectStep = memo(function QuoteSelectStep() {
   const { t } = useTranslation();
@@ -32,7 +32,7 @@ export const QuoteSelectStep = memo(function QuoteSelectStep() {
     <div className={classes.container}>
       <StepHeader onBack={handleBack}>{t('Transact-SelectProvider')}</StepHeader>
       <div className={classes.select}>
-        <Scrollable className={classes.listContainer}>
+        <Scrollable css={styles.listContainer}>
           <div className={classes.list}>
             {quotes.map(quoteId => (
               <ListItem key={quoteId} quoteId={quoteId} onSelect={handleSelect} />

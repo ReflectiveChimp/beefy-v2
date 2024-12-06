@@ -62,7 +62,7 @@ type TvlShareTooltipProps = {
   breakdown: TvlBreakdownUnderlying;
 };
 
-export const TvlShareTooltip = memo<TvlShareTooltipProps>(function TvlShareTooltip({ breakdown }) {
+export const TvlShareTooltip = memo(function TvlShareTooltip({ breakdown }: TvlShareTooltipProps) {
   const platform = useAppSelector(state =>
     breakdown.underlyingPlatformId
       ? selectPlatformById(state, breakdown.underlyingPlatformId)

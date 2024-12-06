@@ -25,7 +25,14 @@ export enum Scale {
 const maxScale = Scale.Nonillion;
 
 // Scale Suffixes (Short Scale, i.e. 1000 × 1000^n, for n = 1... from million+)
-const scaleSuffixes: Record<Scale, { short: string; long: string; e: number }> = {
+const scaleSuffixes: Record<
+  Scale,
+  {
+    short: string;
+    long: string;
+    e: number;
+  }
+> = {
   [Scale.None]: { short: '', long: '', e: 0 },
   [Scale.Thousand]: { short: 'k', long: 'thousand', e: 3 },
   [Scale.Million]: { short: 'M', long: 'million', e: 6 },

@@ -1,31 +1,31 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  link: {
-    textDecoration: 'none' as const,
-  },
-  container: {
+export const styles = {
+  link: css.raw({
+    textDecoration: 'none',
+  }),
+  container: css.raw({
     marginTop: '16px',
-    backgroundColor: theme.palette.background.contentLight,
+    backgroundColor: 'background.content.light',
     padding: '16px',
     borderRadius: '12px',
     '&:Hover': {
-      backgroundColor: theme.palette.background.buttons.button,
+      backgroundColor: 'bayOfMany',
     },
-  },
-  title: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.light,
+  }),
+  title: css.raw({
+    textStyle: 'body.med',
+    color: 'text.light',
     display: 'flex',
-  },
-  icon: {
+  }),
+  icon: css.raw({
     height: '24px',
     width: '24px',
     marginRight: '8px',
-  },
-  content: {
+  }),
+  content: css.raw({
     marginTop: '16px',
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.middle,
-  },
-});
+    textStyle: 'body',
+    color: 'text.middle',
+  }),
+};

@@ -1,41 +1,41 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  label: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
+export const styles = {
+  label: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
     marginBottom: '8px',
-  },
-  network: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
+  }),
+  network: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
     marginTop: '12px',
-  },
-  networkLabel: {
+  }),
+  networkLabel: css.raw({
     marginRight: '8px',
-  },
-  networkButton: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
+  }),
+  networkButton: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
     display: 'flex',
     alignItems: 'center',
     background: 'transparent',
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
-    margin: 0,
-    padding: 0,
-    cursor: 'pointer' as const,
+    margin: '0',
+    padding: '0',
+    cursor: 'pointer',
     '&:hover, &:focus-visible': {
-      color: theme.palette.text.middle,
+      color: 'text.middle',
     },
-  },
-  networkIcon: {
+  }),
+  networkIcon: css.raw({
     marginRight: '8px',
     width: '20px',
     height: '20px',
-  },
-});
+  }),
+};

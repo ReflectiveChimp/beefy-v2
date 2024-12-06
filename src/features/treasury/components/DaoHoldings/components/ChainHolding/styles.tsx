@@ -1,144 +1,148 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
-  },
-  title: {
-    ...theme.typography.h3,
+    flexDirection: 'column',
+  }),
+  title: css.raw({
+    textStyle: 'h3',
     padding: '16px 24px',
     display: 'flex',
     columnGap: '12px',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: theme.palette.background.contentLight,
+    backgroundColor: 'background.content.light',
     borderRadius: '8px 8px 0px 0px',
 
-    [theme.breakpoints.down('md')]: {
+    lgDown: {
       padding: '16px',
     },
-  },
-  marketMakerAnnotation: {
-    position: 'relative' as const,
+  }),
+  marketMakerAnnotation: css.raw({
+    position: 'relative',
     bottom: '0.5em',
     fontSize: '0.5em',
-  },
-  icon: {
+  }),
+  icon: css.raw({
     height: '32px',
-  },
-  mmNameContainer: {
+  }),
+  mmNameContainer: css.raw({
     display: 'flex',
     alignItems: 'center',
-  },
-  nameContainer: {
+  }),
+  nameContainer: css.raw({
     display: 'flex',
     columnGap: '12px',
     alignItems: 'center',
-  },
-  mmName: {
-    color: theme.palette.text.light,
+  }),
+  mmName: css.raw({
+    color: 'text.light',
     paddingLeft: '12px',
-  },
-  chainName: { color: theme.palette.text.light },
-  usdValue: { color: theme.palette.text.light },
-  'headerNetwork-bsc': {
-    backgroundColor: 'rgba(240, 185, 11, 0.2)',
-  },
-  'headerNetwork-heco': {
-    backgroundColor: 'rgba(2, 148, 63, 0.2)',
-  },
-  'headerNetwork-avax': {
-    backgroundColor: 'rgba(231, 65, 66, 0.2)',
-  },
-  'headerNetwork-polygon': {
-    backgroundColor: 'rgba(245, 240, 253, 0.3)',
-  },
-  'headerNetwork-fantom': {
-    backgroundColor: 'rgba(25, 105, 255, 0.2)',
-  },
-  'headerNetwork-harmony': {
-    backgroundColor: 'rgba(0, 216, 175, 0.2)',
-  },
-  'headerNetwork-arbitrum': {
-    backgroundColor: 'rgba(40, 159, 239, 0.2)',
-  },
-  'headerNetwork-celo': {
-    backgroundColor: 'rgba(252, 254, 83, 0.14)',
-  },
-  'headerNetwork-moonriver': {
-    backgroundColor: 'rgba(6, 53, 61, 0.4)',
-  },
-  'headerNetwork-cronos': {
-    backgroundColor: 'rgba(18, 25, 38, 1)',
-  },
-  'headerNetwork-fuse': {
-    backgroundColor: 'rgba(180, 249, 186, 0.2)',
-  },
-  'headerNetwork-metis': {
-    backgroundColor: 'rgba(0, 207, 255, 0.4)',
-  },
-  'headerNetwork-aurora': {
-    backgroundColor: 'rgba(112, 212, 75, 0.2)',
-  },
-  'headerNetwork-moonbeam': {
-    backgroundColor: 'rgba(149, 143, 220, 0.4)',
-  },
-  'headerNetwork-optimism': {
-    backgroundColor: 'rgba(255, 4, 32, 0.2)',
-  },
-  'headerNetwork-emerald': {
-    backgroundColor: 'rgba(1, 146, 246, 0.2)',
-  },
-  'headerNetwork-kava': {
-    backgroundColor: 'rgba(255, 86, 79, 0.2)',
-  },
-  'headerNetwork-ethereum': {
-    backgroundColor: 'rgba(98, 126, 233, 0.2)',
-  },
-  'headerNetwork-canto': {
-    backgroundColor: 'rgba(6, 252, 153, 0.2)',
-  },
-  'headerNetwork-zksync': {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-  },
-  'headerNetwork-zkevm': {
-    backgroundColor: 'rgba(130, 71, 228, 0.2)',
-  },
-  'headerNetwork-base': {
-    backgroundColor: 'rgba(0, 82, 255, 0.2)',
-  },
-  'headerNetwork-gnosis': {
-    backgroundColor: 'rgba(19, 54, 41, 0.4)',
-  },
-  'headerNetwork-linea': {
-    backgroundColor: 'rgba(18, 18, 18, 0.2)',
-  },
-  'headerNetwork-mantle': {
-    backgroundColor: 'rgba(18, 18, 18, 0.2)',
-  },
-  'headerNetwork-fraxtal': {
-    backgroundColor: 'rgba(18, 18, 18, 0.2)',
-  },
-  'headerNetwork-mode': {
-    backgroundColor: 'rgba(18, 18, 18, 0.2)',
-  },
-  'headerNetwork-manta': {
-    backgroundColor: 'rgba(18, 18, 18, 0.2)',
-  },
-  'headerNetwork-real': {
-    backgroundColor: 'rgba(28, 18, 44, 0.4)',
-  },
-  'headerNetwork-sei': {
-    backgroundColor: 'rgba(28, 18, 44, 0.4)',
-  },
-  'headerNetwork-rootstock': {
-    backgroundColor: 'rgba(28, 18, 44, 0.4)',
-  },
-  'headerNetwork-scroll': {
-    backgroundColor: 'rgb(201, 203, 206)',
-  },
-  'headerMM-system9': {
-    backgroundColor: 'rgba(243, 243, 200, 0.5)',
-  },
-});
+  }),
+  chainName: css.raw({
+    color: 'text.light',
+  }),
+  usdValue: css.raw({
+    color: 'text.light',
+  }),
+  'headerNetwork-bsc': css.raw({
+    backgroundColor: 'extracted2911o20',
+  }),
+  'headerNetwork-heco': css.raw({
+    backgroundColor: 'extracted4048o20',
+  }),
+  'headerNetwork-avax': css.raw({
+    backgroundColor: 'extracted3560o20',
+  }),
+  'headerNetwork-polygon': css.raw({
+    backgroundColor: 'extracted785o29',
+  }),
+  'headerNetwork-fantom': css.raw({
+    backgroundColor: 'extracted3886o20',
+  }),
+  'headerNetwork-harmony': css.raw({
+    backgroundColor: 'extracted1302',
+  }),
+  'headerNetwork-arbitrum': css.raw({
+    backgroundColor: 'extracted656',
+  }),
+  'headerNetwork-celo': css.raw({
+    backgroundColor: 'extracted895',
+  }),
+  'headerNetwork-moonriver': css.raw({
+    backgroundColor: 'extracted1870o40',
+  }),
+  'headerNetwork-cronos': css.raw({
+    backgroundColor: 'extracted1254',
+  }),
+  'headerNetwork-fuse': css.raw({
+    backgroundColor: 'extracted3379o20',
+  }),
+  'headerNetwork-metis': css.raw({
+    backgroundColor: 'extracted21o40',
+  }),
+  'headerNetwork-aurora': css.raw({
+    backgroundColor: 'extracted2394o20',
+  }),
+  'headerNetwork-moonbeam': css.raw({
+    backgroundColor: 'extracted4093o40',
+  }),
+  'headerNetwork-optimism': css.raw({
+    backgroundColor: 'extracted1370o20',
+  }),
+  'headerNetwork-emerald': css.raw({
+    backgroundColor: 'extracted308o20',
+  }),
+  'headerNetwork-kava': css.raw({
+    backgroundColor: 'extracted3790o20',
+  }),
+  'headerNetwork-ethereum': css.raw({
+    backgroundColor: 'extracted4068o20',
+  }),
+  'headerNetwork-canto': css.raw({
+    backgroundColor: 'extracted1459o20',
+  }),
+  'headerNetwork-zksync': css.raw({
+    backgroundColor: 'blacko29',
+  }),
+  'headerNetwork-zkevm': css.raw({
+    backgroundColor: 'extracted1174o20',
+  }),
+  'headerNetwork-base': css.raw({
+    backgroundColor: 'extracted2199',
+  }),
+  'headerNetwork-gnosis': css.raw({
+    backgroundColor: 'extracted2923o40',
+  }),
+  'headerNetwork-linea': css.raw({
+    backgroundColor: 'extracted1099o20',
+  }),
+  'headerNetwork-mantle': css.raw({
+    backgroundColor: 'extracted1099o20',
+  }),
+  'headerNetwork-fraxtal': css.raw({
+    backgroundColor: 'extracted1099o20',
+  }),
+  'headerNetwork-mode': css.raw({
+    backgroundColor: 'extracted1099o20',
+  }),
+  'headerNetwork-manta': css.raw({
+    backgroundColor: 'extracted1099o20',
+  }),
+  'headerNetwork-real': css.raw({
+    backgroundColor: 'extracted1571',
+  }),
+  'headerNetwork-sei': css.raw({
+    backgroundColor: 'extracted1571',
+  }),
+  'headerNetwork-rootstock': css.raw({
+    backgroundColor: 'extracted1571',
+  }),
+  'headerNetwork-scroll': css.raw({
+    backgroundColor: 'extracted2530',
+  }),
+  'headerMM-system9': css.raw({
+    backgroundColor: 'extracted1306',
+  }),
+};

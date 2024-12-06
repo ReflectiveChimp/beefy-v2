@@ -170,7 +170,9 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
       price: BigNumber | undefined;
       token: TokenEntity | undefined;
     };
-    type CurveTokenOptionWithPrice = CurveTokenOption & { price: BigNumber };
+    type CurveTokenOptionWithPrice = CurveTokenOption & {
+      price: BigNumber;
+    };
 
     return uniqBy(
       methods

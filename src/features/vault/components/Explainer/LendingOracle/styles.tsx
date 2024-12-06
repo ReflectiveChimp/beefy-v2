@@ -1,31 +1,31 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  apyTitle: {
-    ...theme.typography['h3'],
-    color: theme.palette.text.middle,
+export const styles = {
+  apyTitle: css.raw({
+    textStyle: 'h3',
+    color: 'text.middle',
     marginBottom: '8px',
-  },
-  apys: {
+  }),
+  apys: css.raw({
     display: 'flex',
-    flexWrap: 'wrap' as const,
+    flexWrap: 'wrap',
     gap: '12px 32px',
-  },
-  apy: {},
-  apyLabel: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-  },
-  apyValue: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
-  },
-  oracleLink: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
-    textDecoration: 'none' as const,
+  }),
+  apy: css.raw({}),
+  apyLabel: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+  }),
+  apyValue: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
+  }),
+  oracleLink: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
+    textDecoration: 'none',
     '&:hover': {
-      cursor: 'pointer' as const,
+      cursor: 'pointer',
     },
-  },
-});
+  }),
+};

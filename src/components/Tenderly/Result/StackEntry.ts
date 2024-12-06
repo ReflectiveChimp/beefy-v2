@@ -125,7 +125,7 @@ export class StackEntry {
     };
   }
 
-  getType() {
+  getType(): StackEntryType {
     const trace = this.trace;
 
     if (trace.error_op === 'REVERT' && trace.calls === null) {
@@ -140,6 +140,11 @@ export class StackEntry {
     } else if (callType === 'jumpdest') {
       return { type: callType, label: 'JUMP' };
     }
-    return { type: callType, label: callType.toUpperCase() };
+    return { type: 'other', label: callType.toUpperCase() };
   }
 }
+
+type StackEntryType = {
+  type: 'revert' | 'call' | 'delegatecall' | 'jumpdest' | 'unknown' | 'other';
+  label: string;
+};

@@ -10,6 +10,6 @@ const backdropProps: MuiModalProps['BackdropProps'] = {
 };
 
 export type ModalProps = Omit<MuiModalProps, 'BackdropComponent' | 'BackdropProps'>;
-export const Modal = memo<ModalProps>(function Modal({ children, ...rest }) {
+export const Modal = memo(function Modal({ children, ...rest }: ModalProps) {
   return <MuiModal {...rest} children={children} BackdropProps={backdropProps} />;
 });

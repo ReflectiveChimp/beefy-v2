@@ -1,15 +1,15 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
+export const styles = {
+  container: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
     display: 'flex',
     columnGap: '8px',
     alignItems: 'center',
-  },
-  icon: {
+  }),
+  icon: css.raw({
     width: '24px',
     height: '24px',
-  },
-});
+  }),
+};

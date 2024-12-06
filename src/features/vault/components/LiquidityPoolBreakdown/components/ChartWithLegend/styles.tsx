@@ -1,22 +1,22 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  holder: {
+export const styles = {
+  holder: css.raw({
     padding: '24px',
     display: 'flex',
     columnGap: '24px',
     alignItems: 'center',
-    [theme.breakpoints.up('sm')]: {
+    sm: {
       columnGap: '48px',
     },
-    [theme.breakpoints.up('lg')]: {
-      flexDirection: 'column' as const,
-      borderRight: 'solid 2px #363B63',
+    lg: {
+      flexDirection: 'column',
+      borderRight: 'solid 2px bayOfMany',
     },
-  },
-  legend: {
-    [theme.breakpoints.up('lg')]: {
+  }),
+  legend: css.raw({
+    lg: {
       marginTop: '24px',
     },
-  },
-});
+  }),
+};

@@ -1,17 +1,17 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  mobileStat: {
-    ...theme.typography['body-sm'],
+export const styles = {
+  mobileStat: css.raw({
+    textStyle: 'body.sm',
     display: 'flex',
     alignItems: 'center',
     columnGap: '8px',
-    color: theme.palette.text.dark,
-    [theme.breakpoints.down('md')]: {
+    color: 'text.dark',
+    lgDown: {
       justifyContent: 'space-between',
     },
-  },
-  value: {
-    color: theme.palette.text.middle,
-  },
-});
+  }),
+  value: css.raw({
+    color: 'text.middle',
+  }),
+};

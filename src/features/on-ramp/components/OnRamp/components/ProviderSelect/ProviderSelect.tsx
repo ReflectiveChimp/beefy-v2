@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
@@ -7,7 +7,7 @@ import {
   selectQuoteProviders,
   selectSelectedQuoteOrUndefined,
 } from '../../../../../data/selectors/on-ramp';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 import ContentLoader from 'react-content-loader';
 import { ProviderIcon } from '../ProviderIcon';
 import { useTranslation } from 'react-i18next';
@@ -16,10 +16,12 @@ import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import { PROVIDERS } from '../../providers';
 import { ReactComponent as ChevronRight } from '@repo/images/icons/mui/ChevronRight.svg';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export type ProviderSelectProps = { pending: boolean };
-export const ProviderSelect = memo<ProviderSelectProps>(function ProviderSelect({ pending }) {
+export type ProviderSelectProps = {
+  pending: boolean;
+};
+export const ProviderSelect = memo(function ProviderSelect({ pending }: ProviderSelectProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const quote = useAppSelector(selectSelectedQuoteOrUndefined);
@@ -42,12 +44,9 @@ export const ProviderSelect = memo<ProviderSelectProps>(function ProviderSelect(
       </div>
       <button
         onClick={canSwitchProvider ? handleClick : undefined}
-        className={clsx(
-          classes.button,
-          canSwitchProvider ? classes.clickable : classes.unclickable
-        )}
+        className={css(styles.button, canSwitchProvider ? styles.clickable : styles.unclickable)}
       >
-        <div className={clsx(classes.icon, pending ? classes.iconLoading : classes.iconProvider)}>
+        <div className={css(styles.icon, pending ? styles.iconLoading : styles.iconProvider)}>
           {quote && quote.provider ? <ProviderIcon provider={quote.provider} /> : null}
         </div>
         {pending ? (

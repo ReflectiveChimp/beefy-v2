@@ -1,29 +1,26 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core';
+import { css, type CssStyles } from '@repo/styles/css';
 import { styles } from './styles';
 import { VaultLabelledStat } from '../VaultLabelledStat';
-
-const useStyles = makeStyles(styles);
 
 export type VaultValueStatProps = {
   label: string;
   tooltip?: ReactNode;
   value: ReactNode;
   subValue?: ReactNode;
-  className?: string;
+  css?: CssStyles;
   blur?: boolean;
   loading: boolean;
   boosted?: boolean;
   showLabel?: boolean;
   shouldTranslate?: boolean;
-  contentClassName?: string;
-  triggerClassName?: string;
-  labelClassName?: string;
+  contentCss?: CssStyles;
+  triggerCss?: CssStyles;
+  labelCss?: CssStyles;
 };
-export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat({
+export const VaultValueStat = memo(function VaultValueStat({
   label,
   tooltip,
   value,
@@ -33,26 +30,27 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
   boosted,
   showLabel = true,
   shouldTranslate = false,
-  className,
-  contentClassName,
-  triggerClassName,
-  labelClassName,
-}) {
-  const classes = useStyles();
+  css: cssProp,
+  contentCss,
+  triggerCss,
+  labelCss,
+}: VaultValueStatProps) {
   const { t } = useTranslation();
 
   return (
     <VaultLabelledStat
-      triggerClassName={clsx(classes.value, triggerClassName, {
-        [classes.blurValue]: blur,
-        [classes.boostedValue]: boosted,
-      })}
+      triggerCss={css.raw(
+        styles.value,
+        triggerCss,
+        blur && styles.blurValue,
+        boosted && styles.boostedValue
+      )}
       showLabel={showLabel}
       label={t(label)}
       tooltip={loading ? null : tooltip}
-      className={className}
-      contentClassName={contentClassName}
-      labelClassName={labelClassName}
+      css={cssProp}
+      contentCss={contentCss}
+      labelCss={labelCss}
       subValue={subValue}
       blur={blur}
       boosted={boosted}

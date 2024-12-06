@@ -1,94 +1,79 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  header: {
+export const styles = {
+  header: css.raw({
     display: 'grid',
     gap: '1px',
     gridTemplateColumns: 'repeat(4, 1fr)',
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       gridTemplateColumns: 'repeat(2, 1fr)',
     },
-  },
-  itemContainer: {
+  }),
+  itemContainer: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     justifyContent: 'flex-start',
     padding: '16px 24px',
-    backgroundColor: theme.palette.background.contentPrimary,
-    [theme.breakpoints.down('sm')]: {
+    backgroundColor: 'background.content',
+    mdDown: {
       padding: '16px',
     },
-  },
+  }),
 
-  label: {
-    ...theme.typography['body-sm-med'],
-    fontWeight: 700,
-    color: theme.palette.text.dark,
-    textTransform: 'uppercase' as const,
-  },
-  value: {
+  label: css.raw({
+    textStyle: 'body.sm.med',
+    fontWeight: '700',
+    color: 'text.dark',
+    textTransform: 'uppercase',
+  }),
+  value: css.raw({
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
-    fontWeight: 500,
+    textStyle: 'body.med',
+    color: 'text.middle',
+    fontWeight: '500',
     '& span': {
       textDecoration: 'none',
-      ...theme.typography['subline-sm'],
-      color: theme.palette.text.dark,
-      fontWeight: 700,
+      textStyle: 'subline.sm',
+      color: 'text.dark',
+      fontWeight: '700',
     },
-  },
-  greenValue: {
-    color: theme.palette.primary.main,
-  },
-  redValue: {
-    color: theme.palette.background.indicators.error,
-  },
-  subValue: {
-    ...theme.typography['body-sm-med'],
-    color: theme.palette.text.dark,
-  },
-  withTooltip: {
+  }),
+  greenValue: css.raw({
+    color: 'green',
+  }),
+  redValue: css.raw({
+    color: 'indicators.error',
+  }),
+  subValue: css.raw({
+    textStyle: 'body.sm.med',
+    color: 'text.dark',
+  }),
+  withTooltip: css.raw({
     textDecoration: 'underline 1px dotted',
-    cursor: 'default' as const,
-  },
-  textOverflow: {
+    cursor: 'default',
+  }),
+  textOverflow: css.raw({
     overflow: 'hidden',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-  },
-  labelContainer: {
+  }),
+  labelContainer: css.raw({
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
     '& svg': {
-      color: theme.palette.text.dark,
+      color: 'text.dark',
       height: '16px',
       width: '16px',
       '&:hover': {
         cursor: 'pointer',
       },
     },
-  },
-  center: {
+  }),
+  center: css.raw({
     display: 'flex',
     alignItems: 'center',
-  },
-  alignMobileRight: {
-    [theme.breakpoints.down('md')]: {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      '& $value': {
-        justifyContent: 'flex-end',
-      },
-      '& $labelContainer': {
-        justifyContent: 'flex-end',
-      },
-      '& $subValue': {
-        textAlign: 'right',
-      },
-    },
-  },
-});
+  }),
+};

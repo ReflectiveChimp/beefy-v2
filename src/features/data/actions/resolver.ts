@@ -16,7 +16,9 @@ export type ResolveAddressToDomainArgs = {
 export const resolveAddressToDomain = createAsyncThunk<
   ResolveFulfilledPayload,
   ResolveAddressToDomainArgs,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'resolver/addressToDomain',
   async ({ address }, { getState }) => {
@@ -64,7 +66,9 @@ export type ResolveDomainToAddressArgs = {
 export const resolveDomainToAddress = createAsyncThunk<
   ResolveFulfilledPayload,
   ResolveDomainToAddressArgs,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'resolver/domainToAddress',
   async ({ domain }, { getState }) => {

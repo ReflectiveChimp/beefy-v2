@@ -1,7 +1,8 @@
 import type { FC } from 'react';
+import { type CssStyles } from '@repo/styles/css';
 
 export type BadgeComponentProps = {
-  className?: string;
+  css?: CssStyles;
   spacer?: boolean;
 };
 

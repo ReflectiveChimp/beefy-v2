@@ -1,20 +1,20 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  field: {},
-  label: {
-    ...theme.typography['subline-sm'],
+export const styles = {
+  field: css.raw({}),
+  label: css.raw({
+    textStyle: 'subline.sm',
     lineHeight: '1em',
-  },
-  inputHolder: {},
-  inputHelpHolder: {
-    background: theme.palette.background.contentLight,
+  }),
+  inputHolder: css.raw({}),
+  inputHelpHolder: css.raw({
+    background: 'background.content.light',
     borderRadius: '8px',
-  },
-  input: {
-    ...theme.typography['body-lg'],
+  }),
+  input: css.raw({
+    textStyle: 'body',
     lineHeight: '20px',
-    background: theme.palette.background.searchInputBg,
+    background: 'purpleDarkest',
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
@@ -22,31 +22,31 @@ export const styles = (theme: Theme) => ({
     width: '100%',
     display: 'flex',
     padding: '12px 48px 12px 16px',
-    color: theme.palette.text.light,
+    color: 'text.light',
     height: 'auto',
-  },
-  help: {
-    ...theme.typography['body-sm'],
+  }),
+  help: css.raw({
+    textStyle: 'body.sm',
     padding: '12px 16px',
     fontSize: '16px',
     alignItems: 'center',
-    color: theme.palette.text.middle,
-  },
-  helpIcon: {
-    width: 20,
-    height: 20,
+    color: 'text.middle',
+  }),
+  helpIcon: css.raw({
+    width: '20',
+    height: '20',
     display: 'block',
-  },
-  helpText: {
+  }),
+  helpText: css.raw({
     flex: '1 1 auto',
-  },
-  helpLink: {},
-  helpLinkIcon: {
-    width: 16,
-    height: 16,
+  }),
+  helpLink: css.raw({}),
+  helpLinkIcon: css.raw({
+    width: '16',
+    height: '16',
     display: 'block',
-  },
-  helpLinkAnchor: {
+  }),
+  helpLinkAnchor: css.raw({
     display: 'flex',
-  },
-});
+  }),
+};

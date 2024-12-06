@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Collapsable } from '../../../../components/Collapsable';
@@ -8,13 +8,13 @@ import { selectIsPoolTogether } from '../../../data/selectors/partners';
 import { styles } from './styles';
 import { PoolTogetherCard } from '../PoolTogetherCard';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface GamingCardsProps {
   vaultId: VaultEntity['id'];
 }
 
-export const GamingCards = memo<GamingCardsProps>(function GamingCards({ vaultId }) {
+export const GamingCards = memo(function GamingCards({ vaultId }: GamingCardsProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const isPoolTogether = useAppSelector(state => selectIsPoolTogether(state, vaultId));
@@ -25,7 +25,7 @@ export const GamingCards = memo<GamingCardsProps>(function GamingCards({ vaultId
 
   return (
     <div className={classes.container}>
-      <Collapsable openByDefault={true} titleClassName={classes.title} title={t('Gaming')}>
+      <Collapsable openByDefault={true} titleCss={styles.title} title={t('Gaming')}>
         {isPoolTogether && <PoolTogetherCard vaultId={vaultId} />}
       </Collapsable>
     </div>

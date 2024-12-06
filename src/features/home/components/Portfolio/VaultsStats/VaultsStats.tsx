@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { formatLargeUsd } from '../../../../../helpers/format';
 import { StatLoader } from '../../../../../components/StatLoader';
@@ -11,7 +12,7 @@ import { useAppSelector } from '../../../../../store';
 import { Modal } from '../../../../../components/Modal';
 import infoIcon from '../../../../../images/icons/i.svg';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 export const VaultsStats = () => {
   const [isTvlModalOpen, setIsTvlModalOpen] = useState<boolean>(false);
   const classes = useStyles();

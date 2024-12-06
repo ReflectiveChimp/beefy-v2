@@ -7,8 +7,8 @@ import { selectAllVisibleVaultIds, selectVaultById } from '../selectors/vaults';
 import { isFulfilledResult } from '../../../helpers/promises';
 import type { VaultEntity } from '../entities/vault';
 import {
-  featureFlag_OdosSwapSupport,
   featureFlag_kyberSwapSupport,
+  featureFlag_OdosSwapSupport,
   featureFlag_oneInchSupport,
 } from '../utils/feature-flags';
 import type { ChainEntity } from '../entities/chain';
@@ -21,7 +21,9 @@ interface FetchAllZapsFulfilledPayload {
 export const fetchZapConfigsAction = createAsyncThunk<
   FetchAllZapsFulfilledPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('zap/fetchConfigs', async () => {
   const api = await getConfigApi();
   const zaps = await api.fetchZapConfigs();
@@ -36,7 +38,9 @@ interface FetchAllSwapAggregatorsFulfilledPayload {
 export const fetchZapSwapAggregatorsAction = createAsyncThunk<
   FetchAllSwapAggregatorsFulfilledPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('zap/fetchSwapAggregators', async () => {
   const api = await getConfigApi();
   const aggregators = await api.fetchZapSwapAggregators();
@@ -51,7 +55,9 @@ export type CalculateZapAvailabilityFulfilledPayload = {
 export const calculateZapAvailabilityAction = createAsyncThunk<
   CalculateZapAvailabilityFulfilledPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('zap/calculateZapAvailability', async (_, { getState }) => {
   const state = getState();
   const allVaults = selectAllVisibleVaultIds(state)
@@ -78,7 +84,9 @@ export type FetchZapAggregatorTokenSupportFulfilledPayload = ZapAggregatorTokenS
 export const fetchZapAggregatorTokenSupportAction = createAsyncThunk<
   FetchZapAggregatorTokenSupportFulfilledPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('zap/fetchAggregatorTokenSupport', async () => {
   const api = await getBeefyApi();
   const supportByChain = await api.getZapAggregatorTokenSupport();
@@ -116,7 +124,9 @@ export interface FetchZapAmmsFulfilledPayload {
 export const fetchZapAmmsAction = createAsyncThunk<
   FetchZapAmmsFulfilledPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('zap/fetchAmms', async () => {
   const api = await getConfigApi();
   const amms = await api.fetchZapAmms();

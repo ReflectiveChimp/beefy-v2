@@ -1,7 +1,6 @@
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Theme } from '@material-ui/core';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { PlatformDropdownFilter } from '../PlatformFilters';
 import { styles } from './styles';
 import { VaultCategoryDropdownFilter } from '../VaultCategoryFilters';
@@ -10,19 +9,19 @@ import { ShownVaultsCount } from './ShownVaultsCount';
 import { AssetTypeDropdownFilter } from '../AssetTypeFilters';
 import { MinTvlFilter } from '../MinTvlFilter';
 import { StrategyTypeDropdownFilter } from '../StrategyTypeFilters';
+import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ExtendedFiltersProps = {
   desktopView: boolean;
 };
-export const ExtendedFilters = memo<ExtendedFiltersProps>(function ExtendedFilters({
+export const ExtendedFilters = memo(function ExtendedFilters({
   desktopView,
-}) {
+}: ExtendedFiltersProps) {
   const { t } = useTranslation();
   const classes = useStyles();
-
-  const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.only('xs'), { noSsr: true });
+  const mobileView = useBreakpoint({ to: 'xs' });
 
   const platformFilterPlacement = useMemo(() => {
     return mobileView ? 'top-start' : 'bottom-start';
@@ -30,34 +29,22 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ExtendedFilte
 
   return (
     <div className={classes.extendedFilters}>
-      <ShownVaultsCount className={classes.shownVaultsCount} />
-      <CheckboxFilter className={classes.checkbox} filter="onlyBoosted" label={t('Filter-Boost')} />
-      <CheckboxFilter
-        className={classes.checkbox}
-        filter="onlyEarningPoints"
-        label={t('Filter-Points')}
-      />
-      <CheckboxFilter
-        className={classes.checkbox}
-        filter="onlyZappable"
-        label={t('Filter-Zappable')}
-      />
-      <CheckboxFilter
-        className={classes.checkbox}
-        filter="onlyRetired"
-        label={t('Filter-Retired')}
-      />
-      <CheckboxFilter className={classes.checkbox} filter="onlyPaused" label={t('Filter-Paused')} />
+      <ShownVaultsCount css={styles.shownVaultsCount} />
+      <CheckboxFilter css={styles.checkbox} filter="onlyBoosted" label={t('Filter-Boost')} />
+      <CheckboxFilter css={styles.checkbox} filter="onlyEarningPoints" label={t('Filter-Points')} />
+      <CheckboxFilter css={styles.checkbox} filter="onlyZappable" label={t('Filter-Zappable')} />
+      <CheckboxFilter css={styles.checkbox} filter="onlyRetired" label={t('Filter-Retired')} />
+      <CheckboxFilter css={styles.checkbox} filter="onlyPaused" label={t('Filter-Paused')} />
       <MinTvlFilter />
       {!desktopView ? (
         <>
-          <VaultCategoryDropdownFilter className={classes.selector} />
-          <AssetTypeDropdownFilter className={classes.selector} />
-          <StrategyTypeDropdownFilter className={classes.selector} />
+          <VaultCategoryDropdownFilter css={styles.selector} />
+          <AssetTypeDropdownFilter css={styles.selector} />
+          <StrategyTypeDropdownFilter css={styles.selector} />
         </>
       ) : null}
 
-      <PlatformDropdownFilter className={classes.selector} placement={platformFilterPlacement} />
+      <PlatformDropdownFilter css={styles.selector} placement={platformFilterPlacement} />
     </div>
   );
 });

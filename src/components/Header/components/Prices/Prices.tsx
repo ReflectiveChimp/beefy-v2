@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import {
   type CSSProperties,
   memo,
@@ -22,7 +22,7 @@ import baseIcon from '../../../../images/networks/base.svg';
 import ethIcon from '../../../../images/networks/ethereum.svg';
 import llamaSwapIcon from '../../../../images/icons/llama-swap.png';
 import { Tooltip } from '../../../Tooltip';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import {
   selectVaultById,
   selectVaultExistsById,
@@ -33,7 +33,7 @@ import { addTokenToWalletAction } from '../../../../features/data/actions/add-to
 import { ReactComponent as AccountBalanceWallet } from '@repo/images/icons/mui/AccountBalanceWallet.svg';
 import { TRIGGERS } from '../../../Tooltip/constants';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type Token = {
   symbol: string;
@@ -107,14 +107,14 @@ type AddToWalletProps = {
   style?: CSSProperties;
 };
 
-const AddToWallet = memo<AddToWalletProps>(function AddToWallet({
+const AddToWallet = memo(function AddToWallet({
   tokenAddress,
   customIconUrl,
   title,
   chainId,
   children,
   style,
-}) {
+}: AddToWalletProps) {
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const handleAddToken = useCallback(() => {
@@ -135,17 +135,17 @@ const AddToWallet = memo<AddToWalletProps>(function AddToWallet({
 });
 
 type NavTokenProps = {
-  className?: string;
+  css?: CssStyles;
   token: Token;
 };
 
-const NavToken = memo<NavTokenProps>(function NavToken({ token, className }) {
+const NavToken = memo(function NavToken({ token, css: cssProp }: NavTokenProps) {
   const { symbol, oracleId, icon } = token;
   const classes = useStyles();
   const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, oracleId));
 
   return (
-    <div className={clsx(classes.navToken, className)}>
+    <div className={css(styles.navToken, cssProp)}>
       <img alt={symbol} src={icon} height={24} className={classes.navIcon} />
       {formatLargeUsd(price, { decimalsUnder: 2 })}
     </div>
@@ -153,11 +153,11 @@ const NavToken = memo<NavTokenProps>(function NavToken({ token, className }) {
 });
 
 type TooltipTokenProps = {
-  className?: string;
+  css?: CssStyles;
   token: Token;
 };
 
-const TooltipToken = memo<TooltipTokenProps>(function TooltipToken({ token }) {
+const TooltipToken = memo(function TooltipToken({ token }: TooltipTokenProps) {
   const { symbol, oracleId, icon, explorer, llamaSwapUrl, address, walletIconUrl, chainId } = token;
   const classes = useStyles();
   const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, oracleId));
@@ -174,7 +174,12 @@ const TooltipToken = memo<TooltipTokenProps>(function TooltipToken({ token }) {
         title={`View at ${explorer.name}`}
         className={classes.iconLink}
       >
-        <img alt={explorer.name} src={explorer.icon} height={24} className={classes.icon} />
+        <img
+          alt={explorer.name}
+          src={explorer.icon}
+          height={24}
+          className={css(styles.icon, styles.iconLinkIcon)}
+        />
       </a>
       {llamaSwapUrl ? (
         <a
@@ -184,7 +189,12 @@ const TooltipToken = memo<TooltipTokenProps>(function TooltipToken({ token }) {
           title={`Buy via LlamaSwap`}
           className={classes.iconLink}
         >
-          <img alt={'LlamaSwap'} src={llamaSwapIcon} height={24} className={classes.icon} />
+          <img
+            alt={'LlamaSwap'}
+            src={llamaSwapIcon}
+            height={24}
+            className={css(styles.icon, styles.iconLinkIcon)}
+          />
         </a>
       ) : null}
       <AddToWallet
@@ -193,7 +203,7 @@ const TooltipToken = memo<TooltipTokenProps>(function TooltipToken({ token }) {
         tokenAddress={address}
         customIconUrl={walletIconUrl}
       >
-        <AccountBalanceWallet className={classes.icon} />
+        <AccountBalanceWallet className={css(styles.icon, styles.iconLinkIcon)} />
       </AddToWallet>
     </>
   );
@@ -260,7 +270,7 @@ export const Prices = memo(function Prices() {
       <Tooltip
         content={<TooltipContent />}
         triggers={TRIGGERS.CLICK}
-        triggerClass={classes.trigger}
+        triggerCss={styles.trigger}
         propagateTooltipClick={shouldPropagate}
         dark={true}
       >
@@ -268,12 +278,12 @@ export const Prices = memo(function Prices() {
           <NavToken
             key={i}
             token={token}
-            className={clsx({
-              [classes.face]: true,
-              [classes.current]: i === current,
-              [classes.next]: i === next,
-              [classes.hidden]: i !== current && i !== next,
-            })}
+            css={css.raw(
+              styles.face,
+              i === current && styles.current,
+              i === next && styles.next,
+              i !== current && i !== next && styles.hidden
+            )}
           />
         ))}
       </Tooltip>

@@ -25,7 +25,9 @@ export interface FetchAllApyFulfilledPayload {
 export const fetchApyAction = createAsyncThunk<
   FetchAllApyFulfilledPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('apy/fetchApy', async (_, { getState }) => {
   const api = await getBeefyApi();
   const prices = await api.getApyBreakdown();
@@ -46,7 +48,9 @@ function sumTotalApyComponents(total: TotalApy, fields: Array<keyof TotalApy>): 
 export const recalculateTotalApyAction = createAsyncThunk<
   RecalculateTotalApyPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('apy/recalculateTotalApy', async (_, { getState }) => {
   const state = getState();
   const vaultIds = selectAllVaultIdsIncludingHidden(state); // Hidden: OK

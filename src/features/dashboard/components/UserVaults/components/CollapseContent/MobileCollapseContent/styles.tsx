@@ -1,23 +1,23 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '2px',
     marginTop: '2px',
-  },
-  toggleContainer: {
+  }),
+  toggleContainer: css.raw({
     padding: '16px',
-    backgroundColor: theme.palette.background.contentDark,
+    backgroundColor: 'background.content.dark',
     display: 'flex',
     justifyContent: 'center',
-  },
-  buttonText: {
-    ...theme.typography['body-sm-med'],
-  },
-  select: {
+  }),
+  buttonText: css.raw({
+    textStyle: 'body.sm.med',
+  }),
+  select: css.raw({
     width: '100%',
-    backgroundColor: theme.palette.background.contentPrimary,
-  },
-});
+    backgroundColor: 'background.content',
+  }),
+};

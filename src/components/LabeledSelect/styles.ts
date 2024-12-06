@@ -1,100 +1,97 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  select: {
-    ...theme.typography['body-lg-med'],
-    backgroundColor: theme.palette.background.contentDark,
-    border: `solid 2px ${theme.palette.background.contentPrimary}`,
+export const styles = {
+  select: css.raw({
+    textStyle: 'body.med',
+    backgroundColor: 'background.content.dark',
+    border: 'solid 2px {colors.background.content}',
     borderRadius: '8px',
-    minWidth: 0,
+    minWidth: '0',
     width: 'fit-content',
-    color: theme.palette.text.middle,
-    padding: `${8 - 2}px ${16 - 2}px`,
+    color: 'text.middle',
+    padding: '6px 14px',
     cursor: 'pointer',
-    userSelect: 'none' as const,
+    userSelect: 'none',
     boxShadow: 'none',
-    textAlign: 'left' as const,
+    textAlign: 'left',
     '&:hover': {
       boxShadow: 'none',
     },
-    '&$selectOpen': {
-      color: theme.palette.text.light,
-    },
-  },
-  selectCurrent: {
+  }),
+  selectCurrent: css.raw({
     display: 'flex',
     alignItems: 'center',
-    minWidth: 0,
-  },
-  selectLabel: {
-    flexShrink: 0,
-    flexGrow: 0,
-    color: theme.palette.text.dark,
+    minWidth: '0',
+  }),
+  selectLabel: css.raw({
+    flexShrink: '0',
+    flexGrow: '0',
+    color: 'text.dark',
     marginRight: '4px',
-  },
-  selectValue: {
-    flexShrink: 1,
-    flexGrow: 0,
-    minWidth: 0,
+  }),
+  selectValue: css.raw({
+    flexShrink: '1',
+    flexGrow: '0',
+    minWidth: '0',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
     marginRight: '4px',
-  },
-  selectIcon: {
-    flexShrink: 0,
-    flexGrow: 0,
+  }),
+  selectIcon: css.raw({
+    flexShrink: '0',
+    flexGrow: '0',
     marginLeft: 'auto',
     fill: 'currentColor',
-  },
-  selectFullWidth: {
+  }),
+  selectFullWidth: css.raw({
     width: '100%',
-  },
-  selectBorderless: {
-    borderWidth: 0,
-    padding: `8px 16px`,
-  },
-  selectOpen: {
-    color: theme.palette.text.light,
+  }),
+  selectBorderless: css.raw({
+    borderWidth: '0',
+    padding: '8px 16px',
+  }),
+  selectOpen: css.raw({
+    color: 'text.light',
     '& svg': {
-      color: theme.palette.text.light,
+      color: 'text.light',
     },
-    '& $selectIcon': {
-      transform: 'rotateX(180deg)',
-    },
-  },
-  selectDisabled: {
-    pointerEvents: 'none' as const,
-  },
-  dropdown: {
-    ...theme.typography['body-lg-med'],
-    zIndex: 1000,
-    border: `2px solid ${theme.palette.background.contentLight}`,
+  }),
+  selectOpenIcon: css.raw({
+    transform: 'rotateX(180deg)',
+  }),
+  selectDisabled: css.raw({
+    pointerEvents: 'none',
+  }),
+  dropdown: css.raw({
+    textStyle: 'body.med',
+    zIndex: 'dropdown',
+    border: '2px solid {colors.background.content.light}',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.contentPrimary,
-    padding: `${8 - 2}px 0`,
-    color: theme.palette.text.middle,
+    backgroundColor: 'background.content',
+    padding: '6px 0',
+    color: 'text.middle',
     maxWidth: '100%',
     maxHeight: '100%',
-    overflowX: 'hidden' as const,
-    overflowY: 'auto' as const,
+    overflowX: 'hidden',
+    overflowY: 'auto',
     minHeight: '100px',
-  },
-  dropdownItem: {
-    userSelect: 'none' as const,
+  }),
+  dropdownItem: css.raw({
+    userSelect: 'none',
     cursor: 'pointer',
-    padding: `8px ${16 - 2}px`,
+    padding: '8px 14px',
     '&:hover': {
-      background: 'rgba(255, 255, 255, 0.16)',
-      color: theme.palette.text.light,
+      background: 'whiteo15',
+      color: 'text.light',
     },
     '&:active': {
       background: 'transparent',
-      color: theme.palette.text.light,
+      color: 'text.light',
     },
-  },
-  dropdownItemSelected: {
+  }),
+  dropdownItemSelected: css.raw({
     background: 'transparent',
-    color: theme.palette.text.light,
-  },
-});
+    color: 'text.light',
+  }),
+};

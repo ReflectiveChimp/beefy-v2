@@ -1,18 +1,18 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
 import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type BasicTooltipContentProps = {
   title: string;
   content?: ReactNode;
 };
-export const BasicTooltipContent = memo<BasicTooltipContentProps>(function BasicTooltipContent({
+export const BasicTooltipContent = memo(function BasicTooltipContent({
   title,
   content,
-}) {
+}: BasicTooltipContentProps) {
   const classes = useStyles();
 
   return (

@@ -7,16 +7,17 @@ import { selectChainById } from '../../../../data/selectors/chains';
 import { askForNetworkChange, askForWalletConnection } from '../../../../data/actions/wallet';
 import { Button } from '../../../../../components/Button';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../../data/selectors/wallet';
+import { type CssStyles } from '@repo/styles/css';
 
 type ActionButtonProps = {
-  className?: string;
+  css?: CssStyles;
   disabled?: boolean;
 };
 
 export type ActionConnectProps = ActionButtonProps;
 
 export const ActionConnect = memo(function ActionConnect({
-  className,
+  css: cssProp,
   disabled,
 }: ActionConnectProps) {
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ export const ActionConnect = memo(function ActionConnect({
     <Button
       fullWidth={true}
       borderless={true}
-      className={className}
+      css={cssProp}
       onClick={handleClick}
       disabled={disabled || isStepping}
     >
@@ -39,11 +40,13 @@ export const ActionConnect = memo(function ActionConnect({
   );
 });
 
-export type ActionSwitchProps = { chainId: ChainEntity['id'] } & ActionButtonProps;
+export type ActionSwitchProps = {
+  chainId: ChainEntity['id'];
+} & ActionButtonProps;
 
 export const ActionSwitch = memo(function ActionSwitch({
   chainId,
-  className,
+  css: cssProp,
   disabled,
 }: ActionSwitchProps) {
   const { t } = useTranslation();
@@ -58,7 +61,7 @@ export const ActionSwitch = memo(function ActionSwitch({
     <Button
       fullWidth={true}
       borderless={true}
-      className={className}
+      css={cssProp}
       onClick={handleClick}
       disabled={disabled || isStepping}
     >
@@ -74,7 +77,7 @@ export type ActionConnectSwitchProps = ActionButtonProps & {
 
 export const ActionConnectSwitch = memo(function ActionConnectSwitch({
   children,
-  className,
+  css: cssProp,
   chainId,
   disabled,
 }: ActionConnectSwitchProps) {
@@ -82,11 +85,11 @@ export const ActionConnectSwitch = memo(function ActionConnectSwitch({
   const connectedChainId = useAppSelector(selectCurrentChainId);
 
   if (!isWalletConnected) {
-    return <ActionConnect className={className} disabled={disabled} />;
+    return <ActionConnect css={cssProp} disabled={disabled} />;
   }
 
   if (chainId && chainId !== connectedChainId) {
-    return <ActionSwitch chainId={chainId} className={className} disabled={disabled} />;
+    return <ActionSwitch chainId={chainId} css={cssProp} disabled={disabled} />;
   }
 
   return children;

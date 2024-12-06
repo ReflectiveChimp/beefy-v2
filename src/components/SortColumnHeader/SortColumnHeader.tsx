@@ -1,16 +1,16 @@
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
+import { legacyMakeStyles } from '@repo/helpers/mui';
+import { css, type CssStyles } from '@repo/styles/css';
 import type { ReactNode } from 'react';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type SortIconProps = {
   direction: 'none' | 'asc' | 'desc';
 };
-const SortIcon = memo<SortIconProps>(function SortIcon({ direction }) {
+const SortIcon = memo(function SortIcon({ direction }: SortIconProps) {
   const classes = useStyles();
 
   return (
@@ -33,17 +33,16 @@ type SortColumnHeaderProps = {
   sorted: 'none' | 'asc' | 'desc';
   onChange?: (field: string) => void;
   tooltip?: ReactNode;
-  className?: string;
+  css?: CssStyles;
 };
-export const SortColumnHeader = memo<SortColumnHeaderProps>(function SortColumnHeader({
+export const SortColumnHeader = memo(function SortColumnHeader({
   label,
   sortKey,
   sorted,
   onChange,
   tooltip,
-  className,
-}) {
-  const classes = useStyles();
+  css: cssProp,
+}: SortColumnHeaderProps) {
   const { t } = useTranslation();
   const handleChange = useCallback(() => {
     if (onChange) {
@@ -52,7 +51,7 @@ export const SortColumnHeader = memo<SortColumnHeaderProps>(function SortColumnH
   }, [sortKey, onChange]);
 
   return (
-    <button className={clsx(classes.sortColumn, className)} onClick={handleChange}>
+    <button className={css(styles.sortColumn, cssProp)} onClick={handleChange}>
       {t(label)}
       {tooltip}
       <SortIcon direction={sorted} />

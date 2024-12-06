@@ -1,16 +1,17 @@
-import type { Theme } from '@material-ui/core';
-export const styles = (theme: Theme) => ({
-  pieChartsContainer: {
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  pieChartsContainer: css.raw({
     marginBottom: '24px',
     display: 'grid',
     gridTemplateColumns: 'repeat(3,1fr)',
     columnGap: '24px',
     rowGap: '24px',
-    [theme.breakpoints.down('md')]: {
+    lgDown: {
       gridTemplateColumns: 'repeat(2,1fr)',
     },
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       gridTemplateColumns: '1fr',
     },
-  },
-});
+  }),
+};

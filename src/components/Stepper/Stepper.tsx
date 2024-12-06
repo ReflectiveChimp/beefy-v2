@@ -1,5 +1,6 @@
 import { type FC, memo, useEffect } from 'react';
-import { makeStyles, Snackbar } from '@material-ui/core';
+import { Snackbar } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../store';
@@ -26,7 +27,7 @@ const stepToComponent: Record<StepContent, FC> = {
   [StepContent.SuccessTx]: SuccessContent,
 };
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const StepperImpl = () => {
   const classes = useStyles();

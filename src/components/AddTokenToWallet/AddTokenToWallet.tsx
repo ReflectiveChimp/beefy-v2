@@ -1,4 +1,5 @@
-import { IconButton, makeStyles } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, useCallback, useRef } from 'react';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../store';
@@ -14,7 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../features/vault/c
 import { ReactComponent as CloseIcon } from '@repo/images/icons/mui/Close.svg';
 import { ReactComponent as FileCopy } from '@repo/images/icons/mui/FileCopy.svg';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
@@ -24,7 +25,7 @@ import { getWalletConnectionApi } from '../../features/data/apis/instances';
 import { Button } from '../Button';
 import { selectChainById } from '../../features/data/selectors/chains';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const Pending = memo(function Pending() {
   return <div>Pending</div>;
@@ -36,11 +37,11 @@ const Rejected = memo(function Rejected() {
 });
 
 type CopyTextProps = {
-  className?: string;
+  css?: CssStyles;
   value: string;
 };
 
-const CopyText = memo<CopyTextProps>(function CopyText({ className, value }) {
+const CopyText = memo(function CopyText({ css: cssProp, value }: CopyTextProps) {
   const classes = useStyles();
   const inputRef = useRef<HTMLInputElement>(null);
   const handleCopy = useCallback(() => {
@@ -51,7 +52,7 @@ const CopyText = memo<CopyTextProps>(function CopyText({ className, value }) {
   }, [value, inputRef]);
 
   return (
-    <div className={clsx(classes.copyText, className)}>
+    <div className={css(styles.copyText, cssProp)}>
       <input type="text" readOnly className={classes.copyTextInput} value={value} ref={inputRef} />
       <button className={classes.copyTextButton} onClick={handleCopy}>
         <FileCopy />
@@ -121,11 +122,11 @@ const Fulfilled = memo(function Fulfilled() {
     <>
       <div className={classes.tokenDetails}>
         <div className={classes.tokenLabel}>{t('Token-Symbol')}</div>
-        <CopyText className={classes.tokenValue} value={token.symbol} />
+        <CopyText css={styles.tokenValue} value={token.symbol} />
         <div className={classes.tokenLabel}>{t('Token-Address')}</div>
-        <CopyText className={classes.tokenValue} value={token.address} />
+        <CopyText css={styles.tokenValue} value={token.address} />
         <div className={classes.tokenLabel}>{t('Token-Decimals')}</div>
-        <CopyText className={classes.tokenValue} value={token.decimals.toString()} />
+        <CopyText css={styles.tokenValue} value={token.decimals.toString()} />
       </div>
       <div className={classes.buttons}>
         <Button variant="success" fullWidth={true} borderless={true} onClick={handleClick}>
@@ -151,7 +152,7 @@ const FulfilledCardTitle = memo(function FulfilledCardTitle() {
       {iconUrl && <img src={iconUrl} alt={token.symbol} height={32} className={classes.cardIcon} />}
       <CardTitle
         title={t('Add-Token-To-Wallet', { token: token.symbol })}
-        titleClassName={classes.cardTitle}
+        titleCss={styles.cardTitle}
       />
     </>
   );
@@ -159,9 +160,8 @@ const FulfilledCardTitle = memo(function FulfilledCardTitle() {
 
 const PendingCardTitle = memo(function PendingCardTitle() {
   const { t } = useTranslation();
-  const classes = useStyles();
 
-  return <CardTitle title={t('Add-To-Wallet')} titleClassName={classes.cardTitle} />;
+  return <CardTitle title={t('Add-To-Wallet')} titleCss={styles.cardTitle} />;
 });
 
 export const AddTokenToWallet = memo(function AddTokenToWallet() {
@@ -178,14 +178,14 @@ export const AddTokenToWallet = memo(function AddTokenToWallet() {
     <Modal open={isOpen} onClose={handleClose} tabIndex={-1}>
       {isOpen ? (
         <div className={classes.cardHolder}>
-          <Card className={classes.card}>
-            <CardHeader className={classes.cardHeader}>
+          <Card css={styles.card}>
+            <CardHeader css={styles.cardHeader}>
               {status === 'fulfilled' ? <FulfilledCardTitle /> : <PendingCardTitle />}
               <IconButton onClick={handleClose} aria-label="close" className={classes.closeButton}>
                 <CloseIcon color="#999CB3" />
               </IconButton>
             </CardHeader>
-            <CardContent className={classes.cardContent}>
+            <CardContent css={styles.cardContent}>
               {status === 'pending' && <Pending />}
               {status === 'rejected' && <Rejected />}
               {status === 'fulfilled' && <Fulfilled />}

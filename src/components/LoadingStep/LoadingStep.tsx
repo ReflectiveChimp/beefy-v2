@@ -7,7 +7,7 @@ interface LoadingStepProps {
   stepType: StepType;
 }
 
-export const LoadingStep = memo<LoadingStepProps>(function LoadingStep({ stepType }) {
+export const LoadingStep = memo(function LoadingStep({ stepType }: LoadingStepProps) {
   return (
     <Step stepType={stepType} title={undefined}>
       <LoadingIndicator />

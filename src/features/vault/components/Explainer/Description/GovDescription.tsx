@@ -45,7 +45,7 @@ export type GovDescriptionProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const GovDescription = memo<GovDescriptionProps>(function GovDescription({ vaultId }) {
+export const GovDescription = memo(function GovDescription({ vaultId }: GovDescriptionProps) {
   const { i18n } = useGovHelper(vaultId);
   return <Trans {...i18n} />;
 });

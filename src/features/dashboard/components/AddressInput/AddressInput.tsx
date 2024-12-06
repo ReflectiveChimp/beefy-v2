@@ -1,4 +1,5 @@
-import { CircularProgress, InputBase, makeStyles } from '@material-ui/core';
+import { CircularProgress, InputBase } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { ReactComponent as CloseRounded } from '@repo/images/icons/mui/CloseRounded.svg';
 import { ReactComponent as Search } from '@repo/images/icons/mui/Search.svg';
 import {
@@ -15,7 +16,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { isMaybeDomain, isValidAddress } from '../../../../helpers/addresses';
 import { FloatingError } from './FloatingError';
 import { useResolveDomain } from '../../../data/hooks/resolver';
@@ -25,9 +26,9 @@ import {
   isRejectedStatus,
 } from '../../../data/reducers/wallet/resolver-types';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export const AddressInput = memo(function AddressInput({ className }: { className?: string }) {
+export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?: CssStyles }) {
   const [userInput, setUserInput] = useState<string>('');
   const [inputMode, setInputMode] = useState<'address' | 'domain'>('address');
   const resolverStatus = useResolveDomain(inputMode === 'domain' ? userInput : '');
@@ -35,7 +36,6 @@ export const AddressInput = memo(function AddressInput({ className }: { classNam
   const [isDomainResolving, setIsDomainResolving] = useState<boolean>(false);
   const [hasFocus, setHasFocus] = useState<boolean>(false);
   const { t } = useTranslation();
-  const classes = useStyles();
   const anchorEl = useRef<HTMLInputElement>();
   const history = useHistory();
 
@@ -111,7 +111,7 @@ export const AddressInput = memo(function AddressInput({ className }: { classNam
     <>
       <InputBase
         ref={anchorEl}
-        className={clsx(classes.search, className, { [classes.active]: userInput.length !== 0 })}
+        className={css(styles.search, cssProp, userInput.length !== 0 && styles.active)}
         value={userInput}
         onChange={handleChange}
         onFocus={handleFocus}
@@ -155,13 +155,13 @@ interface GoToDashboardButtonProps {
   inputMode: 'address' | 'domain';
 }
 
-const GoToDashboardButton = memo<GoToDashboardButtonProps>(function GoToDashboardButton({
+const GoToDashboardButton = memo(function GoToDashboardButton({
   isValid,
   userInput,
   handleClear,
   domainResolving,
   inputMode,
-}) {
+}: GoToDashboardButtonProps) {
   const classes = useStyles();
 
   if (domainResolving && inputMode === 'domain')
@@ -171,7 +171,7 @@ const GoToDashboardButton = memo<GoToDashboardButtonProps>(function GoToDashboar
           disableShrink={true}
           thickness={4}
           size={23}
-          className={clsx(classes.loader, classes.disabledIcon)}
+          className={css(styles.loader, styles.disabledIcon)}
         />
       </div>
     );
@@ -180,7 +180,7 @@ const GoToDashboardButton = memo<GoToDashboardButtonProps>(function GoToDashboar
     return (
       <Link
         onClick={handleClear}
-        className={clsx(classes.icon, classes.activeIcon)}
+        className={css(styles.icon, styles.activeIcon)}
         aria-disabled={isValid}
         to={`/dashboard/${userInput}`}
       >
@@ -191,14 +191,14 @@ const GoToDashboardButton = memo<GoToDashboardButtonProps>(function GoToDashboar
 
   if (userInput.length !== 0) {
     return (
-      <button onClick={handleClear} className={clsx(classes.icon, classes.activeIcon)}>
+      <button onClick={handleClear} className={css(styles.icon, styles.activeIcon)}>
         <CloseRounded />
       </button>
     );
   }
 
   return (
-    <div className={clsx(classes.icon, classes.disabledIcon)}>
+    <div className={css(styles.icon, styles.disabledIcon)}>
       <Search />
     </div>
   );

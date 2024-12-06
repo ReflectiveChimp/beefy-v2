@@ -1,27 +1,27 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  inner: {
+export const styles = {
+  inner: css.raw({
     margin: '0 auto',
     paddingTop: '120px',
     paddingBottom: '120px',
     width: '612px',
     maxWidth: '100%',
-  },
-  image: {
+  }),
+  image: css.raw({
     maxWidth: '100%',
     height: 'auto',
     margin: '0 auto',
     display: 'block',
-  },
-  textContainer: {
+  }),
+  textContainer: css.raw({
     margin: '36px 0 0 0',
-    textAlign: 'center' as const,
-  },
-  text: {
-    ...theme.typography['body-lg-med'],
-  },
-  button: {
+    textAlign: 'center',
+  }),
+  text: css.raw({
+    textStyle: 'body.med',
+  }),
+  button: css.raw({
     margin: '24px auto 0 auto',
-  },
-});
+  }),
+};

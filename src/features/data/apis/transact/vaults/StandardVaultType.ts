@@ -1,5 +1,8 @@
-import { isCowcentratedStandardVault, type VaultStandard } from '../../../entities/vault';
-import { isStandardVault } from '../../../entities/vault';
+import {
+  isCowcentratedStandardVault,
+  isStandardVault,
+  type VaultStandard,
+} from '../../../entities/vault';
 import type { BeefyState, BeefyStateFn } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import type {

@@ -1,30 +1,30 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '16px',
-  },
-  rewards: {
+  }),
+  rewards: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '8px',
-    backgroundColor: theme.palette.background.contentLight,
+    backgroundColor: 'background.content.light',
     borderRadius: '8px',
     padding: '12px',
-  },
-  titleHolder: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
+  }),
+  titleHolder: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
     display: 'flex',
-    flexDirection: 'row' as const,
+    flexDirection: 'row',
     gap: '8px',
-  },
-  title: {
+  }),
+  title: css.raw({
     flex: '1 1 auto',
-  },
-  refresh: {
+  }),
+  refresh: css.raw({
     flex: '0 0 auto',
-  },
-});
+  }),
+};

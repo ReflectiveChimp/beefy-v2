@@ -1,75 +1,77 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  bg: {
+export const styles = {
+  bg: css.raw({
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiDrawer-paper': {
-      backgroundColor: theme.palette.background.footerHeader,
+      backgroundColor: 'background.header',
     },
-  },
-  toggleDrawer: {
+  }),
+  toggleDrawer: css.raw({
     background: 'transparent',
     padding: '3px',
-    border: 0,
+    border: '0',
     boxShadow: 'none',
-    color: theme.palette.text.light,
+    color: 'text.light',
     fontSize: '30px',
-    position: 'relative' as const,
-  },
-  toggleDrawerIcon: {
+    position: 'relative',
+  }),
+  toggleDrawerIcon: css.raw({
     display: 'block',
-  },
-  toggleDrawNotification: {
-    position: 'absolute' as const,
+  }),
+  toggleDrawNotification: css.raw({
+    position: 'absolute',
     top: '8px',
     right: '8px',
-  },
-  menuContainer: {
+  }),
+  menuContainer: css.raw({
     height: '100%',
-    [theme.breakpoints.down('lg')]: {
+    xlDown: {
       width: '320px',
     },
-  },
-  head: {
+  }),
+  head: css.raw({
     padding: '16px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  flex: {
+  }),
+  flex: css.raw({
     display: 'flex',
     columnGap: '24px',
-  },
-  divider: {
-    backgroundColor: theme.palette.background.contentDark,
+  }),
+  divider: css.raw({
+    backgroundColor: 'background.content.dark',
     height: '2px',
-  },
-  itemTitle: {
+  }),
+  itemTitle: css.raw({
     display: 'flex',
     columnGap: '8px',
-    color: theme.palette.text.dark,
+    color: 'text.dark',
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiBadge-root': {
       padding: '0px 12px 0px 0px',
       verticalAlign: 'initial',
       columnGap: '8px',
     },
-  },
-  title: {},
-  titleWithBadge: {
-    position: 'relative' as const,
+  }),
+  title: css.raw({}),
+  titleWithBadge: css.raw({
+    position: 'relative',
     display: 'flex',
     alignItems: 'center',
-  },
-  itemsContainer: {
+  }),
+  itemsContainer: css.raw({
     padding: '16px 0px 16px 16px',
-  },
-  customPadding: {
+  }),
+  customPadding: css.raw({
     padding: '16px 16px 16px 32px',
-  },
-  cross: {
-    color: theme.palette.text.middle,
+  }),
+  cross: css.raw({
+    color: 'text.middle',
     '&:hover': {
-      color: theme.palette.text.light,
+      color: 'text.light',
       cursor: 'pointer',
     },
-  },
-});
+  }),
+};

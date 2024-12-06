@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import {
   memo,
@@ -18,16 +18,15 @@ import { Vault } from './components/Vault';
 import { useSortedDashboardVaults } from './hook';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { NoVaults } from './components/NoVaults';
-import type { Theme } from '@material-ui/core';
-import { useMediaQuery } from '@material-ui/core';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type UserVaultsProps = {
   address: string;
 };
 
-export const UserVaults = memo<UserVaultsProps>(function UserVaults({ address }) {
+export const UserVaults = memo(function UserVaults({ address }: UserVaultsProps) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -39,8 +38,7 @@ export const UserVaults = memo<UserVaultsProps>(function UserVaults({ address })
     searchText,
     handleClearText,
   } = useSortedDashboardVaults(address);
-
-  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
+  const mdDown = useBreakpoint({ to: 'sm' });
 
   const subTitle = useMemo(() => {
     return mdDown ? 'Dashboard-Your-Vaults-Subtitle-Mobile' : 'Dashboard-Your-Vaults-Subtitle';
@@ -68,7 +66,7 @@ interface VirtualListProps {
   address: string;
 }
 
-export const VirtualList = memo<VirtualListProps>(function VirtualList({ vaults, address }) {
+export const VirtualList = memo(function VirtualList({ vaults, address }: VirtualListProps) {
   const classes = useStyles();
   const totalVaults = vaults.length;
   const minBatchSize = 3;

@@ -1,20 +1,20 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { ReactComponent as ArrowDown } from '../../../../../../images/icons/arrowDown.svg';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type QuoteDownArrowProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const QuoteArrowDivider = memo<QuoteDownArrowProps>(function QuoteArrowDivider({
-  className,
-}) {
+export const QuoteArrowDivider = memo(function QuoteArrowDivider({
+  css: cssProp,
+}: QuoteDownArrowProps) {
   const classes = useStyles();
   return (
-    <div className={clsx(classes.holder, className)}>
+    <div className={css(styles.holder, cssProp)}>
       <ArrowDown className={classes.arrow} />
     </div>
   );

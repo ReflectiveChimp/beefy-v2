@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
@@ -23,7 +23,7 @@ import { confirmBridgeForm } from '../../../../../data/actions/bridge';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { ReceiverSelector } from '../ReceiverSelector';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function PreviewImpl() {
   const { t } = useTranslation();

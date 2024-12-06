@@ -1,14 +1,15 @@
-import type { Theme } from '@material-ui/core';
-export const styles = (theme: Theme) => ({
-  container: {
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  container: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '16px',
     minHeight: '48px',
-    [theme.breakpoints.down('xs')]: {
-      flexDirection: 'row' as const,
+    smDown: {
+      flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
     },
-  },
-});
+  }),
+};

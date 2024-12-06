@@ -1,19 +1,18 @@
-import type { Theme } from '@material-ui/core';
-import { theme } from '../../../../../../../theme';
+import { css } from '@repo/styles/css';
 
-export const styles = (_theme: Theme) => ({
-  timer: {
+export const styles = {
+  timer: css.raw({
     display: 'flex',
     gap: '4px',
     alignItems: 'center',
-    position: 'relative' as const,
+    position: 'relative',
     width: '100%',
-    textAlign: 'center' as const,
+    textAlign: 'center',
     justifyContent: 'center',
-    height: theme.typography['body-lg-med'].lineHeight,
-  },
-  icon: {
-    position: 'absolute' as const,
-    left: 0,
-  },
-});
+    height: 'body',
+  }),
+  icon: css.raw({
+    position: 'absolute',
+    left: '0',
+  }),
+};

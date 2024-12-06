@@ -25,14 +25,14 @@ import { BIG_ZERO } from '../../helpers/big-number';
 import { useAppSelector } from '../../store';
 import { type BigNumber } from 'bignumber.js';
 import type { TokenEntity } from '../../features/data/entities/token';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { ReactComponent as ErrorOutline } from '@repo/images/icons/mui/ErrorOutline.svg';
 import { ReactComponent as InfoOutlined } from '@repo/images/icons/mui/InfoOutlined.svg';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
@@ -41,7 +41,9 @@ export type VaultDepositStatProps = {
 } & Omit<VaultValueStatProps, 'label' | 'tooltip' | 'value' | 'subValue' | 'loading'>;
 
 type SelectDataReturn =
-  | { loading: true }
+  | {
+      loading: true;
+    }
   | {
       loading: false;
       totalDeposit: BigNumber;
@@ -109,12 +111,12 @@ function selectData(
   };
 }
 
-export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDepositStat({
+export const VaultDepositStat = memo(function VaultDepositStat({
   vaultId,
   walletAddress,
   label = 'VaultStat-DEPOSITED',
   ...passthrough
-}) {
+}: VaultDepositStatProps) {
   const data = useAppSelector(state => selectData(state, vaultId, walletAddress));
   const classes = useStyles();
 
@@ -143,9 +145,7 @@ export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDeposi
         isNotEarning ? (
           <div className={classes.depositWithIcon}>
             <IconComponent
-              className={clsx(classes.depositIcon, {
-                [classes.depositIconNotEarning]: isNotEarning,
-              })}
+              className={css(styles.depositIcon, isNotEarning && styles.depositIconNotEarning)}
             />
             {depositFormattedCondensed}
           </div>

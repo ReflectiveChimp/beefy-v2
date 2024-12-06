@@ -1,50 +1,50 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     padding: '24px',
-  },
-  labels: {
+  }),
+  labels: css.raw({
     display: 'flex',
-    flexWrap: 'nowrap' as const,
+    flexWrap: 'nowrap',
     alignItems: 'baseline',
     gap: '8px',
     marginBottom: '4px',
-  },
-  selectLabel: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.dark,
+  }),
+  selectLabel: css.raw({
+    textStyle: 'body',
+    color: 'text.dark',
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
-  },
-  availableLabel: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.dark,
+  }),
+  availableLabel: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
     marginLeft: 'auto',
-  },
-  availableLabelAmount: {
-    ...theme.typography['body-sm-med'],
-    color: theme.palette.text.middle,
-  },
-  inputs: {
+  }),
+  availableLabelAmount: css.raw({
+    textStyle: 'body.sm.med',
+    color: 'text.middle',
+  }),
+  inputs: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '24px',
-  },
-  input: {},
-  amount: {
+  }),
+  input: css.raw({}),
+  amount: css.raw({
     display: 'flex',
-    flexWrap: 'nowrap' as const,
+    flexWrap: 'nowrap',
     gap: '12px',
-  },
-  links: {
+  }),
+  links: css.raw({
     marginTop: '12px',
-  },
-  quote: {
+  }),
+  quote: css.raw({
     marginTop: '24px',
-  },
-  actions: {
+  }),
+  actions: css.raw({
     marginTop: '24px',
-  },
-});
+  }),
+};

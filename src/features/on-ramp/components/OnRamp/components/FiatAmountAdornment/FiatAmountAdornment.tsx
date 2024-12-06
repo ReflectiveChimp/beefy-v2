@@ -1,23 +1,23 @@
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { CurrencyFlag } from '../CurrencyFlag';
 import { ButtonAdornment } from '../ButtonAdornment';
 import { useAppDispatch } from '../../../../../../store';
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type FiatAmountAdornmentProps = {
   currencyCode: string;
-  className?: string;
+  css?: CssStyles;
 };
-export const FiatAmountAdornment = memo<FiatAmountAdornmentProps>(function FiatAmountAdornment({
+export const FiatAmountAdornment = memo(function FiatAmountAdornment({
   currencyCode,
-  className,
-}) {
+  css: cssProp,
+}: FiatAmountAdornmentProps) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const handleClick = useCallback(() => {
@@ -25,7 +25,7 @@ export const FiatAmountAdornment = memo<FiatAmountAdornmentProps>(function FiatA
   }, [dispatch]);
 
   return (
-    <ButtonAdornment className={clsx(classes.button, className)} onClick={handleClick}>
+    <ButtonAdornment css={css.raw(styles.button, cssProp)} onClick={handleClick}>
       <CurrencyFlag currencyCode={currencyCode} className={classes.flag} />
       {currencyCode}
     </ButtonAdornment>

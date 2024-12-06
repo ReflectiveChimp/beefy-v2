@@ -11,16 +11,10 @@ import MintBurnCard from './MintBurnCard';
 import { useAppDispatch, useAppSelector } from '../../../../../store';
 import { LoadingIndicator } from '../../../../../components/LoadingIndicator';
 import { Card } from '../../Card';
-import { makeStyles } from '@material-ui/core';
 import { isLoaderFulfilled } from '../../../../data/selectors/data-loader-helpers';
 import { initiateMinterForm } from '../../../../data/actions/minters';
 import { fetchAddressBookAction } from '../../../../data/actions/tokens';
-
-const useStyles = makeStyles(() => ({
-  loadingCardContainer: {
-    height: '580px',
-  },
-}));
+import { css } from '@repo/styles/css';
 
 export interface MinterCardParams {
   vaultId: VaultEntity['id'];
@@ -62,10 +56,13 @@ export const MinterCard = memo(function MinterCard({ vaultId, minterId }: Minter
   );
 });
 
+const loadingCardContainerCss = css.raw({
+  height: '580px',
+});
+
 export const LoadingCard = memo(function LoadingCard() {
-  const classes = useStyles();
   return (
-    <Card className={classes.loadingCardContainer}>
+    <Card css={loadingCardContainerCss}>
       <LoadingIndicator />
     </Card>
   );

@@ -1,4 +1,5 @@
-import { ClickAwayListener, makeStyles } from '@material-ui/core';
+import { ClickAwayListener } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 
 import type { MouseEventHandler, MutableRefObject } from 'react';
 import { memo, useCallback, useRef, useState } from 'react';
@@ -10,12 +11,12 @@ import { selectTreasuryWalletAddressesByChainId } from '../../../data/selectors/
 import { styles } from './styles';
 import iconExternalLink from '../../../../images/icons/external-link.svg';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface ExplorerLinkProps {
   chainId: ChainEntity['id'];
 }
-export const ExplorerLinks = memo<ExplorerLinkProps>(function ExplorerLinks({ chainId }) {
+export const ExplorerLinks = memo(function ExplorerLinks({ chainId }: ExplorerLinkProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +42,7 @@ export const ExplorerLinks = memo<ExplorerLinkProps>(function ExplorerLinks({ ch
           open={isOpen}
           anchorEl={anchorEl as MutableRefObject<HTMLDivElement>}
           placement="bottom-start"
-          className={classes.dropdown}
+          css={styles.dropdown}
           display="flex"
           autoWidth={false}
         >

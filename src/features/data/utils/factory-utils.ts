@@ -17,7 +17,9 @@ export function createCachedFactory<FN extends (...args: any[]) => any>(
   factoryFn: FN,
   keyFn: (...args: Parameters<FN>) => string = (...args) => JSON.stringify(args)
 ) {
-  const cache: { [index: string]: ReturnType<FN> } = {};
+  const cache: {
+    [index: string]: ReturnType<FN>;
+  } = {};
   return (...args: Parameters<FN>) => {
     const index = keyFn(...args);
     let value = cache[index];

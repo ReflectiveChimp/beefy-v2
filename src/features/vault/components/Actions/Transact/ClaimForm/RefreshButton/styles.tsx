@@ -1,68 +1,75 @@
-import type { Theme } from '@material-ui/core';
+import { sva } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {},
-  tooltipTrigger: {},
-  button: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.dark,
-    backgroundColor: 'transparent',
-    border: 'none',
-    borderRadius: '0',
-    minWidth: 0,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 'fit-content',
-    margin: 0,
-    padding: 0,
-    cursor: 'pointer',
-    userSelect: 'none' as const,
-    boxShadow: 'none',
-    textAlign: 'center' as const,
-    textDecoration: 'none',
-    outline: 'none',
-    '&:focus': {
+export const refreshRecipe = sva({
+  slots: ['container', 'button', 'icon'],
+  base: {
+    container: {},
+    button: {
+      textStyle: 'body.med',
+      color: 'text.dark',
+      backgroundColor: 'transparent',
+      border: 'none',
+      borderRadius: '0',
+      minWidth: '0',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 'fit-content',
+      margin: '0',
+      padding: '0',
+      cursor: 'pointer',
+      userSelect: 'none',
+      boxShadow: 'none',
+      textAlign: 'center',
+      textDecoration: 'none',
       outline: 'none',
+      '&:focus': {
+        outline: 'none',
+      },
+      '&:disabled,&:hover:disabled,&:active:disabled,&:focus:disabled': {
+        pointerEvents: 'none',
+      },
     },
-    '&:disabled,&:hover:disabled,&:active:disabled,&:focus:disabled': {
-      pointerEvents: 'none',
-    },
-  },
-  icon: {
-    width: 20,
-    height: 20,
-  },
-  '@keyframes rotate': {
-    from: {
-      transform: 'rotate(0deg)',
-    },
-    to: {
-      transform: 'rotate(360deg)',
+    icon: {
+      width: '20px',
+      height: '20px',
     },
   },
-  canLoad: {},
-  loaded: {
-    display: 'none' as const,
-    '& $icon': {
-      color: theme.palette.background.indicators.success,
+  variants: {
+    status: {
+      loading: {
+        icon: {
+          color: 'text.dark',
+          animationName: 'rotate',
+          animationDuration: '3s',
+          animationIterationCount: 'infinite',
+          animationTimingFunction: 'linear',
+        },
+      },
+      loaded: {
+        container: {
+          display: 'none',
+        },
+        icon: {
+          color: 'indicators.success',
+        },
+      },
+      error: {
+        icon: {
+          color: 'indicators.warning',
+        },
+      },
     },
-    '&.$canLoad': {
-      display: 'block' as const,
+    canLoad: {
+      true: {
+        container: {
+          display: 'block',
+        },
+      },
     },
   },
-  error: {
-    '& $icon': {
-      color: theme.palette.background.indicators.warning,
-    },
-  },
-  loading: {
-    '& $icon': {
-      color: theme.palette.text.dark,
-      animationName: '$rotate',
-      animationDuration: '3s',
-      animationIterationCount: 'infinite',
-      animationTimingFunction: 'linear',
-    },
+  defaultVariants: {
+    status: 'loaded',
+    canLoad: false,
   },
 });

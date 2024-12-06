@@ -127,7 +127,12 @@ export type GetFeesRequest = {
   sourceTokenSymbol: string;
 };
 
-type AxelarResponse<TRequest extends { method: string }, TResult> = {
+type AxelarResponse<
+  TRequest extends {
+    method: string;
+  },
+  TResult
+> = {
   method: TRequest['method'];
   params: TRequest;
   result: TResult;

@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../../../../components/LinkButton';
@@ -29,13 +29,13 @@ import {
 } from '../../../data/selectors/rewards';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type BoostCardProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const BoostCard = memo<BoostCardProps>(function BoostCard({ vaultId }) {
+export const BoostCard = memo(function BoostCard({ vaultId }: BoostCardProps) {
   const hasBaseActiveMerklCampaigns = useAppSelector(state =>
     selectVaultHasActiveMerklBoostCampaigns(state, vaultId)
   );
@@ -47,7 +47,7 @@ export const BoostCard = memo<BoostCardProps>(function BoostCard({ vaultId }) {
   );
 });
 
-export const MerklBoostCard = memo<BoostCardProps>(function MerklBoostCard({ vaultId }) {
+export const MerklBoostCard = memo(function MerklBoostCard({ vaultId }: BoostCardProps) {
   const activeCampaigns = useAppSelector(state =>
     selectVaultActiveMerklBoostCampaigns(state, vaultId)
   );
@@ -85,7 +85,7 @@ export const MerklBoostCard = memo<BoostCardProps>(function MerklBoostCard({ vau
   return null;
 });
 
-export const NormalBoostCard = memo<BoostCardProps>(function BoostCard({ vaultId }) {
+export const NormalBoostCard = memo(function BoostCard({ vaultId }: BoostCardProps) {
   const boostIds = useAppSelector(state => selectPreStakeOrActiveBoostIds(state, vaultId));
   const boost = useAppSelector(state => selectBoostById(state, boostIds[0]));
   const rewardTokens = useAppSelector(state => selectBoostActiveRewardTokens(state, boost.id));
@@ -104,7 +104,7 @@ interface CampaignContentProps {
   partnerIds?: string[];
 }
 
-const CampaignContent = memo<CampaignContentProps>(function CampaignContent({
+const CampaignContent = memo(function CampaignContent({
   name,
   title,
   description,
@@ -112,7 +112,7 @@ const CampaignContent = memo<CampaignContentProps>(function CampaignContent({
   social,
   rewardTokens,
   partnerIds,
-}) {
+}: CampaignContentProps) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -130,7 +130,7 @@ const CampaignContent = memo<CampaignContentProps>(function CampaignContent({
           {social.discord && <LinkIcon alt="discord" logo={Discord} href={social.discord} />}
         </div>
       </div>
-      <CardContent className={classes.content}>
+      <CardContent css={styles.content}>
         <div className={classes.campaignTitle}>{title}</div>
         <div className={classes.campaignText}>{description}</div>
         {partnerIds && partnerIds.length > 0 && (
@@ -157,10 +157,10 @@ type InnerBoostCardProps = {
   rewardTokens: TokenEntity[];
 };
 
-const CampaignBoostCard = memo<InnerBoostCardProps>(function CampaignBoostCard({
+const CampaignBoostCard = memo(function CampaignBoostCard({
   boost,
   rewardTokens,
-}) {
+}: InnerBoostCardProps) {
   const { title, description, learn, social } = useAppSelector(state =>
     selectBoostCampaignById(state, boost.campaignId || '')
   );
@@ -182,7 +182,7 @@ type PartnerSubCardProps = {
   partnerId: string;
 };
 
-const PartnerSubCard = memo<PartnerSubCardProps>(function PartnerSubCard({ partnerId }) {
+const PartnerSubCard = memo(function PartnerSubCard({ partnerId }: PartnerSubCardProps) {
   const classes = useStyles();
   const { title, text, website, social } = useAppSelector(state =>
     selectBoostPartnerById(state, partnerId)
@@ -205,10 +205,10 @@ const PartnerSubCard = memo<PartnerSubCardProps>(function PartnerSubCard({ partn
   );
 });
 
-const PartnerBoostCard = memo<InnerBoostCardProps>(function PartnerBoostCard({
+const PartnerBoostCard = memo(function PartnerBoostCard({
   boost,
   rewardTokens,
-}) {
+}: InnerBoostCardProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const { text, social, website } = useAppSelector(state =>
@@ -229,7 +229,7 @@ const PartnerBoostCard = memo<InnerBoostCardProps>(function PartnerBoostCard({
           {social.discord && <LinkIcon alt="discord" logo={Discord} href={social.discord} />}
         </div>
       </div>
-      <CardContent className={classes.content}>
+      <CardContent css={styles.content}>
         <div>{text}</div>
         {rewardTokens.map(rewardToken => (
           <RewardTokenDetails

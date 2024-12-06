@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SummaryStats } from '../../../../components/SummaryStats';
@@ -12,7 +12,7 @@ import { useAppSelector } from '../../../../store';
 import { selectTreasuryStats } from '../../../data/selectors/treasury';
 import { Container } from '../../../../components/Container/Container';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const DaoSummary = memo(function DaoSummary() {
   const { t } = useTranslation();

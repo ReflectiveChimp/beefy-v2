@@ -25,8 +25,14 @@ export interface IBridgeQuote<T extends BeefyAnyBridgeConfig> {
   timeEstimate: number;
   withinLimits: boolean;
   limits: {
-    from: { current: BigNumber; max: BigNumber };
-    to: { current: BigNumber; max: BigNumber };
+    from: {
+      current: BigNumber;
+      max: BigNumber;
+    };
+    to: {
+      current: BigNumber;
+      max: BigNumber;
+    };
   };
 }
 

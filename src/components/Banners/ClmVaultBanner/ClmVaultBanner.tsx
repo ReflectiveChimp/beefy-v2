@@ -17,7 +17,7 @@ export type ClmVaultBannerProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const ClmVaultBanner = memo<ClmVaultBannerProps>(function ClmVaultBanner({ vaultId }) {
+export const ClmVaultBanner = memo(function ClmVaultBanner({ vaultId }: ClmVaultBannerProps) {
   const maybeClmPool = useAppSelector(state => selectVaultById(state, vaultId));
 
   if (!isCowcentratedGovVault(maybeClmPool) || !maybeClmPool.cowcentratedIds.vault) {
@@ -32,10 +32,10 @@ export type ClmVaultBannerImplProps = {
   vaultId: VaultStandardCowcentrated['id'];
 };
 
-const ClmVaultBannerImpl = memo<ClmVaultBannerImplProps>(function ClmVaultBannerImpl({
+const ClmVaultBannerImpl = memo(function ClmVaultBannerImpl({
   pool,
   vaultId,
-}) {
+}: ClmVaultBannerImplProps) {
   const { t } = useTranslation();
   const isDeposited = useAppSelector(state => selectHasUserDepositInVault(state, pool.id));
   const components = useMemo(

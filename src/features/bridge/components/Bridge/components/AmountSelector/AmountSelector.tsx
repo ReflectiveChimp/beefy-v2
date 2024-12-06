@@ -1,12 +1,12 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectBridgeDepositTokenForChainId,
   selectBridgeFormState,
 } from '../../../../../data/selectors/bridge';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { useTranslation } from 'react-i18next';
 import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
 import {
@@ -19,13 +19,13 @@ import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance'
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type AmountSelectorProps = {
-  className?: string;
+  css?: CssStyles;
 };
 
-export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector({ className }) {
+export const AmountSelector = memo(function AmountSelector({ css: cssProp }: AmountSelectorProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const classes = useStyles();
@@ -64,7 +64,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
   }, [input.amount, userBalance]);
 
   return (
-    <div className={clsx(classes.group, className)}>
+    <div className={css(styles.group, cssProp)}>
       <div className={classes.labels}>
         <div className={classes.label}>{t('AMOUNT')}</div>
         <div onClick={handleMax} className={classes.balance}>
@@ -75,7 +75,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
         </div>
       </div>
       <AmountInput
-        className={clsx(classes.input)}
+        css={styles.input}
         value={input.amount}
         maxValue={userBalance}
         tokenDecimals={input.token.decimals}

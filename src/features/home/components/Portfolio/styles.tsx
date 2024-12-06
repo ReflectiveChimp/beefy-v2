@@ -1,42 +1,46 @@
-export const styles = theme => ({
-  portfolio: {
-    backgroundColor: theme.palette.background.header,
-    padding: `${40 - 24}px 0 40px 0`,
-  },
-  stats: {
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  portfolio: css.raw({
+    backgroundColor: 'background.header',
+    padding: '16px 0 40px 0',
+  }),
+  stats: css.raw({
     display: 'grid',
     gridTemplateColumns: '100%',
     rowGap: '32px',
     columnGap: '32px',
-    [theme.breakpoints.up('md')]: {
+    md: {
       gridTemplateColumns: '583fr 417fr',
     },
-  },
-  userStats: {},
-  vaultStats: {
-    [theme.breakpoints.up('md')]: {
-      textAlign: 'right' as const,
-      '& $title': {
-        justifyContent: 'flex-end',
-      },
+  }),
+  userStats: css.raw({}),
+  vaultStats: css.raw({
+    md: {
+      textAlign: 'right',
     },
-  },
-  title: {
-    ...theme.typography['h3'],
-    color: theme.palette.text.middle,
+  }),
+  title: css.raw({
+    textStyle: 'h3',
+    color: 'text.middle',
     display: 'flex',
     alignItems: 'center',
     marginBottom: '12px',
-  },
-  btnHide: {
-    color: '#484F7F',
+  }),
+  vaultStatsTitle: css.raw({
+    md: {
+      justifyContent: 'flex-end',
+    },
+  }),
+  btnHide: css.raw({
+    color: 'extracted2048',
     marginLeft: '8px',
-    padding: 0,
-    minWidth: 0,
+    padding: '0',
+    minWidth: '0',
     width: 'auto',
     '&:hover': {
       backgroundColor: 'transparent',
-      color: '#6B7199',
+      color: 'extracted1071',
     },
-  },
-});
+  }),
+};

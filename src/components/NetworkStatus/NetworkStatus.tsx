@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
+import { legacyMakeStyles } from '@repo/helpers/mui';
+import { css, cx } from '@repo/styles/css';
 import { isEqual, sortedUniq, uniq } from 'lodash-es';
 import { memo, type RefObject, useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -25,7 +25,8 @@ import {
   isLoaderRejected,
 } from '../../features/data/selectors/data-loader-helpers';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
+
 const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
   const classes = useStyles();
 
@@ -68,18 +69,18 @@ export const NetworkStatus = memo(function NetworkStatus({
   const hasAnyLoading =
     rpcPending.length > 0 || beefyPending.length > 0 || configPending.length > 0;
 
-  const colorClasses = {
-    success: !hasAnyError && !hasAnyLoading,
-    warning: hasAnyError,
-    loading: hasAnyLoading,
-    notLoading: !hasAnyLoading,
-  };
-  const pulseClassName = clsx(classes.pulseCircle, colorClasses);
+  const colorClasses = cx(
+    !hasAnyError && !hasAnyLoading && 'success',
+    hasAnyError && 'warning',
+    hasAnyLoading && 'loading',
+    !hasAnyLoading && 'notLoading'
+  );
+  const pulseClassName = cx(classes.pulseCircle, colorClasses);
 
   return (
     <>
       <button className={classes.container} onClick={handleToggle}>
-        <div className={clsx(classes.circle, colorClasses)}>
+        <div className={cx(classes.circle, colorClasses)}>
           <div className={pulseClassName} />
           <div className={pulseClassName} />
           <div className={pulseClassName} />
@@ -91,7 +92,7 @@ export const NetworkStatus = memo(function NetworkStatus({
         open={open}
         placement="bottom-end"
         anchorEl={anchorEl}
-        className={classes.dropdown}
+        css={styles.dropdown}
         display="flex"
         autoWidth={false}
       >
@@ -115,39 +116,41 @@ export const NetworkStatus = memo(function NetworkStatus({
         </div>
         <div className={classes.content}>
           <div className={classes.contentTitle}>{t('NetworkStatus-Status')}</div>
-          {hasAnyError ? (
-            <>
-              {rpcErrors.map(chainId => (
-                <div className={classes.popoverLine} key={chainId}>
-                  <div className={clsx([classes.circle, 'warning', 'circle'])} />
-                  <div>{t('NetworkStatus-RpcError', { chain: chainsById[chainId].name })}</div>
+          <div className={classes.contentDetail}>
+            {hasAnyError ? (
+              <>
+                {rpcErrors.map(chainId => (
+                  <div className={classes.popoverLine} key={chainId}>
+                    <div className={cx(classes.circle, 'warning', 'circle')} />
+                    <div>{t('NetworkStatus-RpcError', { chain: chainsById[chainId].name })}</div>
+                  </div>
+                ))}
+                {(beefyErrors.length > 0 || configErrors.length > 0) && (
+                  <div className={classes.popoverLine}>
+                    <div className={cx(classes.circle, 'warning', 'circle')} />
+                    <div>{t('NetworkStatus-BeefyError')}</div>
+                  </div>
+                )}
+                <div className={css(styles.popoverLine, styles.popoverHelpText)}>
+                  {t('NetworkStatus-HelpText-Error')}
                 </div>
-              ))}
-              {(beefyErrors.length > 0 || configErrors.length > 0) && (
+              </>
+            ) : hasAnyLoading ? (
+              <>
                 <div className={classes.popoverLine}>
-                  <div className={clsx([classes.circle, 'warning', 'circle'])} />
-                  <div>{t('NetworkStatus-BeefyError')}</div>
+                  <div className={cx(classes.circle, 'loading', 'circle')} />
+                  {t('NetworkStatus-Title-Loading')}
                 </div>
-              )}
-              <div className={clsx(classes.popoverLine, classes.popoverHelpText)}>
-                {t('NetworkStatus-HelpText-Error')}
-              </div>
-            </>
-          ) : hasAnyLoading ? (
-            <>
-              <div className={classes.popoverLine}>
-                <div className={clsx([classes.circle, 'loading', 'circle'])} />
-                {t('NetworkStatus-Title-Loading')}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className={classes.popoverLine}>
-                <div className={clsx([classes.circle, 'success', 'circle'])} />
-                {t('NetworkStatus-Title-OK')}
-              </div>
-            </>
-          )}
+              </>
+            ) : (
+              <>
+                <div className={classes.popoverLine}>
+                  <div className={cx(classes.circle, 'success', 'circle')} />
+                  {t('NetworkStatus-Title-OK')}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </Floating>
     </>

@@ -21,14 +21,19 @@ import { isDefined } from '../utils/array-utils';
 
 export interface FulfilledAllVaultsPayload {
   byChainId: {
-    [chainId in ChainEntity['id']]?: { config: VaultConfig; entity: VaultEntity }[];
+    [chainId in ChainEntity['id']]?: {
+      config: VaultConfig;
+      entity: VaultEntity;
+    }[];
   };
 }
 
 export const fetchAllVaults = createAsyncThunk<
   FulfilledAllVaultsPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('vaults/fetchAllVaults', async () => {
   const api = await getConfigApi();
   const vaultsByChainId = await api.fetchAllVaults();
@@ -44,7 +49,9 @@ export const fetchAllVaults = createAsyncThunk<
 });
 
 type FulfilledVaultsLastHarvestPayload = {
-  byVaultId: { [vaultId: VaultConfig['id']]: number };
+  byVaultId: {
+    [vaultId: VaultConfig['id']]: number;
+  };
 };
 
 export const fetchVaultsLastHarvests = createAsyncThunk<FulfilledVaultsLastHarvestPayload>(

@@ -57,7 +57,11 @@ export type BridgeQuoteState = {
     >;
   };
   error: SerializedError | undefined;
-  limitError?: { current: BigNumber; max: BigNumber; canWait: boolean };
+  limitError?: {
+    current: BigNumber;
+    max: BigNumber;
+    canWait: boolean;
+  };
   requestId: string | undefined;
 };
 
@@ -66,8 +70,14 @@ export type BridgeConfirmState = {
   requestId?: string;
   error?: SerializedError;
   quote?: IBridgeQuote<BeefyAnyBridgeConfig>;
-  outgoing?: { hash: string; mined: boolean };
-  incoming?: { hash: string; mined: boolean };
+  outgoing?: {
+    hash: string;
+    mined: boolean;
+  };
+  incoming?: {
+    hash: string;
+    mined: boolean;
+  };
 };
 
 export type BridgesMap = {
@@ -134,7 +144,12 @@ export const bridgeSlice = createSlice({
   name: 'bridge',
   initialState: initialBridgeState,
   reducers: {
-    setStep(sliceState, action: PayloadAction<{ step: FormStep }>) {
+    setStep(
+      sliceState,
+      action: PayloadAction<{
+        step: FormStep;
+      }>
+    ) {
       if (!sliceState.form) {
         throw new Error(`Bridge form not initialized.`);
       }
@@ -154,7 +169,12 @@ export const bridgeSlice = createSlice({
 
       resetQuotes(sliceState);
     },
-    setFromChain(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
+    setFromChain(
+      sliceState,
+      action: PayloadAction<{
+        chainId: ChainEntity['id'];
+      }>
+    ) {
       if (!sliceState.form) {
         throw new Error(`Bridge form not initialized.`);
       }
@@ -175,7 +195,12 @@ export const bridgeSlice = createSlice({
 
       resetQuotes(sliceState);
     },
-    setToChain(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
+    setToChain(
+      sliceState,
+      action: PayloadAction<{
+        chainId: ChainEntity['id'];
+      }>
+    ) {
       if (!sliceState.form) {
         throw new Error(`Bridge form not initialized.`);
       }
@@ -251,7 +276,12 @@ export const bridgeSlice = createSlice({
         resetQuotes(sliceState);
       }
     },
-    selectQuote(sliceState, action: PayloadAction<{ quoteId: string }>) {
+    selectQuote(
+      sliceState,
+      action: PayloadAction<{
+        quoteId: string;
+      }>
+    ) {
       const { quoteId } = action.payload;
 
       if (quoteId in sliceState.quote.quotes.byId) {

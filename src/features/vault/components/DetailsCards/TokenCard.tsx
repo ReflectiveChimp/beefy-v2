@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
 import type { ChainEntity } from '../../../data/entities/chain';
@@ -23,7 +23,7 @@ import { ReactComponent as Link } from '@repo/images/icons/mui/Link.svg';
 import { ReactComponent as DocsIcon } from '../../../../images/icons/navigation/docs.svg';
 import { memo, useEffect } from 'react';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function TokenCardDisplay({ token }: { token: TokenEntity }) {
   const classes = useStyles();
@@ -43,7 +43,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
             assetSymbols={[token.symbol]}
             chainId={chain.id}
             size={24}
-            className={classes.assetIcon}
+            css={styles.assetIcon}
           />
           <div className={classes.assetSymbol}>{token.symbol}</div>
         </div>
@@ -53,8 +53,8 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
               Icon={Link}
               text={t('Token-Site')}
               href={token.website}
-              className={classes.assetWebsite}
-              textClassName={classes.assetLinkText}
+              css={styles.assetWebsite}
+              textCss={styles.assetLinkText}
             />
           )}
           {isErc20 && (
@@ -62,8 +62,8 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
               Icon={Code}
               href={explorerTokenUrl(chain, token.address)}
               text={t('Token-Contract')}
-              className={classes.assetContract}
-              textClassName={classes.assetLinkText}
+              css={styles.assetContract}
+              textCss={styles.assetLinkText}
             />
           )}
           {token.documentation && (
@@ -71,18 +71,18 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
               Icon={DocsIcon}
               href={token.documentation}
               text={t('Token-Docs')}
-              className={classes.assetDocumentation}
-              textClassName={classes.assetLinkText}
+              css={styles.assetDocumentation}
+              textCss={styles.assetLinkText}
             />
           )}
         </div>
         <div className={classes.assetBridgePrice}>
           {isNative ? (
-            <NativeTag chain={chain} className={classes.assetBridge} />
+            <NativeTag chain={chain} css={styles.assetBridge} />
           ) : bridge ? (
-            <BridgeTag bridge={bridge} chain={chain} className={classes.assetBridge} />
+            <BridgeTag bridge={bridge} chain={chain} css={styles.assetBridge} />
           ) : null}
-          <PriceWithChange oracleId={token.oracleId} className={classes.assetPrice} />
+          <PriceWithChange oracleId={token.oracleId} css={styles.assetPrice} />
         </div>
       </div>
       <div className={classes.description}>

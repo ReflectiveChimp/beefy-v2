@@ -1,19 +1,19 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  title: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.background.txsModal.text,
+export const styles = {
+  title: css.raw({
+    textStyle: 'body.med',
+    color: 'blackMarket1',
     display: 'flex',
     alignItems: 'center',
-  },
-  titleContainer: {
+  }),
+  titleContainer: css.raw({
     display: 'flex',
     justifyContent: 'space-between',
-    flexShrink: 0,
+    flexShrink: '0',
     marginBottom: '4px',
-  },
-  closeIcon: {
-    padding: 0,
-  },
-});
+  }),
+  closeIcon: css.raw({
+    padding: '0',
+  }),
+};

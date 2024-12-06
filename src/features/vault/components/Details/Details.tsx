@@ -1,11 +1,11 @@
-import { memo, useCallback, useMemo, useState, type FC } from 'react';
+import { type FC, memo, useCallback, useMemo, useState } from 'react';
 import { StatSwitcher } from '../StatSwitcher';
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { useTranslation } from 'react-i18next';
-import { makeStyles, type Theme } from '@material-ui/core';
 import { AssetsCard } from '../AssetsCard';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { PlatformsCard } from '../PlatformsCard';
+import { css } from '@repo/styles/css';
 
 interface DetailsProps {
   vaultId: VaultEntity['id'];
@@ -18,28 +18,27 @@ const detailsToComponent = {
 
 type TabType = keyof typeof detailsToComponent;
 
-const useStyles = makeStyles((theme: Theme) => ({
-  header: {
-    [theme.breakpoints.up('sm')]: {
+const styles = {
+  header: css.raw({
+    sm: {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
     },
-    [theme.breakpoints.down('xs')]: {
+    smDown: {
       display: 'flex',
-      flexDirection: 'column' as const,
+      flexDirection: 'column',
       gap: '8px',
       padding: '16px',
     },
-  },
-  content: {
+  }),
+  content: css.raw({
     gap: '16px',
-  },
-}));
+  }),
+};
 
-export const Details = memo<DetailsProps>(function Details({ vaultId }) {
+export const Details = memo(function Details({ vaultId }: DetailsProps) {
   const { t } = useTranslation();
-  const classes = useStyles();
   const [tab, setTab] = useState<TabType>('assets');
 
   const tabs = useMemo(() => {
@@ -57,11 +56,11 @@ export const Details = memo<DetailsProps>(function Details({ vaultId }) {
 
   return (
     <Card>
-      <CardHeader className={classes.header}>
+      <CardHeader css={styles.header}>
         <CardTitle title={'Details'} />
         <StatSwitcher onChange={onTabChange} options={tabs} stat={tab} />
       </CardHeader>
-      <CardContent className={classes.content}>
+      <CardContent css={styles.content}>
         <DetailsComponent vaultId={vaultId} />
       </CardContent>
     </Card>

@@ -111,7 +111,9 @@ type DistributedOmit<TEntry, TKeys extends keyof TEntry> = {
 };
 
 export function distributedOmit<
-  TEntry extends { [key: string]: unknown },
+  TEntry extends {
+    [key: string]: unknown;
+  },
   TKeys extends keyof TEntry
 >(entry: TEntry, ...keys: TKeys[]): DistributedOmit<TEntry, TKeys> {
   return Object.fromEntries(
@@ -119,6 +121,10 @@ export function distributedOmit<
   ) as DistributedOmit<TEntry, TKeys>;
 }
 
-export function firstKey<T extends { [key: string]: unknown }>(obj: T): KeysOfUnion<T> | undefined {
+export function firstKey<
+  T extends {
+    [key: string]: unknown;
+  }
+>(obj: T): KeysOfUnion<T> | undefined {
   return Object.keys(obj)[0] as KeysOfUnion<T> | undefined;
 }

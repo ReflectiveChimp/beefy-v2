@@ -14,9 +14,9 @@ export type HistoricGraphsLoaderProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const HistoricGraphsLoader = memo<HistoricGraphsLoaderProps>(function HistoricGraphsLoader({
+export const HistoricGraphsLoader = memo(function HistoricGraphsLoader({
   vaultId,
-}) {
+}: HistoricGraphsLoaderProps) {
   const dispatch = useAppDispatch();
   const rangesStatus = useAppSelector(state => selectHistoricalRangesStatus(state, vaultId));
   const hasAnyChart = useAppSelector(state => selectHistoricalHasAnyChart(state, vaultId));

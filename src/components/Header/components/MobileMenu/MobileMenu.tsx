@@ -1,5 +1,6 @@
 import { Fragment, memo, useState } from 'react';
-import { Divider, Drawer, makeStyles } from '@material-ui/core';
+import { Divider, Drawer } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { ReactComponent as Close } from '@repo/images/icons/mui/Close.svg';
 import { ReactComponent as Menu } from '@repo/images/icons/mui/Menu.svg';
 import { styles } from './styles';
@@ -9,11 +10,11 @@ import { useTranslation } from 'react-i18next';
 import { MobileList } from '../../list';
 import type { NavConfig, NavDropdownConfig } from '../DropNavItem/types';
 import { isNavDropdownConfig } from '../DropNavItem/types';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 import { Prices } from '../Prices';
 import { UnreadDots } from '../Badges/UnreadDots';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const MobileMenu = memo(function MobileMenu() {
   const classes = useStyles();
@@ -54,7 +55,7 @@ type MobileItemProps = {
   item: NavConfig;
   onClick: () => void;
 };
-const MobileItem = memo<MobileItemProps>(function MobileItem({ item, onClick }) {
+const MobileItem = memo(function MobileItem({ item, onClick }: MobileItemProps) {
   if (isNavDropdownConfig(item)) {
     const NavComponent = item.MobileComponent ?? DropMobile;
     return (
@@ -83,20 +84,20 @@ const MobileItem = memo<MobileItemProps>(function MobileItem({ item, onClick }) 
 
 type DropMobileProps = NavDropdownConfig;
 
-export const DropMobile = memo<DropMobileProps>(function DropMobile({
+export const DropMobile = memo(function DropMobile({
   title,
   Icon,
   items,
   onClick,
   Badge,
-}) {
+}: DropMobileProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
     <div className={classes.itemsContainer}>
       <div className={classes.itemTitle}>
         <Icon />
-        <div className={clsx(classes.title, { [classes.titleWithBadge]: !!Badge })}>
+        <div className={css(styles.title, !!Badge && styles.titleWithBadge)}>
           {t(title)}
           {Badge ? <Badge /> : null}
         </div>
@@ -108,7 +109,7 @@ export const DropMobile = memo<DropMobileProps>(function DropMobile({
             <NavComponent
               key={item.title}
               onClick={onClick}
-              className={classes.customPadding}
+              css={styles.customPadding}
               title={item.title}
               url={item.url}
               Icon={item.Icon}

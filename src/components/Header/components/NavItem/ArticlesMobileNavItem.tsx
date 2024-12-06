@@ -6,13 +6,13 @@ import { UnreadArticleDot } from '../Badges/UnreadDots';
 import { selectLastArticle } from '../../../../features/data/selectors/articles';
 import { articlesActions } from '../../../../features/data/reducers/articles';
 
-export const ArticlesMobileNavItem = memo<NavItemProps>(function ArticlesMobileNavItem({
+export const ArticlesMobileNavItem = memo(function ArticlesMobileNavItem({
   url,
   title,
   Icon,
-  className,
+  css: cssProp,
   onClick,
-}) {
+}: NavItemProps) {
   const lastArticle = useAppSelector(selectLastArticle);
   const dispatch = useAppDispatch();
   const markRead = useCallback(() => {
@@ -30,7 +30,7 @@ export const ArticlesMobileNavItem = memo<NavItemProps>(function ArticlesMobileN
       title={title}
       Icon={Icon}
       onClick={markRead}
-      className={className}
+      css={cssProp}
       Badge={UnreadArticleDot}
     />
   );

@@ -1,5 +1,6 @@
-import { ClickAwayListener, makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
+import { ClickAwayListener } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
+import { css, type CssStyles } from '@repo/styles/css';
 import type { FC, MouseEventHandler, MutableRefObject } from 'react';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,25 +10,25 @@ import type { ToggleButtonProps } from '../../ToggleButtons';
 import { ToggleButton } from '../../ToggleButtons';
 import { ReactComponent as MoreVertRounded } from '@repo/images/icons/mui/MoreVertRounded.svg';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface ExtraOptionsListProps {
   ButtonComponent?: FC<ToggleButtonProps>;
   extraOptions: Record<string, string>;
   onClick: (value: string) => void;
   value: string;
-  buttonClass?: string;
-  selectedClass?: string;
+  buttonCss?: CssStyles;
+  selectedCss?: CssStyles;
 }
 
-export const ExtraOptionsList = memo<ExtraOptionsListProps>(function ExtraOptionsList({
+export const ExtraOptionsList = memo(function ExtraOptionsList({
   extraOptions,
   ButtonComponent = ToggleButton,
   onClick,
   value,
-  buttonClass,
-  selectedClass,
-}) {
+  buttonCss,
+  selectedCss,
+}: ExtraOptionsListProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +56,7 @@ export const ExtraOptionsList = memo<ExtraOptionsListProps>(function ExtraOption
   return (
     <ClickAwayListener onClickAway={handleClose} mouseEvent="onMouseDown" touchEvent="onTouchStart">
       <div
-        className={clsx(classes.container, { [classes.selectedList]: extraListOptionSelected })}
+        className={css(styles.container, extraListOptionSelected && styles.selectedList)}
         onClick={handleToggle}
         ref={anchorEl}
       >
@@ -65,7 +66,7 @@ export const ExtraOptionsList = memo<ExtraOptionsListProps>(function ExtraOption
           open={isOpen}
           anchorEl={anchorEl as MutableRefObject<HTMLDivElement>}
           placement="bottom-end"
-          className={classes.dropdown}
+          css={styles.dropdown}
           display="flex"
           autoWidth={false}
         >
@@ -75,9 +76,11 @@ export const ExtraOptionsList = memo<ExtraOptionsListProps>(function ExtraOption
               value={optionValue}
               label={label}
               onClick={onClick}
-              className={clsx(classes.buttonList, buttonClass, {
-                [clsx(classes.selectedList, selectedClass)]: value === optionValue,
-              })}
+              css={css.raw(
+                styles.buttonList,
+                buttonCss,
+                value === optionValue && css.raw(styles.selectedList, selectedCss)
+              )}
             />
           ))}
         </Floating>

@@ -1,47 +1,47 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  group: {},
-  labels: {
+export const styles = {
+  group: css.raw({}),
+  labels: css.raw({
     display: 'flex',
     marginBottom: '4px',
-  },
-  label: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
-    color: theme.palette.text.dark,
+  }),
+  label: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: '700',
+    color: 'text.dark',
     flex: '1 1 40%',
-  },
-  balance: {
-    ...theme.typography['body-sm'],
+  }),
+  balance: css.raw({
+    textStyle: 'body.sm',
     cursor: 'pointer',
-    color: theme.palette.text.dark,
+    color: 'text.dark',
     '& span': {
       paddingLeft: '4px',
-      fontWeight: theme.typography['body-sm-med'].fontWeight,
-      color: theme.palette.text.middle,
+      fontWeight: 'body.medium',
+      color: 'text.middle',
     },
-  },
-  input: {},
-  max: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.light,
-    backgroundColor: theme.palette.background.border,
+  }),
+  input: css.raw({}),
+  max: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.light',
+    backgroundColor: 'bayOfMany',
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
     borderRadius: '4px',
-    margin: 0,
+    margin: '0',
     padding: '6px 12px',
-    minWidth: 0,
-    flexShrink: 0,
+    minWidth: '0',
+    flexShrink: '0',
     cursor: 'pointer',
     marginRight: '12px',
     '&:disabled': {
-      color: theme.palette.text.dark,
-      backgroundColor: theme.palette.background.buttons.button,
-      borderColor: theme.palette.background.contentLight,
-      opacity: 0.4,
+      color: 'text.dark',
+      backgroundColor: 'bayOfMany',
+      borderColor: 'background.content.light',
+      opacity: '0.4',
     },
-  },
-});
+  }),
+};

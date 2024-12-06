@@ -1,53 +1,53 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  cowcentratedHeader: {
+export const styles = {
+  cowcentratedHeader: css.raw({
     display: 'grid',
     gap: '1px',
     gridTemplateColumns: 'repeat(3,minmax(0,1fr))',
-    [theme.breakpoints.down('xs')]: {
+    smDown: {
       gridTemplateColumns: '1fr',
     },
-  },
-  cowcentratedStat: {
-    backgroundColor: theme.palette.background.contentPrimary,
+  }),
+  cowcentratedStat: css.raw({
+    backgroundColor: 'background.content',
     padding: '16px 24px',
-    position: 'relative' as const,
-  },
-  label: {
-    ...theme.typography['body-sm-med'],
-    fontWeight: 700,
-    color: theme.palette.text.dark,
-    textTransform: 'uppercase' as const,
-  },
-  inRange: {
-    color: theme.palette.background.indicators.success,
-  },
-  outOfRange: {
-    color: theme.palette.background.indicators.error,
-  },
-  value: {
-    ...theme.typography['body-lg-med'],
-    fontWeight: 500,
-    color: theme.palette.text.primary,
+    position: 'relative',
+  }),
+  label: css.raw({
+    textStyle: 'body.sm.med',
+    fontWeight: '700',
+    color: 'text.dark',
+    textTransform: 'uppercase',
+  }),
+  inRange: css.raw({
+    color: 'indicators.success',
+  }),
+  outOfRange: css.raw({
+    color: 'indicators.error',
+  }),
+  value: css.raw({
+    textStyle: 'body.med',
+    fontWeight: '500',
+    color: 'text.white',
     '& span': {
-      ...theme.typography['body-sm-med'],
-      fontWeight: 700,
-      textTransform: 'uppercase' as const,
-      color: theme.palette.text.dark,
+      textStyle: 'body.sm.med',
+      fontWeight: '700',
+      textTransform: 'uppercase',
+      color: 'text.dark',
     },
-  },
-  fullWidth: {
+  }),
+  fullWidth: css.raw({
     widht: '100%',
     marginBottom: '1px',
-  },
-  inverted: {
-    position: 'absolute' as const,
-    top: 8,
-    right: 8,
-  },
-  invertButton: {
-    color: theme.palette.text.primary,
+  }),
+  inverted: css.raw({
+    position: 'absolute',
+    top: '8',
+    right: '8',
+  }),
+  invertButton: css.raw({
+    color: 'text.white',
     padding: '0px 2px',
-  },
-});
+  }),
+};

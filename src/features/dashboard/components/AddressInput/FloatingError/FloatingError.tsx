@@ -1,25 +1,22 @@
 import { memo, type MutableRefObject, type RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Floating } from '../../../../../components/Floating';
-import type { Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  dropdown: {
-    ...theme.typography['body-lg-med'],
-    display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center',
-    color: theme.palette.text.dark,
-    padding: '6px 12px',
-    backgroundColor: theme.palette.background.contentPrimary,
-    border: `2px solid ${theme.palette.background.border}`,
-    borderRadius: '8px',
-    marginTop: '4px',
-    minWidth: '250px',
-    zIndex: 999,
-  },
-}));
+const dropdownCss = css.raw({
+  textStyle: 'body.med',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  color: 'text.dark',
+  padding: '6px 12px',
+  backgroundColor: 'background.content',
+  border: '2px solid {colors.bayOfMany}',
+  borderRadius: '8px',
+  marginTop: '4px',
+  minWidth: '250px',
+  zIndex: 'tooltip',
+});
 
 interface FloatingErrorProps {
   userInput: string;
@@ -30,15 +27,14 @@ interface FloatingErrorProps {
   anchorRef: RefObject<HTMLInputElement> | MutableRefObject<HTMLInputElement>;
 }
 
-export const FloatingError = memo<FloatingErrorProps>(function FloatingError({
+export const FloatingError = memo(function FloatingError({
   userInput,
   inputMode,
   isAddressValid,
   isDomainValid,
   isDomainResolving,
   anchorRef,
-}) {
-  const classes = useStyles();
+}: FloatingErrorProps) {
   const { t } = useTranslation();
 
   if (!isDomainResolving && inputMode === 'domain') {
@@ -47,7 +43,7 @@ export const FloatingError = memo<FloatingErrorProps>(function FloatingError({
         open={!isDomainValid}
         placement="bottom-start"
         anchorEl={anchorRef as MutableRefObject<HTMLElement>}
-        className={classes.dropdown}
+        css={dropdownCss}
         display="flex"
         autoWidth={false}
       >
@@ -62,7 +58,7 @@ export const FloatingError = memo<FloatingErrorProps>(function FloatingError({
         open={!isAddressValid}
         placement="bottom-start"
         anchorEl={anchorRef as MutableRefObject<HTMLElement>}
-        className={classes.dropdown}
+        css={dropdownCss}
         display="flex"
         autoWidth={false}
       >

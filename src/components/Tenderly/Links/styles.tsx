@@ -1,7 +1,7 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (_theme: Theme) => ({
-  link: {
+export const styles = {
+  link: css.raw({
     color: 'inherit',
     textDecoration: 'none',
     cursor: 'pointer',
@@ -11,9 +11,9 @@ export const styles = (_theme: Theme) => ({
     '&:hover': {
       textDecoration: 'underline',
     },
-  },
-  icon: {
-    width: 16,
-    height: 16,
-  },
-});
+  }),
+  icon: css.raw({
+    width: '16',
+    height: '16',
+  }),
+};

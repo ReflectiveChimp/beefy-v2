@@ -1,64 +1,37 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
     alignItems: 'flex-end',
-  },
-  barsContainer: {
+  }),
+  barsContainer: css.raw({
     display: 'flex',
     alignItems: 'flex-end',
-    justifyContent: 'space-between',
     margin: 'auto 0 2px 4px',
-  },
-  bar: {
-    backgroundColor: theme.palette.text.dark,
+    gap: '4px',
+  }),
+  bar: css.raw({
+    backgroundColor: 'text.dark',
     width: '5px',
     borderRadius: '1px',
-    '& + $bar': {
-      marginLeft: '4px',
-    },
-  },
-  sm: {
+  }),
+  sm: css.raw({
     height: '11px',
-  },
-  md: {
+  }),
+  md: css.raw({
     height: '14px',
-  },
-  lg: {
+  }),
+  lg: css.raw({
     height: '19px',
-  },
-  withSizeMedium: {
+  }),
+  green: css.raw({
+    backgroundColor: 'green',
+  }),
+  withSizeMedium: css.raw({
     alignItems: 'center',
-    '& $barsContainer': {
-      margin: '0 0 0 8px',
-    },
-  },
-  withScoreLow: {
-    '& $sm': {
-      backgroundColor: theme.palette.primary.main,
-    },
-  },
-  withScoreMed: {
-    '& $sm': {
-      backgroundColor: theme.palette.primary.main,
-    },
-    '& $md': {
-      backgroundColor: theme.palette.primary.main,
-    },
-  },
-  withScoreHigh: {
-    '& $sm': {
-      backgroundColor: theme.palette.primary.main,
-    },
-    '& $md': {
-      backgroundColor: theme.palette.primary.main,
-    },
-    '& $lg': {
-      backgroundColor: theme.palette.primary.main,
-    },
-  },
-  withRightAlign: {
+  }),
+  withRightAlign: css.raw({
     justifyContent: 'flex-end',
-  },
-});
+  }),
+};

@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { type BigNumber } from 'bignumber.js';
 import { orderBy } from 'lodash-es';
 import { memo, useMemo } from 'react';
@@ -14,7 +14,7 @@ import { styles } from './styles';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
 import { entries } from '../../../../helpers/object';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const DaoInflows = memo(function DaoInflows() {
   const { t } = useTranslation();
@@ -51,7 +51,7 @@ interface ChainProps {
   value: BigNumber;
 }
 
-const Chain = memo<ChainProps>(function Chain({ chainId, value }) {
+const Chain = memo(function Chain({ chainId, value }: ChainProps) {
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, chainId));
   return (

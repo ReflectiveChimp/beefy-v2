@@ -1,20 +1,20 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
     width: '100%',
     height: '100%',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: 'inherit',
-  },
-  icon: {
+  }),
+  icon: css.raw({
     marginBottom: '16px',
-  },
-  text: {
-    ...theme.typography['subline-lg'],
-    color: theme.palette.text.dark,
-  },
-});
+  }),
+  text: css.raw({
+    textStyle: 'subline',
+    color: 'text.dark',
+  }),
+};

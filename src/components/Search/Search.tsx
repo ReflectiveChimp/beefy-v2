@@ -2,35 +2,36 @@ import type { ChangeEvent, MouseEventHandler } from 'react';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { InputBaseProps } from '@material-ui/core';
-import { InputBase, makeStyles } from '@material-ui/core';
+import { InputBase } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { ReactComponent as SearchIcon } from '@repo/images/icons/mui/Search.svg';
 import { ReactComponent as CloseRounded } from '@repo/images/icons/mui/CloseRounded.svg';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface SearchProps {
   handleSearchText: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   handleClearText: () => void;
   searchText: string;
   autoFocus?: HTMLInputElement['autofocus'];
-  className?: string;
+  css?: CssStyles;
   onClick?: MouseEventHandler<HTMLDivElement>;
   onFocus?: InputBaseProps['onFocus'];
   onBlur?: InputBaseProps['onBlur'];
 }
 
-export const Search = memo<SearchProps>(function Search({
+export const Search = memo(function Search({
   handleSearchText,
   searchText,
   handleClearText,
   autoFocus = false,
-  className,
+  css: cssProp,
   onClick,
   onFocus,
   onBlur,
-}) {
+}: SearchProps) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -52,7 +53,7 @@ export const Search = memo<SearchProps>(function Search({
     <InputBase
       onFocus={onFocus}
       onBlur={onBlur}
-      className={clsx(className, classes.search)}
+      className={css(cssProp, styles.search)}
       value={searchText}
       onChange={handleSearchText}
       fullWidth={true}

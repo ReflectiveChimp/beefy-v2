@@ -1,22 +1,22 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  message: {
+export const styles = {
+  message: css.raw({
     padding: '24px',
-    background: theme.palette.background.contentPrimary,
+    background: 'background.content',
     borderBottomLeftRadius: '8px',
     borderBottomRightRadius: '8px',
-  },
-  title: {
-    ...theme.typography['h3'],
-    color: theme.palette.text.middle,
+  }),
+  title: css.raw({
+    textStyle: 'h3',
+    color: 'text.middle',
     margin: '0 0 4px 0',
-  },
-  text: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.middle,
-  },
-  extra: {
+  }),
+  text: css.raw({
+    textStyle: 'body',
+    color: 'text.middle',
+  }),
+  extra: css.raw({
     marginTop: '24px',
-  },
-});
+  }),
+};

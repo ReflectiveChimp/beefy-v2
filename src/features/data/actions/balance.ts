@@ -44,7 +44,9 @@ export interface FetchAllBalanceFulfilledPayload {
 export const fetchAllBalanceAction = createAsyncThunk<
   FetchAllBalanceFulfilledPayload,
   FetchAllBalanceActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('balance/fetchAllBalanceAction', async ({ chainId, walletAddress }, { getState }) => {
   const state = getState();
   const chain = selectChainById(state, chainId);
@@ -78,7 +80,9 @@ export type FetchBalanceParams = {
 export const fetchBalanceAction = createAsyncThunk<
   FetchAllBalanceFulfilledPayload,
   FetchBalanceParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'balance/fetchBalanceAction',
   async ({ chainId, tokens: requestedTokens = [], vaults = [] }, { getState }) => {
@@ -143,7 +147,9 @@ export type RecalculateDepositedVaultsPayload = {
 export const recalculateDepositedVaultsAction = createAsyncThunk<
   RecalculateDepositedVaultsPayload,
   RecalculateDepositedVaultsParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('balance/recalculateDepositedVaultsAction', async ({ walletAddress }, { getState }) => {
   const state = getState();
   const allVaultIds = selectAllVisibleVaultIds(state);

@@ -1,51 +1,52 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  header: {
-    [theme.breakpoints.up('sm')]: {
+export const styles = {
+  header: css.raw({
+    sm: {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
     },
-    [theme.breakpoints.down('xs')]: {
+    smDown: {
       display: 'flex',
-      flexDirection: 'column' as const,
+      flexDirection: 'column',
       gap: '8px',
       padding: '16px',
     },
-  },
-  card: {
+  }),
+  card: css.raw({
     backgroundColor: 'transparent',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '1px',
-  },
-  content: {
+  }),
+  content: css.raw({
     padding: '0px',
     backgroundColor: 'transparent',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '1px',
-  },
-  graphContainer: {
-    backgroundColor: theme.palette.background.contentPrimary,
+  }),
+  graphContainer: css.raw({
+    backgroundColor: 'background.content',
     '&:last-child': {
       borderRadius: '0px 0px 12px 12px',
     },
-  },
-  dashboardPnlContainer: {
-    backgroundColor: theme.palette.background.contentPrimary,
+  }),
+  dashboardPnlContainer: css.raw({
+    backgroundColor: 'background.content',
     borderRadius: '12px',
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       borderRadius: '0px',
     },
-  },
-  tabsDashboard: {
+  }),
+  tabsDashboard: css.raw({
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiTab-root': {
-      ...theme.typography['subline-sm'],
+      textStyle: 'subline.sm',
     },
-  },
-  footerDashboard: {
-    borderTop: `2px solid ${theme.palette.background.border}`,
-  },
-});
+  }),
+  footerDashboard: css.raw({
+    borderTop: '2px solid {colors.bayOfMany}',
+  }),
+};

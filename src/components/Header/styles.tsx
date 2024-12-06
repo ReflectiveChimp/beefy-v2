@@ -1,37 +1,38 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  headerContainer: {
-    flexGrow: 1,
-  },
-  navHeader: {
+export const styles = {
+  headerContainer: css.raw({
+    flexGrow: '1',
+  }),
+  navHeader: css.raw({
     background: 'transparent',
     boxShadow: 'none',
+    //FIXME MUI2PANDA: Target MUI class
     '&:hover .MuiListItem-button': {
       background: 'transparent',
     },
-  },
-  flex: {
+  }),
+  flex: css.raw({
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
     columnGap: '16px',
-  },
-  hasPortfolio: {
-    backgroundColor: theme.palette.background.footerHeader,
-  },
-  container: {
+  }),
+  hasPortfolio: css.raw({
+    backgroundColor: 'background.header',
+  }),
+  container: css.raw({
     paddingTop: '12px',
     paddingBottom: '12px',
-  },
-  content: {
+  }),
+  content: css.raw({
     justifyContent: 'space-between',
-  },
-  beefy: {
+  }),
+  beefy: css.raw({
     display: 'block',
     '& img': {
       height: '40px',
       display: 'block',
     },
-  },
-});
+  }),
+};

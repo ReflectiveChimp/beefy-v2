@@ -76,7 +76,15 @@ export const selectVaultCurrentBoostId = createCachedSelector(
 export const selectVaultCurrentBoostIdWithStatus = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
-  (activeBoostIds, prestakeBoostIds): { id: string; status: 'active' | 'prestake' } | undefined => {
+  (
+    activeBoostIds,
+    prestakeBoostIds
+  ):
+    | {
+        id: string;
+        status: 'active' | 'prestake';
+      }
+    | undefined => {
     if (activeBoostIds.length > 0) {
       return { id: activeBoostIds[0], status: 'active' };
     }
@@ -262,7 +270,9 @@ export const selectBoostRewards = createCachedSelector(
 
 export const selectBoostActiveRewards = createCachedSelector(
   (state: BeefyState, boostId: BoostEntity['id']) => selectBoostRewards(state, boostId),
-  () => Math.trunc(Date.now() / 60_0000), // invalidate every 60s
+  () => Math.trunc(Date.now() / 600000), // invalidate every 60s
+  // invalidate every 60s
+  // invalidate every 60s
   rewards => {
     const now = new Date();
     return orderBy(

@@ -22,9 +22,9 @@ type StandardExplainerProps = {
   underlyingId?: VaultEntity['id'];
 };
 
-export const StandardExplainer = memo<StandardExplainerProps>(function StandardExplainer({
+export const StandardExplainer = memo(function StandardExplainer({
   vaultId,
-}) {
+}: StandardExplainerProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectStandardVaultById(state, vaultId));
   const boost = useAppSelector(state => selectCurrentBoostByVaultIdOrUndefined(state, vaultId));
@@ -37,7 +37,10 @@ export const StandardExplainer = memo<StandardExplainerProps>(function StandardE
   const showLendingOracle = !!vault.lendingOracle;
 
   const links = useMemo(() => {
-    const urls: { link: string; label: string }[] = [];
+    const urls: {
+      link: string;
+      label: string;
+    }[] = [];
     if (strategyAddress) {
       urls.push({
         link: explorerAddressUrl(chain, strategyAddress),

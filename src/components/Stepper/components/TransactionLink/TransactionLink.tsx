@@ -1,4 +1,5 @@
-import { Button, makeStyles } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as OpenInNewRoundedIcon } from '@repo/images/icons/mui/OpenInNewRounded.svg';
 import { selectChainById } from '../../../../features/data/selectors/chains';
@@ -7,7 +8,7 @@ import { useAppSelector } from '../../../../store';
 import { selectStepperChainId } from '../../../../features/data/selectors/stepper';
 import { explorerTxUrl } from '../../../../helpers/url';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export function TransactionLink() {
   const classes = useStyles();

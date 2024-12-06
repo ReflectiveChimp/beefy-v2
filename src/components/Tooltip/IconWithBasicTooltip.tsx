@@ -6,11 +6,11 @@ import { IconWithTooltip, type IconWithTooltipProps } from './IconWithTooltip';
 export type IconWithBasicTooltipProps = BasicTooltipContentProps &
   Omit<IconWithTooltipProps, 'title' | 'content'>;
 
-export const IconWithBasicTooltip = memo<IconWithBasicTooltipProps>(function IconWithBasicTooltip({
+export const IconWithBasicTooltip = memo(function IconWithBasicTooltip({
   title,
   content,
   ...rest
-}) {
+}: IconWithBasicTooltipProps) {
   return (
     <IconWithTooltip content={<BasicTooltipContent title={title} content={content} />} {...rest} />
   );

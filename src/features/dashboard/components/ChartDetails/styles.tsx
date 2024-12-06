@@ -1,38 +1,39 @@
-import type { Theme } from '@material-ui/core';
-export const styles = (theme: Theme) => ({
-  itemsContainer: {
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  itemsContainer: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '8px',
     width: '100%',
-  },
-  item: {
+  }),
+  item: css.raw({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     columnGap: '4px',
-  },
-  square: {
+  }),
+  square: css.raw({
     width: '12px',
     height: '12px',
     borderRadius: '2px',
-  },
-  label: {
-    ...theme.typography['body-sm-med'],
-    color: theme.palette.text.middle,
-    textTransform: 'uppercase' as const,
+  }),
+  label: css.raw({
+    textStyle: 'body.sm.med',
+    color: 'text.middle',
+    textTransform: 'uppercase',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
     overflow: 'hidden',
     maxWidth: '90%',
-  },
-  value: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.dark,
-  },
-  flex: {
+  }),
+  value: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
+  }),
+  flex: css.raw({
     display: 'flex',
     alignItems: 'center',
     columnGap: '8px',
-  },
-});
+  }),
+};

@@ -6,8 +6,12 @@ import { selectVaultRawTvl } from './tvl';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import type { MerklRewardsCampaign, StellaSwapRewardsCampaign } from '../reducers/rewards-types';
 
-export type MerklRewardsCampaignWithApr = MerklRewardsCampaign & { apr: number };
-export type StellaSwapRewardsCampaignWithApr = StellaSwapRewardsCampaign & { apr: number };
+export type MerklRewardsCampaignWithApr = MerklRewardsCampaign & {
+  apr: number;
+};
+export type StellaSwapRewardsCampaignWithApr = StellaSwapRewardsCampaign & {
+  apr: number;
+};
 
 export const selectVaultActiveMerklCampaigns = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>

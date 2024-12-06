@@ -8,7 +8,7 @@ import type { VaultGov, VaultStandard } from '../entities/vault';
 import { isGovVault, isStandardVault } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectVaultIdsByChainIdIncludingHidden, selectVaultById } from '../selectors/vaults';
+import { selectVaultById, selectVaultIdsByChainIdIncludingHidden } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 
 interface ActionParams {
@@ -24,7 +24,9 @@ export interface FetchAllAllowanceFulfilledPayload {
 export const fetchAllAllowanceAction = createAsyncThunk<
   FetchAllAllowanceFulfilledPayload,
   ActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('allowance/fetchAllAllowanceAction', async ({ chainId, walletAddress }, { getState }) => {
   const state = getState();
   const chain = selectChainById(state, chainId);
@@ -69,7 +71,9 @@ interface FetchAllowanceActionParams {
 export const fetchAllowanceAction = createAsyncThunk<
   FetchAllAllowanceFulfilledPayload,
   FetchAllowanceActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'allowance/fetchAllowanceAction',
   async ({ chainId, spenderAddress, tokens, walletAddress }, { getState }) => {

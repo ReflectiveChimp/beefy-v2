@@ -232,7 +232,10 @@ export const selectYieldStatsByVaultId = (
 };
 
 type ApyVaultUIData =
-  | { status: 'loading' | 'missing' | 'hidden'; type: 'apy' | 'apr' }
+  | {
+      status: 'loading' | 'missing' | 'hidden';
+      type: 'apy' | 'apr';
+    }
   | {
       status: 'available';
       type: 'apy' | 'apr';

@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect } from 'react';
 import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { getSingleAssetSrc } from '../../../../helpers/singleAssetSrc';
 import { Button } from '../../../../components/Button';
 import type { VaultEntity } from '../../../data/entities/vault';
@@ -27,13 +27,13 @@ import { ActionConnect, ActionSwitch } from '../Actions/Transact/CommonActions';
 import { isEmpty } from '../../../../helpers/utils';
 import type { MigrationConfig } from '../../../data/reducers/wallet/migration';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface MigrationProps {
   vaultId: VaultEntity['id'];
 }
 
-export const Migration = memo<MigrationProps>(function Migration({ vaultId }) {
+export const Migration = memo(function Migration({ vaultId }: MigrationProps) {
   const dispatch = useAppDispatch();
   const shouldInitMigration = useAppSelector(selectShouldInitMigration);
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
@@ -58,10 +58,12 @@ export const Migration = memo<MigrationProps>(function Migration({ vaultId }) {
   return null;
 });
 
-const Migrator = memo<{ migrationId: MigrationConfig['id'] } & MigrationProps>(function Migrator({
+const Migrator = memo(function Migrator({
   vaultId,
   migrationId,
-}) {
+}: {
+  migrationId: MigrationConfig['id'];
+} & MigrationProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));

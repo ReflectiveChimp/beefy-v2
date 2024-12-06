@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { formatTokenDisplayCondensed, formatUsd } from '../../../../../../../helpers/format';
-import { makeStyles, type Theme } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { featureFlag_detailedTooltips } from '../../../../../../data/utils/feature-flags';
 import type {
   ClmInvestorFeesTimeSeriesPoint,
@@ -10,38 +10,39 @@ import type {
 } from '../../../../../../../helpers/graph/timeseries';
 import type { TokenEntity } from '../../../../../../data/entities/token';
 import type { RechartsTooltipProps } from '../../../../../../../helpers/graph/types';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  content: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.primary,
+const useStyles = legacyMakeStyles({
+  content: css.raw({
+    textStyle: 'body',
+    color: 'text.white',
     padding: '12px 16px',
     minWidth: '250px',
-    background: '#1B1D32',
+    background: 'extracted668',
     borderRadius: '8px',
-    textAlign: 'left' as const,
+    textAlign: 'left',
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
-  },
-  value: {
-    ...theme.typography['body-lg-med'],
+  }),
+  value: css.raw({
+    textStyle: 'body.med',
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
-    textAlign: 'right' as const,
-  },
-  itemContainer: {
+    textAlign: 'right',
+  }),
+  itemContainer: css.raw({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: '8px',
-  },
-  label: {
-    color: theme.palette.text.dark,
-  },
-  timestamp: {},
-}));
+  }),
+  label: css.raw({
+    color: 'text.dark',
+  }),
+  timestamp: css.raw({}),
+});
 
 export type OverviewTooltipProps = RechartsTooltipProps<
   'underlyingUsd',
@@ -49,10 +50,10 @@ export type OverviewTooltipProps = RechartsTooltipProps<
   ClmInvestorOverviewTimeSeriesPoint
 >;
 
-export const OverviewTooltip = memo<OverviewTooltipProps>(function OverviewTooltip({
+export const OverviewTooltip = memo(function OverviewTooltip({
   active,
   payload,
-}) {
+}: OverviewTooltipProps) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -104,11 +105,11 @@ export type FeesTooltipProps = RechartsTooltipProps<
   tokens: TokenEntity[];
 };
 
-export const FeesTooltip = memo<FeesTooltipProps>(function FeesTooltip({
+export const FeesTooltip = memo(function FeesTooltip({
   active,
   payload,
   tokens,
-}) {
+}: FeesTooltipProps) {
   const classes = useStyles();
 
   if (!active || !payload || !Array.isArray(payload) || !payload.length) {

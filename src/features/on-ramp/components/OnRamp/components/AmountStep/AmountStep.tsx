@@ -1,5 +1,4 @@
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { Step } from '../../../../../../components/Step';
 import { useTranslation } from 'react-i18next';
@@ -12,10 +11,7 @@ import { QuoteContinue } from '../QuoteContinue';
 import { FormStep, InputMode } from '../../../../../data/reducers/on-ramp-types';
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 
-const useStyles = makeStyles(styles);
-
 export const AmountStep = memo(function AmountStep() {
-  const classes = useStyles();
   const { t } = useTranslation();
   const inputMode = useAppSelector(selectInputMode);
 
@@ -29,19 +25,19 @@ export const AmountStep = memo(function AmountStep() {
     <Step
       stepType="onRamp"
       title={t('OnRamp-AmountStep-Title')}
-      contentClass={classes.container}
+      contentCss={styles.container}
       onBack={handleBack}
     >
       <FiatAmount
         isInput={inputMode === InputMode.Fiat}
-        className={inputMode === InputMode.Fiat ? classes.input : classes.output}
+        css={inputMode === InputMode.Fiat ? styles.input : styles.output}
       />
-      <InputSwitcher className={classes.switcher} />
+      <InputSwitcher css={styles.switcher} />
       <TokenAmount
         isInput={inputMode === InputMode.Token}
-        className={inputMode === InputMode.Token ? classes.input : classes.output}
+        css={inputMode === InputMode.Token ? styles.input : styles.output}
       />
-      <QuoteContinue className={classes.continue} />
+      <QuoteContinue css={styles.continue} />
     </Step>
   );
 });

@@ -1,7 +1,6 @@
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectCanQuote, selectHaveQuote } from '../../../../../data/selectors/on-ramp';
@@ -10,13 +9,10 @@ import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles(styles);
-
 export type QuoteContinueProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const QuoteContinue = memo<QuoteContinueProps>(function QuoteContinue({ className }) {
-  const classes = useStyles();
+export const QuoteContinue = memo(function QuoteContinue({ css: cssProp }: QuoteContinueProps) {
   const canQuote = useAppSelector(selectCanQuote);
   const haveQuote = useAppSelector(selectHaveQuote);
   const dispatch = useAppDispatch();
@@ -27,7 +23,7 @@ export const QuoteContinue = memo<QuoteContinueProps>(function QuoteContinue({ c
   }, [dispatch]);
 
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       {canQuote ? <QuoteBest /> : null}
       <Button
         variant="success"

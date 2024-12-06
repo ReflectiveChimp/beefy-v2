@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, type ReactNode } from 'react';
 import { useAppSelector } from '../../store';
 import { selectUserDepositedVaultIds } from '../data/selectors/balance';
@@ -18,13 +18,13 @@ import { useResolveDomain } from '../data/hooks/resolver';
 import { DashboardMeta } from '../../components/Meta/DashboardMeta';
 import { UnstakedClmBannerDashboard } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type DashboardProps = {
   mode: 'url' | 'wallet';
 };
 
-export const Dashboard = memo<DashboardProps>(function Dashboard({ mode }) {
+export const Dashboard = memo(function Dashboard({ mode }: DashboardProps) {
   return (
     <>
       <DashboardMeta />
@@ -34,7 +34,9 @@ export const Dashboard = memo<DashboardProps>(function Dashboard({ mode }) {
 });
 
 const DashboardFromUrl = memo(function DashboardFromWallet() {
-  const { address: addressOrDomain } = useParams<{ address: string }>();
+  const { address: addressOrDomain } = useParams<{
+    address: string;
+  }>();
 
   if (isValidAddress(addressOrDomain)) {
     return <DashboardForAddress address={addressOrDomain.toLocaleLowerCase()} />;
@@ -68,9 +70,9 @@ const DashboardFromWallet = memo(function DashboardFromWallet() {
 type DashboardFromDomainProps = {
   domain: string;
 };
-const DashboardFromDomain = memo<DashboardFromDomainProps>(function DashboardFromDomain({
+const DashboardFromDomain = memo(function DashboardFromDomain({
   domain,
-}) {
+}: DashboardFromDomainProps) {
   const { t } = useTranslation();
   const status = useResolveDomain(domain);
 
@@ -93,7 +95,7 @@ type DashboardContainerProps = {
   children: ReactNode;
 };
 
-const DashboardContainer = memo<DashboardContainerProps>(function DashboardContainer({ children }) {
+const DashboardContainer = memo(function DashboardContainer({ children }: DashboardContainerProps) {
   const classes = useStyles();
   return <div className={classes.dashboard}>{children}</div>;
 });
@@ -102,10 +104,10 @@ type DashboardForAddressProps = {
   address: string;
   addressLabel?: string | undefined;
 };
-const DashboardForAddress = memo<DashboardForAddressProps>(function DashboardForAddress({
+const DashboardForAddress = memo(function DashboardForAddress({
   address,
   addressLabel,
-}) {
+}: DashboardForAddressProps) {
   const loading = useInitDashboard(address);
   const userVaults = useAppSelector(state => selectUserDepositedVaultIds(state, address));
 

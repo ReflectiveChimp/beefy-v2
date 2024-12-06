@@ -4,19 +4,20 @@ import {
   autoUpdate,
   flip as flipFloating,
   hide,
+  type Middleware,
   offset,
+  type Placement,
   shift as shiftFloating,
   size,
   useFloating,
-  type Placement,
-  type Middleware,
 } from '@floating-ui/react-dom';
+import { css, type CssStyles } from '@repo/styles/css';
 
 export type FloatingProps = {
   open: boolean;
   anchorEl: MutableRefObject<HTMLElement | null>;
   children: ReactNode;
-  className?: string;
+  css?: CssStyles;
   placement?: Placement;
   autoHeight?: boolean;
   autoWidth?: boolean;
@@ -25,10 +26,10 @@ export type FloatingProps = {
   shift?: boolean;
   flip?: boolean;
 };
-export const Floating = memo<FloatingProps>(function Floating({
+export const Floating = memo(function Floating({
   open = false,
   anchorEl,
-  className,
+  css: cssProp,
   children,
   placement = 'bottom-start',
   autoHeight = true,
@@ -37,7 +38,7 @@ export const Floating = memo<FloatingProps>(function Floating({
   display = 'block',
   shift = true,
   flip = true,
-}) {
+}: FloatingProps) {
   const middleware = useMemo(() => {
     const middlewares: Array<Middleware> = [];
     if (autoHide) middlewares.push(hide());
@@ -84,7 +85,7 @@ export const Floating = memo<FloatingProps>(function Floating({
 
   return open ? (
     <div
-      className={className}
+      className={css(cssProp)}
       ref={setFloating}
       style={{
         position: strategy,

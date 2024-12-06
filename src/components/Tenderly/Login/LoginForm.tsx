@@ -5,7 +5,8 @@ import {
   selectTenderlyStatus,
 } from '../../../features/data/selectors/tenderly';
 import { type TenderlyCredentials, tenderlyLogin } from '../../../features/data/actions/tenderly';
-import { InputBase, makeStyles } from '@material-ui/core';
+import { InputBase } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { Button } from '../../Button';
 import { VerticalLayout } from '../Layout/VerticalLayout';
 import { ErrorMessage } from '../Error/ErrorMessage';
@@ -16,7 +17,7 @@ import { ReactComponent as InfoOutlined } from '@repo/images/icons/mui/InfoOutli
 import { AlertInfo } from '../../Alerts';
 import logoUrl from '../logo.svg';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type CredentialInputProps = {
   type: 'text' | 'password';
@@ -26,10 +27,16 @@ type CredentialInputProps = {
   label: string;
   placeholder: string;
   help?: ReactNode;
-  helpLink?: string | { url: string; text: string; icon?: string };
+  helpLink?:
+    | string
+    | {
+        url: string;
+        text: string;
+        icon?: string;
+      };
 };
 
-const CredentialInput = memo<CredentialInputProps>(function CredentialInput({
+const CredentialInput = memo(function CredentialInput({
   type,
   field,
   credentials,
@@ -38,7 +45,7 @@ const CredentialInput = memo<CredentialInputProps>(function CredentialInput({
   placeholder,
   help,
   helpLink,
-}) {
+}: CredentialInputProps) {
   const classes = useStyles();
   const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     e => setCredentials(creds => ({ ...creds, [field]: e.target.value })),
@@ -47,7 +54,7 @@ const CredentialInput = memo<CredentialInputProps>(function CredentialInput({
   const hasHelp = !!help || !!helpLink;
 
   return (
-    <VerticalLayout className={classes.field} gap={8}>
+    <VerticalLayout css={styles.field} gap={8}>
       <div className={classes.label}>{label}</div>
       <div className={hasHelp ? classes.inputHelpHolder : classes.inputHolder}>
         <InputBase
@@ -58,13 +65,13 @@ const CredentialInput = memo<CredentialInputProps>(function CredentialInput({
           placeholder={placeholder}
         />
         {hasHelp ? (
-          <HorizontalLayout className={classes.help} gap={8}>
+          <HorizontalLayout css={styles.help} gap={8}>
             <InfoOutlined className={classes.helpIcon} />
             {help ? <div className={classes.helpText}>{help}</div> : null}
             {helpLink ? (
               <div className={classes.helpLink}>
                 <ExternalLink
-                  className={classes.helpLinkAnchor}
+                  css={styles.helpLinkAnchor}
                   href={typeof helpLink === 'string' ? helpLink : helpLink.url}
                   icon={true}
                 >

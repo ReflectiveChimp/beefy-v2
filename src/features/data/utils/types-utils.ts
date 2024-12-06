@@ -12,7 +12,9 @@ export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & unknown;
 
-export type KeysOfType<T, V> = { [K in keyof T]-?: T[K] extends V ? K : never }[keyof T];
+export type KeysOfType<T, V> = {
+  [K in keyof T]-?: T[K] extends V ? K : never;
+}[keyof T];
 
 export type SnakeToCamelCase<Key extends string> =
   Key extends `${infer FirstPart}_${infer FirstLetter}${infer LastPart}`
@@ -58,7 +60,9 @@ export type EnsureKeys<
 export type PromiseReturnType<T> = T extends PromiseLike<infer U> ? U : never;
 
 /** Excludes keys whose value type is never */
-export type OmitNever<T> = { [K in keyof T as T[K] extends never ? never : K]: T[K] };
+export type OmitNever<T> = {
+  [K in keyof T as T[K] extends never ? never : K]: T[K];
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type OptionalRecord<K extends keyof any, T> = {

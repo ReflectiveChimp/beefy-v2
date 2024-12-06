@@ -1,27 +1,24 @@
 import { memo, useCallback } from 'react';
-import { ClickAwayListener, makeStyles, Portal } from '@material-ui/core';
 import type { ClickAwayListenerProps } from '@material-ui/core';
+import { ClickAwayListener, Portal } from '@material-ui/core';
 import { styles } from './styles';
 import type { FloatingProps } from '../Floating';
 import { Floating } from '../Floating';
-import clsx from 'clsx';
-
-const useStyles = makeStyles(styles);
+import { css, type CssStyles } from '@repo/styles/css';
 
 export type DropdownProps = Omit<FloatingProps, 'autoHeight' | 'autoWidth' | 'className'> & {
   onClose: () => void;
-  dropdownClassName?: string;
-  innerClassName?: string;
+  dropdownCss?: CssStyles;
+  innerCss?: CssStyles;
 };
 
-export const Dropdown = memo<DropdownProps>(function Dropdown({
+export const Dropdown = memo(function Dropdown({
   onClose,
   children,
-  dropdownClassName,
-  innerClassName,
+  dropdownCss,
+  innerCss,
   ...rest
-}) {
-  const classes = useStyles();
+}: DropdownProps) {
   const handleClose = useCallback<ClickAwayListenerProps['onClickAway']>(
     e => {
       e.stopPropagation();
@@ -36,10 +33,10 @@ export const Dropdown = memo<DropdownProps>(function Dropdown({
         {...rest}
         autoHeight={false}
         autoWidth={false}
-        className={clsx(classes.dropdown, dropdownClassName)}
+        css={css.raw(styles.dropdown, dropdownCss)}
       >
         <ClickAwayListener onClickAway={handleClose}>
-          <div className={clsx(classes.dropdownInner, innerClassName)}>{children}</div>
+          <div className={css(styles.dropdownInner, innerCss)}>{children}</div>
         </ClickAwayListener>
       </Floating>
     </Portal>

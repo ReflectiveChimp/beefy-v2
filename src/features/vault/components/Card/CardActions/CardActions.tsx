@@ -1,14 +1,16 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { LinkButton } from '../../../../../components/LinkButton';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export type CardActionsProps = { children: ReactNode };
+export type CardActionsProps = {
+  children: ReactNode;
+};
 
-export const CardActions = memo<CardActionsProps>(function CardActions({ children }) {
+export const CardActions = memo(function CardActions({ children }: CardActionsProps) {
   const classes = useStyles();
 
   return <div className={classes.actions}>{children}</div>;
@@ -19,6 +21,6 @@ export type CardActionProps = {
   href: string;
   text: string;
 };
-export const CardAction = memo<CardActionProps>(function CardAction({ type, href, text }) {
+export const CardAction = memo(function CardAction({ type, href, text }: CardActionProps) {
   return <LinkButton type={type} href={href} text={text} />;
 });

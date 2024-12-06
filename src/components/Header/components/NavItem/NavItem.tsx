@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
+import { legacyMakeStyles } from '@repo/helpers/mui';
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { NavLinkProps } from 'react-router-dom';
@@ -8,29 +8,29 @@ import { styles } from './styles';
 import { ReactComponent as RightArrow } from '@repo/images/icons/mui/ArrowForwardIosRounded.svg';
 import type { NavItemProps } from '../DropNavItem/types';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type AutoNavLinkProps = {
   onClick?: NavLinkProps['onClick'];
-  activeClassName: NavLinkProps['activeClassName'];
+  activeCss: CssStyles;
   exact: NavLinkProps['exact'];
   to: NavLinkProps['to'];
   children: NavLinkProps['children'];
-  className: HTMLAnchorElement['className'];
+  css: CssStyles;
 };
-const AutoNavLink = memo<AutoNavLinkProps>(function AutoNavLink({
+const AutoNavLink = memo(function AutoNavLink({
   to,
-  className,
+  css: cssProp,
   children,
   onClick,
   ...rest
-}) {
+}: AutoNavLinkProps) {
   const isExternal = typeof to === 'string' && to[0] !== '/';
 
   if (isExternal) {
     return (
       <a
-        className={className}
+        className={css(cssProp)}
         href={to}
         target="_blank"
         rel="noopener"
@@ -40,30 +40,31 @@ const AutoNavLink = memo<AutoNavLinkProps>(function AutoNavLink({
     );
   }
 
-  return <NavLink className={className} to={to} children={children} onClick={onClick} {...rest} />;
+  return (
+    <NavLink className={css(cssProp)} to={to} children={children} onClick={onClick} {...rest} />
+  );
 });
 
-export const NavItem = memo<NavItemProps>(function NavItem({
+export const NavItem = memo(function NavItem({
   url,
   title,
   Icon,
   Badge,
   onClick,
   exact = true,
-}) {
-  const classes = useStyles();
+}: NavItemProps) {
   const { t } = useTranslation();
   return (
     <AutoNavLink
-      activeClassName={classes.active}
+      activeCss={styles.active}
       exact={exact}
-      className={classes.navLink}
+      css={styles.navLink}
       key={url}
       to={url}
       onClick={onClick}
     >
       <Icon />
-      <div className={clsx(classes.title, { [classes.titleWithBadge]: !!Badge })}>
+      <div className={css(styles.title, !!Badge && styles.titleWithBadge)}>
         {t(title)}
         {Badge ? <Badge /> : null}
       </div>
@@ -73,29 +74,29 @@ export const NavItem = memo<NavItemProps>(function NavItem({
 
 type NavItemPropsMobile = NavItemProps;
 
-export const NavItemMobile = memo<NavItemPropsMobile>(function NavItemMobile({
+export const NavItemMobile = memo(function NavItemMobile({
   url,
   title,
   Icon,
-  className,
+  css: cssProp,
   onClick,
   Badge,
   exact = true,
-}) {
+}: NavItemPropsMobile) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
     <AutoNavLink
       onClick={onClick}
-      activeClassName={classes.active}
+      activeCss={styles.active}
       exact={exact}
-      className={clsx(classes.navLink, classes.itemMobile, className)}
+      css={css.raw(styles.navLink, styles.itemMobile, cssProp)}
       key={url}
       to={url}
     >
       <div className={classes.flex}>
         <Icon />
-        <div className={clsx(classes.title, { [classes.titleWithBadge]: !!Badge })}>
+        <div className={css(styles.title, !!Badge && styles.titleWithBadge)}>
           {t(title)}
           {Badge ? <Badge /> : null}
         </div>

@@ -1,9 +1,9 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  link: {
+export const styles = {
+  link: css.raw({
     textDecoration: 'none',
-    color: theme.palette.primary.main,
+    color: 'green',
     cursor: 'pointer',
-  },
-});
+  }),
+};

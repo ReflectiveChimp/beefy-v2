@@ -1,5 +1,5 @@
-import { makeStyles, type Theme } from '@material-ui/core';
-import clsx from 'clsx';
+import { legacyMakeStyles } from '@repo/helpers/mui';
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, type ReactNode } from 'react';
 import { Tooltip } from '../../../../../../../components/Tooltip';
 import { ReactComponent as HelpOutline } from '@repo/images/icons/mui/HelpOutline.svg';
@@ -13,61 +13,62 @@ interface StatProps {
   subValue0?: string;
   subValue1?: string;
   subValue2?: ReactNode;
-  value2ClassName?: string;
+  value2Css?: CssStyles;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
+const styles = {
+  container: css.raw({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     padding: '16px 24px',
-    backgroundColor: theme.palette.background.contentPrimary,
-    [theme.breakpoints.down('xs')]: {
+    backgroundColor: 'background.content',
+    smDown: {
       padding: '16px',
     },
-  },
-  label: {
-    ...theme.typography['body-sm-med'],
-    fontWeight: 700,
-    color: theme.palette.text.dark,
-    textTransform: 'uppercase' as const,
-  },
-  value: {
-    ...theme.typography['body-lg-med'],
+  }),
+  label: css.raw({
+    textStyle: 'body.sm.med',
+    fontWeight: '700',
+    color: 'text.dark',
+    textTransform: 'uppercase',
+  }),
+  value: css.raw({
+    textStyle: 'body.med',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    color: theme.palette.text.primary,
-  },
-  subValue: {
-    ...theme.typography['body-sm-med'],
-    color: theme.palette.text.secondary,
-  },
-  lastValue: {
-    color: theme.palette.text.dark,
-  },
-  center: {
+    color: 'text.white',
+  }),
+  subValue: css.raw({
+    textStyle: 'body.sm.med',
+    color: 'text.light',
+  }),
+  lastValue: css.raw({
+    color: 'text.dark',
+  }),
+  center: css.raw({
     display: 'flex',
     alignItems: 'center',
-  },
-  labelContainer: {
+  }),
+  labelContainer: css.raw({
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
     '& svg': {
-      color: theme.palette.text.dark,
+      color: 'text.dark',
       height: '16px',
       width: '16px',
       '&:hover': {
         cursor: 'pointer',
       },
     },
-  },
-}));
+  }),
+};
+const useStyles = legacyMakeStyles(styles);
 
-export const Stat = memo<StatProps>(function Stat({
+export const Stat = memo(function Stat({
   tooltipText,
   label,
   value0,
@@ -76,15 +77,15 @@ export const Stat = memo<StatProps>(function Stat({
   subValue1,
   value2,
   subValue2,
-  value2ClassName,
-}) {
+  value2Css,
+}: StatProps) {
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
       <div className={classes.labelContainer}>
         <div className={classes.label}>{label}</div>
-        <Tooltip triggerClass={classes.center} content={tooltipText}>
+        <Tooltip triggerCss={styles.center} content={tooltipText}>
           <HelpOutline />
         </Tooltip>
       </div>
@@ -97,7 +98,7 @@ export const Stat = memo<StatProps>(function Stat({
         {subValue1 && <div className={classes.subValue}>{subValue1}</div>}
       </div>
       {value2 && (
-        <div className={clsx(classes.value, classes.lastValue, value2ClassName)}>
+        <div className={css(styles.value, styles.lastValue, value2Css)}>
           {value2}
           {subValue2 && <div className={classes.subValue}>{subValue2}</div>}
         </div>

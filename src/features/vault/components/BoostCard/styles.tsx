@@ -1,68 +1,68 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  text: {
-    color: theme.palette.text.middle,
+export const styles = {
+  text: css.raw({
+    color: 'text.middle',
     marginBottom: '16px',
-  },
-  boostedBy: {
-    ...theme.typography['h2'],
-    margin: 0,
-    color: theme.palette.background.vaults.boost,
-    flexGrow: 1,
+  }),
+  boostedBy: css.raw({
+    textStyle: 'h2',
+    margin: '0',
+    color: 'background.vaults.boost',
+    flexGrow: '1',
     '& span': {
-      color: theme.palette.text.light,
+      color: 'text.light',
     },
-  },
-  header: {
+  }),
+  header: css.raw({
     display: 'flex',
-    flexWrap: 'wrap' as const,
+    flexWrap: 'wrap',
     gap: '16px',
     padding: '24px',
     borderRadius: '12px 12px 0 0',
-    backgroundColor: theme.palette.background.contentDark,
-  },
-  socials: {
+    backgroundColor: 'background.content.dark',
+  }),
+  socials: css.raw({
     display: 'flex',
     alignItems: 'center',
-    flexWrap: 'wrap' as const,
+    flexWrap: 'wrap',
     rowGap: '8px',
     columnGap: '8px',
     marginLeft: 'auto',
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       marginLeft: '0',
     },
-  },
-  campaignTitle: {
-    ...theme.typography['h3'],
-  },
-  campaignText: {
-    color: theme.palette.text.middle,
-  },
-  partners: {},
-  partnerSubCard: {
+  }),
+  campaignTitle: css.raw({
+    textStyle: 'h3',
+  }),
+  campaignText: css.raw({
+    color: 'text.middle',
+  }),
+  partners: css.raw({}),
+  partnerSubCard: css.raw({
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.contentLight,
-  },
-  partnerHeader: {
+    backgroundColor: 'background.content.light',
+  }),
+  partnerHeader: css.raw({
     display: 'flex',
-    flexWrap: 'wrap' as const,
+    flexWrap: 'wrap',
     gap: '16px',
     padding: '16px',
     borderRadius: '12px 12px 0 0',
-    backgroundColor: theme.palette.background.contentDark,
+    backgroundColor: 'background.content.dark',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  partnerContent: {
+  }),
+  partnerContent: css.raw({
     padding: '16px',
-  },
-  partnerTitle: {
-    ...theme.typography['h3'],
-    margin: 0,
-  },
-  partnerText: {},
-  content: {
+  }),
+  partnerTitle: css.raw({
+    textStyle: 'h3',
+    margin: '0',
+  }),
+  partnerText: css.raw({}),
+  content: css.raw({
     rowGap: '16px',
-  },
-});
+  }),
+};

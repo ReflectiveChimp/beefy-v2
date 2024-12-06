@@ -1,20 +1,20 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { memo } from 'react';
 import type { BreakdownMode, CalculatedBreakdownData } from '../../types';
 import { Legend } from '../Legend';
 import { Chart } from '../Chart';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ChartWithLegendProps = {
   breakdown: CalculatedBreakdownData;
   tab: BreakdownMode;
 };
-export const ChartWithLegend = memo<ChartWithLegendProps>(function ChartWithLegend({
+export const ChartWithLegend = memo(function ChartWithLegend({
   breakdown,
   tab,
-}) {
+}: ChartWithLegendProps) {
   const classes = useStyles();
 
   const isUnderlying = tab === 'underlying';
@@ -24,7 +24,7 @@ export const ChartWithLegend = memo<ChartWithLegendProps>(function ChartWithLege
       <Legend
         assets={breakdown.assets}
         chainId={breakdown.chainId}
-        className={classes.legend}
+        css={styles.legend}
         isUnderlying={isUnderlying}
       />
     </div>

@@ -105,5 +105,10 @@ export type ZapStrategyId = ZapStrategyConfig['strategyId'];
 export type AnyStrategyId = ZapStrategyId | 'vault';
 
 export type StrategyIdToConfig<TId extends ZapStrategyId = ZapStrategyId> = {
-  [K in TId]: Extract<ZapStrategyConfig, { strategyId: K }>;
+  [K in TId]: Extract<
+    ZapStrategyConfig,
+    {
+      strategyId: K;
+    }
+  >;
 }[TId];

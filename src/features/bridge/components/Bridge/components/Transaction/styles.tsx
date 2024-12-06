@@ -1,18 +1,18 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  steps: {
+export const styles = {
+  steps: css.raw({
     flex: '1 0 auto',
     display: 'flex',
-    flexDirection: 'column' as const,
-  },
-  step: {
+    flexDirection: 'column',
+  }),
+  step: css.raw({
     padding: '24px',
-    backgroundColor: theme.palette.background.contentPrimary,
-    position: 'relative' as const,
-    textAlign: 'center' as const,
+    backgroundColor: 'background.content',
+    position: 'relative',
+    textAlign: 'center',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     alignItems: 'center',
     '&:first-child': {
       borderRadius: '8px 8px 0 0',
@@ -23,76 +23,76 @@ export const styles = (theme: Theme) => ({
     '&::after': {
       content: '""',
       display: 'block',
-      position: 'absolute' as const,
+      position: 'absolute',
       bottom: '-20px',
       left: '50%',
       transform: 'translateX(-50%)',
-      width: 0,
-      height: 0,
+      width: '0',
+      height: '0',
       borderStyle: 'solid',
       borderWidth: '20px 40px 0 40px',
-      borderColor: `${theme.palette.background.contentPrimary} transparent transparent transparent`,
-      zIndex: 1,
+      borderColor: '{colors.background.content} transparent transparent transparent',
+      zIndex: '1',
     },
-  },
-  stepFrom: {},
-  stepBridge: {
+  }),
+  stepFrom: css.raw({}),
+  stepBridge: css.raw({
     paddingTop: '32px',
-    backgroundColor: '#313759',
+    backgroundColor: 'extracted198',
     '&::after': {
-      borderColor: '#313759 transparent transparent transparent',
+      borderColor: 'extracted198 transparent transparent transparent',
     },
-  },
-  stepTo: {
+  }),
+  stepTo: css.raw({
     paddingTop: '32px',
     '&::after': {
       display: 'none',
       content: 'none',
     },
-  },
-  tokenAmount: {},
-  via: {
-    color: theme.palette.text.dark,
-  },
-  network: {
+  }),
+  tokenAmount: css.raw({}),
+  via: css.raw({
+    color: 'text.dark',
+  }),
+  network: css.raw({
     display: 'flex',
     gap: '8px',
     alignItems: 'center',
-  },
-  networkIcon: {
+  }),
+  networkIcon: css.raw({
     display: 'block',
-  },
-  networkName: {},
-  provider: {
+  }),
+  networkName: css.raw({}),
+  provider: css.raw({
     marginTop: '8px',
     marginBottom: '8px',
-  },
-  providerDetails: {
+  }),
+  providerDetails: css.raw({
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-  },
-  fee: {
+  }),
+  fee: css.raw({
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
-  },
-  feeIcon: {
+  }),
+  feeIcon: css.raw({
     width: '16px',
     height: '16px',
-    fill: theme.palette.text.light,
-  },
-  time: {
+    fill: 'text.light',
+  }),
+  time: css.raw({
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
-  },
-  timeIcon: {
+  }),
+  timeIcon: css.raw({
     width: '16px',
     height: '16px',
-    fill: theme.palette.text.light,
-  },
-  buttonsContainer: {
+    fill: 'text.light',
+  }),
+  buttonsContainer: css.raw({
     marginTop: 'auto',
-  },
-});
+  }),
+};

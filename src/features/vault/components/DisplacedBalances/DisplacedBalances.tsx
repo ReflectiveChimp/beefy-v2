@@ -1,6 +1,6 @@
 import { type FC, memo, useMemo } from 'react';
 import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import {
@@ -16,22 +16,22 @@ import { TokenImage } from '../../../../components/TokenImage/TokenImage';
 import { Trans, useTranslation } from 'react-i18next';
 import { TokenAmountFromEntity } from '../../../../components/TokenAmount';
 import { groupBy } from 'lodash-es';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 import { selectBoostById } from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
 import { Link } from 'react-router-dom';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type EntryProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBreakdownEntry> = {
   entry: T;
   depositToken: TokenEntity;
 };
 
-const BoostEntry = memo<EntryProps<UserVaultBalanceBreakdownBoost>>(function BoostEntry({
+const BoostEntry = memo(function BoostEntry({
   entry,
   depositToken,
-}) {
+}: EntryProps<UserVaultBalanceBreakdownBoost>) {
   const classes = useStyles();
   const { t } = useTranslation();
   const boost = useAppSelector(state => selectBoostById(state, entry.boostId));
@@ -41,7 +41,7 @@ const BoostEntry = memo<EntryProps<UserVaultBalanceBreakdownBoost>>(function Boo
       <TokenImage
         chainId={depositToken.chainId}
         tokenAddress={depositToken.address}
-        className={classes.icon}
+        css={styles.icon}
       />
       <div className={classes.text}>
         <Trans
@@ -61,10 +61,10 @@ const BoostEntry = memo<EntryProps<UserVaultBalanceBreakdownBoost>>(function Boo
   );
 });
 
-const BridgedEntry = memo<EntryProps<UserVaultBalanceBreakdownBridged>>(function BridgedEntry({
+const BridgedEntry = memo(function BridgedEntry({
   entry,
   depositToken,
-}) {
+}: EntryProps<UserVaultBalanceBreakdownBridged>) {
   const classes = useStyles();
   const { t } = useTranslation();
   const chain = useAppSelector(state => selectChainById(state, entry.chainId));
@@ -74,7 +74,7 @@ const BridgedEntry = memo<EntryProps<UserVaultBalanceBreakdownBridged>>(function
       <TokenImage
         chainId={depositToken.chainId}
         tokenAddress={depositToken.address}
-        className={classes.icon}
+        css={styles.icon}
       />
       <div className={classes.text}>
         <Trans
@@ -100,14 +100,12 @@ type EntriesProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBre
   depositToken: TokenEntity;
 };
 
-const BoostEntries = memo<EntriesProps<UserVaultBalanceBreakdownBoost>>(function BoostEntries({
+const BoostEntries = memo(function BoostEntries({
   entries,
   depositToken,
-}) {
-  const classes = useStyles();
-
+}: EntriesProps<UserVaultBalanceBreakdownBoost>) {
   return (
-    <div className={clsx(classes.entries)}>
+    <div className={css(styles.entries)}>
       {entries.map(entry => (
         <BoostEntry key={entry.id} entry={entry} depositToken={depositToken} />
       ))}
@@ -115,19 +113,18 @@ const BoostEntries = memo<EntriesProps<UserVaultBalanceBreakdownBoost>>(function
   );
 });
 
-const BridgedEntries = memo<EntriesProps<UserVaultBalanceBreakdownBridged>>(
-  function BridgedEntries({ entries, depositToken }) {
-    const classes = useStyles();
-
-    return (
-      <div className={clsx(classes.entries)}>
-        {entries.map(entry => (
-          <BridgedEntry key={entry.id} entry={entry} depositToken={depositToken} />
-        ))}
-      </div>
-    );
-  }
-);
+const BridgedEntries = memo(function BridgedEntries({
+  entries,
+  depositToken,
+}: EntriesProps<UserVaultBalanceBreakdownBridged>) {
+  return (
+    <div className={css(styles.entries)}>
+      {entries.map(entry => (
+        <BridgedEntry key={entry.id} entry={entry} depositToken={depositToken} />
+      ))}
+    </div>
+  );
+});
 
 type TypeToComponentMap = Omit<
   {
@@ -141,7 +138,7 @@ const typeToComponent: TypeToComponentMap = {
   bridged: BridgedEntries,
 };
 
-const Entries = memo<EntriesProps>(function Entries({ entries, depositToken }) {
+const Entries = memo(function Entries({ entries, depositToken }: EntriesProps) {
   const Component = typeToComponent[entries[0].type];
   return <Component entries={entries} depositToken={depositToken} />;
 });
@@ -150,9 +147,9 @@ interface DisplacedBalancesProps {
   vaultId: VaultEntity['id'];
 }
 
-export const DisplacedBalances = memo<DisplacedBalancesProps>(function DisplacedBalances({
+export const DisplacedBalances = memo(function DisplacedBalances({
   vaultId,
-}) {
+}: DisplacedBalancesProps) {
   const total = useAppSelector(state =>
     selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(state, vaultId)
   );
@@ -169,9 +166,9 @@ interface DisplacedBalancesProps {
   vaultId: VaultEntity['id'];
 }
 
-export const DisplacedBalancesImpl = memo<DisplacedBalancesProps>(function DisplacedBalancesImpl({
+export const DisplacedBalancesImpl = memo(function DisplacedBalancesImpl({
   vaultId,
-}) {
+}: DisplacedBalancesProps) {
   const classes = useStyles();
   const breakdown = useAppSelector(state =>
     selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId)

@@ -1,74 +1,74 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  cardHolder: {
-    position: 'absolute' as const,
+export const styles = {
+  cardHolder: css.raw({
+    position: 'absolute',
     outline: 'none',
-    top: 0,
-    left: 0,
+    top: '0',
+    left: '0',
     width: '100%',
     height: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     padding: '24px',
-    [theme.breakpoints.down('xs')]: {
+    smDown: {
       padding: '0',
     },
-  },
-  card: {
-    margin: 0,
+  }),
+  card: css.raw({
+    margin: '0',
     maxHeight: '100%',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     width: '500px',
     maxWidth: '100%',
-  },
-  cardHeader: {
+  }),
+  cardHeader: css.raw({
     display: 'flex',
     alignItems: 'center',
     padding: '18px 24px',
-    background: theme.palette.background.contentDark,
+    background: 'background.content.dark',
     borderRadius: '10px 10px 0px 0px ',
-    borderBottom: `2px solid ${theme.palette.background.border}`,
-  },
-  cardIcon: {
+    borderBottom: '2px solid {colors.bayOfMany}',
+  }),
+  cardIcon: css.raw({
     marginRight: '8px',
-  },
-  cardTitle: {
-    color: theme.palette.text.light,
+  }),
+  cardTitle: css.raw({
+    color: 'text.light',
     marginRight: 'auto',
-  },
-  closeButton: {
+  }),
+  closeButton: css.raw({
     '&:hover': {
       background: 'none',
     },
-  },
-  cardContent: {
-    background: theme.palette.background.contentPrimary,
+  }),
+  cardContent: css.raw({
+    background: 'background.content',
     borderRadius: '0 0 12px 12px',
     padding: '24px',
     minHeight: '200px',
-    flexShrink: 1,
+    flexShrink: '1',
     display: 'flex',
-    flexDirection: 'column' as const,
-  },
-  tokenDetails: {
+    flexDirection: 'column',
+  }),
+  tokenDetails: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '8px',
-  },
-  tokenLabel: {
-    ...theme.typography['subline-sm'],
-  },
-  tokenValue: {},
-  copyText: {
-    position: 'relative' as const,
-  },
-  copyTextInput: {
-    ...theme.typography['body-lg'],
+  }),
+  tokenLabel: css.raw({
+    textStyle: 'subline.sm',
+  }),
+  tokenValue: css.raw({}),
+  copyText: css.raw({
+    position: 'relative',
+  }),
+  copyTextInput: css.raw({
+    textStyle: 'body',
     lineHeight: '20px',
-    background: theme.palette.background.searchInputBg,
+    background: 'purpleDarkest',
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
@@ -77,25 +77,25 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     cursor: 'default',
     padding: '12px 48px 12px 16px',
-    color: theme.palette.text.light,
+    color: 'text.light',
     height: 'auto',
-  },
-  copyTextButton: {
-    position: 'absolute' as const,
-    top: 0,
-    right: 0,
+  }),
+  copyTextButton: css.raw({
+    position: 'absolute',
+    top: '0',
+    right: '0',
     height: '100%',
     background: 'none',
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
     cursor: 'pointer',
-    color: theme.palette.text.middle,
+    color: 'text.middle',
     '&:hover': {
-      color: theme.palette.text.light,
+      color: 'text.light',
     },
-  },
-  buttons: {
+  }),
+  buttons: css.raw({
     marginTop: '24px',
-  },
-});
+  }),
+};

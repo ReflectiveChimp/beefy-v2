@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
 import { selectChainById } from '../../../../../data/selectors/chains';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { formatLargeUsd } from '../../../../../../helpers/format';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import {
@@ -11,7 +11,7 @@ import {
 } from '../../../../../data/selectors/treasury';
 
 import { Assets, MMAssets } from '../Assets';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 import { ExplorerLinks } from '../../../ExplorerLinks';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import { getPartnerSrc } from '../../../../../../helpers/partnerSrc';
@@ -19,7 +19,7 @@ import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface ChainHoldingProps {
   chainId: ChainEntity['id'];
@@ -29,7 +29,7 @@ interface MMHoldingProps {
   mmId: string;
 }
 
-export const ChainHolding = memo<ChainHoldingProps>(function ChainHolding({ chainId }) {
+export const ChainHolding = memo(function ChainHolding({ chainId }: ChainHoldingProps) {
   const totalUsd = useAppSelector(state => selectTreasuryBalanceByChainId(state, chainId));
 
   const classes = useStyles();
@@ -37,7 +37,7 @@ export const ChainHolding = memo<ChainHoldingProps>(function ChainHolding({ chai
 
   return (
     <div className={classes.container}>
-      <div className={clsx(classes.title, classes[`headerNetwork-${chainId}`])}>
+      <div className={css(styles.title, styles[`headerNetwork-${chainId}`])}>
         <div className={classes.nameContainer}>
           <img className={classes.icon} src={getNetworkSrc(chainId)} alt={chainId} />
           <div className={classes.chainName}>{chain.name}</div>
@@ -50,14 +50,14 @@ export const ChainHolding = memo<ChainHoldingProps>(function ChainHolding({ chai
   );
 });
 
-export const MMHolding = memo<MMHoldingProps>(function MMHolding({ mmId }) {
+export const MMHolding = memo(function MMHolding({ mmId }: MMHoldingProps) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   const totalUsd = useAppSelector(state => selectTreasuryBalanceByMMId(state, mmId));
   return (
     <div className={classes.container}>
-      <div className={clsx(classes.title, classes[`headerMM-${mmId.toLowerCase()}`])}>
+      <div className={css(styles.title, styles[`headerMM-${mmId.toLowerCase()}`])}>
         <div className={classes.mmNameContainer}>
           <img className={classes.icon} src={getPartnerSrc(mmId.toLowerCase())} alt={mmId} />
           <div className={classes.mmName}>{mmId}</div>

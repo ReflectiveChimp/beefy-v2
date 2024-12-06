@@ -19,11 +19,11 @@ export type VaultApyStatProps = Omit<
   type: 'yearly' | 'daily';
 };
 
-export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
+export const VaultApyStat = memo(function VaultApyStat({
   vaultId,
   type,
   ...rest
-}) {
+}: VaultApyStatProps) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
   const label =
@@ -82,12 +82,12 @@ type ApyTooltipContentProps = {
   rates: AllValuesAsString<TotalApy>;
 };
 
-export const ApyTooltipContent = memo<ApyTooltipContentProps>(function ApyTooltipContent({
+export const ApyTooltipContent = memo(function ApyTooltipContent({
   vaultId,
   type,
   isBoosted,
   rates,
-}) {
+}: ApyTooltipContentProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const rows = useMemo(() => {
     const labels = getApyLabelsForType(getApyLabelsTypeForVault(vault));
@@ -96,7 +96,11 @@ export const ApyTooltipContent = memo<ApyTooltipContentProps>(function ApyToolti
     const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
     const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
 
-    const items: { label: string | string[]; value: string; last?: boolean }[] = components
+    const items: {
+      label: string | string[];
+      value: string;
+      last?: boolean;
+    }[] = components
       .filter(key => key in rates)
       .map(key => ({
         label: labels[key],

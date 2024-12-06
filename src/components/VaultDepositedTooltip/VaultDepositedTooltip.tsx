@@ -1,5 +1,5 @@
 import { type FC, memo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import type { VaultEntity } from '../../features/data/entities/vault';
 import { useAppSelector } from '../../store';
@@ -21,7 +21,7 @@ import { selectChainById } from '../../features/data/selectors/chains';
 import { selectBoostById } from '../../features/data/selectors/boosts';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type EntryDisplayProps = {
   entry: UserVaultBalanceBreakdownEntry;
@@ -30,12 +30,12 @@ type EntryDisplayProps = {
   label: string;
 };
 
-const EntryDisplay = memo<EntryDisplayProps>(function VaultEntry({
+const EntryDisplay = memo(function VaultEntry({
   entry,
   depositToken,
   price,
   label,
-}) {
+}: EntryDisplayProps) {
   const classes = useStyles();
   const value = entry.amount.multipliedBy(price);
   return (
@@ -51,12 +51,12 @@ const EntryDisplay = memo<EntryDisplayProps>(function VaultEntry({
   );
 });
 
-const VaultEntry = memo<EntryProps<UserVaultBalanceBreakdownVault>>(function VaultEntry({
+const VaultEntry = memo(function VaultEntry({
   entry,
   depositToken,
   price,
   type,
-}) {
+}: EntryProps<UserVaultBalanceBreakdownVault>) {
   const { t } = useTranslation();
 
   return (
@@ -69,11 +69,11 @@ const VaultEntry = memo<EntryProps<UserVaultBalanceBreakdownVault>>(function Vau
   );
 });
 
-const BoostEntry = memo<EntryProps<UserVaultBalanceBreakdownBoost>>(function BoostEntry({
+const BoostEntry = memo(function BoostEntry({
   entry,
   depositToken,
   price,
-}) {
+}: EntryProps<UserVaultBalanceBreakdownBoost>) {
   const { t } = useTranslation();
   const boost = useAppSelector(state => selectBoostById(state, entry.boostId));
   return (
@@ -86,11 +86,11 @@ const BoostEntry = memo<EntryProps<UserVaultBalanceBreakdownBoost>>(function Boo
   );
 });
 
-const BridgedEntry = memo<EntryProps<UserVaultBalanceBreakdownBridged>>(function BridgedEntry({
+const BridgedEntry = memo(function BridgedEntry({
   entry,
   depositToken,
   price,
-}) {
+}: EntryProps<UserVaultBalanceBreakdownBridged>) {
   const { t } = useTranslation();
   const chain = useAppSelector(state => selectChainById(state, entry.chainId));
 
@@ -123,7 +123,7 @@ type EntryProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBreak
   type: VaultEntity['type'];
 };
 
-const Entry = memo<EntryProps>(function Entry(props) {
+const Entry = memo(function Entry(props: EntryProps) {
   const Component = typeToComponent[props.entry.type];
   return <Component {...props} />;
 });
@@ -133,36 +133,37 @@ export type VaultDepositedTooltipProps = {
   walletAddress?: string;
 };
 
-export const VaultDepositedTooltip = memo<VaultDepositedTooltipProps>(
-  function VaultDepositedTooltip({ vaultId, walletAddress }) {
-    const classes = useStyles();
-    const { t } = useTranslation();
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    const { depositToken, entries } = useAppSelector(state =>
-      selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId, walletAddress)
-    );
-    const price = useAppSelector(state =>
-      selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
-    );
-    const notEarning = useAppSelector(state =>
-      selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vaultId, walletAddress)
-    );
+export const VaultDepositedTooltip = memo(function VaultDepositedTooltip({
+  vaultId,
+  walletAddress,
+}: VaultDepositedTooltipProps) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const { depositToken, entries } = useAppSelector(state =>
+    selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId, walletAddress)
+  );
+  const price = useAppSelector(state =>
+    selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
+  );
+  const notEarning = useAppSelector(state =>
+    selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vaultId, walletAddress)
+  );
 
-    return (
-      <div className={classes.grid}>
-        {entries.map(entry => (
-          <Entry
-            key={entry.id}
-            entry={entry}
-            price={price}
-            depositToken={depositToken}
-            type={vault.type}
-          />
-        ))}
-        {notEarning.gt(0) && (
-          <div className={classes.notInBoost}>{t('VaultStat-Deposited-NotInActiveBoost')}</div>
-        )}
-      </div>
-    );
-  }
-);
+  return (
+    <div className={classes.grid}>
+      {entries.map(entry => (
+        <Entry
+          key={entry.id}
+          entry={entry}
+          price={price}
+          depositToken={depositToken}
+          type={vault.type}
+        />
+      ))}
+      {notEarning.gt(0) && (
+        <div className={classes.notInBoost}>{t('VaultStat-Deposited-NotInActiveBoost')}</div>
+      )}
+    </div>
+  );
+});

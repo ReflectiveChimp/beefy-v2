@@ -34,7 +34,9 @@ export type FulfilledSupportedPayload = ApiSupportedResponse;
 export const fetchOnRampSupportedProviders = createAsyncThunk<
   FulfilledSupportedPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('on-ramp/fetchSupported', async () => {
   const api = await getOnRampApi();
   return await api.getSupported();
@@ -45,7 +47,9 @@ export type FulfilledQuotePayload = ApiQuoteResponse;
 export const fetchOnRampQuote = createAsyncThunk<
   FulfilledQuotePayload,
   ApiQuoteRequest,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('on-ramp/fetchQuote', async options => {
   const api = await getOnRampApi();
   return await api.getQuote(options);
@@ -58,8 +62,12 @@ export type FulfilledSetFiatPayload = {
 
 export const setOnRampFiat = createAsyncThunk<
   FulfilledSetFiatPayload,
-  { fiat: string },
-  { state: BeefyState }
+  {
+    fiat: string;
+  },
+  {
+    state: BeefyState;
+  }
 >('on-ramp/setFiat', async (options, { getState }) => {
   const state = getState();
   const { fiat: newFiat } = options;
@@ -90,8 +98,12 @@ export type FulfilledSetTokenPayload = {
 
 export const setOnRampToken = createAsyncThunk<
   FulfilledSetTokenPayload,
-  { token: string },
-  { state: BeefyState }
+  {
+    token: string;
+  },
+  {
+    state: BeefyState;
+  }
 >('on-ramp/setToken', async (options, { getState }) => {
   const state = getState();
   const { token: newToken } = options;
@@ -125,7 +137,9 @@ export type ValidateFulfilledPayload = {
 export const validateOnRampForm = createAsyncThunk<
   ValidateFulfilledPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('on-ramp/validateForm', async (_, { getState, dispatch }) => {
   const state = getState();
   const errors: ValidateFulfilledPayload = {

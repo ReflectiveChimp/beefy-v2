@@ -6,7 +6,7 @@ import { UnreadArticleDot } from '../Badges/UnreadDots';
 import { selectLastArticle } from '../../../../features/data/selectors/articles';
 import { articlesActions } from '../../../../features/data/reducers/articles';
 
-export const ArticlesNavItem = memo<NavItemProps>(function ArticlesNavItem({ url, title, Icon }) {
+export const ArticlesNavItem = memo(function ArticlesNavItem({ url, title, Icon }: NavItemProps) {
   const lastArticle = useAppSelector(selectLastArticle);
   const dispatch = useAppDispatch();
   const markRead = useCallback(() => {

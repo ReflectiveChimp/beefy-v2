@@ -28,7 +28,10 @@ const tokenTagReplacements = {
   rCLM: 'CLM Pool',
   mooCLM: 'CLM Vault',
 };
-export function symbolToLabelAndTag(symbol: string): { label: string; tag: string | undefined } {
+export function symbolToLabelAndTag(symbol: string): {
+  label: string;
+  tag: string | undefined;
+} {
   const match = symbol.match(/ (?<tag>LP|sLP|vLP|CLM|rCLM|mooCLM)\b/);
   const tag = match?.groups?.tag;
   if (tag) {

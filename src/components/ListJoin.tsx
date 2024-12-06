@@ -6,7 +6,7 @@ type ListJoinProps = {
   items: ReactNode[];
   mode?: 'and' | 'or';
 };
-export const ListJoin = memo<ListJoinProps>(function ListJoin({ items, mode = 'and' }) {
+export const ListJoin = memo(function ListJoin({ items, mode = 'and' }: ListJoinProps) {
   const { t } = useTranslation();
   const comma = t('List-Join-Comma');
   const and = t(mode == 'or' ? 'List-Join-Or' : 'List-Join-And');

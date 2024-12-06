@@ -35,7 +35,9 @@ export interface HistoricalRangesParams {
 export const fetchHistoricalRanges = createAsyncThunk<
   HistoricalRangesPayload,
   HistoricalRangesParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('historical/fetchHistoricalRanges', async ({ vaultId }, { getState }) => {
   const state = getState();
   const vault = selectVaultById(state, vaultId);
@@ -65,7 +67,9 @@ export interface HistoricalApysParams {
 export const fetchHistoricalApys = createAsyncThunk<
   HistoricalApysPayload,
   HistoricalApysParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('historical/fetchHistoricalApys', async ({ vaultId, bucket }) => {
   const api = await getBeefyDataApi();
   const data = await api.getApyChartData(vaultId, bucket);
@@ -85,7 +89,9 @@ export interface HistoricalTvlsParams {
 export const fetchHistoricalTvls = createAsyncThunk<
   HistoricalTvlsPayload,
   HistoricalTvlsParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('historical/fetchHistoricalTvls', async ({ vaultId, bucket }) => {
   const api = await getBeefyDataApi();
   const data = await api.getTvlChartData(vaultId, bucket);
@@ -105,7 +111,9 @@ export interface HistoricalPricesParams {
 export const fetchHistoricalPrices = createAsyncThunk<
   HistoricalPricesPayload,
   HistoricalPricesParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('historical/fetchHistoricalPrices', async ({ oracleId, bucket }) => {
   if (featureFlag_simulateBeefyApiError('historical-prices')) {
     await sleep(5000);
@@ -130,7 +138,9 @@ export interface HistoricalCowcentratedParams {
 export const fetchHistoricalCowcentratedRanges = createAsyncThunk<
   HistoricalCowcentratedPayload,
   HistoricalCowcentratedParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('historical/fetchHistoricalCowcentratedRanges', async ({ bucket, vaultId }, { getState }) => {
   const state = getState();
   const vault = selectCowcentratedLikeVaultById(state, vaultId);

@@ -1,23 +1,25 @@
-import { makeStyles, useMediaQuery } from '@material-ui/core';
-import type { Theme } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import type { CSSProperties, MutableRefObject } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'lodash-es';
 import { useInView } from 'react-intersection-observer';
 import { Vault } from '../../../Vault';
 import type { VaultEntity } from '../../../../../data/entities/vault';
+import { css } from '@repo/styles/css';
+import { useBreakpoints } from '../../../../../../components/MediaQueries/useBreakpoints';
 
-const useStyles = makeStyles(() => ({
-  container: {
+const useStyles = legacyMakeStyles({
+  container: css.raw({
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1fr)',
-  },
-}));
+  }),
+});
 
 function useVaultHeightEstimate() {
-  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'), { noSsr: true });
-  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'), { noSsr: true });
-  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
+  const breakpoints = useBreakpoints();
+  const smUp = breakpoints.sm;
+  const mdUp = breakpoints.md;
+  const lgUp = breakpoints.lg;
 
   return useMemo(() => {
     if (lgUp) {
@@ -52,9 +54,9 @@ function useVaultHeightEstimate() {
 type VirtualVaultsListProps = {
   vaultIds: VaultEntity['id'][];
 };
-export const VirtualVaultsList = memo<VirtualVaultsListProps>(function VirtualVaultsList({
+export const VirtualVaultsList = memo(function VirtualVaultsList({
   vaultIds,
-}) {
+}: VirtualVaultsListProps) {
   const classes = useStyles();
   const totalVaults = vaultIds.length;
   const minBatchSize = 10;

@@ -7,10 +7,10 @@ import type {
   MutableRefObject,
 } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { formatPercent } from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectTransactSlippage } from '../../../../../data/selectors/transact';
@@ -24,7 +24,7 @@ import { IconWithTooltip } from '../../../../../../components/Tooltip';
 import { IconWithBasicTooltip } from '../../../../../../components/Tooltip/IconWithBasicTooltip';
 import { transactFetchQuotes } from '../../../../../data/actions/transact';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 // Decimal space (0.1% = 0.001)
 const SLIPPAGE_PRESETS = [0.1, 0.5, 1, 3].map(p => p / 100);
@@ -85,17 +85,16 @@ type CustomSlippageInputProps = {
   value: number;
   placeholder: string;
   isCustom: boolean;
-  className?: string;
+  css?: CssStyles;
 };
-const CustomSlippageInput = memo<CustomSlippageInputProps>(function CustomSlippageInput({
+const CustomSlippageInput = memo(function CustomSlippageInput({
   onChange,
   onFocus,
   value,
   placeholder,
-  className,
+  css: cssProp,
   isCustom,
-}) {
-  const classes = useStyles();
+}: CustomSlippageInputProps) {
   const [inputMode, setInputMode] = useState(false);
   const [input, setInput] = useState('');
   const inputRef = useRef<HTMLInputElement>();
@@ -152,11 +151,9 @@ const CustomSlippageInput = memo<CustomSlippageInputProps>(function CustomSlippa
   }, [value, setInput, inputMode]);
 
   return (
-    <div className={clsx(className, classes.custom)}>
+    <div className={css(cssProp, styles.custom)}>
       <input
-        className={clsx(classes.option, classes.customInput, {
-          [classes.customHidden]: showPlaceholder,
-        })}
+        className={css(styles.option, styles.customInput, showPlaceholder && styles.customHidden)}
         inputMode="decimal"
         value={input}
         onChange={handleChange}
@@ -166,7 +163,7 @@ const CustomSlippageInput = memo<CustomSlippageInputProps>(function CustomSlippa
       />
       {showPlaceholder ? (
         <button
-          className={clsx(classes.option, classes.button, classes.customPlaceholder)}
+          className={css(styles.option, styles.button, styles.customPlaceholder)}
           onClick={handleClick}
         >
           {placeholder}
@@ -181,11 +178,11 @@ type SlippageButtonProps = Omit<ButtonProps, 'onChange' | 'onClick' | 'value'> &
   value: number;
   onChange: (value: number) => void;
 };
-const SlippageButton = memo<SlippageButtonProps>(function SlippageButton({
+const SlippageButton = memo(function SlippageButton({
   onChange,
   value,
   ...rest
-}) {
+}: SlippageButtonProps) {
   const handleClick = useCallback(() => onChange(value * 100), [onChange, value]);
   return (
     <button onClick={handleClick} {...rest}>
@@ -195,9 +192,9 @@ const SlippageButton = memo<SlippageButtonProps>(function SlippageButton({
 });
 
 export type ZapSlippageProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ className }) {
+export const ZapSlippage = memo(function ZapSlippage({ css: cssProp }: ZapSlippageProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -220,7 +217,7 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ classNa
   );
 
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       <button className={classes.titleToggle} onClick={handleToggle}>
         <div className={classes.title}>
           {t('Transact-Slippage')}
@@ -231,10 +228,11 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ classNa
         </div>
         <div className={classes.valueIcon}>
           <div
-            className={clsx(classes.value, {
-              [classes.warning]: slippage >= SLIPPAGE_WARNING,
-              [classes.danger]: slippage >= SLIPPAGE_DANGER,
-            })}
+            className={css(
+              styles.value,
+              slippage >= SLIPPAGE_WARNING && styles.warning,
+              slippage >= SLIPPAGE_DANGER && styles.danger
+            )}
           >
             {slippage >= SLIPPAGE_WARNING ? (
               <IconWithBasicTooltip
@@ -262,15 +260,15 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ classNa
               key={percent}
               value={percent}
               onChange={handleChange}
-              className={clsx(classes.option, classes.button, {
-                [classes.selected]: !customFocused && selectedIndex === i,
-              })}
+              className={css(
+                styles.option,
+                styles.button,
+                !customFocused && selectedIndex === i && styles.selected
+              )}
             />
           ))}
           <CustomSlippageInput
-            className={clsx({
-              [classes.selected]: customFocused || isCustom,
-            })}
+            css={(customFocused || isCustom) && styles.selected}
             placeholder={t('Transact-Slippage-Custom')}
             value={slippage * 100}
             onChange={handleChange}

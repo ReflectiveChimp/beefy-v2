@@ -1,41 +1,41 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
-  },
-  statuses: {
+    textStyle: 'body.med',
+    color: 'text.middle',
+  }),
+  statuses: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '8px',
-  },
-  sources: {
+  }),
+  sources: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '8px',
-  },
-  source: {},
-  sourceTitle: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
+  }),
+  source: css.raw({}),
+  sourceTitle: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: '700',
     color: 'var(--tooltip-title-color)',
-  },
-  rewards: {
+  }),
+  rewards: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '4px',
-  },
-  rewardsText: {
-    ...theme.typography['body-lg-med'],
+  }),
+  rewardsText: css.raw({
+    textStyle: 'body.med',
     color: 'var(--tooltip-value-color)',
-  },
-  usdPrice: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
+  }),
+  usdPrice: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: '700',
     color: 'var(--tooltip-label-color)',
-  },
-});
+  }),
+};

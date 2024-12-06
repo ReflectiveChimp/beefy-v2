@@ -6,24 +6,24 @@ import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectFilterBoolean } from '../../../../../data/selectors/filtered-vaults';
 import type { LabelledCheckboxProps } from '../../../../../../components/LabelledCheckbox';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox';
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
+import { legacyMakeStyles } from '@repo/helpers/mui';
+import { css, type CssStyles } from '@repo/styles/css';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type CheckboxFilterProps = {
   filter: FilteredVaultBooleanKeys;
   label: string;
   icon?: ReactNode;
-  className?: string;
+  css?: CssStyles;
 };
-export const CheckboxFilter = memo<CheckboxFilterProps>(function CheckboxFilter({
+export const CheckboxFilter = memo(function CheckboxFilter({
   filter,
   label,
   icon,
-  className,
-}) {
+  css: cssProp,
+}: CheckboxFilterProps) {
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const value = useAppSelector(state => selectFilterBoolean(state, filter));
@@ -44,7 +44,7 @@ export const CheckboxFilter = memo<CheckboxFilterProps>(function CheckboxFilter(
       }
       onChange={handleChange}
       checked={value}
-      checkboxClass={clsx(className, classes.checkbox)}
+      checkboxCss={css.raw(cssProp, styles.checkbox)}
     />
   );
 });

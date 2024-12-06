@@ -1,68 +1,68 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  chartContainer: {
+export const styles = {
+  chartContainer: css.raw({
     padding: '16px 0px',
-    [theme.breakpoints.down('md')]: {
+    lgDown: {
       padding: '16px 0px',
     },
-  },
-  graph: {
+  }),
+  graph: css.raw({
     '& text': {
-      ...theme.typography['subline-sm'],
-      fill: theme.palette.text.dark,
+      textStyle: 'subline.sm',
+      fill: 'text.dark',
     },
     '& .recharts-yAxis': {
       '& .recharts-cartesian-axis-tick': {
-        opacity: 1,
+        opacity: '1',
         transition: 'ease-in-out 0.5s',
       },
     },
     '&:hover': {
       '& .recharts-yAxis': {
         '& .recharts-cartesian-axis-tick': {
-          opacity: 0.5,
+          opacity: '0.5',
           transition: 'ease-in-out 0.5s',
         },
       },
     },
-  },
-  cowcentratedHeader: {
+  }),
+  cowcentratedHeader: css.raw({
     display: 'grid',
     gap: '1px',
     gridTemplateColumns: 'repeat(3,minmax(0,1fr))',
-  },
-  cowcentratedStat: {
-    backgroundColor: theme.palette.background.contentPrimary,
+  }),
+  cowcentratedStat: css.raw({
+    backgroundColor: 'background.content',
     padding: '16px 24px',
-  },
-  label: {
-    ...theme.typography['body-sm-med'],
-    fontWeight: 700,
-    color: theme.palette.text.dark,
-    textTransform: 'uppercase' as const,
-  },
-  inRange: {
-    color: theme.palette.primary.main,
-  },
-  outOfRange: {
-    color: theme.palette.background.buttons.boost,
-  },
-  value: {
-    ...theme.typography['body-lg-med'],
-    fontWeight: 500,
-    color: theme.palette.text.primary,
+  }),
+  label: css.raw({
+    textStyle: 'body.sm.med',
+    fontWeight: '700',
+    color: 'text.dark',
+    textTransform: 'uppercase',
+  }),
+  inRange: css.raw({
+    color: 'green',
+  }),
+  outOfRange: css.raw({
+    color: 'orangeBoost',
+  }),
+  value: css.raw({
+    textStyle: 'body.med',
+    fontWeight: '500',
+    color: 'text.white',
     '& span': {
-      ...theme.typography['body-sm-med'],
-      fontWeight: 700,
-      textTransform: 'uppercase' as const,
-      color: theme.palette.text.dark,
+      textStyle: 'body.sm.med',
+      fontWeight: '700',
+      textTransform: 'uppercase',
+      color: 'text.dark',
     },
-  },
-  roundBottomLeft: {
+  }),
+  roundBottomLeft: css.raw({
     borderBottomLeftRadius: '8px',
-  },
-  roundBottomRight: {
+  }),
+  roundBottomRight: css.raw({
     borderBottomRightRadius: '8px',
-  },
-});
+  }),
+};

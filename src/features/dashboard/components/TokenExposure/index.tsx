@@ -6,10 +6,10 @@ import type { ExposureDashboardChartLoaderProps } from '../ExposureChart/types';
 
 import { selectDashboardUserExposureByToken } from '../../../data/selectors/dashboard';
 
-const TokenExposure = memo<ExposureDashboardChartLoaderProps>(function TokenExposure({
+const TokenExposure = memo(function TokenExposure({
   title,
   address,
-}) {
+}: ExposureDashboardChartLoaderProps) {
   const tokensExposureData = useAppSelector(state =>
     selectDashboardUserExposureByToken(state, address)
   );
@@ -17,16 +17,15 @@ const TokenExposure = memo<ExposureDashboardChartLoaderProps>(function TokenExpo
   return <ExposureChart title={title} type="token" data={tokensExposureData} />;
 });
 
-export const TokenExposureLoader = memo<ExposureDashboardChartLoaderProps>(
-  function TokenExposureLoader({ title, address }) {
-    const isUserDataAvailable = useAppSelector(state =>
-      selectIsUserBalanceAvailable(state, address)
-    );
+export const TokenExposureLoader = memo(function TokenExposureLoader({
+  title,
+  address,
+}: ExposureDashboardChartLoaderProps) {
+  const isUserDataAvailable = useAppSelector(state => selectIsUserBalanceAvailable(state, address));
 
-    if (isUserDataAvailable) {
-      return <TokenExposure address={address} title={title} />;
-    }
-
-    return null;
+  if (isUserDataAvailable) {
+    return <TokenExposure address={address} title={title} />;
   }
-);
+
+  return null;
+});

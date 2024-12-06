@@ -17,7 +17,14 @@ function makeLazyLoader<T extends VaultEntity>(loader: () => Promise<VaultTypeCo
 type VaultTypeBuilderFromVault<T extends VaultEntity> = ReturnType<typeof makeLazyLoader<T>>;
 
 type TypeToConstructorMap = {
-  [K in VaultEntity['type']]: VaultTypeBuilderFromVault<Extract<VaultEntity, { type: K }>>;
+  [K in VaultEntity['type']]: VaultTypeBuilderFromVault<
+    Extract<
+      VaultEntity,
+      {
+        type: K;
+      }
+    >
+  >;
 };
 
 const vaultTypeBuildersById = {

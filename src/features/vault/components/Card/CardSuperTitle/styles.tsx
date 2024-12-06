@@ -1,8 +1,8 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  supertitle: {
-    ...theme.typography['subline-lg'],
-    color: theme.palette.text.dark,
-  },
-});
+export const styles = {
+  supertitle: css.raw({
+    textStyle: 'subline',
+    color: 'text.dark',
+  }),
+};

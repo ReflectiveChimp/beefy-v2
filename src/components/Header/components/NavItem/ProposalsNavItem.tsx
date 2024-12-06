@@ -5,7 +5,7 @@ import { markAllProposalsRead } from '../../../../features/data/actions/proposal
 import { useAppDispatch } from '../../../../store';
 import { UnreadProposalsCount } from '../Badges/UnreadProposalsCount';
 
-export const ProposalsNavItem = memo<NavItemProps>(function ProposalsNavItem({ url, title, Icon }) {
+export const ProposalsNavItem = memo(function ProposalsNavItem({ url, title, Icon }: NavItemProps) {
   const dispatch = useAppDispatch();
   const markRead = useCallback(() => {
     dispatch(markAllProposalsRead());

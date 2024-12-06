@@ -2,33 +2,29 @@ import { type CSSProperties, type FC, memo, type SVGProps, useMemo } from 'react
 import type { TooltipProps } from './Tooltip';
 import { Tooltip } from './Tooltip';
 import { ReactComponent as HelpOutline } from '@repo/images/icons/mui/HelpOutline.svg';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core';
+import { css, type CssStyles } from '@repo/styles/css';
 import { styles } from './styles';
-
-const useStyles = makeStyles(styles);
 
 export type IconWithTooltipProps = {
   Icon?: FC<SVGProps<SVGSVGElement>>;
-  iconClassName?: string;
+  iconCss?: CssStyles;
   iconSize?: number;
 } & Omit<TooltipProps, 'children'>;
 
-export const IconWithTooltip = memo<IconWithTooltipProps>(function IconWithTooltip({
+export const IconWithTooltip = memo(function IconWithTooltip({
   Icon = HelpOutline,
-  iconClassName,
+  iconCss,
   iconSize = 20,
   ...rest
-}) {
-  const classes = useStyles();
-  const styles = useMemo(
+}: IconWithTooltipProps) {
+  const style = useMemo(
     () => ({ '--tooltip-icon-size': `${iconSize}px` } as CSSProperties),
     [iconSize]
   );
 
   return (
     <Tooltip {...rest}>
-      <Icon className={clsx(classes.icon, iconClassName)} style={styles} />
+      <Icon className={css(styles.icon, iconCss)} style={style} />
     </Tooltip>
   );
 });

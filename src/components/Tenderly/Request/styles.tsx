@@ -1,20 +1,20 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  label: {
-    ...theme.typography['subline-sm'],
+export const styles = {
+  label: css.raw({
+    textStyle: 'subline.sm',
     marginBottom: '4px',
-  },
-  calls: {
+  }),
+  calls: css.raw({
     display: 'grid',
     gridTemplateColumns: 'auto auto auto minmax(0, 1fr)',
     gap: '4px 8px',
-  },
-  callHeader: {
-    fontWeight: theme.typography['body-sm-med'].fontWeight,
-  },
-  callData: {
+  }),
+  callHeader: css.raw({
+    fontWeight: 'body.medium',
+  }),
+  callData: css.raw({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  },
-});
+  }),
+};

@@ -1,9 +1,9 @@
 import { type ChangeEventHandler, memo, useCallback, useMemo } from 'react';
-import { InputBase, makeStyles } from '@material-ui/core';
+import { InputBase } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectBridgeFormState } from '../../../../../data/selectors/bridge';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
 import { isAddress } from 'viem';
 import { selectChainById } from '../../../../../data/selectors/chains';
@@ -12,17 +12,14 @@ import {
   type LabelledCheckboxProps,
 } from '../../../../../../components/LabelledCheckbox';
 
-const useStyles = makeStyles(styles);
-
 type ReceiverSelectorProps = {
-  className?: string;
+  css?: CssStyles;
 };
 
-export const ReceiverSelector = memo<ReceiverSelectorProps>(function ReceiverSelector({
-  className,
-}) {
+export const ReceiverSelector = memo(function ReceiverSelector({
+  css: cssProp,
+}: ReceiverSelectorProps) {
   const dispatch = useAppDispatch();
-  const classes = useStyles();
   const { receiverAddress, receiverIsDifferent, to } = useAppSelector(selectBridgeFormState);
   const chain = useAppSelector(state => selectChainById(state, to));
   const addressError = useMemo(() => {
@@ -50,19 +47,19 @@ export const ReceiverSelector = memo<ReceiverSelectorProps>(function ReceiverSel
   );
 
   return (
-    <div className={clsx(classes.group, className)}>
+    <div className={css(styles.group, cssProp)}>
       <LabelledCheckbox
-        checkboxClass={classes.checkbox}
-        labelClass={classes.label}
-        iconClass={classes.check}
-        checkedClass={classes.checked}
+        checkboxCss={styles.checkbox}
+        labelCss={styles.label}
+        iconCss={styles.check}
+        checkedIconCss={styles.checkedIcon}
         label={`My ${chain.name} address is different`}
         checked={receiverIsDifferent}
         onChange={handleReceiverToggle}
       />
       {receiverIsDifferent ? (
         <InputBase
-          className={clsx(classes.input)}
+          className={css(styles.input)}
           value={receiverAddress || ''}
           onChange={handleAddressChange}
           error={addressError !== undefined}

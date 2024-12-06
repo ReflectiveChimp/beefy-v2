@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { ReactComponent as ExpandLess } from '@repo/images/icons/mui/ExpandLess.svg';
 import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { groupBy, keyBy } from 'lodash-es';
 import { type VaultEntity } from '../../../../../../data/entities/vault';
 import {
@@ -26,7 +26,7 @@ import { fetchUserMerklRewardsAction } from '../../../../../../data/actions/user
 import { AlertWarning } from '../../../../../../../components/Alerts';
 import { RefreshButton } from '../RefreshButton/RefreshButton';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function useUserRewardsLoader(walletAddress: string, autoRefresh: boolean) {
   const dispatch = useAppDispatch();
@@ -60,12 +60,12 @@ type MerklRewardsProps = {
   deposited: boolean;
 };
 
-export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
+export const MerklRewards = memo(function MerklRewards({
   vaultId,
   chainId,
   walletAddress,
   deposited,
-}) {
+}: MerklRewardsProps) {
   const { t } = useTranslation();
   const vaultRewards = useAppSelector(state =>
     selectUserMerklUnifiedRewardsForVault(state, vaultId, walletAddress)
@@ -110,12 +110,12 @@ type ClaimableRewardsProps = {
   deposited: boolean;
 };
 
-const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
+const ClaimableRewards = memo(function ClaimableRewards({
   vaultRewards,
   walletAddress,
   deposited,
   vaultChainId,
-}) {
+}: ClaimableRewardsProps) {
   const byChain = useMemo(
     () =>
       groupBy(vaultRewards, r => r.token.chainId) as Partial<
@@ -149,7 +149,7 @@ type ClaimableChainRewardsProps = {
   withRefresh?: boolean;
 };
 
-const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function ClaimableChainRewards({
+const ClaimableChainRewards = memo(function ClaimableChainRewards({
   chainId,
   vaultChainId,
   vaultRewards,
@@ -157,7 +157,7 @@ const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function Claimabl
   deposited,
   withChain,
   withRefresh,
-}) {
+}: ClaimableChainRewardsProps) {
   const { t } = useTranslation();
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const hasClaimable = useMemo(() => vaultRewards.some(r => r.amount.gt(BIG_ZERO)), [vaultRewards]);
@@ -185,11 +185,11 @@ type OtherRewardsProps = {
   walletAddress: string;
 };
 
-const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
+const OtherRewards = memo(function OtherRewards({
   chainId,
   vaultRewards,
   walletAddress,
-}) {
+}: OtherRewardsProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const [otherOpen, setOtherOpen] = useState<boolean>(false);
@@ -240,7 +240,7 @@ const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
       {otherOpen ? (
         <RewardList
           chainId={chainId}
-          className={classes.otherRewardsList}
+          css={styles.otherRewardsList}
           rewards={otherRewards}
           deposited={false}
         />
@@ -253,20 +253,20 @@ type RewardsRefresherProps = {
   walletAddress: string;
 };
 
-const AutomaticUserRewardsRefresher = memo<RewardsRefresherProps>(
-  function AutomaticUserRewardsRefresher({ walletAddress }) {
-    const status = useUserRewardsLoader(walletAddress, true);
-    if (status.isError) {
-      return <AlertWarning>{'Failed to fetch user rewards from Merkl API.'}</AlertWarning>;
-    }
-
-    return null;
-  }
-);
-
-const UserRewardsRefreshButton = memo<RewardsRefresherProps>(function UserRewardsRefreshButton({
+const AutomaticUserRewardsRefresher = memo(function AutomaticUserRewardsRefresher({
   walletAddress,
-}) {
+}: RewardsRefresherProps) {
+  const status = useUserRewardsLoader(walletAddress, true);
+  if (status.isError) {
+    return <AlertWarning>{'Failed to fetch user rewards from Merkl API.'}</AlertWarning>;
+  }
+
+  return null;
+});
+
+const UserRewardsRefreshButton = memo(function UserRewardsRefreshButton({
+  walletAddress,
+}: RewardsRefresherProps) {
   const { t } = useTranslation();
   const status = useUserRewardsLoader(walletAddress, false);
   const canRefresh = status.canLoad && !!status.handleLoad;

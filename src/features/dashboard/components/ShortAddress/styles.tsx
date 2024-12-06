@@ -1,25 +1,26 @@
-import type { Theme } from '@material-ui/core';
-export const styles = (theme: Theme) => ({
-  shortAddress: {
-    ...theme.typography['h3'],
-    color: theme.palette.text.dark,
-  },
-  longAddress: {
-    [theme.breakpoints.down('xs')]: {
-      ...theme.typography['body-sm'],
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  shortAddress: css.raw({
+    textStyle: 'h3',
+    color: 'text.dark',
+  }),
+  longAddress: css.raw({
+    smDown: {
+      textStyle: 'body.sm',
     },
-  },
-  triggerClass: {
+  }),
+  triggerClass: css.raw({
     '&:hover': {
       cursor: 'pointer',
     },
-  },
-  tooltipContent: {
+  }),
+  tooltipContent: css.raw({
     '&:hover': {
       cursor: 'pointer',
     },
-    [theme.breakpoints.up('xs')]: {
+    '@media (min-width: 0)': {
       maxWidth: 'min(100%, 450px)',
     },
-  },
-});
+  }),
+};

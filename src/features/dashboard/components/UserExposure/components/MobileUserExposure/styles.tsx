@@ -1,33 +1,34 @@
-import type { Theme } from '@material-ui/core';
-export const styles = (theme: Theme) => ({
-  container: {
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  container: css.raw({
     width: '100%',
-    backgroundColor: theme.palette.background.contentPrimary,
+    backgroundColor: 'background.content',
     borderRadius: '8px',
     display: 'grid',
     padding: '16px',
-    [theme.breakpoints.only('md')]: {
+    mdOnly: {
       height: '120px',
     },
-  },
-  option: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.dark,
-    whiteSpace: 'nowrap' as const,
+  }),
+  option: css.raw({
+    textStyle: 'body.med',
+    color: 'text.dark',
+    whiteSpace: 'nowrap',
     '&:hover': {
-      color: theme.palette.text.light,
+      color: 'text.light',
       cursor: 'pointer',
     },
-  },
-  active: {
-    color: theme.palette.text.light,
-  },
-  optionsContainer: {
+  }),
+  active: css.raw({
+    color: 'text.light',
+  }),
+  optionsContainer: css.raw({
     display: 'flex',
     gap: '12px',
     marginBottom: '16px',
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       marginBottom: '24px',
     },
-  },
-});
+  }),
+};

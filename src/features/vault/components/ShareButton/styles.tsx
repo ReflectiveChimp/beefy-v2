@@ -1,7 +1,7 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  shareButton: {
+export const styles = {
+  shareButton: css.raw({
     display: 'flex',
     width: '100%',
     alignItems: 'center',
@@ -10,54 +10,51 @@ export const styles = (theme: Theme) => ({
     outline: 'none',
     '&:focus-visible, &.active': {
       outline: 'none',
-      backgroundColor: theme.palette.background.border,
+      backgroundColor: 'bayOfMany',
     },
-  },
-  mobileAlternative: {
-    [theme.breakpoints.down('md')]: {
+  }),
+  mobileAlternative: css.raw({
+    lgDown: {
       padding: '10px',
-      '& $shareText': {
-        display: 'none',
-      },
     },
-  },
-  shareText: {},
-  shareIcon: {
-    flexShrink: 0,
-    flexGrow: 0,
+  }),
+  shareText: css.raw({}),
+  shareIcon: css.raw({
+    flexShrink: '0',
+    flexGrow: '0',
     fontSize: '16px',
-  },
-  dropdown: {
+  }),
+  dropdown: css.raw({
     width: 'auto',
-    zIndex: 10000,
-  },
-  dropdownInner: {
-    backgroundColor: theme.palette.background.contentPrimary,
+    zIndex: 'dropdown',
+  }),
+  dropdownInner: css.raw({
+    backgroundColor: 'background.content',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '16px',
     padding: '16px',
-  },
-  shareItem: {
-    ...theme.typography['body-lg-med'],
-    whiteSpace: 'nowrap' as const,
+  }),
+  shareItem: css.raw({
+    textStyle: 'body.med',
+    whiteSpace: 'nowrap',
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    color: theme.palette.text.light,
+    color: 'text.light',
     backgroundColor: 'transparent',
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
     borderRadius: '0',
-    margin: 0,
+    margin: '0',
     padding: '0',
-    minWidth: 0,
-    flexShrink: 0,
+    minWidth: '0',
+    flexShrink: '0',
     cursor: 'pointer',
-    textAlign: 'left' as const,
+    textAlign: 'left',
     '&:hover, &:focus-visible': {
-      color: '#fff',
+      color: 'white',
     },
-  },
-});
+  }),
+};

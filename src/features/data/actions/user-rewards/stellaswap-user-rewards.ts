@@ -19,7 +19,9 @@ import { getCowcentratedPool } from '../../entities/vault';
 export const fetchUserStellaSwapRewardsAction = createAsyncThunk<
   FetchUserStellaSwapRewardsFulfilledPayload,
   FetchUserStellaSwapRewardsActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'rewards/fetchUserStellaSwapRewardsAction',
   async ({ walletAddress }, { getState }) => {

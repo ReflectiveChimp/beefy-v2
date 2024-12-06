@@ -1,37 +1,40 @@
 import { memo } from 'react';
-import type { Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import type { BadgeComponentProps } from './types';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  badge: {
-    ...theme.typography['body-sm'],
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.background.footerHeader,
+const styles = {
+  badge: css.raw({
+    textStyle: 'body.sm',
+    backgroundColor: 'green',
+    color: 'background.header',
     padding: '0px 6px',
     borderRadius: '10px',
     height: '20px',
-    position: 'absolute' as const,
+    position: 'absolute',
     top: '-2px',
     right: '0',
     transform: 'translate(50%, -50%)',
     pointerEvents: 'none',
-  },
-  spacer: {
+  }),
+  spacer: css.raw({
     width: '12px',
     pointerEvents: 'none',
-  },
-}));
+  }),
+};
+const useStyles = legacyMakeStyles(styles);
 
-export const NewBadge = memo<BadgeComponentProps>(function NewBadge({ className, spacer = true }) {
+export const NewBadge = memo(function NewBadge({
+  css: cssProp,
+  spacer = true,
+}: BadgeComponentProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
     <>
       {spacer === false ? null : <div className={classes.spacer} />}
-      <div className={clsx(classes.badge, className)}>{t('Header-Badge-New')}</div>
+      <div className={css(styles.badge, cssProp)}>{t('Header-Badge-New')}</div>
     </>
   );
 });

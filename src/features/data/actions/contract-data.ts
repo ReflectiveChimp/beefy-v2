@@ -25,7 +25,9 @@ export interface FetchAllContractDataFulfilledPayload {
 export const fetchAllContractDataByChainAction = createAsyncThunk<
   FetchAllContractDataFulfilledPayload,
   ActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('contract-data/fetchAllContractDataByChainAction', async ({ chainId }, { getState }) => {
   if (featureFlag_simulateRpcError(chainId)) {
     throw new Error('Simulated RPC error');

@@ -45,9 +45,12 @@ export const MERKL_SUPPORTED_CHAINS: Partial<Record<ChainEntity['id'], Address>>
   rootstock: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
 };
 
-function parseReasonId(
-  reasonId: string
-): { type: VaultEntity['type']; address: string } | undefined {
+function parseReasonId(reasonId: string):
+  | {
+      type: VaultEntity['type'];
+      address: string;
+    }
+  | undefined {
   const parts = reasonId.trim().split('_');
   if (parts.length !== 2) {
     return undefined;
@@ -86,7 +89,9 @@ function addVaultRewardToExisting(existing: MerklVaultReward, next: MerklVaultRe
 export const fetchUserMerklRewardsAction = createAsyncThunk<
   FetchUserMerklRewardsFulfilledPayload,
   FetchUserMerklRewardsActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'rewards/fetchUserMerklRewardsAction',
   async ({ walletAddress }, { getState }) => {

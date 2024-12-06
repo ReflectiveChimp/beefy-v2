@@ -27,7 +27,9 @@ export interface FetchAddressBookPayload {
 export const fetchAddressBookAction = createAsyncThunk<
   FetchAddressBookPayload,
   ActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('tokens/fetchAddressBookAction', async ({ chainId }, { getState }) => {
   const chain = selectChainById(getState(), chainId);
   const addressBook = await getChainAddressBook(chain);
@@ -37,7 +39,9 @@ export const fetchAddressBookAction = createAsyncThunk<
 export const fetchAllAddressBookAction = createAsyncThunk<
   FetchAddressBookPayload[],
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('tokens/fetchAllAddressBookAction', async (_, { getState }) => {
   const chains = selectAllChains(getState());
   if (chains.length <= 0) {
@@ -76,7 +80,9 @@ export type AllCurrentCowcentratedRangesPayload = Record<string, CurrentCowcentr
 export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThunk<
   ReloadBalanceAllowanceRewardsFulfilledPayload,
   ReloadBalanceAllowanceRewardsParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'deposit/reloadBalanceAndAllowanceAndGovRewards',
   async ({ chainId, tokens, spenderAddress, govVaultId, boostId, walletAddress }, { getState }) => {
@@ -136,7 +142,9 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
 export const fetchAllCurrentCowcentratedRanges = createAsyncThunk<
   AllCurrentCowcentratedRangesPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('tokens/fetchAllCurrentCowcentratedRanges', async () => {
   const api = await getBeefyApi();
   const data = await api.getAllCowcentratedVaultRanges();

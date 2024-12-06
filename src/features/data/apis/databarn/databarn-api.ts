@@ -1,10 +1,10 @@
 import { BigNumber } from 'bignumber.js';
 import type {
   DatabarnPricesResponse,
-  IDatabarnApi,
   DatabarnPriceType,
   DatabarnTimeBucket,
   DatabarnTimelineEntry,
+  IDatabarnApi,
 } from './databarn-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';

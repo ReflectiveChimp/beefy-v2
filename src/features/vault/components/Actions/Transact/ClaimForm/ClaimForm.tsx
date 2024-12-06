@@ -1,5 +1,5 @@
 import { memo, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
 import { isCowcentratedLikeVault, isGovVault } from '../../../../../data/entities/vault';
@@ -16,7 +16,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { StellaSwapRewards } from './StellaSwap/StellaSwapRewards';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const ClaimFormLoader = memo(function ClaimFormLoader() {
   const classes = useStyles();

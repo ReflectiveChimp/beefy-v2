@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { selectIsPlatformsAvailable } from '../../../data/selectors/data-loader';
 import { styles } from './styles';
@@ -12,9 +12,9 @@ import type { PlatformEntity } from '../../../data/entities/platform';
 import { selectPlatformById } from '../../../data/selectors/platforms';
 import { TagTooltip, TagWithTooltip } from '../BridgeTag';
 import { getPlatformSrc, platformAssetExists } from '../../../../helpers/platformsSrc';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
   const classes = useStyles();
@@ -33,7 +33,7 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
               Icon={Link}
               text={t('Token-Site')}
               href={platform.website}
-              textClassName={classes.assetLinkText}
+              textCss={styles.assetLinkText}
             />
           )}
           {platform.documentation && (
@@ -41,7 +41,7 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
               Icon={DocsIcon}
               href={platform.documentation}
               text={t('Token-Docs')}
-              textClassName={classes.assetLinkText}
+              textCss={styles.assetLinkText}
             />
           )}
           {platform.twitter && (
@@ -49,7 +49,7 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
               Icon={Twitter}
               href={`https://x.com/${platform.twitter}`}
               text={t('Details-Platform-Link-Twitter')}
-              textClassName={classes.assetLinkText}
+              textCss={styles.assetLinkText}
             />
           )}
         </div>
@@ -65,9 +65,7 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
           ) : null}
         </div>
       </div>
-      <div
-        className={clsx(classes.description, !platform.description && classes.descriptionPending)}
-      >
+      <div className={css(styles.description, !platform.description && styles.descriptionPending)}>
         {platform.description ? platform.description : t('Details-Platform-Description-pending')}
       </div>
     </div>

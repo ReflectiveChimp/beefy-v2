@@ -1,35 +1,35 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'grid',
     rowGap: '16px',
     columnGap: '16px',
     gridTemplateColumns: 'repeat(6,minmax(0,1fr))',
-    [theme.breakpoints.down('md')]: {
+    lgDown: {
       gridTemplateColumns: 'repeat(3,minmax(0,1fr))',
     },
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
     },
-  },
-  chain: {
+  }),
+  chain: css.raw({
     display: 'flex',
     padding: '12px',
     columnGap: '8px',
-    backgroundColor: theme.palette.background.contentPrimary,
+    backgroundColor: 'background.content',
     borderRadius: '4px',
     alignItems: 'center',
-  },
-  chainLogo: {
+  }),
+  chainLogo: css.raw({
     height: '32px',
-  },
-  chainText: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-  },
-  chainValue: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
-  },
-});
+  }),
+  chainText: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+  }),
+  chainValue: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
+  }),
+};

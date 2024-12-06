@@ -1,8 +1,9 @@
-import { makeStyles, Tabs as MuiTabs, Tab } from '@material-ui/core';
+import { Tab, Tabs as MuiTabs } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const Tabs = ({ value, onChange, labels }) => {
   const classes = useStyles();

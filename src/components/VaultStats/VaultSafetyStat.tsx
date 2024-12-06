@@ -6,8 +6,7 @@ import { selectVaultById } from '../../features/data/selectors/vaults';
 import { VaultValueStat } from '../VaultValueStat';
 import type { SafetyScoreProps } from '../SafetyScore';
 import { SafetyScore } from '../SafetyScore';
-import { useMediaQuery } from '@material-ui/core';
-import type { Theme } from '@material-ui/core';
+import { useBreakpoint } from '../MediaQueries/useBreakpoint';
 
 export type VaultSafetyStatProps = {
   vaultId: VaultEntity['id'];
@@ -28,8 +27,10 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultSafetyStatProps) {
   };
 }
 
-type StatSafetyScoreProps = { score: SafetyScoreProps['score'] };
-const StatSafetyScore = memo<StatSafetyScoreProps>(function SafetyTooltip({ score }) {
-  const alignRight = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
+type StatSafetyScoreProps = {
+  score: SafetyScoreProps['score'];
+};
+const StatSafetyScore = memo(function SafetyTooltip({ score }: StatSafetyScoreProps) {
+  const alignRight = useBreakpoint({ from: 'lg' });
   return <SafetyScore score={score} size="sm" align={alignRight ? 'right' : 'left'} />;
 });

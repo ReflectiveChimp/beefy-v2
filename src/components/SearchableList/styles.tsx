@@ -1,53 +1,53 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = () => ({
-  searchableList: {
+export const styles = {
+  searchableList: css.raw({
     display: 'grid',
     gridTemplateColumns: 'auto',
     gridTemplateRows: 'auto minmax(0,1fr)',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     width: 'calc(100% + 48px)',
     height: 'calc(100% + 24px)',
     margin: '0 -24px -24px -24px',
     rowGap: '24px',
-  },
-  search: {
+  }),
+  search: css.raw({
     padding: '0 24px',
-  },
-  list: {
+  }),
+  list: css.raw({
     padding: '0 24px 24px 24px',
     minHeight: '100px',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '16px',
-    overflowY: 'auto' as const,
-  },
-});
+    overflowY: 'auto',
+  }),
+};
 
-export const itemStyles = (theme: Theme) => ({
+export const itemStyles = {
   item: {
-    ...theme.typography['body-lg-med'],
+    textStyle: 'body.med',
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-    color: theme.palette.text.dark,
+    color: 'text.dark',
     background: 'transparent',
     border: 'none',
     boxShadow: 'none',
-    padding: 0,
-    margin: 0,
+    padding: '0',
+    margin: '0',
     cursor: 'pointer',
-    userSelect: 'none' as const,
+    userSelect: 'none',
     outline: 'none',
     '&:hover, &:focus-visible': {
-      color: theme.palette.text.middle,
-      '& $arrow': {
-        color: '#fff',
+      color: 'text.middle',
+      '& .item-arrow': {
+        color: 'white',
       },
     },
   },
   arrow: {
-    color: theme.palette.text.middle,
+    color: 'text.middle',
     height: '24px',
   },
   marginWithendAdornment: {
@@ -57,4 +57,4 @@ export const itemStyles = (theme: Theme) => ({
     marginLeft: 'auto',
     display: 'flex',
   },
-});
+} as const;

@@ -1,47 +1,48 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  successContent: {
-    backgroundColor: 'rgba(89, 166, 98, 0.15)',
-  },
-  errorContent: {
-    backgroundColor: 'rgba(219, 50, 50, 0.1)',
-  },
-  content: {
+export const styles = {
+  successContent: css.raw({
+    backgroundColor: 'extracted1431o14',
+  }),
+  errorContent: css.raw({
+    backgroundColor: 'extracted1401',
+  }),
+  content: css.raw({
     marginTop: '12px',
     padding: '16px',
     borderRadius: '4px',
-  },
-  message: {
-    color: theme.palette.background.txsModal.text,
+    display: 'flex',
+    maxWidth: '100%',
+    flexDirection: 'column',
+    gap: '16px',
+  }),
+  message: css.raw({
+    color: 'blackMarket1',
     '& span': {
-      fontWeight: theme.typography['body-lg-med'].fontWeight,
+      fontWeight: 'body.medium',
     },
-  },
-  messageHighlight: {
-    color: theme.palette.background.txsModal.text,
-    fontWeight: theme.typography['body-lg-med'].fontWeight,
-    '$message + &': {
-      marginTop: '16px',
-    },
-  },
-  friendlyMessage: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.background.txsModal.text,
+  }),
+  messageHighlight: css.raw({
+    color: 'blackMarket1',
+    fontWeight: 'body.medium',
+  }),
+  friendlyMessage: css.raw({
+    textStyle: 'body.med',
+    color: 'blackMarket1',
     marginBottom: '16px',
-  },
-  closeBtn: {},
-  rememberContainer: {
+  }),
+  closeBtn: css.raw({}),
+  rememberContainer: css.raw({
     marginTop: '16px',
-  },
-  dustContainer: {
+  }),
+  dustContainer: css.raw({
     marginTop: '16px',
-  },
-  icon: {
+  }),
+  icon: css.raw({
     height: '20px',
     marginRight: '8px',
-  },
-  buttons: {
+  }),
+  buttons: css.raw({
     display: 'grid',
     gridAutoFlow: 'column',
     gridAutoColumns: '1fr',
@@ -49,9 +50,9 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     gap: '8px',
     marginTop: '24px',
-  },
-  link: {
+  }),
+  link: css.raw({
     textDecoration: 'none',
-    color: theme.palette.primary.main,
-  },
-});
+    color: 'green',
+  }),
+};

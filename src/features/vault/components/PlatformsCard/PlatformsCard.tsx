@@ -10,7 +10,7 @@ interface PlatformsCardProps {
   vaultId: VaultEntity['id'];
 }
 
-export const PlatformsCard = memo<PlatformsCardProps>(function PlatformsCard({ vaultId }) {
+export const PlatformsCard = memo(function PlatformsCard({ vaultId }: PlatformsCardProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
   const depositToken = useAppSelector(state =>

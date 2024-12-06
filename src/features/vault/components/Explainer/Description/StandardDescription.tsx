@@ -43,9 +43,9 @@ export type StandardDescriptionProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const StandardDescription = memo<StandardDescriptionProps>(function StandardDescription({
+export const StandardDescription = memo(function StandardDescription({
   vaultId,
-}) {
+}: StandardDescriptionProps) {
   const { i18n } = useStandardHelper(vaultId);
   return <Trans {...i18n} />;
 });

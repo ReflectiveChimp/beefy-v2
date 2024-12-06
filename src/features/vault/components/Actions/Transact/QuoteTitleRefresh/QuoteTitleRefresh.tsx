@@ -1,23 +1,23 @@
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { ReactComponent as Refresh } from '@repo/images/icons/mui/Refresh.svg';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { useAppDispatch } from '../../../../../../store';
 import { transactFetchQuotes } from '../../../../../data/actions/transact';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type QuoteTitleRefreshProps = {
   title: string;
   enableRefresh?: boolean;
-  className?: string;
+  css?: CssStyles;
 };
-export const QuoteTitleRefresh = memo<QuoteTitleRefreshProps>(function QuoteTitleRefresh({
+export const QuoteTitleRefresh = memo(function QuoteTitleRefresh({
   title,
   enableRefresh = false,
-  className,
-}) {
+  css: cssProp,
+}: QuoteTitleRefreshProps) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const handleRefresh = useCallback(() => {
@@ -25,7 +25,7 @@ export const QuoteTitleRefresh = memo<QuoteTitleRefreshProps>(function QuoteTitl
   }, [dispatch]);
 
   return (
-    <div className={clsx(classes.holder, className)}>
+    <div className={css(styles.holder, cssProp)}>
       <div className={classes.title}>{title}</div>
       {enableRefresh ? (
         <button className={classes.refreshButton} onClick={handleRefresh}>

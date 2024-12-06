@@ -1,21 +1,24 @@
 import { memo, useMemo } from 'react';
 import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import type { TokenEntity } from '../../features/data/entities/token';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
 import type { UserClmPnl } from '../../features/data/selectors/analytics-types';
 import { BIG_ZERO } from '../../helpers/big-number';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type CowcentratedCompoundedTooltipContentProps = {
   yields: UserClmPnl['yields'];
   tokens: readonly [TokenEntity, TokenEntity];
 };
 
-export const CowcentratedCompoundedTooltipContent = memo<CowcentratedCompoundedTooltipContentProps>(
-  function CowcentratedCompoundedTooltipContent({ yields, tokens }) {
+export const CowcentratedCompoundedTooltipContent = memo(
+  function CowcentratedCompoundedTooltipContent({
+    yields,
+    tokens,
+  }: CowcentratedCompoundedTooltipContentProps) {
     const { t } = useTranslation();
     const classes = useStyles();
     const items = useMemo(

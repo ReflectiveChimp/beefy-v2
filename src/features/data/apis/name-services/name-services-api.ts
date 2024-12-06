@@ -21,7 +21,10 @@ export class NameServicesApi {
       return undefined;
     }
 
-    const lookups: { resolver: Resolver; chainId: ChainId }[] = [];
+    const lookups: {
+      resolver: Resolver;
+      chainId: ChainId;
+    }[] = [];
 
     for (const resolver of resolvers) {
       const chainIds = getAllChainsFromTldToChain(await resolver.tldToChain());
@@ -56,7 +59,10 @@ export class NameServicesApi {
       return undefined;
     }
 
-    const lookups: { resolver: Resolver; chainId: ChainId }[] = [];
+    const lookups: {
+      resolver: Resolver;
+      chainId: ChainId;
+    }[] = [];
 
     for (const resolver of resolvers) {
       const tldToChain = await resolver.tldToChain();

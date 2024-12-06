@@ -16,12 +16,12 @@ type GovRewardsProps = {
   deposited: boolean;
 };
 
-export const GovRewards = memo<GovRewardsProps>(function GovRewards({
+export const GovRewards = memo(function GovRewards({
   vaultId,
   chainId,
   walletAddress,
   deposited,
-}) {
+}: GovRewardsProps) {
   const { t } = useTranslation();
   const vaultRewards = useAppSelector(state =>
     selectUserGovVaultUnifiedRewards(state, vaultId, walletAddress)

@@ -1,43 +1,42 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  page: {
+export const styles = {
+  page: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '24px',
-    paddingTop: '32px',
-    paddingBottom: '32px',
-  },
-  contentContainer: {},
-  contentColumns: {
+    paddingBlock: '32px',
+  }),
+  contentContainer: css.raw({}),
+  contentColumns: css.raw({
     display: 'grid',
     gridTemplateColumns: '100%',
     rowGap: '24px',
     columnGap: '24px',
-    [theme.breakpoints.up('md')]: {
+    md: {
       display: 'grid',
       gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
     },
-  },
-  columnActions: {
+  }),
+  columnActions: css.raw({
     width: '100%',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '24px',
     '& > :first-child': {
-      marginTop: 0,
+      marginTop: '0',
     },
-    [theme.breakpoints.up('md')]: {
-      order: 1,
+    md: {
+      order: '1',
     },
-  },
-  columnInfo: {
+  }),
+  columnInfo: css.raw({
     width: '100%',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '24px',
-    [theme.breakpoints.up('md')]: {
-      marginTop: 0,
+    md: {
+      marginTop: '0',
     },
-  },
-});
+  }),
+};

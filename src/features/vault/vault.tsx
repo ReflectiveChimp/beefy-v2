@@ -1,4 +1,5 @@
-import { Hidden, makeStyles } from '@material-ui/core';
+import { Hidden } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import type { PropsWithChildren } from 'react';
 import { lazy, memo } from 'react';
 import { Redirect, useParams } from 'react-router';
@@ -30,7 +31,7 @@ import { Container } from '../../components/Container/Container';
 import { Details } from './components/Details';
 import { RetiredSuggestClmBanner } from '../../components/Banners/RetiredSuggestClmBanner';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
 
 type VaultUrlParams = {
@@ -65,7 +66,7 @@ export const Vault = memo(function Vault() {
 });
 
 type VaultNotFoundProps = PropsWithChildren<VaultUrlParams>;
-const VaultNotFound = memo<VaultNotFoundProps>(function VaultNotFound({ id }) {
+const VaultNotFound = memo(function VaultNotFound({ id }: VaultNotFoundProps) {
   const maybeVaultId = useAppSelector(state => selectVaultIdIgnoreCase(state, id));
 
   if (maybeVaultId !== undefined) {
@@ -78,7 +79,7 @@ const VaultNotFound = memo<VaultNotFoundProps>(function VaultNotFound({ id }) {
 type VaultContentProps = PropsWithChildren<{
   vaultId: VaultEntity['id'];
 }>;
-const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) {
+const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) {
   const classes = useStyles();
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const isBoostedOrPreStake = useAppSelector(state =>
@@ -86,7 +87,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
   );
 
   return (
-    <Container maxWidth="lg" className={classes.page}>
+    <Container maxWidth="lg" css={styles.page}>
       <VaultMeta vaultId={vaultId} />
       <BusdBannerVault vaultId={vaultId} />
       <UnstakedClmBannerVault vaultId={vaultId} fromVault={true} />

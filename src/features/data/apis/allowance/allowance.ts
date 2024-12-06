@@ -32,9 +32,14 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
 
     // first, build a list of tokens and spenders we want info on
     const allowanceCallsByToken: {
-      [tokenAddress: string]: { tokenAddress: TokenEntity['address']; spenders: Set<string> };
+      [tokenAddress: string]: {
+        tokenAddress: TokenEntity['address'];
+        spenders: Set<string>;
+      };
     } = {};
-    const tokensByAddress: { [tokenAddress: TokenEntity['address']]: TokenEntity } = {};
+    const tokensByAddress: {
+      [tokenAddress: TokenEntity['address']]: TokenEntity;
+    } = {};
     const addTokenAddressesToCalls = (tokenAddress: string, spenderAddress: string) => {
       const token = selectTokenByAddress(state, this.chain.id, tokenAddress);
       const keyTokenAddress = token.address.toLowerCase();
@@ -126,9 +131,14 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
 
     // first, build a list of tokens and spenders we want info on
     const allowanceCallsByToken: {
-      [tokenAddress: string]: { tokenAddress: TokenEntity['address']; spenders: Set<string> };
+      [tokenAddress: string]: {
+        tokenAddress: TokenEntity['address'];
+        spenders: Set<string>;
+      };
     } = {};
-    const tokensByAddress: { [tokenAddress: TokenEntity['address']]: TokenEntity } = {};
+    const tokensByAddress: {
+      [tokenAddress: TokenEntity['address']]: TokenEntity;
+    } = {};
     const addTokenAddressesToCalls = (tokenAddress: string, spenderAddress: string) => {
       const token = selectTokenByAddress(state, this.chain.id, tokenAddress);
       const keyTokenAddress = token.address.toLowerCase();

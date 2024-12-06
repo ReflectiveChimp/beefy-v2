@@ -1,54 +1,45 @@
-import { makeStyles, type Theme } from '@material-ui/core';
-import clsx from 'clsx';
-import { memo } from 'react';
+import { css, type CssStyles } from '@repo/styles/css';
+import { memo, type ReactNode } from 'react';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
+const styles = {
+  root: css.raw({
     width: '100%',
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
-    padding: '0px 16px',
-    [theme.breakpoints.up('xs')]: {
-      padding: '0px 24px',
-    },
-  },
-  'width-xl': {},
-  'width-lg': {
-    [theme.breakpoints.up('lg')]: {
+    paddingInline: '24px',
+  }),
+  'width-xl': css.raw({}),
+  'width-lg': css.raw({
+    lg: {
       maxWidth: '1296px',
     },
-  },
-  'width-md': {
-    [theme.breakpoints.up('md')]: {
+  }),
+  'width-md': css.raw({
+    md: {
       maxWidth: '960px',
     },
-  },
-  'width-sm': {
-    [theme.breakpoints.up('sm')]: {
+  }),
+  'width-sm': css.raw({
+    sm: {
       maxWidth: '600px',
     },
-  },
-  'width-xs': {
-    [theme.breakpoints.up('xs')]: {
-      maxWidth: '444px',
-    },
-  },
-}));
+  }),
+  'width-xs': css.raw({
+    maxWidth: '444px',
+  }),
+};
 
 interface ContainerProps {
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  children: React.ReactNode;
-  className?: string;
+  children: ReactNode;
+  css?: CssStyles;
 }
 
-export const Container = memo<ContainerProps>(function Container({
+export const Container = memo(function Container({
   maxWidth = 'xl',
   children,
-  className,
-}) {
-  const classes = useStyles();
-  return (
-    <div className={clsx(classes.root, className, classes[`width-${maxWidth}`])}>{children}</div>
-  );
+  css: cssProp,
+}: ContainerProps) {
+  return <div className={css(styles.root, cssProp, styles[`width-${maxWidth}`])}>{children}</div>;
 });

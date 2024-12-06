@@ -5,26 +5,25 @@ import { ExposureChart } from '../ExposureChart';
 import type { ExposureDashboardChartLoaderProps } from '../ExposureChart/types';
 import { selectDashboardUserExposureByChain } from '../../../data/selectors/dashboard';
 
-const ChainExposure = memo<ExposureDashboardChartLoaderProps>(function ChainExposure({
+const ChainExposure = memo(function ChainExposure({
   title,
   address,
-}) {
+}: ExposureDashboardChartLoaderProps) {
   const chainExposureData = useAppSelector(state =>
     selectDashboardUserExposureByChain(state, address)
   );
   return <ExposureChart title={title} type="chain" data={chainExposureData} />;
 });
 
-export const ChainExposureLoader = memo<ExposureDashboardChartLoaderProps>(
-  function ChainExposureLoader({ title, address }) {
-    const isUserDataAvailable = useAppSelector(state =>
-      selectIsUserBalanceAvailable(state, address)
-    );
+export const ChainExposureLoader = memo(function ChainExposureLoader({
+  title,
+  address,
+}: ExposureDashboardChartLoaderProps) {
+  const isUserDataAvailable = useAppSelector(state => selectIsUserBalanceAvailable(state, address));
 
-    if (isUserDataAvailable) {
-      return <ChainExposure address={address} title={title} />;
-    }
-
-    return null;
+  if (isUserDataAvailable) {
+    return <ChainExposure address={address} title={title} />;
   }
-);
+
+  return null;
+});

@@ -1,49 +1,49 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
-    flexWrap: 'wrap' as const,
+    flexWrap: 'wrap',
     rowGap: '16px',
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.contentLight,
+    backgroundColor: 'background.content.light',
     padding: '16px',
-  },
-  text: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.light,
+  }),
+  text: css.raw({
+    textStyle: 'body.med',
+    color: 'text.light',
     marginLeft: '8px',
-  },
-  token: {
+  }),
+  token: css.raw({
     display: 'flex',
     alignItems: 'center',
-    flexGrow: 1,
-  },
-  buttons: {
+    flexGrow: '1',
+  }),
+  buttons: css.raw({
     display: 'flex',
     columnGap: '8px',
     rowGap: '8px',
-    flexWrap: 'wrap' as const,
-  },
-  button: {
-    ...theme.typography['body-lg'],
-    lineHeight: 0,
+    flexWrap: 'wrap',
+  }),
+  button: css.raw({
+    textStyle: 'body',
+    lineHeight: '0',
     padding: '2px 8px',
     borderRadius: '4px',
-    backgroundColor: theme.palette.background.buttons.button,
-    borderColor: 'transparent' as const,
-    color: theme.palette.text.middle,
+    backgroundColor: 'bayOfMany',
+    borderColor: 'transparent',
+    color: 'text.middle',
     '&:hover': {
-      color: theme.palette.text.light,
-      backgroundColor: theme.palette.background.buttons.buttonHover,
-      borderColor: 'transparent' as const,
+      color: 'text.light',
+      backgroundColor: 'blueJewel',
+      borderColor: 'transparent',
       transition: 'color 0.1s',
     },
-  },
-  icon: {
+  }),
+  icon: css.raw({
     marginLeft: '4px',
     '&:hover': {
-      fill: theme.palette.text.light,
+      fill: 'text.light',
     },
-  },
-});
+  }),
+};

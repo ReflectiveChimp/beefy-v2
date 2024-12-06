@@ -1,57 +1,58 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  navLink: {
+export const styles = {
+  navLink: css.raw({
     display: 'flex',
-    ...theme.typography['body-lg-med'],
+    textStyle: 'body.med',
     textDecoration: 'none',
-    color: theme.palette.text.dark,
+    color: 'text.dark',
     columnGap: '8px',
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiBadge-root': {
       padding: '0px 12px 0px 0px',
       verticalAlign: 'initial',
       columnGap: '8px',
     },
     '&:hover': {
-      color: theme.palette.text.light,
+      color: 'text.light',
       cursor: 'pointer',
     },
     '& a': {
       textDecoration: 'none',
-      color: theme.palette.text.dark,
+      color: 'text.dark',
       '&:hover': {
-        color: theme.palette.text.light,
+        color: 'text.light',
         '& svg': {
-          color: theme.palette.text.light,
+          color: 'text.light',
         },
       },
     },
-  },
-  active: {
-    color: theme.palette.text.light,
+  }),
+  active: css.raw({
+    color: 'text.light',
     '& svg ': {
-      color: theme.palette.text.light,
+      color: 'text.light',
     },
-  },
-  itemMobile: {
+  }),
+  itemMobile: css.raw({
     padding: '16px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  flex: {
+  }),
+  flex: css.raw({
     display: 'flex',
     columnGap: '8px',
-  },
-  arrow: {
+  }),
+  arrow: css.raw({
     height: '12px',
-  },
-  title: {},
-  titleWithBadge: {
-    position: 'relative' as const,
+  }),
+  title: css.raw({}),
+  titleWithBadge: css.raw({
+    position: 'relative',
     lineHeight: '1',
     display: 'flex',
     alignItems: 'center',
-  },
-  badge: {},
-});
+  }),
+  badge: css.raw({}),
+};

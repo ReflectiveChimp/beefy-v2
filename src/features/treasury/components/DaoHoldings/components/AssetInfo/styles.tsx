@@ -1,32 +1,32 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  asset: {
+export const styles = {
+  asset: css.raw({
     display: 'grid',
     padding: '16px 24px',
-    backgroundColor: theme.palette.background.contentPrimary,
+    backgroundColor: 'background.content',
     gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
-    [theme.breakpoints.down('md')]: {
+    lgDown: {
       padding: '16px',
     },
-  },
-  assetFlex: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.light,
+  }),
+  assetFlex: css.raw({
+    textStyle: 'body.med',
+    color: 'text.light',
     display: 'flex',
     alignItems: 'center',
     columnGap: '8px',
-  },
-  value: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
+  }),
+  value: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
     display: 'flex',
     justifyContent: 'flex-end',
-  },
-  subValue: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.dark,
+  }),
+  subValue: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
     display: 'flex',
     justifyContent: 'flex-end',
-  },
-});
+  }),
+};

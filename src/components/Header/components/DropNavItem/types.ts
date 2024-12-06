@@ -1,12 +1,17 @@
 import type { FC, FunctionComponent, SVGProps } from 'react';
 import type { BadgeComponent } from '../Badges/types';
+import { type CssStyles } from '@repo/styles/css';
 
 type BaseNavItemProps = {
   title: string;
-  Icon: FunctionComponent<SVGProps<SVGSVGElement> & { title?: string }>;
+  Icon: FunctionComponent<
+    SVGProps<SVGSVGElement> & {
+      title?: string;
+    }
+  >;
   Badge?: BadgeComponent;
   onClick?: () => void;
-  className?: string;
+  css?: CssStyles;
   exact?: boolean;
 };
 

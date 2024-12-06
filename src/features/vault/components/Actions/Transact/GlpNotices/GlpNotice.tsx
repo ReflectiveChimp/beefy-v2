@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { memo, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -8,21 +7,18 @@ import { TimeUntil } from '../../../../../../components/TimeUntil';
 import type { UnlockTimeResult } from './types';
 import { formatDistanceStrict } from 'date-fns';
 
-const useStyles = makeStyles(styles);
-
 export type GlpNoticeProps = {
   noticeKey: string;
   noticeKeyUnlocks: string;
   onChange: (isLocked: boolean) => void;
   fetchUnlockTime: () => Promise<UnlockTimeResult>;
 };
-export const GlpNotice = memo<GlpNoticeProps>(function GlpNotice({
+export const GlpNotice = memo(function GlpNotice({
   noticeKey,
   noticeKeyUnlocks,
   onChange,
   fetchUnlockTime,
-}) {
-  const classes = useStyles();
+}: GlpNoticeProps) {
   const { t } = useTranslation();
 
   const {
@@ -69,7 +65,7 @@ export const GlpNotice = memo<GlpNoticeProps>(function GlpNotice({
   }
 
   return (
-    <AlertComponent className={classes.alert}>
+    <AlertComponent css={styles.alert}>
       <p>
         {t(noticeKey, {
           cooldown: formatDistanceStrict(new Date(0), new Date(unlockInfo.cooldownDuration)),

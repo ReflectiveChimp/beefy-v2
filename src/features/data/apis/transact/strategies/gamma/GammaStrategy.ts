@@ -214,7 +214,11 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
   async quoteAddLiquidity(
     depositToken: TokenEntity,
     inputs: TokenAmount[]
-  ): Promise<{ liquidity: TokenAmount; used: TokenAmount[]; unused: TokenAmount[] }> {
+  ): Promise<{
+    liquidity: TokenAmount;
+    used: TokenAmount[];
+    unused: TokenAmount[];
+  }> {
     const { priceRatio, totalAmounts, totalSupply } = this.pool.getHypervisorData();
     const optimal = await this.pool.getOptimalAddLiquidity(inputs);
     if (!optimal.every(({ amount }, i) => amount.lte(inputs[i].amount))) {

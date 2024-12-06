@@ -11,44 +11,45 @@ import {
   LabeledMultiSelect,
   type LabeledMultiSelectProps,
 } from '../../../../../../components/LabeledMultiSelect';
+import { type CssStyles } from '@repo/styles/css';
 
 export type VaultCategoryDropdownFilterProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const VaultCategoryDropdownFilter = memo<VaultCategoryDropdownFilterProps>(
-  function VaultCategoryDropdownFilter({ className }) {
-    const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const options: Record<string, string> = useMemo(
-      () =>
-        Object.fromEntries(
-          Object.entries(CATEGORY_OPTIONS).map(([key, cat]) => [key, t(cat.i18nKey)])
-        ),
-      [t]
-    );
-    const value = useAppSelector(selectFilterVaultCategory);
-    const handleChange = useCallback<LabeledMultiSelectProps['onChange']>(
-      selected => {
-        dispatch(
-          filteredVaultsActions.setVaultCategory(
-            selected.length === Object.values(options).length
-              ? []
-              : (selected as FilteredVaultsState['vaultCategory'])
-          )
-        );
-      },
-      [dispatch, options]
-    );
+export const VaultCategoryDropdownFilter = memo(function VaultCategoryDropdownFilter({
+  css: cssProp,
+}: VaultCategoryDropdownFilterProps) {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const options: Record<string, string> = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(CATEGORY_OPTIONS).map(([key, cat]) => [key, t(cat.i18nKey)])
+      ),
+    [t]
+  );
+  const value = useAppSelector(selectFilterVaultCategory);
+  const handleChange = useCallback<LabeledMultiSelectProps['onChange']>(
+    selected => {
+      dispatch(
+        filteredVaultsActions.setVaultCategory(
+          selected.length === Object.values(options).length
+            ? []
+            : (selected as FilteredVaultsState['vaultCategory'])
+        )
+      );
+    },
+    [dispatch, options]
+  );
 
-    return (
-      <LabeledMultiSelect
-        label={t('Filter-Category')}
-        value={value}
-        options={options}
-        onChange={handleChange}
-        selectClass={className}
-        fullWidth={true}
-      />
-    );
-  }
-);
+  return (
+    <LabeledMultiSelect
+      label={t('Filter-Category')}
+      value={value}
+      options={options}
+      onChange={handleChange}
+      selectCss={cssProp}
+      fullWidth={true}
+    />
+  );
+});

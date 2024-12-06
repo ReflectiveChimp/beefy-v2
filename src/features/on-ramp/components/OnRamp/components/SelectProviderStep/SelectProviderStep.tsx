@@ -1,5 +1,5 @@
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { Step } from '../../../../../../components/Step';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,7 @@ import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import { ProviderIcon } from '../ProviderIcon';
 import { PROVIDERS } from '../../providers';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const SelectProviderStep = memo(function SelectProviderStep() {
   const { t } = useTranslation();
@@ -34,13 +34,13 @@ export const SelectProviderStep = memo(function SelectProviderStep() {
   );
 });
 
-const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
+const ListItem = memo(function ListItem({ value }: ItemInnerProps) {
   const classes = useStyles();
   const quote = useAppSelector(state => selectQuoteByProvider(state, value));
 
   return (
     <>
-      <ProviderIcon provider={quote.provider} className={classes.icon} />
+      <ProviderIcon provider={quote.provider} css={styles.icon} />
       <div className={classes.provider}>{PROVIDERS[quote.provider].title}</div>
       <div className={classes.rate}>
         1 {quote.token} = {(1 / quote.rate).toFixed(2)} {quote.fiat}

@@ -9,8 +9,7 @@ import {
   YAxis,
 } from 'recharts';
 import { usePnLChartData } from './hooks';
-import type { Theme } from '@material-ui/core';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { GraphLoader } from '../../../../GraphLoader';
 import {
   GRAPH_TIME_BUCKETS,
@@ -22,8 +21,9 @@ import { XAxisTick } from '../../../../../../../components/XAxisTick';
 import { OverviewTooltip, type OverviewTooltipProps } from '../Tooltips';
 import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks';
 import { GraphNoData } from '../../../../../../../components/GraphNoData/GraphNoData';
+import { useBreakpoint } from '../../../../../../../components/MediaQueries/useBreakpoint';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface CLMOverviewGraphProps {
   vaultId: string;
@@ -31,13 +31,13 @@ interface CLMOverviewGraphProps {
   address?: string;
 }
 
-export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverviewGraph({
+export const CLMOverviewGraph = memo(function CLMOverviewGraph({
   vaultId,
   period,
   address,
-}) {
+}: CLMOverviewGraphProps) {
   const classes = useStyles();
-  const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+  const xsDown = useBreakpoint({ to: 'xs' });
   const chartMargin = useMemo(() => {
     const xMargin = xsDown ? 16 : 24;
     return { top: 14, right: xMargin, bottom: 0, left: xMargin };

@@ -9,6 +9,7 @@ import {
   isZapQuote,
 } from '../../../../../data/apis/transact/transact-types';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { type CssStyles } from '@repo/styles/css';
 
 const IMPACT_WARN_PERCENT = 1 / 100;
 const IMPACT_CONFIRM_PERCENT = 5 / 100;
@@ -17,14 +18,14 @@ export type PriceImpactNoticeProps = {
   quote: TransactQuote;
   onChange: (shouldDisable: boolean) => void;
   hideCheckbox?: boolean;
-  className?: string;
+  css?: CssStyles;
 };
-export const PriceImpactNotice = memo<PriceImpactNoticeProps>(function PriceImpactNotice({
+export const PriceImpactNotice = memo(function PriceImpactNotice({
   quote,
   onChange,
-  className,
+  css: cssProp,
   hideCheckbox = false,
-}) {
+}: PriceImpactNoticeProps) {
   const { t } = useTranslation();
   const [shouldWarn, setShouldWarn] = useState(false);
   const [shouldConfirm, setShouldConfirm] = useState(false);
@@ -73,7 +74,7 @@ export const PriceImpactNotice = memo<PriceImpactNoticeProps>(function PriceImpa
   }
 
   return (
-    <AlertComponent className={className}>
+    <AlertComponent css={cssProp}>
       <p>
         {t('Transact-Notice-PriceImpact', {
           priceImpact: formatLargePercent(-priceImpact, 2, '0.00%'),

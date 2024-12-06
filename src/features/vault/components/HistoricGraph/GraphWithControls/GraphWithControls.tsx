@@ -5,7 +5,7 @@ import { useAppSelector } from '../../../../../store';
 import { selectHistoricalAvailableBuckets } from '../../../../data/selectors/historical';
 import { GraphLoader } from '../../GraphLoader';
 import { RangeSwitcher } from '../RangeSwitcher';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { Graph } from '../Graph';
 import type { TimeRange } from '../utils';
 import { getAvailableRanges, getDefaultTimeRange, timeRangeToBucket } from '../utils';
@@ -18,7 +18,7 @@ import type { ChartStat } from '../types';
 import { ErrorBoundary } from '../../../../../components/ErrorBoundary/ErrorBoundary';
 import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type HistoricGraphProp = {
   vaultId: VaultEntity['id'];
@@ -27,12 +27,12 @@ export type HistoricGraphProp = {
   inverted: boolean;
 };
 
-export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithControls({
+export const GraphWithControls = memo(function GraphWithControls({
   vaultId,
   oracleId,
   stat,
   inverted,
-}) {
+}: HistoricGraphProp) {
   const classes = useStyles();
   const availableBuckets = useAppSelector(state =>
     selectHistoricalAvailableBuckets(state, stat, vaultId, oracleId)

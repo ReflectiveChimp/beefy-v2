@@ -1,12 +1,12 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
     width: '100%',
-  },
-  arrow: {
-    color: theme.palette.text.dark,
+  }),
+  arrow: css.raw({
+    color: 'text.dark',
     height: '24px',
-  },
-});
+  }),
+};

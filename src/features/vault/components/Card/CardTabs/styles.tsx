@@ -1,35 +1,35 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  tabs: {
+export const styles = {
+  tabs: css.raw({
     borderRadius: '12px 12px 0 0',
     display: 'flex',
     width: '100%',
-    background: theme.palette.background.contentDark,
-  },
-  tab: {
-    ...theme.typography['body-lg-med'],
-    position: 'relative' as const,
-    color: theme.palette.text.dark,
+    background: 'background.content.dark',
+  }),
+  tab: css.raw({
+    textStyle: 'body.med',
+    position: 'relative',
+    color: 'text.dark',
     background: 'transparent',
     flexBasis: '1px',
-    flexGrow: 1,
-    flexShrink: 0,
+    flexGrow: '1',
+    flexShrink: '0',
     padding: '16px 0',
-    margin: 0,
+    margin: '0',
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
-    cursor: 'pointer' as const,
-    userSelect: 'none' as const,
+    cursor: 'pointer',
+    userSelect: 'none',
     '&::before': {
       content: '""',
-      position: 'absolute' as const,
-      left: 0,
-      bottom: 0,
-      right: 0,
+      position: 'absolute',
+      left: '0',
+      bottom: '0',
+      right: '0',
       height: '2px',
-      background: theme.palette.background.border,
+      background: 'bayOfMany',
     },
     '&:first-child': {
       borderRadius: '12px 0 0 0',
@@ -37,33 +37,28 @@ export const styles = (theme: Theme) => ({
     '&:last-child': {
       borderRadius: '0 12px 0 0',
     },
-  },
-  selectedTab: {
-    color: theme.palette.text.light,
-    cursor: 'default' as const,
-    pointerEvents: 'none' as const,
+  }),
+  selectedTab: css.raw({
+    color: 'text.light',
+    cursor: 'default',
+    pointerEvents: 'none',
     '&::before': {
-      backgroundColor: theme.palette.text.dark,
+      backgroundColor: 'text.dark',
     },
-  },
-  '@keyframes highlight': {
-    to: {
-      backgroundPosition: '200% center',
-    },
-  },
-  highlightTab: {
+  }),
+  highlightTab: css.raw({
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'center',
     '&::after': {
       content: '""',
       display: 'block',
-      backgroundColor: theme.palette.background.indicators.error,
+      backgroundColor: 'indicators.error',
       padding: '0',
       borderRadius: '100%',
       height: '8px',
       width: '8px',
       pointerEvents: 'none',
     },
-  },
-});
+  }),
+};

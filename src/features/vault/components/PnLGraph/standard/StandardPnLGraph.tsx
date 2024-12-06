@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useAppSelector } from '../../../../../store';
 import { isStandardVault, type VaultEntity } from '../../../../data/entities/vault';
@@ -15,17 +15,17 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../Card';
 import { useTranslation } from 'react-i18next';
 import { StatSwitcher } from '../../StatSwitcher';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface PnLGraphLoaderProps {
   vaultId: VaultEntity['id'];
   address?: string;
 }
 
-export const StandardPnLGraphLoader = memo<PnLGraphLoaderProps>(function PnLGraphLoader({
+export const StandardPnLGraphLoader = memo(function PnLGraphLoader({
   vaultId,
   address,
-}) {
+}: PnLGraphLoaderProps) {
   const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
   const hasData = useAppSelector(state =>
     selectHasDataToShowGraphByVaultId(state, vaultId, address)
@@ -45,10 +45,10 @@ interface PnLGraphProps {
   address: string;
 }
 
-export const StandardPnLGraph = memo<PnLGraphProps>(function StandardPnLGraph({
+export const StandardPnLGraph = memo(function StandardPnLGraph({
   vaultId,
   address,
-}) {
+}: PnLGraphProps) {
   const { t } = useTranslation();
   const [stat, setStat] = useState<'overview'>('overview');
   const classes = useStyles();
@@ -63,14 +63,14 @@ export const StandardPnLGraph = memo<PnLGraphProps>(function StandardPnLGraph({
   }, [t]);
 
   return (
-    <Card className={classes.card}>
-      <CardHeader className={classes.header}>
+    <Card css={styles.card}>
+      <CardHeader css={styles.header}>
         <CardTitle title={t('Graph-PositionPerformance')} />
         {Object.keys(options).length > 1 ? (
           <StatSwitcher stat={stat} options={options} onChange={setStat as (v: string) => void} />
         ) : null}
       </CardHeader>
-      <CardContent className={classes.content}>
+      <CardContent css={styles.content}>
         <Header vaultId={vaultId} />
         <div className={classes.graphContainer}>
           {canShowGraph ? (
@@ -87,10 +87,10 @@ export const StandardPnLGraph = memo<PnLGraphProps>(function StandardPnLGraph({
   );
 });
 
-export const DashboardPnLGraph = memo<PnLGraphProps>(function DashboardPnLGraph({
+export const DashboardPnLGraph = memo(function DashboardPnLGraph({
   vaultId,
   address,
-}) {
+}: PnLGraphProps) {
   const classes = useStyles();
 
   const labels = useVaultPeriods(vaultId, address);
@@ -105,8 +105,8 @@ export const DashboardPnLGraph = memo<PnLGraphProps>(function DashboardPnLGraph(
     <div className={classes.dashboardPnlContainer}>
       <Graph address={address} period={period} vaultId={vaultId} />
       <Footer
-        className={classes.footerDashboard}
-        tabsClassName={classes.tabsDashboard}
+        css={styles.footerDashboard}
+        tabsCss={styles.tabsDashboard}
         labels={labels}
         vaultId={vaultId}
         period={period}

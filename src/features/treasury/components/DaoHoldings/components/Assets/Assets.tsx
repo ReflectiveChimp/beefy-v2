@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';
@@ -11,7 +11,7 @@ import { AssetInfo, AssetInfoMM } from '../AssetInfo';
 import { useSortedAssets, useSortedMMHoldings } from './hooks';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type AssetsProps = {
   chainId: ChainEntity['id'];
@@ -23,7 +23,7 @@ const chainAssetTypes: Record<string, string> = {
   locked: 'Locked Assets',
 };
 
-export const Assets = memo<AssetsProps>(function Assets({ chainId }) {
+export const Assets = memo(function Assets({ chainId }: AssetsProps) {
   const { t } = useTranslation();
 
   const assets = useAppSelector(state => selectTreasuryAssetsByChainId(state, chainId));
@@ -48,9 +48,11 @@ export const Assets = memo<AssetsProps>(function Assets({ chainId }) {
   );
 });
 
-export type MMAssetsProps = { mmId: string };
+export type MMAssetsProps = {
+  mmId: string;
+};
 
-export const MMAssets = memo<MMAssetsProps>(function MMAssets({ mmId }) {
+export const MMAssets = memo(function MMAssets({ mmId }: MMAssetsProps) {
   const mmHoldings = useAppSelector(state => selectTreasuryHoldingsByMMId(state, mmId));
   const sortedAssetsByExchange = useSortedMMHoldings(mmHoldings);
 

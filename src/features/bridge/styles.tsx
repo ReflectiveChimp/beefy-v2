@@ -1,15 +1,15 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  pageContainer: {
-    paddingTop: 120,
-    paddingBottom: 120,
-    [theme.breakpoints.down('sm')]: {
-      paddingTop: 32,
-      paddingBottom: 32,
+export const styles = {
+  pageContainer: css.raw({
+    paddingTop: '120',
+    paddingBottom: '120',
+    mdDown: {
+      paddingTop: '32',
+      paddingBottom: '32',
     },
-  },
-  inner: {
+  }),
+  inner: css.raw({
     margin: '0 auto',
     width: '1036px',
     maxWidth: '100%',
@@ -18,14 +18,14 @@ export const styles = (theme: Theme) => ({
     rowGap: '32px',
     gridTemplateColumns: 'minmax(0, 1fr)',
     gridTemplateRows: 'auto',
-    [theme.breakpoints.up('md')]: {
+    md: {
       gridTemplateColumns: 'minmax(0, 1fr) 440px',
     },
-  },
-  intro: {
+  }),
+  intro: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '24px',
     paddingTop: '32px',
-  },
-});
+  }),
+};

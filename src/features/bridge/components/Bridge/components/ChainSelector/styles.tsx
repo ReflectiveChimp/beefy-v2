@@ -1,80 +1,80 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  group: {},
-  labels: {
+export const styles = {
+  group: css.raw({}),
+  labels: css.raw({
     display: 'flex',
     marginBottom: '4px',
-  },
-  label: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
-    color: theme.palette.text.dark,
+  }),
+  label: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: '700',
+    color: 'text.dark',
     flex: '1 1 40%',
-  },
-  buttons: {
+  }),
+  buttons: css.raw({
     display: 'flex',
     padding: '0 8px',
-    background: theme.palette.background.searchInputBg,
+    background: 'purpleDarkest',
     borderRadius: '8px',
-  },
-  btn: {
-    ...theme.typography['body-lg-med'],
+  }),
+  btn: css.raw({
+    textStyle: 'body.med',
     display: 'flex',
     padding: '0',
     margin: '0',
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
-    cursor: 'pointer' as const,
-    color: theme.palette.text.middle,
-    background: theme.palette.background.searchInputBg,
-  },
-  arrowButton: {
+    cursor: 'pointer',
+    color: 'text.middle',
+    background: 'purpleDarkest',
+  }),
+  arrowButton: css.raw({
     width: '24px',
     flex: '0 0 24px',
-    background: theme.palette.background.searchInputBg,
-    '&:hover $arrow': {
+    background: 'purpleDarkest',
+    '&:hover > .arrow-button-arrow': {
       transform: 'rotateY(180deg)',
     },
-  },
-  arrow: {
+  }),
+  arrow: css.raw({
     transition: 'transform 0.2s ease-in-out',
     display: 'flex',
     width: '24px',
     '&::after': {
       content: '""',
       display: 'block',
-      borderLeft: `12px solid ${theme.palette.background.contentPrimary}`,
+      borderLeft: '12px solid {colors.background.content}',
       borderTop: '20px solid transparent',
       borderBottom: '20px solid transparent',
     },
-  },
-  arrowInner: {
+  }),
+  arrowInner: css.raw({
     width: '12px',
-    background: theme.palette.background.contentPrimary,
+    background: 'background.content',
     '&::before': {
       content: '""',
       display: 'block',
-      borderLeft: `12px solid ${theme.palette.background.searchInputBg}`,
+      borderLeft: '12px solid {colors.purpleDarkest}',
       borderTop: '20px solid transparent',
       borderBottom: '20px solid transparent',
     },
-  },
-  chain: {
+  }),
+  chain: css.raw({
     flex: '1 1 20%',
     padding: '8px 8px',
     '&:hover': {
-      color: '#FFF',
+      color: 'white',
     },
-  },
-  icon: {
+  }),
+  icon: css.raw({
     marginRight: '8px',
-  },
-  from: {
+  }),
+  from: css.raw({
     borderRadius: '8px 0 0 8px',
-  },
-  to: {
+  }),
+  to: css.raw({
     borderRadius: '0 8px 8px 0',
-  },
-});
+  }),
+};

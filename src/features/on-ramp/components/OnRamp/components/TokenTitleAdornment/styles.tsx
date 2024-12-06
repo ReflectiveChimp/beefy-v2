@@ -1,19 +1,19 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  tokenAdornment: {
+export const styles = {
+  tokenAdornment: css.raw({
     background: 'transparent',
-    padding: 0,
-    margin: 0,
+    padding: '0',
+    margin: '0',
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
-    cursor: 'pointer' as const,
+    cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    color: theme.palette.text.light,
-  },
-  icon: {
+    color: 'text.light',
+  }),
+  icon: css.raw({
     marginRight: '8px',
-  },
-});
+  }),
+};

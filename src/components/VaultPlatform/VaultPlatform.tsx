@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 export type VaultPlatformProps = {
   vaultId: VaultEntity['id'];
 };
-export const VaultPlatform = memo<VaultPlatformProps>(function VaultPlatform({ vaultId }) {
+export const VaultPlatform = memo(function VaultPlatform({ vaultId }: VaultPlatformProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));

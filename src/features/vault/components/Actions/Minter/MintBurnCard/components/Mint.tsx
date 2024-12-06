@@ -1,5 +1,6 @@
 import { memo, useMemo } from 'react';
-import { Button, makeStyles } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card';
 import { AssetsImage } from '../../../../../../../components/AssetsImage';
@@ -29,7 +30,7 @@ import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
 import { AmountInput } from '../../../Transact/AmountInput';
 import { useInputForm } from '../../../../../../data/hooks/input';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
@@ -122,7 +123,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   };
 
   return (
-    <CardContent className={classes.cardContent}>
+    <CardContent css={styles.cardContent}>
       <div className={classes.content}>
         {t(contentKey, {
           mintedToken: minter.mintedToken.symbol,

@@ -15,7 +15,7 @@ export type ExplainerProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const Explainer = memo<ExplainerProps>(function Explainer({ vaultId }) {
+export const Explainer = memo(function Explainer({ vaultId }: ExplainerProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   if (isCowcentratedLikeVault(vault)) {

@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/styles';
-import clsx from 'clsx';
-import { type ReactNode, useCallback } from 'react';
-import { memo, useMemo } from 'react';
+import { legacyMakeStyles } from '@repo/helpers/mui';
+import { css } from '@repo/styles/css';
+import { type FC, memo, type ReactNode, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { Step } from '../../../../features/data/reducers/wallet/stepper';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
@@ -35,7 +34,7 @@ import { explorerTxUrl } from '../../../../helpers/url';
 import { CircularProgress } from '@material-ui/core';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const StepsStartContent = memo(function StepsStartContent() {
   const { t } = useTranslation();
@@ -106,7 +105,7 @@ export const ErrorContent = memo(function ErrorContent() {
         }
       />
 
-      <div className={clsx(classes.content, classes.errorContent)}>
+      <div className={css(styles.content, styles.errorContent)}>
         {walletActionsState.data.error.friendlyMessage && (
           <div className={classes.friendlyMessage}>
             {walletActionsState.data.error.friendlyMessage}
@@ -141,7 +140,7 @@ type SuccessContentProps = {
   step: Step;
 };
 
-const ZapSuccessContent = memo<SuccessContentProps>(function ZapSuccessContent({ step }) {
+const ZapSuccessContent = memo(function ZapSuccessContent({ step }: SuccessContentProps) {
   const { t } = useTranslation();
   const returned = useAppSelector(selectZapReturned);
 
@@ -175,7 +174,7 @@ const ZapSuccessContent = memo<SuccessContentProps>(function ZapSuccessContent({
   );
 });
 
-const MintSuccessContent = memo<SuccessContentProps>(function MintSuccessContent({ step }) {
+const MintSuccessContent = memo(function MintSuccessContent({ step }: SuccessContentProps) {
   const { t } = useTranslation();
   const { type, amount, token } = useAppSelector(selectMintResult);
 
@@ -206,7 +205,7 @@ const BridgeSuccessContent = memo<SuccessContentProps>(function BridgeSuccessCon
   return (
     <>
       <Title text={t('Stepper-bridge-Success-Title')} />
-      <div className={clsx(classes.content, classes.successContent)}>
+      <div className={css(styles.content, styles.successContent)}>
         <div className={classes.message}>
           {t('Stepper-bridge-Success-Content', { from: fromChain.name })}
         </div>
@@ -234,9 +233,9 @@ const BridgeSuccessContent = memo<SuccessContentProps>(function BridgeSuccessCon
   );
 });
 
-const BoostStakeSuccessContent = memo<SuccessContentProps>(function BoostStakeSuccessContent({
+const BoostStakeSuccessContent = memo(function BoostStakeSuccessContent({
   step,
-}) {
+}: SuccessContentProps) {
   const { t } = useTranslation();
   const data = useAppSelector(selectBoostAdditionalData);
   const token = data?.token.symbol || 'UNKNOWN';
@@ -252,9 +251,9 @@ const BoostStakeSuccessContent = memo<SuccessContentProps>(function BoostStakeSu
   );
 });
 
-const BoostUnstakeSuccessContent = memo<SuccessContentProps>(function BoostUnstakeSuccessContent({
+const BoostUnstakeSuccessContent = memo(function BoostUnstakeSuccessContent({
   step,
-}) {
+}: SuccessContentProps) {
   const { t } = useTranslation();
   const data = useAppSelector(selectBoostAdditionalData);
   const token = data?.token.symbol || 'UNKNOWN';
@@ -289,7 +288,7 @@ const BoostUnstakeSuccessContent = memo<SuccessContentProps>(function BoostUnsta
   );
 });
 
-const FallbackSuccessContent = memo<SuccessContentProps>(function FallbackSuccessContent({ step }) {
+const FallbackSuccessContent = memo(function FallbackSuccessContent({ step }: SuccessContentProps) {
   const { t } = useTranslation();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
   const hasRememberMsg = step.step === 'deposit';
@@ -349,20 +348,20 @@ type SuccessContentDisplayProps = {
   rememberMessage?: ReactNode;
   shareVaultId?: VaultEntity['id'];
 };
-const SuccessContentDisplay = memo<SuccessContentDisplayProps>(function SuccessContentDisplay({
+const SuccessContentDisplay = memo(function SuccessContentDisplay({
   title,
   message,
   messageHighlight,
   rememberTitle,
   rememberMessage,
   shareVaultId,
-}) {
+}: SuccessContentDisplayProps) {
   const classes = useStyles();
 
   return (
     <>
       <Title text={title} />
-      <div className={clsx(classes.content, classes.successContent)}>
+      <div className={css(styles.content, styles.successContent)}>
         <div className={classes.message}>{message}</div>
         {messageHighlight ? (
           <div className={classes.messageHighlight}>{messageHighlight}</div>
@@ -385,7 +384,7 @@ const SuccessContentDisplay = memo<SuccessContentDisplayProps>(function SuccessC
 });
 
 type StepToSuccessContent = {
-  [key in Step['step']]?: typeof FallbackSuccessContent;
+  [key in Step['step']]?: FC<SuccessContentProps>;
 };
 
 const stepToSuccessContent: StepToSuccessContent = {

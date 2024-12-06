@@ -1,74 +1,74 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  stat: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
+export const styles = {
+  stat: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
     overflow: 'hidden',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     maxWidth: '80%',
     display: 'flex',
     alignItems: 'center',
-  },
-  column: {
+  }),
+  column: css.raw({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-  },
-  textFlexStart: {
-    textAlign: 'left' as const,
-  },
-  txCurrent: {},
-  txPast: {
-    opacity: 0.7,
-  },
-  gridMobile: {
+  }),
+  textFlexStart: css.raw({
+    textAlign: 'left',
+  }),
+  txCurrent: css.raw({}),
+  txPast: css.raw({
+    opacity: '0.7',
+  }),
+  gridMobile: css.raw({
     display: 'grid',
     gridTemplateColumns: 'repeat(2,minmax(0, 50fr))',
     columnGap: '8px',
-    position: 'relative' as const,
+    position: 'relative',
     alignItems: 'start',
-  },
-  statMobile: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.middle,
-  },
-  action: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
-  },
-  actionMobile: {
-    ...theme.typography['body-sm'],
-  },
-  network: {
+  }),
+  statMobile: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.middle',
+  }),
+  action: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
+  }),
+  actionMobile: css.raw({
+    textStyle: 'body.sm',
+  }),
+  network: css.raw({
     display: 'block',
     marginRight: '8px',
-  },
-  link: {
+  }),
+  link: css.raw({
     color: 'inherit',
     textDecoration: 'none',
     display: 'block',
-  },
-  textRed: {
-    color: theme.palette.background.indicators.error,
-  },
-  textGreen: {
-    color: theme.palette.primary.main,
-  },
-  textDark: {
-    color: theme.palette.text.dark,
-  },
-  textOverflow: {
-    flexDirection: 'row-reverse' as const,
+  }),
+  textRed: css.raw({
+    color: 'indicators.error',
+  }),
+  textGreen: css.raw({
+    color: 'green',
+  }),
+  textDark: css.raw({
+    color: 'text.dark',
+  }),
+  textOverflow: css.raw({
+    flexDirection: 'row-reverse',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
     overflow: 'hidden',
-    flexShrink: 1,
-  },
-  vaultNetwork: {
-    top: 0,
-    left: 0,
+    flexShrink: '1',
+  }),
+  vaultNetwork: css.raw({
+    top: '0',
+    left: '0',
     width: '20px',
     height: '22px',
     border: 'none',
@@ -77,32 +77,32 @@ export const styles = (theme: Theme) => ({
       width: '16px',
       height: '16px',
     },
-  },
-  cowcentratedTokenAmounts: {
+  }),
+  cowcentratedTokenAmounts: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '4px',
-  },
-  tokenIconAmount: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
+  }),
+  tokenIconAmount: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
     display: 'flex',
     gap: '4px',
     alignItems: 'center',
-  },
-  tokenIcon: {
+  }),
+  tokenIcon: css.raw({
     flex: '0 0 auto',
-  },
-  tokenAmount: {
+  }),
+  tokenAmount: css.raw({
     flex: '1 1 50%',
-  },
-  tokenIconAmountMobile: {
-    ...theme.typography['body-sm'],
-  },
-  tokenIconAmountPositive: {
-    color: theme.palette.primary.main,
-  },
-  tokenIconAmountNegative: {
-    color: theme.palette.background.indicators.error,
-  },
-});
+  }),
+  tokenIconAmountMobile: css.raw({
+    textStyle: 'body.sm',
+  }),
+  tokenIconAmountPositive: css.raw({
+    color: 'green',
+  }),
+  tokenIconAmountNegative: css.raw({
+    color: 'indicators.error',
+  }),
+};

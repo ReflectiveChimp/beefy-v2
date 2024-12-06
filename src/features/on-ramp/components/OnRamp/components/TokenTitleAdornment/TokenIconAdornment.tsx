@@ -1,23 +1,19 @@
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { useAppDispatch } from '../../../../../../store';
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 
-const useStyles = makeStyles(styles);
-
 export type TokenIconAdornmentProps = {
   token: string;
-  className?: string;
+  css?: CssStyles;
 };
-export const TokenIconAdornment = memo<TokenIconAdornmentProps>(function TokenIconAdornment({
+export const TokenIconAdornment = memo(function TokenIconAdornment({
   token,
-  className,
-}) {
-  const classes = useStyles();
+  css: cssProp,
+}: TokenIconAdornmentProps) {
   const dispatch = useAppDispatch();
 
   const handleClick = useCallback(() => {
@@ -25,8 +21,8 @@ export const TokenIconAdornment = memo<TokenIconAdornmentProps>(function TokenIc
   }, [dispatch]);
 
   return (
-    <button className={clsx(classes.tokenAdornment, className)} onClick={handleClick}>
-      <AssetsImage chainId={undefined} assetSymbols={[token]} size={24} className={classes.icon} />
+    <button className={css(styles.tokenAdornment, cssProp)} onClick={handleClick}>
+      <AssetsImage chainId={undefined} assetSymbols={[token]} size={24} css={styles.icon} />
       {token}
     </button>
   );

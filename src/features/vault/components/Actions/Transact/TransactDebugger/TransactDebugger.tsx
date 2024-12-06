@@ -1,5 +1,5 @@
 import { lazy, memo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { TransactState } from './TransactState';
 import { useAppSelector } from '../../../../../../store';
@@ -11,13 +11,13 @@ const BalancerZap = lazy(() =>
   import(`./BalancerZap`).then(module => ({ default: module.BalancerZap }))
 );
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type TransactDebuggerProps = {
   vaultId: string;
 };
 
-export const TransactDebugger = memo<TransactDebuggerProps>(function TransactDebugger({ vaultId }) {
+export const TransactDebugger = memo(function TransactDebugger({ vaultId }: TransactDebuggerProps) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const depositToken = useAppSelector(state =>

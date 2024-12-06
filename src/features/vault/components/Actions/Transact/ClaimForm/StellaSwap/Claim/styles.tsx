@@ -1,7 +1,7 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (_theme: Theme) => ({
-  claim: {
+export const styles = {
+  claim: css.raw({
     gap: '4px',
-  },
-});
+  }),
+};

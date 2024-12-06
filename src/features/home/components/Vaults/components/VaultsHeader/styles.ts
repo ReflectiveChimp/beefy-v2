@@ -1,29 +1,29 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  header: {
+export const styles = {
+  header: css.raw({
     display: 'grid',
     columnGap: '24px',
     rowGap: '16px',
     width: '100%',
-    color: theme.palette.text.dark,
-    background: theme.palette.background.contentDark,
+    color: 'text.dark',
+    background: 'background.content.dark',
     padding: '16px',
     gridTemplateColumns: '1fr',
     alignItems: 'center',
     borderTopLeftRadius: '8px',
     borderTopRightRadius: '8px',
     backgroundClip: 'padding-box',
-    [theme.breakpoints.up('sm')]: {
+    sm: {
       gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
     },
-    [theme.breakpoints.up('lg')]: {
+    lg: {
       gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
     },
-  },
-  searchWidth: {
-    [theme.breakpoints.up('lg')]: {
+  }),
+  searchWidth: css.raw({
+    lg: {
       maxWidth: '75%',
     },
-  },
-});
+  }),
+};

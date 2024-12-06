@@ -1,14 +1,14 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     padding: '24px',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '16px',
-  },
-  description: {
-    ...theme.typography['body-md'],
-    color: theme.palette.text.middle,
-  },
-});
+  }),
+  description: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
+  }),
+};

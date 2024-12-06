@@ -38,12 +38,5 @@ export const transformPropTypes = (
 
   content.code += `\n\nexport type CssStyles = Styles | Styles[];`;
 
-  for (const artifact of args.artifacts) {
-    console.log(artifact.id);
-    for (const file of artifact.files) {
-      console.log('  ', file.file);
-    }
-  }
-
   return args.artifacts;
 };

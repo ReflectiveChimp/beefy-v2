@@ -1,67 +1,71 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  search: {
-    color: theme.palette.text.middle,
-    background: theme.palette.background.searchInputBg,
+export const styles = {
+  search: css.raw({
+    color: 'text.middle',
+    background: 'purpleDarkest',
     borderRadius: '8px',
+    //FIXME MUI2PANDA: Target MUI class
     '&.Mui-focused': {
+      //FIXME MUI2PANDA: Target MUI class
       '& .MuiInputBase-input': {
         width: '400px',
-        [theme.breakpoints.down('md')]: {
+        lgDown: {
           width: '100%',
         },
       },
     },
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiInputBase-input': {
       minWidth: '200px',
       transition: '0.2s ease-in-out',
       padding: '8px 16px',
-      color: theme.palette.text.middle,
+      color: 'text.middle',
       height: 'auto',
       '&:focus': {
-        color: theme.palette.text.light,
+        color: 'text.light',
       },
       '&::placeholder': {
-        color: theme.palette.text.dark,
-        opacity: 1,
+        color: 'text.dark',
+        opacity: '1',
       },
     },
-  },
-  active: {
+  }),
+  active: css.raw({
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiInputBase-input': {
       width: '400px',
-      [theme.breakpoints.down('sm')]: {
+      mdDown: {
         width: '100%',
       },
     },
-  },
-  icon: {
+  }),
+  icon: css.raw({
     background: 'transparent',
-    padding: 0,
-    border: 0,
+    padding: '0',
+    border: '0',
     margin: '0 16px 0 0',
     boxShadow: 'none',
     lineHeight: 'inherit',
     display: 'flex',
     alignItems: 'center',
-    flexShrink: 0,
+    flexShrink: '0',
     width: '24px',
     height: '24px',
     'button&': {
       cursor: 'pointer',
     },
-  },
-  activeIcon: {
-    color: theme.palette.text.light,
-  },
-  disabledIcon: {
-    color: theme.palette.text.dark,
-  },
-  flex: {
+  }),
+  activeIcon: css.raw({
+    color: 'text.light',
+  }),
+  disabledIcon: css.raw({
+    color: 'text.dark',
+  }),
+  flex: css.raw({
     display: 'flex',
-  },
-  loader: {
+  }),
+  loader: css.raw({
     margin: '0 16px 0 0',
-  },
-});
+  }),
+};

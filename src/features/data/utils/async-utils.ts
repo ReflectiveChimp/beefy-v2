@@ -99,7 +99,11 @@ export function poll(
  * Feel free to implement any other solution if you find it better
  */
 export function createFulfilledActionCapturer(store: Store) {
-  type CustomAction<T> = Action<string> & { payload: T & { state?: BeefyState } };
+  type CustomAction<T> = Action<string> & {
+    payload: T & {
+      state?: BeefyState;
+    };
+  };
 
   /**
    * Some actions include the state in their payload

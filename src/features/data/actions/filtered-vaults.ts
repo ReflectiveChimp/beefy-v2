@@ -57,7 +57,9 @@ export type RecalculateFilteredVaultsPayload = {
 export const recalculateFilteredVaultsAction = createAsyncThunk<
   RecalculateFilteredVaultsPayload,
   RecalculateFilteredVaultsParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'filtered-vaults/recalculateFilteredVaults',
   async ({ filtersChanged, sortChanged, dataChanged }, { getState }) => {
@@ -78,9 +80,9 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
       const allVaults = selectAllVisibleVaultIds(state).map(id => selectVaultById(state, id));
 
       /*
-       @dev every filter that can be applied without using a selector should come first
-       then cheap selectors, then expensive selectors last
-      */
+           @dev every filter that can be applied without using a selector should come first
+           then cheap selectors, then expensive selectors last
+          */
       filteredVaults = allVaults.filter(vault => {
         // Chains
         if (!visibleChains.has(vault.chainId)) {

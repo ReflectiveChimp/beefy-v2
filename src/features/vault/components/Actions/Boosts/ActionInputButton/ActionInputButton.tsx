@@ -1,4 +1,5 @@
-import { Collapse, IconButton, makeStyles } from '@material-ui/core';
+import { Collapse, IconButton } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { ReactComponent as ExpandLess } from '@repo/images/icons/mui/ExpandLess.svg';
 import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import { memo, useCallback, useEffect, useMemo } from 'react';
@@ -20,7 +21,7 @@ import { type BigNumber } from 'bignumber.js';
 import { TokenAmount } from '../../../../../../components/TokenAmount';
 import { ActionButton } from '../ActionButton/ActionButton';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export interface ActionInputButtonProps {
   boostId: BoostEntity['id'];
@@ -33,7 +34,7 @@ export interface ActionInputButtonProps {
   buttonLabel: string;
 }
 
-export const ActionInputButton = memo<ActionInputButtonProps>(function ActionInputButton({
+export const ActionInputButton = memo(function ActionInputButton({
   boostId,
   open,
   onToggle,
@@ -42,7 +43,7 @@ export const ActionInputButton = memo<ActionInputButtonProps>(function ActionInp
   title,
   balanceLabel,
   buttonLabel,
-}) {
+}: ActionInputButtonProps) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const boost = useAppSelector(state => selectBoostById(state, boostId));
@@ -101,11 +102,7 @@ export const ActionInputButton = memo<ActionInputButtonProps>(function ActionInp
             onChange={handleChange}
             tokenDecimals={mooToken.decimals}
             endAdornment={
-              <Button
-                disabled={isDisabledMaxButton}
-                className={classes.maxButton}
-                onClick={handleMax}
-              >
+              <Button disabled={isDisabledMaxButton} css={styles.maxButton} onClick={handleMax}>
                 MAX
               </Button>
             }

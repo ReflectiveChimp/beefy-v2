@@ -1,8 +1,8 @@
 import { memo, useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectBridgeFormState,
   selectBridgeDepositTokenForChainId,
+  selectBridgeFormState,
 } from '../../../../../data/selectors/bridge';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { validateBridgeForm } from '../../../../../data/actions/bridge';

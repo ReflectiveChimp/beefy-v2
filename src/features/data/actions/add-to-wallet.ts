@@ -36,7 +36,9 @@ function getTokenIconUrl(
 export const addTokenToWalletAction = createAsyncThunk<
   AddTokenToWalletPayload,
   AddToWalletParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('addToWallet/open', async ({ chainId, tokenAddress, customIconUrl }, { getState }) => {
   const state = getState();
   const token = selectTokenByAddress(state, chainId, tokenAddress);

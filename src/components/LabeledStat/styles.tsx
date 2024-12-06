@@ -1,15 +1,15 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  valueStrikethrough: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-    textAlign: 'left' as const,
+export const styles = {
+  valueStrikethrough: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+    textAlign: 'left',
     textDecoration: 'line-through',
-  },
-  value: {
-    ...theme.typography['body-lg-med'],
-    margin: 0,
-    padding: 0,
-  },
-});
+  }),
+  value: css.raw({
+    textStyle: 'body.med',
+    margin: '0',
+    padding: '0',
+  }),
+};

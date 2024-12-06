@@ -1,8 +1,8 @@
 import type { FC, SVGProps } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface LinkIconProps {
   logo: string | FC<SVGProps<SVGSVGElement>>;

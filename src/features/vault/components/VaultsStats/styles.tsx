@@ -1,65 +1,59 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  boxes: {
+export const styles = {
+  boxes: css.raw({
     display: 'grid',
     gridTemplateColumns: '100%',
     rowGap: '24px',
     columnGap: '24px',
-    [theme.breakpoints.up('lg')]: {
+    lg: {
       display: 'grid',
       gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
     },
-  },
-  stats: {
+  }),
+  stats: css.raw({
     display: 'grid',
     minHeight: '96px',
     gridTemplateColumns: 'repeat(auto-fit, minmax(0, 1fr))',
-    backgroundColor: theme.palette.background.contentDark,
+    backgroundColor: 'background.content.dark',
     borderRadius: '8px',
     padding: '16px',
     columnGap: '48px',
-    [theme.breakpoints.up('lg')]: {
+    lg: {
       padding: '16px 24px',
     },
-  },
-  statsInterest: {
-    '& $stat': {
-      textAlign: 'left' as const,
+  }),
+  statsInterest: css.raw({
+    '& *': {
+      textAlign: 'left',
+    },
+  }),
+  statsDeposit: css.raw({
+    '& *': {
+      textAlign: 'left',
+    },
+    lg: {
       '& *': {
-        textAlign: 'left' as const,
+        textAlign: 'right',
+        justifyContent: 'flex-end',
       },
     },
-  },
-  statsDeposit: {
-    '& $stat *': {
-      textAlign: 'left' as const,
-    },
-    [theme.breakpoints.up('lg')]: {
-      '& $stat': {
-        textAlign: 'right' as const,
-        '& *': {
-          textAlign: 'right' as const,
-          justifyContent: 'flex-end' as const,
-        },
-      },
-    },
-  },
-  stat: {
-    position: 'relative' as const,
+  }),
+  stat: css.raw({
+    position: 'relative',
     '&::before': {
       content: '""',
-      position: 'absolute' as const,
-      display: 'block' as const,
-      background: theme.palette.background.border,
+      position: 'absolute',
+      display: 'block',
+      background: 'bayOfMany',
       width: '2px',
       height: '100%',
-      left: -25,
-      top: 0,
+      left: '-25',
+      top: '0',
     },
     '&:first-child::before': {
       content: 'none',
       display: 'none',
     },
-  },
-});
+  }),
+};

@@ -12,11 +12,11 @@ export type ExplorerAddressLinkProps = {
   children?: ReactNode;
 };
 
-export const ExplorerAddressLink = memo<ExplorerAddressLinkProps>(function ExplorerAddressLink({
+export const ExplorerAddressLink = memo(function ExplorerAddressLink({
   chainId,
   address,
   children,
-}) {
+}: ExplorerAddressLinkProps) {
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const href = useMemo(() => explorerAddressUrl(chain, address), [chain, address]);
   return <ExternalLink href={href} children={children || formatAddressShort(address)} />;

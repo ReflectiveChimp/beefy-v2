@@ -16,10 +16,19 @@ type ChartStatToApiPoint = EnsureKeys<
 export type AnyApiPoint = ChartStatToApiPoint[keyof ChartStatToApiPoint];
 
 type ChartStatToChartDataPoint = Prettify<{
-  apy: ChartStatToApiPoint['apy'] & { ma: number };
-  tvl: ChartStatToApiPoint['tvl'] & { ma: number };
-  price: ChartStatToApiPoint['price'] & { ma: number };
-  clm: ChartStatToApiPoint['clm'] & { ma: number; ranges: [number, number] };
+  apy: ChartStatToApiPoint['apy'] & {
+    ma: number;
+  };
+  tvl: ChartStatToApiPoint['tvl'] & {
+    ma: number;
+  };
+  price: ChartStatToApiPoint['price'] & {
+    ma: number;
+  };
+  clm: ChartStatToApiPoint['clm'] & {
+    ma: number;
+    ranges: [number, number];
+  };
 }>;
 
 export type ChartApiPoint<TStat extends ChartStat> = ChartStatToApiPoint[TStat];

@@ -8,7 +8,7 @@ interface AssetsCardProps {
   vaultId: VaultEntity['id'];
 }
 
-export const AssetsCard = memo<AssetsCardProps>(function AssetsCard({ vaultId }) {
+export const AssetsCard = memo(function AssetsCard({ vaultId }: AssetsCardProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   return (

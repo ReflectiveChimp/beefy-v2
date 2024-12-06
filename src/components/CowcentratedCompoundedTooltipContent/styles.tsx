@@ -1,30 +1,30 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
-  },
-  tooltipTitle: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
+    textStyle: 'body.med',
+    color: 'text.middle',
+  }),
+  tooltipTitle: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: '700',
     color: 'var(--tooltip-title-color)',
-  },
-  rewardsContainer: {
+  }),
+  rewardsContainer: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '4px',
-  },
-  rewardsText: {
-    ...theme.typography['body-lg-med'],
+  }),
+  rewardsText: css.raw({
+    textStyle: 'body.med',
     color: 'var(--tooltip-value-color)',
-  },
-  usdPrice: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
+  }),
+  usdPrice: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: '700',
     color: 'var(--tooltip-title-color)',
-  },
-});
+  }),
+};

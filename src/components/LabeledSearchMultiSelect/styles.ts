@@ -1,103 +1,102 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  select: {
-    ...theme.typography['body-lg-med'],
-    backgroundColor: theme.palette.background.contentDark,
-    border: `solid 2px ${theme.palette.background.contentPrimary}`,
+export const styles = {
+  select: css.raw({
+    textStyle: 'body.med',
+    backgroundColor: 'background.content.dark',
+    border: 'solid 2px {colors.background.content}',
     borderRadius: '8px',
-    minWidth: 0,
+    minWidth: '0',
     width: 'fit-content',
-    color: theme.palette.text.middle,
-    padding: `${8 - 2}px ${16 - 2}px`,
+    color: 'text.middle',
+    padding: '6px 14px',
     cursor: 'pointer',
-    userSelect: 'none' as const,
+    userSelect: 'none',
     boxShadow: 'none',
-    textAlign: 'left' as const,
+    textAlign: 'left',
     '&:hover': {
       boxShadow: 'none',
     },
-  },
-  selectCurrent: {
+  }),
+  selectCurrent: css.raw({
     display: 'flex',
-    minWidth: 0,
-  },
-  selectLabel: {
-    flexShrink: 0,
-    flexGrow: 0,
-    color: theme.palette.text.dark,
+    minWidth: '0',
+  }),
+  selectLabel: css.raw({
+    flexShrink: '0',
+    flexGrow: '0',
+    color: 'text.dark',
     marginRight: '4px',
-  },
-  selectValue: {
-    flexShrink: 1,
-    flexGrow: 0,
-    minWidth: 0,
+  }),
+  selectValue: css.raw({
+    flexShrink: '1',
+    flexGrow: '0',
+    minWidth: '0',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
     marginRight: '4px',
     display: 'flex',
     alignItems: 'center',
-  },
-  selectIcon: {
-    flexShrink: 0,
-    flexGrow: 0,
+  }),
+  selectIcon: css.raw({
+    flexShrink: '0',
+    flexGrow: '0',
     marginLeft: 'auto',
-    fill: theme.palette.text.middle,
-  },
-  selectFullWidth: {
+    fill: 'text.middle',
+  }),
+  selectFullWidth: css.raw({
     width: '100%',
-  },
-  selectBorderless: {
-    borderWidth: 0,
-    padding: `8px 16px`,
-  },
-  selectOpen: {
-    '& $selectIcon': {
-      transform: 'rotateX(180deg)',
-    },
-  },
-  dropdown: {
-    ...theme.typography['body-lg-med'],
-    zIndex: 1000,
-    border: `2px solid ${theme.palette.background.contentLight}`,
+  }),
+  selectBorderless: css.raw({
+    borderWidth: '0',
+    padding: '8px 16px',
+  }),
+  selectOpen: css.raw({}),
+  selectOpenIcon: css.raw({
+    transform: 'rotateX(180deg)',
+  }),
+  dropdown: css.raw({
+    textStyle: 'body.med',
+    zIndex: 'dropdown',
+    border: '2px solid {colors.background.content.light}',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.contentPrimary,
-    padding: `${8 - 2}px 0`,
-    color: theme.palette.text.middle,
+    backgroundColor: 'background.content',
+    padding: '6px 0',
+    color: 'text.middle',
     maxHeight: '350px',
-    overflowX: 'hidden' as const,
-    overflowY: 'auto' as const,
-    [theme.breakpoints.only('xs')]: {
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    smDown: {
       maxHeight: '250px',
     },
-  },
-  dropdownItem: {
+  }),
+  dropdownItem: css.raw({
     display: 'flex',
     alignItems: 'center',
-    minWidth: 0,
-    userSelect: 'none' as const,
+    minWidth: '0',
+    userSelect: 'none',
     cursor: 'pointer',
-    padding: `8px ${16 - 2}px`,
+    padding: '8px 14px',
     '&:hover': {
-      background: 'rgba(255, 255, 255, 0.16)',
-      color: theme.palette.text.light,
+      background: 'whiteo15',
+      color: 'text.light',
     },
     '&:active': {
       background: 'transparent',
-      color: theme.palette.text.light,
+      color: 'text.light',
     },
-  },
-  dropdownItemSelected: {
-    color: theme.palette.text.light,
-  },
-  inputContainer: {
+  }),
+  dropdownItemSelected: css.raw({
+    color: 'text.light',
+  }),
+  inputContainer: css.raw({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     padding: '2px 8px',
-  },
-  noResultItem: {
-    padding: `8px ${16 - 2}px`,
-  },
-});
+  }),
+  noResultItem: css.raw({
+    padding: '8px 14px',
+  }),
+};

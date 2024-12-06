@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, useMemo } from 'react';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import { useAppSelector } from '../../../../../../store';
@@ -8,14 +8,14 @@ import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { MobileStat } from '../MobileStat';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface TableStatsInterface {
   vaultId: VaultEntity['id'];
   address: string;
 }
 
-export const TabletStats = memo<TableStatsInterface>(function TabletStats({ vaultId, address }) {
+export const TabletStats = memo(function TabletStats({ vaultId, address }: TableStatsInterface) {
   const classes = useStyles();
   const { t } = useTranslation();
   const apy = useAppSelector(state => selectApyVaultUIData(state, vaultId));
@@ -47,7 +47,7 @@ export const TabletStats = memo<TableStatsInterface>(function TabletStats({ vaul
       <MobileStat
         label={label}
         value={isBoosted ? formatted.boostedTotalApy : formatted.totalApy}
-        valueClassName={isBoosted ? classes.boostText : ''}
+        valueCss={isBoosted ? styles.boostText : undefined}
       />
       <MobileStat label={t('Dashboard-Filter-DailyYield')} value={formatLargeUsd(dailyUsd)} />
     </div>

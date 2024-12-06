@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
@@ -10,7 +10,7 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
 import { TokenImage, TokensImage } from '../../../../../../components/TokenImage/TokenImage';
 import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types';
@@ -20,17 +20,17 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import type { TokenEntity } from '../../../../../data/entities/token';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type TokenSelectButtonProps = {
   index: number;
-  className?: string;
+  css?: CssStyles;
 };
 
-export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSelectButton({
+export const TokenSelectButton = memo(function TokenSelectButton({
   index,
-  className,
-}) {
+  css: cssProp,
+}: TokenSelectButtonProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const classes = useStyles();
@@ -64,10 +64,10 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
   return (
     <button
       onClick={canSwitchToTokenSelect ? handleClick : undefined}
-      className={clsx(classes.button, className, { [classes.buttonMore]: canSwitchToTokenSelect })}
+      className={css(styles.button, cssProp, canSwitchToTokenSelect && styles.buttonMore)}
     >
       {forceSelection ? (
-        <div className={clsx(classes.select, classes.forceSelection)}>
+        <div className={css(styles.select, styles.forceSelection)}>
           <div className={classes.zapIcon}>
             <img src={zapIcon} alt="zap" />
           </div>
@@ -79,7 +79,7 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
         <div className={classes.select}>
           <TokensImage
             tokens={isMultiDeposit ? [selection.tokens[index]] : selection.tokens}
-            className={classes.iconAssets}
+            css={styles.iconAssets}
             size={24}
           />
           {tokenSymbol}

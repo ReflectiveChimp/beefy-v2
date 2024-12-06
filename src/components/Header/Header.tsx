@@ -1,7 +1,8 @@
 import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Hidden, makeStyles, Toolbar, useMediaQuery } from '@material-ui/core';
-import clsx from 'clsx';
+import { AppBar, Hidden, Toolbar, useMediaQuery } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
+import { css } from '@repo/styles/css';
 import { styles } from './styles';
 import { NavItem } from './components/NavItem';
 import { ReactComponent as VaultsIcon } from '../../images/icons/navigation/vault.svg';
@@ -21,13 +22,13 @@ import {
   selectShouldInitProposals,
 } from '../../features/data/selectors/data-loader';
 import { fetchActiveProposals } from '../../features/data/actions/proposal';
-import { UnreadProposalDot, UnreadArticleDot } from './components/Badges/UnreadDots';
+import { UnreadArticleDot, UnreadProposalDot } from './components/Badges/UnreadDots';
 import { fetchLastArticle } from '../../features/data/actions/articles';
 import headerLogoMobile from '../../images/bifi-logos/header-logo-notext.svg';
 import headerLogoDesktop from '../../images/bifi-logos/header-logo.svg';
 import { Container } from '../Container/Container';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 export const Header = memo(function Header() {
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width: 500px)', { noSsr: true });
@@ -49,8 +50,8 @@ export const Header = memo(function Header() {
 
   return (
     <div className={classes.headerContainer}>
-      <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
-        <Container className={classes.container} maxWidth="lg">
+      <AppBar className={css(styles.navHeader, styles.hasPortfolio)} position="static">
+        <Container css={styles.container} maxWidth="lg">
           <Toolbar className={classes.content} disableGutters={true}>
             <div className={classes.flex}>
               <Link className={classes.beefy} to="/">

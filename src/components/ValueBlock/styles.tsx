@@ -1,48 +1,48 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  value: {
-    ...theme.typography['body-lg-med'],
-    margin: 0,
-    padding: 0,
-    whiteSpace: 'nowrap' as const,
-    [theme.breakpoints.down('md')]: {
-      textAlign: 'left' as const,
+export const styles = {
+  value: css.raw({
+    textStyle: 'body.med',
+    margin: '0',
+    padding: '0',
+    whiteSpace: 'nowrap',
+    lgDown: {
+      textAlign: 'left',
     },
-  },
-  label: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-    textAlign: 'left' as const,
-    [theme.breakpoints.up('md')]: {
-      textAlign: 'center' as const,
+  }),
+  label: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+    textAlign: 'left',
+    md: {
+      textAlign: 'center',
     },
-  },
-  price: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-    whiteSpace: 'nowrap' as const,
-  },
-  blurred: {
+  }),
+  price: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+    whiteSpace: 'nowrap',
+  }),
+  blurred: css.raw({
     filter: 'blur(.5rem)',
-  },
-  tooltipLabel: {
+  }),
+  tooltipLabel: css.raw({
     display: 'flex',
     alignItems: 'center',
-  },
-  tooltipHolder: {
+  }),
+  tooltipHolder: css.raw({
     marginLeft: '4px',
-  },
-  tooltipIcon: {
+  }),
+  tooltipIcon: css.raw({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: theme.palette.text.dark,
+    color: 'text.dark',
     width: '18px',
     height: '18px',
     cursor: 'pointer',
-  },
-  noTextContentLoader: {
+  }),
+  noTextContentLoader: css.raw({
     paddingTop: '3px',
-  },
-});
+  }),
+};

@@ -1,24 +1,17 @@
 import { memo, type ReactNode } from 'react';
-import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import clsx from 'clsx';
-
-const useStyles = makeStyles(styles);
+import { css, type CssStyles } from '@repo/styles/css';
 
 type CardContentProps = {
   children: ReactNode;
-  className?: string;
+  css?: CssStyles;
   disableDefaultClass?: boolean;
 };
 
-export const CardContent = memo<CardContentProps>(function CardContent({
+export const CardContent = memo(function CardContent({
   children,
-  className,
+  css: cssProp,
   disableDefaultClass = false,
-}) {
-  const classes = useStyles();
-
-  return (
-    <div className={clsx(className, { [classes.container]: !disableDefaultClass })}>{children}</div>
-  );
+}: CardContentProps) {
+  return <div className={css(cssProp, !disableDefaultClass && styles.container)}>{children}</div>;
 });

@@ -1,11 +1,11 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  top: {
-    backgroundColor: theme.palette.background.footerHeader,
-  },
-  vaultContainer: {
+export const styles = {
+  top: css.raw({
+    backgroundColor: 'background.header',
+  }),
+  vaultContainer: css.raw({
     paddingTop: '32px',
     paddingBottom: '32px',
-  },
-});
+  }),
+};

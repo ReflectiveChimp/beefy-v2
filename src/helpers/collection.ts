@@ -29,7 +29,11 @@ export function minMaxAverage<
   avgKey: KAvg,
   minKeys: Array<KMin>,
   maxKeys: Array<KMax>
-): { avg: number; min: number; max: number } {
+): {
+  avg: number;
+  min: number;
+  max: number;
+} {
   return {
     avg: averageOf(values, avgKey),
     min: minOf(values, ...minKeys),

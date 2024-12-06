@@ -11,7 +11,10 @@ export class VelodromeV2ModeSolidlyPool extends VelodromeV2SolidlyPool {
   protected buildZapSwapTx(
     amountIn: BigNumber,
     amountOutMin: BigNumber,
-    routes: { from: string; to: string }[],
+    routes: {
+      from: string;
+      to: string;
+    }[],
     to: string,
     deadline: number,
     insertBalance: boolean

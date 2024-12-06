@@ -12,12 +12,12 @@ import { BigNumber } from 'bignumber.js';
 import { formatLargeUsd } from '../../../../../../helpers/format';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox';
 import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-const DEFAULT_MAX_TVL = new BigNumber(3_000_000);
+const DEFAULT_MAX_TVL = new BigNumber(3000000);
 
 export const MinTvlFilter = memo(function MinTvlFilter() {
   const { t } = useTranslation();
@@ -73,7 +73,7 @@ export const MinTvlFilter = memo(function MinTvlFilter() {
         label={t('Filter-MinTvl')}
         onChange={handleShowToggle}
         checked={show}
-        checkboxClass={classes.checkbox}
+        checkboxCss={styles.checkbox}
       />
       {show && (
         <div className={classes.amountContainer}>
@@ -89,7 +89,7 @@ export const MinTvlFilter = memo(function MinTvlFilter() {
             label={t('Filter-MinTvlLarge')}
             onChange={handleShowLargeToggle}
             checked={showLarge}
-            checkboxClass={classes.largeTvlCheckbox}
+            checkboxCss={styles.largeTvlCheckbox}
           />
         </div>
       )}

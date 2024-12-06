@@ -14,11 +14,11 @@ export type GlpDepositNoticeImplProps = {
   onChange: (isLocked: boolean) => void;
 };
 
-export const GlpDepositNoticeImpl = memo<GlpDepositNoticeImplProps>(function GlpDepositNoticeImpl({
+export const GlpDepositNoticeImpl = memo(function GlpDepositNoticeImpl({
   vaultId,
   config,
   onChange,
-}) {
+}: GlpDepositNoticeImplProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const userAddress = useAppSelector(selectWalletAddressIfKnown);

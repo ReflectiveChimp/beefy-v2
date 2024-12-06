@@ -1,11 +1,8 @@
 import { memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToggleButtons } from '../../../../../components/ToggleButtons';
-import { makeStyles } from '@material-ui/core';
 import type { TimeRange } from '../utils';
 import { styles } from './styles';
-
-const useStyles = makeStyles(styles);
 
 export type RangeSwitcherProps = {
   availableRanges: TimeRange[];
@@ -13,12 +10,11 @@ export type RangeSwitcherProps = {
   onChange: (newBucket: TimeRange) => void;
 };
 
-export const RangeSwitcher = memo<RangeSwitcherProps>(function RangeSwitcher({
+export const RangeSwitcher = memo(function RangeSwitcher({
   availableRanges,
   range,
   onChange,
-}) {
-  const classes = useStyles();
+}: RangeSwitcherProps) {
   const { t } = useTranslation();
   const options: Record<string, string> = useMemo(() => {
     return Object.fromEntries(availableRanges.map(range => [range, t(`Graph-${range}`)]));
@@ -35,9 +31,9 @@ export const RangeSwitcher = memo<RangeSwitcherProps>(function RangeSwitcher({
       value={range}
       options={options}
       onChange={onChange}
-      buttonsClass={classes.tabs}
-      buttonClass={classes.tab}
-      selectedClass={classes.selected}
+      buttonsCss={styles.tabs}
+      buttonCss={styles.tab}
+      selectedCss={styles.selected}
     />
   );
 });

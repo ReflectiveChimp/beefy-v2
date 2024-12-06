@@ -1,32 +1,32 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  header: {
-    [theme.breakpoints.up('sm')]: {
+export const styles = {
+  header: css.raw({
+    sm: {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
     },
-    [theme.breakpoints.down('xs')]: {
+    smDown: {
       display: 'flex',
-      flexDirection: 'column' as const,
+      flexDirection: 'column',
       gap: '8px',
       padding: '16px',
     },
-  },
-  tabs: {
+  }),
+  tabs: css.raw({
     marginTop: '16px',
     backgroundColor: 'transparent',
-    [theme.breakpoints.up('sm')]: {
-      marginTop: 0,
+    sm: {
+      marginTop: '0',
     },
-  },
-  layout: {
-    backgroundColor: theme.palette.background.contentPrimary,
+  }),
+  layout: css.raw({
+    backgroundColor: 'background.content',
     borderRadius: '0 0 12px 12px',
-    [theme.breakpoints.up('lg')]: {
+    lg: {
       display: 'grid',
       gridTemplateColumns: '232fr 484fr',
     },
-  },
-});
+  }),
+};

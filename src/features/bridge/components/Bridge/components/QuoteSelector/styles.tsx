@@ -1,134 +1,134 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
     flex: '1 1 auto',
     height: '100%',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     borderRadius: '8px',
-  },
-  quotesHolder: {
+  }),
+  quotesHolder: css.raw({
     display: 'flex',
     flex: '1 1 auto',
     height: '100%',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '8px',
-  },
-  quotesTitle: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
-    color: theme.palette.text.dark,
-  },
+  }),
+  quotesTitle: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: '700',
+    color: 'text.dark',
+  }),
 
-  scrollableThumb: {
-    background: '#373B60',
-  },
-  scrollableTopShadow: {
-    background: 'linear-gradient(0deg, rgba(46,49,80, 0) 0%, rgba(0, 0, 0, 0.5) 100%)',
-  },
-  scrollableBottomShadow: {
-    background: 'linear-gradient(180deg, rgba(46,49,80, 0) 0%, rgba(0, 0, 0, 0.5) 100%)',
-  },
-  scrollableLeftShadow: {
-    background: 'linear-gradient(270deg, rgba(46,49,80, 0) 0%, rgba(0, 0, 0, 0.5) 100%)',
-  },
-  scrollableRightShadow: {
-    background: 'linear-gradient(90deg, rgba(46,49,80, 0) 0%, rgba(0, 0, 0, 0.5) 100%)',
-  },
-  quotes: {
+  scrollableThumb: css.raw({
+    background: 'extracted2916',
+  }),
+  scrollableTopShadow: css.raw({
+    background: 'linear-gradient(0deg, extracted2615 0%, blacko49 100%)',
+  }),
+  scrollableBottomShadow: css.raw({
+    background: 'linear-gradient(180deg, extracted2615 0%, blacko49 100%)',
+  }),
+  scrollableLeftShadow: css.raw({
+    background: 'linear-gradient(270deg, extracted2615 0%, blacko49 100%)',
+  }),
+  scrollableRightShadow: css.raw({
+    background: 'linear-gradient(90deg, extracted2615 0%, blacko49 100%)',
+  }),
+  quotes: css.raw({
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1fr)',
     gap: '8px',
     padding: '12px',
     borderRadius: '8px',
-    background: theme.palette.background.contentLight,
-  },
-  quote: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.dark,
+    background: 'background.content.light',
+  }),
+  quote: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
     border: 'none',
-    background: theme.palette.background.buttons.button,
+    background: 'bayOfMany',
     boxShadow: 'none',
     outline: 'none',
     display: 'flex',
     alignItems: 'center',
-    margin: 0,
+    margin: '0',
     padding: '8px 12px',
     borderRadius: '8px',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
     gap: '8px',
-  },
-  quoteButton: {
-    cursor: 'pointer' as const,
+  }),
+  quoteButton: css.raw({
+    cursor: 'pointer',
     '&:hover, &:focus-visible': {
-      color: '#fff',
+      color: 'white',
     },
-  },
-  quoteLimited: {
-    pointerEvents: 'none' as const,
+  }),
+  quoteLimited: css.raw({
+    pointerEvents: 'none',
     filter: 'grayscale(100)',
-  },
-  quoteProvider: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
+  }),
+  quoteProvider: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
     display: 'flex',
     gap: '8px',
     alignItems: 'center',
     flex: '0 0 114px',
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       flex: '0 0 24px',
     },
-  },
-  quoteProviderIcon: {
+  }),
+  quoteProviderIcon: css.raw({
     display: 'block',
-  },
-  quoteProviderTitle: {
+  }),
+  quoteProviderTitle: css.raw({
     display: 'block',
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       display: 'none',
     },
-  },
-  quoteLimit: {
+  }),
+  quoteLimit: css.raw({
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
     flex: '1 0 142px',
-  },
-  quoteLimitIcon: {
+  }),
+  quoteLimitIcon: css.raw({
     width: '16px',
     height: '16px',
-    fill: theme.palette.text.light,
-  },
-  quoteFee: {
+    fill: 'text.light',
+  }),
+  quoteFee: css.raw({
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
     flex: '0 0 142px',
-  },
-  quoteFeeIcon: {
+  }),
+  quoteFeeIcon: css.raw({
     width: '16px',
     height: '16px',
-    fill: theme.palette.text.light,
-  },
-  quoteTime: {
+    fill: 'text.light',
+  }),
+  quoteTime: css.raw({
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
     flex: '0 0 50px',
-  },
-  quoteTimeIcon: {
+  }),
+  quoteTimeIcon: css.raw({
     width: '16px',
     height: '16px',
-    fill: theme.palette.text.light,
-  },
-  quoteButtonSelected: {
-    background: theme.palette.background.contentPrimary,
-    color: theme.palette.text.light,
-    cursor: 'default' as const,
-    pointerEvents: 'none' as const,
+    fill: 'text.light',
+  }),
+  quoteButtonSelected: css.raw({
+    background: 'background.content',
+    color: 'text.light',
+    cursor: 'default',
+    pointerEvents: 'none',
     '&:hover, &:focus-visible': {
-      background: '#232741',
+      background: 'extracted263',
     },
-  },
-});
+  }),
+};

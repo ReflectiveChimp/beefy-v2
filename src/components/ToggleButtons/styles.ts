@@ -1,110 +1,110 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  buttons: {
+export const styles = {
+  buttons: css.raw({
     display: 'flex',
     width: 'fit-content',
-    border: `solid 2px ${theme.palette.background.contentPrimary}`,
+    border: 'solid 2px {colors.background.content}',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.contentDark,
-  },
-  fullWidth: {
+    backgroundColor: 'background.content.dark',
+  }),
+  fullWidth: css.raw({
     width: '100%',
-  },
-  button: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.dark,
+  }),
+  button: css.raw({
+    textStyle: 'body.med',
+    color: 'text.dark',
     backgroundColor: 'inherit',
     border: 'none',
     borderRadius: '6px',
     boxShadow: 'none',
     cursor: 'pointer',
-    margin: 0,
-    padding: `6px 16px`,
-    flexGrow: 1,
-    flexShrink: 0,
-    position: 'relative' as const,
+    margin: '0',
+    padding: '6px 16px',
+    flexGrow: '1',
+    flexShrink: '0',
+    position: 'relative',
     '&:hover': {
-      color: theme.palette.text.middle,
+      color: 'text.middle',
       boxShadow: 'none',
     },
     '&:active, &:hover:active': {
-      color: theme.palette.text.light,
+      color: 'text.light',
     },
-  },
-  selected: {
-    pointerEvents: 'none' as const,
-    color: theme.palette.text.light,
-    backgroundColor: theme.palette.background.buttons.button,
+  }),
+  selected: css.raw({
+    pointerEvents: 'none',
+    color: 'text.light',
+    backgroundColor: 'bayOfMany',
     '&:hover': {
-      color: theme.palette.text.light,
-      backgroundColor: theme.palette.background.buttons.button,
+      color: 'text.light',
+      backgroundColor: 'bayOfMany',
     },
-  },
-  untogglable: {
-    padding: `${8 - 2}px ${16 - 12 - 2}px`,
-    '& $button': {
-      padding: '0 12px',
+  }),
+  untogglable: css.raw({
+    padding: '6px 2px',
+  }),
+  untogglableButton: css.raw({
+    padding: '0 12px',
+    '&:hover': {
+      color: 'text.middle',
+      backgroundColor: 'transparent',
+    },
+    '&:active, &:hover:active': {
+      color: 'text.light',
+      backgroundColor: 'transparent',
+    },
+    '&[data-selected=true]': {
+      pointerEvents: 'all',
+      color: 'text.light',
+      backgroundColor: 'transparent',
       '&:hover': {
-        color: theme.palette.text.middle,
+        color: 'text.light',
         backgroundColor: 'transparent',
-      },
-      '&:active, &:hover:active': {
-        color: theme.palette.text.light,
-        backgroundColor: 'transparent',
-      },
-      '&$selected': {
-        pointerEvents: 'all' as const,
-        color: theme.palette.text.light,
-        backgroundColor: 'transparent',
-        '&:hover': {
-          color: theme.palette.text.light,
-          backgroundColor: 'transparent',
-        },
       },
     },
-  },
-  dropdown: {
+  }),
+  dropdown: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '8px',
-    padding: `12px`,
-    backgroundColor: theme.palette.background.contentLight,
+    padding: '12px',
+    backgroundColor: 'background.content.light',
     borderRadius: '8px',
     marginTop: '8px',
     marginLeft: '4px',
-  },
-  container: {
+  }),
+  container: css.raw({
     display: 'flex',
     alignItems: 'center',
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.dark,
-    fill: theme.palette.text.dark,
+    textStyle: 'body.med',
+    color: 'text.dark',
+    fill: 'text.dark',
     '&:hover': {
-      color: theme.palette.text.light,
-      fill: theme.palette.text.light,
+      color: 'text.light',
+      fill: 'text.light',
       cursor: 'pointer',
     },
-  },
-  icon: {
+  }),
+  icon: css.raw({
     height: '20px',
-  },
-  iconActive: {
-    fill: theme.palette.text.light,
-  },
-  buttonList: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.dark,
+  }),
+  iconActive: css.raw({
+    fill: 'text.light',
+  }),
+  buttonList: css.raw({
+    textStyle: 'body.med',
+    color: 'text.dark',
     backgroundColor: 'inherit',
     border: 'none',
-    padding: 0,
-    textAlign: 'start' as const,
+    padding: '0',
+    textAlign: 'start',
     '&:hover': {
-      color: theme.palette.text.light,
+      color: 'text.light',
       cursor: 'pointer',
     },
-  },
-  selectedList: {
-    color: theme.palette.text.light,
-  },
-});
+  }),
+  selectedList: css.raw({
+    color: 'text.light',
+  }),
+};

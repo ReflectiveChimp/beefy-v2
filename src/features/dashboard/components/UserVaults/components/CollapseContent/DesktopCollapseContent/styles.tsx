@@ -1,21 +1,21 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  collapseInner: {
+export const styles = {
+  collapseInner: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '16px',
-    backgroundColor: theme.palette.background.contentDark,
+    backgroundColor: 'background.content.dark',
     padding: '16px 24px',
     marginTop: '2px',
-    [theme.breakpoints.down('md')]: {
+    lgDown: {
       padding: '16px',
     },
-  },
-  toggleContainer: {
+  }),
+  toggleContainer: css.raw({
     padding: '16px',
-    backgroundColor: theme.palette.background.contentDark,
+    backgroundColor: 'background.content.dark',
     display: 'flex',
     justifyContent: 'center',
-  },
-});
+  }),
+};

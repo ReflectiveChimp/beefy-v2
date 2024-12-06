@@ -1,5 +1,6 @@
 import type { LabeledSelectCommonProps } from '../LabeledSelect';
 import type { FC } from 'react';
+import { type CssStyles } from '@repo/styles/css';
 
 export type LabeledMultiSelectProps<V extends string = string> = LabeledSelectCommonProps<V> & {
   value: V[];
@@ -18,7 +19,7 @@ export type DropdownItemProps<V extends string = string> = {
   value: V;
   selected: boolean;
   onChange: (value: V) => void;
-  className?: string;
+  css?: CssStyles;
   DropdownItemLabelComponent?: FC<DropdownItemLabelProps<V>>;
 };
 export type DropdownItemLabelProps<V extends string = string> = {

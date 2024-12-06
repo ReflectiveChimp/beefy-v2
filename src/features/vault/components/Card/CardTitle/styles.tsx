@@ -1,13 +1,13 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  title: {
-    ...theme.typography['h2'],
-    color: theme.palette.text.light,
-    margin: 0,
-  },
-  subtitle: {
-    ...theme.typography['subline-lg'],
-    color: '#8585A6',
-  },
-});
+export const styles = {
+  title: css.raw({
+    textStyle: 'h2',
+    color: 'text.light',
+    margin: '0',
+  }),
+  subtitle: css.raw({
+    textStyle: 'subline',
+    color: 'extracted2029',
+  }),
+};

@@ -24,7 +24,7 @@ const stepToComponent: Record<TransactStep, ComponentType> = {
 export type TransactProps = {
   vaultId: VaultEntity['id'];
 };
-export const Transact = memo<TransactProps>(function Transact({ vaultId }) {
+export const Transact = memo(function Transact({ vaultId }: TransactProps) {
   const transactStep = useAppSelector(selectTransactStep);
   const transactVaultId = useAppSelector(selectTransactVaultIdOrUndefined);
   const isReady = transactVaultId === vaultId;

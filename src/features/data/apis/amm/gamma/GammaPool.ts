@@ -28,7 +28,10 @@ import { onlyOneTokenAmount } from '../../transact/helpers/options';
 type HypervisorResponse = {
   currentTick: string;
   totalSupply: string;
-  totalAmounts: { 0: string; 1: string };
+  totalAmounts: {
+    0: string;
+    1: string;
+  };
 };
 
 export class GammaPool implements IGammaPool {

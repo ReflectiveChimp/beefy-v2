@@ -32,7 +32,6 @@ const config = buildConfig(
     jsxFramework: 'react',
     // jsx/styled() can only be used for recipes
     jsxStyleProps: 'minimal',
-
     // Typescript validation for some supported properties
     // @see https://panda-css.com/docs/concepts/writing-styles#strictpropertyvalues
     strictPropertyValues: true,
@@ -465,6 +464,42 @@ const config = buildConfig(
           from: { transform: 'scale(0.5, 0.5)', opacity: '0.7' },
           to: { transform: 'scale(3.0, 3.0)', opacity: '0' },
         },
+        scrollBackground: {
+          '0%': {
+            backgroundPosition: '0 0',
+          },
+          '50%': {
+            backgroundPosition: '100% 0',
+          },
+          '100%': {
+            backgroundPosition: '0 0',
+          },
+        },
+        scaleIn: {
+          from: { transform: 'scale(.5, .5)', opacity: '.7' },
+          to: { transform: 'scale(3.0, 3.0)', opacity: '0' },
+        },
+        fadeInOut: {
+          from: {
+            opacity: '0',
+          },
+          to: {
+            opacity: '1',
+          },
+        },
+        rotate: {
+          from: {
+            transform: 'rotate(0deg)',
+          },
+          to: {
+            transform: 'rotate(360deg)',
+          },
+        },
+        highlight: {
+          to: {
+            backgroundPosition: '200% center',
+          },
+        },
       },
     },
   },
@@ -603,6 +638,8 @@ const config = buildConfig(
       },
     },
     zIndex: {
+      highlight: 100,
+      slider: 200,
       dropdown: 600,
       tooltip: 700,
       version: 800,

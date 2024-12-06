@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { Step } from '../../../../../../components/Step';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import { setOnRampFiat } from '../../../../../data/actions/on-ramp';
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const FiatStep = memo(function FiatStep() {
   const { t } = useTranslation();
@@ -32,7 +32,7 @@ export const FiatStep = memo(function FiatStep() {
   );
 });
 
-const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
+const ListItem = memo(function ListItem({ value }: ItemInnerProps) {
   const classes = useStyles();
   return (
     <>

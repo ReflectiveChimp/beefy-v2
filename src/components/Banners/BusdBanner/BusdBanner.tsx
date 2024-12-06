@@ -36,7 +36,7 @@ export const BusdBannerHome = memo(function BusdBannerHome() {
 export type BusdBannerVaultProps = {
   vaultId: VaultEntity['id'];
 };
-export const BusdBannerVault = memo<BusdBannerVaultProps>(function BusdBannerVault({ vaultId }) {
+export const BusdBannerVault = memo(function BusdBannerVault({ vaultId }: BusdBannerVaultProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   return vault.assetIds.includes('BUSD') ? <BusdBanner /> : null;
 });

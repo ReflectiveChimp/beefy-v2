@@ -1,66 +1,66 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  item: {
-    ...theme.typography['body-lg-med'],
+export const styles = {
+  item: css.raw({
+    textStyle: 'body.med',
     display: 'flex',
-    flexWrap: 'nowrap' as const,
+    flexWrap: 'nowrap',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: '12px',
     width: '100%',
-    color: theme.palette.text.dark,
+    color: 'text.dark',
     background: 'transparent',
     border: 'none',
     boxShadow: 'none',
-    padding: 0,
-    margin: 0,
+    padding: '0',
+    margin: '0',
     cursor: 'pointer',
-    userSelect: 'none' as const,
+    userSelect: 'none',
     outline: 'none',
-    textAlign: 'left' as const,
+    textAlign: 'left',
     '&:hover, &:focus-visible': {
-      color: theme.palette.text.middle,
-      '& $arrow': {
-        color: '#fff',
+      color: 'text.middle',
+      '& .item-arrow': {
+        color: 'white',
       },
     },
-  },
-  side: {
+  }),
+  side: css.raw({
     display: 'flex',
-    flexWrap: 'nowrap' as const,
+    flexWrap: 'nowrap',
     alignItems: 'center',
     gap: '8px',
-  },
-  right: {
-    flexShrink: 1,
-    minWidth: 0,
-  },
-  icon: {
+  }),
+  right: css.raw({
+    flexShrink: '1',
+    minWidth: '0',
+  }),
+  icon: css.raw({
     width: '24px',
     height: '24px',
-  },
-  symbol: {
-    whiteSpace: 'nowrap' as const,
-  },
-  tag: {
-    ...theme.typography['body-sm-med'],
-    color: theme.palette.text.middle,
-    background: theme.palette.background.buttons.button,
+  }),
+  symbol: css.raw({
+    whiteSpace: 'nowrap',
+  }),
+  tag: css.raw({
+    textStyle: 'body.sm.med',
+    color: 'text.middle',
+    background: 'bayOfMany',
     padding: '2px 8px',
     borderRadius: '4px',
-    whiteSpace: 'nowrap' as const,
-  },
-  balance: {
-    flexShrink: 1,
-    minWidth: 0,
+    whiteSpace: 'nowrap',
+  }),
+  balance: css.raw({
+    flexShrink: '1',
+    minWidth: '0',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  },
-  arrow: {
-    color: theme.palette.text.middle,
+  }),
+  arrow: css.raw({
+    color: 'text.middle',
     height: '24px',
     width: '8px',
-    flexShrink: 0,
-  },
-});
+    flexShrink: '0',
+  }),
+};

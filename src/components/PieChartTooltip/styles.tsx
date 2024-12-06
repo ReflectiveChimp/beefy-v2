@@ -1,55 +1,56 @@
-import type { Theme } from '@material-ui/core';
-export const styles = (theme: Theme) => ({
-  container: {
-    backgroundColor: '#FFF',
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  container: css.raw({
+    backgroundColor: 'white',
     borderRadius: '4px',
     minWidth: '150px',
     maxWidth: '180px',
     padding: '8px',
-  },
-  titleContainer: {
+  }),
+  titleContainer: css.raw({
     display: 'flex',
     alignItems: 'center',
     columnGap: '8px',
     marginBottom: '8px',
-  },
-  infoContainer: {
+  }),
+  infoContainer: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '4px',
-  },
+  }),
 
-  icon: {
+  icon: css.raw({
     height: '24px',
     width: '24px',
-  },
-  title: {
-    ...theme.typography['body-lg-med'],
+  }),
+  title: css.raw({
+    textStyle: 'body.med',
     color: 'var(--tooltip-title-color)',
-    textTransform: 'uppercase' as const,
+    textTransform: 'uppercase',
     textOverflow: 'ellipsis',
     width: '90%',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
     overflow: 'hidden',
-  },
-  valueContainer: {
+  }),
+  valueContainer: css.raw({
     display: 'flex',
     justifyContent: 'space-between',
-  },
-  value: {
-    ...theme.typography['body-sm'],
+  }),
+  value: css.raw({
+    textStyle: 'body.sm',
     color: 'var(--tooltip-value-color)',
-  },
-  label: {
-    ...theme.typography['body-sm-med'],
+  }),
+  label: css.raw({
+    textStyle: 'body.sm.med',
     color: 'var(--tooltip-title-color)',
-  },
-  triangle: {
-    width: 0,
-    height: 0,
+  }),
+  triangle: css.raw({
+    width: '0',
+    height: '0',
     marginLeft: '10px',
     borderLeft: '8px solid transparent',
     borderRight: '8px solid transparent',
-    borderBottom: '8px solid #FFF',
-  },
-});
+    borderBottom: '8px solid white',
+  }),
+};

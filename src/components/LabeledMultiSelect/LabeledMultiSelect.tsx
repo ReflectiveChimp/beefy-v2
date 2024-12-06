@@ -1,10 +1,10 @@
 import type { MouseEventHandler } from 'react';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
-import { ClickAwayListener, makeStyles } from '@material-ui/core';
+import { ClickAwayListener } from '@material-ui/core';
 import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 import { Floating } from '../Floating';
-import { styles } from './styles';
+import { styles as baseStyles } from './styles';
 import { useTranslation } from 'react-i18next';
 import type { LabelledCheckboxProps } from '../LabelledCheckbox';
 import { LabelledCheckbox } from '../LabelledCheckbox';
@@ -17,13 +17,11 @@ import type {
 } from './types';
 import { useMultiSelectSortedOptions } from './hooks';
 
-const useStyles = makeStyles(styles);
-
 export const DropdownMultiSelectItem = memo(function DropdownItem<V extends string = string>({
   label,
   value,
   onChange,
-  className,
+  css: cssProp,
   selected,
   DropdownItemLabelComponent = DropdownMultiSelectItemLabel<V>,
 }: DropdownItemProps<V | 'all'>) {
@@ -34,7 +32,7 @@ export const DropdownMultiSelectItem = memo(function DropdownItem<V extends stri
   return (
     <LabelledCheckbox
       label={<DropdownItemLabelComponent label={label} value={value} />}
-      checkboxClass={className}
+      checkboxCss={cssProp}
       onChange={handleChange}
       checked={selected}
     />
@@ -79,54 +77,55 @@ export const LabeledMultiSelect = memo(function LabeledMultiSelect<V extends str
   SelectedItemComponent = SelectedMultiSelectItem<V>,
   DropdownItemComponent = DropdownMultiSelectItem<V>,
   DropdownItemLabelComponent = DropdownMultiSelectItemLabel<V>,
-  selectClass,
-  selectCurrentClass,
-  selectLabelClass,
-  selectValueClass,
-  selectIconClass,
-  selectFullWidthClass,
-  selectBorderlessClass,
-  selectOpenClass,
-  dropdownClass,
-  dropdownItemClass,
-  dropdownItemSelectedClass,
+  selectCss,
+  selectCurrentCss,
+  selectLabelCss,
+  selectValueCss,
+  selectIconCss,
+  selectFullWidthCss,
+  selectBorderlessCss,
+  selectOpenCss,
+  selectOpenIconCss,
+  dropdownCss,
+  dropdownItemCss,
+  dropdownItemSelectedCss,
   dropdownAutoWidth = true,
   dropdownAutoHeight = true,
   dropdownAutoHide = true,
 }: LabeledMultiSelectProps<V>) {
-  const baseClasses = useStyles();
   const allKey = 'all';
   const [isOpen, setIsOpen] = useState(false);
   const anchorEl = useRef<HTMLButtonElement | null>(null);
   const optionsList = useMultiSelectSortedOptions<V>(options, sortOptions);
-  const classes = useMemo<typeof baseClasses>(
+  const styles = useMemo<typeof baseStyles>(
     () => ({
-      ...baseClasses,
-      select: clsx(baseClasses.select, selectClass),
-      selectCurrent: clsx(baseClasses.selectCurrent, selectCurrentClass),
-      selectLabel: clsx(baseClasses.selectLabel, selectLabelClass),
-      selectValue: clsx(baseClasses.selectValue, selectValueClass),
-      selectIcon: clsx(baseClasses.selectIcon, selectIconClass),
-      selectFullWidth: clsx(baseClasses.selectFullWidth, selectFullWidthClass),
-      selectBorderless: clsx(baseClasses.selectBorderless, selectBorderlessClass),
-      selectOpen: clsx(baseClasses.selectOpen, selectOpenClass),
-      dropdown: clsx(baseClasses.dropdown, dropdownClass),
-      dropdownItem: clsx(baseClasses.dropdownItem, dropdownItemClass),
-      dropdownItemSelected: clsx(baseClasses.dropdownItemSelected, dropdownItemSelectedClass),
+      ...baseStyles,
+      select: css.raw(baseStyles.select, selectCss),
+      selectCurrent: css.raw(baseStyles.selectCurrent, selectCurrentCss),
+      selectLabel: css.raw(baseStyles.selectLabel, selectLabelCss),
+      selectValue: css.raw(baseStyles.selectValue, selectValueCss),
+      selectIcon: css.raw(baseStyles.selectIcon, selectIconCss),
+      selectFullWidth: css.raw(baseStyles.selectFullWidth, selectFullWidthCss),
+      selectBorderless: css.raw(baseStyles.selectBorderless, selectBorderlessCss),
+      selectOpen: css.raw(baseStyles.selectOpen, selectOpenCss),
+      selectOpenIcon: css.raw(baseStyles.selectOpenIcon, selectOpenIconCss),
+      dropdown: css.raw(baseStyles.dropdown, dropdownCss),
+      dropdownItem: css.raw(baseStyles.dropdownItem, dropdownItemCss),
+      dropdownItemSelected: css.raw(baseStyles.dropdownItemSelected, dropdownItemSelectedCss),
     }),
     [
-      baseClasses,
-      selectClass,
-      selectCurrentClass,
-      selectLabelClass,
-      selectValueClass,
-      selectIconClass,
-      selectFullWidthClass,
-      selectBorderlessClass,
-      selectOpenClass,
-      dropdownClass,
-      dropdownItemClass,
-      dropdownItemSelectedClass,
+      selectCss,
+      selectCurrentCss,
+      selectLabelCss,
+      selectValueCss,
+      selectIconCss,
+      selectFullWidthCss,
+      selectBorderlessCss,
+      selectOpenCss,
+      selectOpenIconCss,
+      dropdownCss,
+      dropdownItemCss,
+      dropdownItemSelectedCss,
     ]
   );
   const allOptionEnabled = !!allLabel;
@@ -164,15 +163,16 @@ export const LabeledMultiSelect = memo(function LabeledMultiSelect<V extends str
       <button
         onClick={handleToggle}
         ref={anchorEl}
-        className={clsx(classes.select, {
-          [classes.selectBorderless]: borderless,
-          [classes.selectFullWidth]: fullWidth,
-          [classes.selectOpen]: isOpen,
-        })}
+        className={css(
+          styles.select,
+          borderless && styles.selectBorderless,
+          fullWidth && styles.selectFullWidth,
+          isOpen && styles.selectOpen
+        )}
       >
-        <div className={classes.selectCurrent}>
-          <div className={classes.selectLabel}>{label}</div>
-          <div className={classes.selectValue}>
+        <div className={css(styles.selectCurrent)}>
+          <div className={css(styles.selectLabel)}>{label}</div>
+          <div className={css(styles.selectValue)}>
             <SelectedItemComponent
               value={value}
               options={options}
@@ -181,13 +181,13 @@ export const LabeledMultiSelect = memo(function LabeledMultiSelect<V extends str
               countSelectedLabel={countSelectedLabel}
             />
           </div>
-          <ExpandMore className={classes.selectIcon} />
+          <ExpandMore className={css(styles.selectIcon, isOpen && styles.selectOpenIcon)} />
         </div>
         <Floating
           open={isOpen}
           anchorEl={anchorEl}
           placement="bottom-start"
-          className={classes.dropdown}
+          css={styles.dropdown}
           autoWidth={dropdownAutoWidth}
           autoHeight={dropdownAutoHeight}
           autoHide={dropdownAutoHide}
@@ -199,9 +199,7 @@ export const LabeledMultiSelect = memo(function LabeledMultiSelect<V extends str
               value={allKey}
               selected={allSelected}
               DropdownItemLabelComponent={DropdownItemLabelComponent}
-              className={clsx(classes.dropdownItem, {
-                [classes.dropdownItemSelected]: allSelected,
-              })}
+              css={css.raw(styles.dropdownItem, allSelected && styles.dropdownItemSelected)}
             />
           ) : null}
           {optionsList.map(({ value: optionValue, label }) => (
@@ -212,9 +210,10 @@ export const LabeledMultiSelect = memo(function LabeledMultiSelect<V extends str
               value={optionValue}
               selected={value.includes(optionValue)}
               DropdownItemLabelComponent={DropdownItemLabelComponent}
-              className={clsx(classes.dropdownItem, {
-                [classes.dropdownItemSelected]: value.includes(optionValue),
-              })}
+              css={css.raw(
+                styles.dropdownItem,
+                value.includes(optionValue) && styles.dropdownItemSelected
+              )}
             />
           ))}
         </Floating>

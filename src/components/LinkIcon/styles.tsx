@@ -1,26 +1,26 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  link: {
+export const styles = {
+  link: css.raw({
     display: 'inline-flex',
-    flexDirection: 'row' as const,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     textDecoration: 'none',
-    color: theme.palette.text.middle,
-    backgroundColor: theme.palette.background.buttons.button,
+    color: 'text.middle',
+    backgroundColor: 'bayOfMany',
     padding: '2px 8px',
     borderRadius: '4px',
     height: '28px',
     '&:hover': {
-      color: theme.palette.text.light,
-      backgroundColor: '#3F466D',
+      color: 'text.light',
+      backgroundColor: 'extracted3658',
       transition: 'color 0.1s',
     },
-  },
-  icon: {},
-  svgIcon: {
+  }),
+  icon: css.raw({}),
+  svgIcon: css.raw({
     width: '16px',
     height: '16px',
-  },
-});
+  }),
+};

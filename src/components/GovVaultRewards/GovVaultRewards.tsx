@@ -30,7 +30,14 @@ type GovVaultRewardsProps =
     };
 
 const _GovVaultRewards = connect(
-  (state: BeefyState, { vaultId }: { vaultId: VaultGov['id'] }): GovVaultRewardsProps => {
+  (
+    state: BeefyState,
+    {
+      vaultId,
+    }: {
+      vaultId: VaultGov['id'];
+    }
+  ): GovVaultRewardsProps => {
     const vault = selectGovVaultById(state, vaultId);
     const blurred = selectIsBalanceHidden(state);
     const walletAddress = selectWalletAddress(state);

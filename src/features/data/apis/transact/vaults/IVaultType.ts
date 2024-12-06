@@ -1,8 +1,8 @@
 import type {
+  VaultCowcentrated,
   VaultEntity,
   VaultGov,
   VaultStandard,
-  VaultCowcentrated,
 } from '../../../entities/vault';
 import type { BeefyStateFn } from '../../../../../redux-types';
 import type {
@@ -76,7 +76,12 @@ export interface ICowcentratedVaultType extends IVaultType {
 
 export type VaultType = IStandardVaultType | IGovVaultType | ICowcentratedVaultType;
 
-export type VaultTypeFromVault<T extends VaultEntity> = Extract<VaultType, { id: T['type'] }>;
+export type VaultTypeFromVault<T extends VaultEntity> = Extract<
+  VaultType,
+  {
+    id: T['type'];
+  }
+>;
 
 export type VaultTypeConstructor<T extends VaultEntity> = new (
   vault: T,

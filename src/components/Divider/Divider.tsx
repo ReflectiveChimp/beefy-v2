@@ -1,22 +1,25 @@
 import { ReactComponent as ArrowDown } from '../../images/icons/arrowDown.svg';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { memo } from 'react';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface DividerProps {
   onClick?: () => void;
-  clickleable?: boolean;
 }
 
-export const Divider = memo<DividerProps>(function Divider({ onClick, clickleable }) {
-  const classes = useStyles({ clickleable });
+export const Divider = memo(function Divider({ onClick }: DividerProps) {
+  const classes = useStyles();
   return (
     <div className={classes.customDivider}>
       <div className={classes.line} />
       <div className={classes.arrowContainer}>
-        <ArrowDown onClick={onClick} />
+        <ArrowDown
+          className={classes.arrowSvg}
+          onClick={onClick}
+          data-clickable={(onClick && true) || undefined}
+        />
       </div>
       <div className={classes.line} />
     </div>

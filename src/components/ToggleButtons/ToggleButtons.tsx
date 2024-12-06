@@ -1,17 +1,14 @@
 import type { FC, ReactNode } from 'react';
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
+import { styles as baseStyles } from './styles';
+import { css, type CssStyles } from '@repo/styles/css';
 import { ExtraOptionsList } from './components/ExtraOptionsList';
-
-const useStyles = makeStyles(styles);
 
 export type ToggleButtonProps = {
   value: string;
   label: ReactNode;
   onClick: (value: string) => void;
-  className?: string;
+  css?: CssStyles;
 };
 
 export type ToggleButtonsProps = {
@@ -19,47 +16,46 @@ export type ToggleButtonsProps = {
   options: Record<string, string>;
   extraOptions?: Record<string, string>;
   fullWidth?: boolean;
-  buttonsClass?: string;
-  buttonClass?: string;
-  selectedClass?: string;
-  untogglableClass?: string;
+  buttonsCss?: CssStyles;
+  buttonCss?: CssStyles;
+  selectedCss?: CssStyles;
+  untogglableCss?: CssStyles;
   onChange: (value: string) => void;
   ButtonComponent?: FC<ToggleButtonProps>;
   /** set this to 'all' key */
   untoggleValue?: string;
 };
 
-export const ToggleButton = memo<ToggleButtonProps>(function ToggleButton({
+export const ToggleButton = memo(function ToggleButton({
   value,
   label,
   onClick,
-  className,
-}) {
+  css: cssProp,
+}: ToggleButtonProps) {
   const handleClick = useCallback(() => {
     onClick(value);
   }, [value, onClick]);
 
   return (
-    <button className={className} onClick={handleClick}>
+    <button className={css(cssProp)} onClick={handleClick}>
       {label}
     </button>
   );
 });
 
-export const ToggleButtons = memo<ToggleButtonsProps>(function ToggleButtons({
+export const ToggleButtons = memo(function ToggleButtons({
   value,
   options,
   extraOptions,
   fullWidth,
-  buttonsClass,
-  buttonClass,
-  selectedClass,
-  untogglableClass,
+  buttonsCss,
+  buttonCss,
+  selectedCss,
+  untogglableCss,
   onChange,
   ButtonComponent = ToggleButton,
   untoggleValue,
-}) {
-  const baseClasses = useStyles();
+}: ToggleButtonsProps) {
   const optionsList = useMemo(
     () => Object.entries(options).map(([value, label]) => ({ value, label })),
     [options]
@@ -78,10 +74,12 @@ export const ToggleButtons = memo<ToggleButtonsProps>(function ToggleButtons({
 
   return (
     <div
-      className={clsx(baseClasses.buttons, buttonsClass, {
-        [baseClasses.fullWidth]: fullWidth,
-        [clsx(baseClasses.untogglable, untogglableClass)]: untoggleValue !== undefined,
-      })}
+      className={css(
+        baseStyles.buttons,
+        buttonsCss,
+        fullWidth && baseStyles.fullWidth,
+        untoggleValue !== undefined && css.raw(baseStyles.untogglable, untogglableCss)
+      )}
     >
       {optionsList.map(({ value: optionValue, label }) => (
         <ButtonComponent
@@ -89,9 +87,12 @@ export const ToggleButtons = memo<ToggleButtonsProps>(function ToggleButtons({
           value={optionValue}
           label={label}
           onClick={handleClick}
-          className={clsx(baseClasses.button, buttonClass, {
-            [clsx(baseClasses.selected, selectedClass)]: value === optionValue,
-          })}
+          css={css.raw(
+            baseStyles.button,
+            buttonCss,
+            value === optionValue && css.raw(baseStyles.selected, selectedCss),
+            untoggleValue !== undefined && baseStyles.untogglableButton
+          )}
         />
       ))}
       {extraOptions && (
@@ -100,8 +101,8 @@ export const ToggleButtons = memo<ToggleButtonsProps>(function ToggleButtons({
           extraOptions={extraOptions}
           onClick={handleClick}
           value={value}
-          buttonClass={buttonClass}
-          selectedClass={selectedClass}
+          buttonCss={buttonCss}
+          selectedCss={selectedCss}
         />
       )}
     </div>
@@ -113,19 +114,19 @@ export type MultiToggleButtonProps = Omit<ToggleButtonProps, 'onClick'> & {
   onClick: (isSelected: boolean, value: string) => void;
 };
 
-export const MultiToggleButton = memo<MultiToggleButtonProps>(function ToggleButton({
+export const MultiToggleButton = memo(function ToggleButton({
   value,
   label,
   onClick,
   isSelected,
-  className,
-}) {
+  css: cssProp,
+}: MultiToggleButtonProps) {
   const handleClick = useCallback(() => {
     onClick(!isSelected, value);
   }, [onClick, isSelected, value]);
 
   return (
-    <button className={className} onClick={handleClick}>
+    <button className={css(cssProp)} onClick={handleClick} data-selected={isSelected}>
       {label}
     </button>
   );
@@ -140,19 +141,18 @@ type MultiToggleButtonsProps = Omit<
   ButtonComponent?: FC<MultiToggleButtonProps>;
 };
 
-export const MultiToggleButtons = memo<MultiToggleButtonsProps>(function MultiToggleButtons({
+export const MultiToggleButtons = memo(function MultiToggleButtons({
   value,
   options,
   fullWidth,
-  buttonsClass,
-  buttonClass,
-  selectedClass,
-  untogglableClass,
+  buttonsCss,
+  buttonCss,
+  selectedCss,
+  untogglableCss,
   onChange,
   ButtonComponent = MultiToggleButton,
   untoggleValue,
-}) {
-  const baseClasses = useStyles();
+}: MultiToggleButtonsProps) {
   const optionsList = useMemo(
     () => Object.entries(options).map(([value, label]) => ({ value, label })),
     [options]
@@ -167,10 +167,12 @@ export const MultiToggleButtons = memo<MultiToggleButtonsProps>(function MultiTo
 
   return (
     <div
-      className={clsx(baseClasses.buttons, buttonsClass, {
-        [baseClasses.fullWidth]: fullWidth,
-        [clsx(baseClasses.untogglable, untogglableClass)]: untoggleValue !== undefined,
-      })}
+      className={css(
+        baseStyles.buttons,
+        buttonsCss,
+        fullWidth && baseStyles.fullWidth,
+        untoggleValue !== undefined && css.raw(baseStyles.untogglable, untogglableCss)
+      )}
     >
       {optionsList.map(({ value: optionValue, label }) => (
         <ButtonComponent
@@ -179,9 +181,12 @@ export const MultiToggleButtons = memo<MultiToggleButtonsProps>(function MultiTo
           label={label}
           isSelected={value.includes(optionValue)}
           onClick={handleClick}
-          className={clsx(baseClasses.button, buttonClass, {
-            [clsx(baseClasses.selected, selectedClass)]: value.includes(optionValue),
-          })}
+          css={css.raw(
+            baseStyles.button,
+            buttonCss,
+            value.includes(optionValue) && css.raw(baseStyles.selected, selectedCss),
+            untoggleValue !== undefined && baseStyles.untogglableButton
+          )}
         />
       ))}
     </div>

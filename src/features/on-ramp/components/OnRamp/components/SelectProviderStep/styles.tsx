@@ -1,29 +1,29 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  icon: {
+export const styles = {
+  icon: css.raw({
     width: '24px',
     height: '24px',
     borderRadius: '50%',
     marginRight: '8px',
-  },
-  iconLoading: {
-    background: 'rgba(255, 255, 255, 0.12);',
-  },
-  iconProvider: {
+  }),
+  iconLoading: css.raw({
+    background: 'whiteo11;',
+  }),
+  iconProvider: css.raw({
     background: 'red',
-  },
-  provider: {
+  }),
+  provider: css.raw({
     marginRight: '8px',
-  },
-  rate: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.dark,
+  }),
+  rate: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
     marginRight: '8px',
-  },
-  arrow: {
+  }),
+  arrow: css.raw({
     marginLeft: 'auto',
-    color: theme.palette.text.middle,
+    color: 'text.middle',
     height: '24px',
-  },
-});
+  }),
+};

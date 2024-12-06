@@ -77,9 +77,17 @@ export type UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart = {
   /** total diff from all reward pools */
   rewardPoolDiff: BigNumber;
   /** details of each reward pool */
-  rewardPoolDetails: NonEmptyArray<{ address: string; balance: BigNumber; diff: BigNumber }>;
+  rewardPoolDetails: NonEmptyArray<{
+    address: string;
+    balance: BigNumber;
+    diff: BigNumber;
+  }>;
   /** reward details */
-  rewardPoolClaimedDetails: { address: string; rewardToUsd: BigNumber; claimedAmount: BigNumber }[];
+  rewardPoolClaimedDetails: {
+    address: string;
+    rewardToUsd: BigNumber;
+    claimedAmount: BigNumber;
+  }[];
   /** reward pool from which rewards were claimed */
   claimedRewardPool: string | undefined;
 };
@@ -129,7 +137,11 @@ export type TimelineEntryCowcentratedPool = {
   usdBalance: BigNumber;
   usdDiff: BigNumber;
   actions: TimelineActionClm[];
-  rewardPoolClaimedDetails: { address: string; rewardToUsd: BigNumber; claimedAmount: BigNumber }[];
+  rewardPoolClaimedDetails: {
+    address: string;
+    rewardToUsd: BigNumber;
+    claimedAmount: BigNumber;
+  }[];
 };
 
 type UnprocessedTimelineEntryCowcentratedVaultBasePart = {
@@ -171,7 +183,11 @@ export type UnprocessedTimelineEntryCowcentratedVaultWithRewardPoolsPart = {
   /** total diff from all reward pools */
   rewardPoolDiff: BigNumber;
   /** details of each reward pool */
-  rewardPoolDetails: NonEmptyArray<{ address: string; balance: BigNumber; diff: BigNumber }>;
+  rewardPoolDetails: NonEmptyArray<{
+    address: string;
+    balance: BigNumber;
+    diff: BigNumber;
+  }>;
 };
 
 export type UnprocessedTimelineEntryCowcentratedVaultWithoutRewardPool =
@@ -218,7 +234,11 @@ export type TimelineEntryCowcentratedVault = {
   usdBalance: BigNumber;
   usdDiff: BigNumber;
   actions: TimelineActionClassic[];
-  rewardPoolClaimedDetails: { address: string; rewardToUsd: BigNumber; claimedAmount: BigNumber }[];
+  rewardPoolClaimedDetails: {
+    address: string;
+    rewardToUsd: BigNumber;
+    claimedAmount: BigNumber;
+  }[];
 };
 
 export type AnyTimelineEntry =

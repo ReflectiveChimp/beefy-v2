@@ -8,9 +8,12 @@ import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { useAppSelector } from '../../store';
 import { ApyTooltipContent } from '../VaultStats/VaultApyStat';
 
-type ApyStatsProps = { vaultId: VaultEntity['id']; type: 'yearly' | 'daily' };
+type ApyStatsProps = {
+  vaultId: VaultEntity['id'];
+  type: 'yearly' | 'daily';
+};
 
-export const ApyStats = memo<ApyStatsProps>(function ApyStats({ vaultId, type }) {
+export const ApyStats = memo(function ApyStats({ vaultId, type }: ApyStatsProps) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
   const label = useMemo(

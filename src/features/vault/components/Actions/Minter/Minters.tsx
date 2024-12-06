@@ -13,7 +13,7 @@ export type MinterCardsParams = PropsWithChildren<{
   vaultId: VaultEntity['id'];
 }>;
 
-export const Minters = memo<MinterCardsParams>(function Minters({ vaultId }) {
+export const Minters = memo(function Minters({ vaultId }: MinterCardsParams) {
   const dispatch = useAppDispatch();
   const shouldInitMinters = useAppSelector(selectShouldInitMinters);
   const minterCardIds = useAppSelector(state => selectMintersByVaultId(state, vaultId));

@@ -1,5 +1,5 @@
-import { createTheme } from '@material-ui/core/styles';
 import type { ThemeOptions } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import type { TypographyStyleOptions } from '@material-ui/core/styles/createTypography';
 import { featureFlag_breakpoints } from './features/data/utils/feature-flags';
 

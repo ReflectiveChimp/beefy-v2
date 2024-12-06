@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { memo, useEffect } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { selectBridgeFormStep } from '../../../data/selectors/bridge';
@@ -15,7 +15,7 @@ import { LoadingStep } from './components/LoadingStep';
 import { selectIsConfigAvailable } from '../../../data/selectors/data-loader';
 import { TransactionStep } from './components/TransactionStep';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const stepToComponent: Record<FormStep, FC> = {
   [FormStep.Loading]: LoadingStep,

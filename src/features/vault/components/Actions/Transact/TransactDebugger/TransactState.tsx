@@ -1,10 +1,10 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useAppSelector } from '../../../../../../store';
 import type { BeefyState } from '../../../../../../redux-types';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function selectTransactState(state: BeefyState) {
   return state.ui.transact;

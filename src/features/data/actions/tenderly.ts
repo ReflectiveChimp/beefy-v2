@@ -1,4 +1,4 @@
-import { type ThunkDispatch, type AnyAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { type AnyAction, createAsyncThunk, type ThunkDispatch } from '@reduxjs/toolkit';
 import type { AbstractProvider } from 'web3-core';
 import type { Step } from '../reducers/wallet/stepper';
 import type { BeefyState } from '../../../redux-types';
@@ -169,7 +169,9 @@ type TenderlySaveConfigPayload = {
 export const tenderlyLogin = createAsyncThunk<
   TenderlySaveConfigPayload,
   TenderlySaveConfigParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('tenderly/saveConfig', async ({ credentials }) => {
   const api = new TenderlyApi(credentials);
 
@@ -192,7 +194,9 @@ type TenderlySimulateTransactQuoteParams = {
 export const tenderlySimulateTransactQuote = createAsyncThunk<
   TenderlyOpenSimulationPayload,
   TenderlySimulateTransactQuoteParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('tenderly/simulateTransactQuote', async ({ option, quote, t }, { getState, dispatch }) => {
   const steps = await getTransactSteps(quote, t, getState);
   const txs = await captureTransactionsFromSteps(steps, dispatch);
@@ -208,7 +212,9 @@ type TenderlyStellaSwapClaimButtonParams = {
 export const tenderlySimulateStellaSwapClaim = createAsyncThunk<
   TenderlyOpenSimulationPayload,
   TenderlyStellaSwapClaimButtonParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('tenderly/simulateStellaSwapClaim', async ({ chainId, vaultId, t }, { dispatch }) => {
   const steps: Step[] = [
     {
@@ -230,7 +236,9 @@ type TenderlyMerklClaimButtonParams = {
 export const tenderlySimulateMerklClaim = createAsyncThunk<
   TenderlyOpenSimulationPayload,
   TenderlyMerklClaimButtonParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('tenderly/simulateMerklClaim', async ({ chainId, t }, { dispatch }) => {
   const steps: Step[] = [
     {
@@ -249,7 +257,9 @@ export type TenderlySimulateConfig = {
   save: 'always' | 'if-fails' | 'never';
 };
 
-export type TenderlySimulateParams = { config: TenderlySimulateConfig };
+export type TenderlySimulateParams = {
+  config: TenderlySimulateConfig;
+};
 
 export type TenderlySimulatePayload = {
   chainId: ChainId;
@@ -284,7 +294,7 @@ export const tenderlySimulate = createAsyncThunk<
       from: call.from,
       to: call.to,
       input: call.data,
-      gas: 80_00_000,
+      gas: 8000000,
       value: call.value || '0',
       save: config.save === 'always',
       save_if_fails: config.save === 'if-fails',

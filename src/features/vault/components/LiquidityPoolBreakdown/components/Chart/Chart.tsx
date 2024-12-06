@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, useCallback, useMemo, useState } from 'react';
 import type { CalculatedAsset } from '../../types';
 import type { PieProps } from 'recharts';
@@ -6,7 +6,7 @@ import { Cell, Pie, PieChart, Sector } from 'recharts';
 import { styles } from './styles';
 import { formatLargePercent } from '../../../../../../helpers/format';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type ActiveShapeProps = {
   cx: number;
@@ -64,7 +64,7 @@ export type ChartProps = {
   assets: CalculatedAsset[];
   isUnderlying?: boolean;
 };
-export const Chart = memo<ChartProps>(function Chart({ assets, isUnderlying }) {
+export const Chart = memo(function Chart({ assets, isUnderlying }: ChartProps) {
   const classes = useStyles();
   const [activeIndex, setActiveIndex] = useState<undefined | number>(undefined);
   const onPieEnter = useCallback<Exclude<PieProps['onMouseEnter'], undefined>>(

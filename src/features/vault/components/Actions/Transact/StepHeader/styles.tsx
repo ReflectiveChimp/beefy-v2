@@ -1,11 +1,11 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
-    ...theme.typography['body-lg-med'],
-    position: 'relative' as const,
-    color: theme.palette.text.middle,
-    background: theme.palette.background.contentDark,
+export const styles = {
+  container: css.raw({
+    textStyle: 'body.med',
+    position: 'relative',
+    color: 'text.middle',
+    background: 'background.content.dark',
     padding: '16px 24px',
     borderTopLeftRadius: '12px',
     borderTopRightRadius: '12px',
@@ -14,34 +14,34 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     '&::after': {
       content: '""',
-      position: 'absolute' as const,
-      left: 0,
-      bottom: 0,
-      right: 0,
+      position: 'absolute',
+      left: '0',
+      bottom: '0',
+      right: '0',
       height: '2px',
-      background: theme.palette.background.border,
+      background: 'bayOfMany',
     },
-  },
-  backButton: {
-    margin: 0,
-    padding: 0,
+  }),
+  backButton: css.raw({
+    margin: '0',
+    padding: '0',
     borderRadius: '50%',
     width: '24px',
     height: '24px',
-    background: theme.palette.background.border,
+    background: 'bayOfMany',
     boxShadow: 'none',
     cursor: 'pointer',
     border: 'none',
-    color: theme.palette.text.light,
-    flexShrink: 0,
-    flexGrow: 0,
+    color: 'text.light',
+    flexShrink: '0',
+    flexGrow: '0',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  backIcon: {
-    fill: theme.palette.text.light,
+  }),
+  backIcon: css.raw({
+    fill: 'text.light',
     width: '12px',
     height: '9px',
-  },
-});
+  }),
+};

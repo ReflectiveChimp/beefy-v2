@@ -1,10 +1,8 @@
 import { memo, useCallback, useState } from 'react';
-import { InputBase, makeStyles } from '@material-ui/core';
+import { InputBase } from '@material-ui/core';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
-
-const useStyles = makeStyles(styles);
 
 function isValidNumberInputString(value: string, maxDecimals: number): boolean {
   const regex = new RegExp(`^[0-9]*\\.?[0-9]{0,${maxDecimals}}$`);
@@ -32,18 +30,17 @@ export type AmountInputProps = {
   value: number;
   onChange: (value: number | undefined) => void;
   error?: boolean;
-  className?: string;
+  css?: CssStyles;
   endAdornment?: InputBaseProps['endAdornment'];
 };
-export const AmountInput = memo<AmountInputProps>(function AmountInput({
+export const AmountInput = memo(function AmountInput({
   value,
   onChange,
   maxDecimals = 2,
   error = false,
-  className,
+  css: cssProp,
   endAdornment,
-}) {
-  const classes = useStyles();
+}: AmountInputProps) {
   // Initial value to string
   const [input, setInput] = useState(() => {
     return numberToString(value, maxDecimals);
@@ -100,7 +97,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
 
   return (
     <InputBase
-      className={clsx(classes.input, className, { [classes.error]: error })}
+      className={css(styles.input, cssProp, error && styles.error)}
       value={input}
       onChange={handleChange}
       onBlur={handleBlur}

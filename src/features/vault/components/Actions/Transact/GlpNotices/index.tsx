@@ -14,10 +14,10 @@ type GlpDepositNoticeProps = {
   vaultId: VaultEntity['id'];
   onChange: (isLocked: boolean) => void;
 };
-export const GlpDepositNotice = memo<GlpDepositNoticeProps>(function GlpDepositNotice({
+export const GlpDepositNotice = memo(function GlpDepositNotice({
   vaultId,
   onChange,
-}) {
+}: GlpDepositNoticeProps) {
   if (vaultId in enableForVaults) {
     return (
       <GlpDepositNoticeImpl
@@ -35,10 +35,10 @@ type GlpWithdrawNoticeProps = {
   vaultId: VaultEntity['id'];
   onChange: (isLocked: boolean) => void;
 };
-export const GlpWithdrawNotice = memo<GlpWithdrawNoticeProps>(function GlpWithdrawNotice({
+export const GlpWithdrawNotice = memo(function GlpWithdrawNotice({
   vaultId,
   onChange,
-}) {
+}: GlpWithdrawNoticeProps) {
   if (vaultId in enableForVaults) {
     return (
       <GlpWithdrawNoticeImpl

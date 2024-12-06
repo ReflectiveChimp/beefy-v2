@@ -8,19 +8,15 @@ import { selectHistoricalAvailableCharts } from '../../../data/selectors/histori
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { StatSwitcher } from '../StatSwitcher';
 import { GraphWithControls } from './GraphWithControls';
-import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { getDefaultStat } from './utils';
 import { CurrentCowcentratedRangeIfAvailable } from './CurrentCowcentratedRange';
 import type { ChartStat } from './types';
 
-const useStyles = makeStyles(styles);
-
 type HistoricGraphsProps = {
   vaultId: VaultEntity['id'];
 };
-export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs({ vaultId }) {
-  const classes = useStyles();
+export const HistoricGraphs = memo(function HistoricGraphs({ vaultId }: HistoricGraphsProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const { oracleId } = useAppSelector(state =>
@@ -44,12 +40,12 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
   }, []);
 
   return (
-    <Card className={classes.container}>
-      <CardHeader className={classes.header}>
+    <Card css={styles.container}>
+      <CardHeader css={styles.header}>
         <CardTitle title={t('Graph-RateHist')} />
         <StatSwitcher<ChartStat> stat={stat} options={options} onChange={setStat} />
       </CardHeader>
-      <CardContent className={classes.content}>
+      <CardContent css={styles.content}>
         {stat === 'clm' && (
           <CurrentCowcentratedRangeIfAvailable
             inverted={inverted}

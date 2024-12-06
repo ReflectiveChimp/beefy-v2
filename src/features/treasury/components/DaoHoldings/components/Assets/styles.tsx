@@ -1,37 +1,37 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  assetsContainer: {
+export const styles = {
+  assetsContainer: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     marginTop: '2px',
     rowGap: '2px',
     '& div:last-child': {
       borderRadius: '0px 0px 8px 8px',
     },
-  },
-  filter: {
+  }),
+  filter: css.raw({
     display: 'grid',
     padding: '16px 24px',
     gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
-    backgroundColor: theme.palette.background.contentDark,
+    backgroundColor: 'background.content.dark',
     '& div': {
-      ...theme.typography['subline-sm'],
-      color: theme.palette.text.dark,
-      fontWeight: 700,
+      textStyle: 'subline.sm',
+      color: 'text.dark',
+      fontWeight: '700',
     },
-    [theme.breakpoints.down('md')]: {
+    lgDown: {
       padding: '16px',
     },
-  },
-  assetTypes: {
-    backgroundColor: theme.palette.background.contentDark,
+  }),
+  assetTypes: css.raw({
+    backgroundColor: 'background.content.dark',
     padding: '8px 16px',
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-    fontWeight: 700,
-  },
-  sortColumn: {
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+    fontWeight: '700',
+  }),
+  sortColumn: css.raw({
     justifyContent: 'flex-start',
-  },
-});
+  }),
+};

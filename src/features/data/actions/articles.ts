@@ -6,7 +6,9 @@ import { getBeefyApi } from '../apis/instances';
 export const fetchLastArticle = createAsyncThunk<
   BeefyLastArticleResponse,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('articles/fetchLastArticle', async () => {
   const api = await getBeefyApi();
 

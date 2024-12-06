@@ -62,7 +62,9 @@ export type BeefyBlock = {
   totalDifficulty: BigNumber;
   uncles: string[];
 };
-export type BeefyBlockWithTransactions = BeefyBlock & { transactions: Transaction[] };
+export type BeefyBlockWithTransactions = BeefyBlock & {
+  transactions: Transaction[];
+};
 
 type RawFeeHistoryResult = {
   baseFeePerGas: string[];

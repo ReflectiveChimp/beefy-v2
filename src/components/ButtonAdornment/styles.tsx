@@ -1,28 +1,28 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  button: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
+export const styles = {
+  button: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
     background: 'transparent',
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
     display: 'flex',
     alignItems: 'center',
-    margin: 0,
-    padding: 0,
-    whiteSpace: 'nowrap' as const,
-    cursor: 'pointer' as const,
+    margin: '0',
+    padding: '0',
+    whiteSpace: 'nowrap',
+    cursor: 'pointer',
     '&:hover, &:focus-visible': {
-      color: theme.palette.text.light,
-      '& $arrow': {
-        color: theme.palette.text.middle,
+      color: 'text.light',
+      '& > .button-arrow': {
+        color: 'text.middle',
       },
     },
-  },
-  arrow: {
-    color: theme.palette.text.dark,
+  }),
+  arrow: css.raw({
+    color: 'text.dark',
     height: '24px',
-  },
-});
+  }),
+};

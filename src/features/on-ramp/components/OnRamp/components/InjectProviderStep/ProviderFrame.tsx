@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useAppSelector } from '../../../../../../store';
 import { selectSelectedQuote } from '../../../../../data/selectors/on-ramp';
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet';
 import { useAsync } from '../../../../../../helpers/useAsync';
@@ -9,9 +9,9 @@ import { LoadingIndicator } from '../../../../../../components/LoadingIndicator'
 import { PROVIDERS } from '../../providers';
 import { ErrorIndicator } from '../ErrorIndicator';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const ProviderFrame = memo(function ProviderFrame() {
   const classes = useStyles();
@@ -40,14 +40,14 @@ export const ProviderFrame = memo(function ProviderFrame() {
         height="100%"
         frameBorder="0"
         title={title}
-        className={clsx(classes.iframe, classes.iframeMtPellerin)}
+        className={css(styles.iframe, styles.iframeMtPellerin)}
         allow="usb; ethereum; clipboard-write; payment; microphone; camera"
         loading="lazy"
       />
     )
   ) : urlError || (urlStatus === 'success' && !url) ? (
     <ErrorIndicator
-      className={classes.error}
+      css={styles.error}
       title={t('OnRamp-InjectProviderStep-Error', { provider: title })}
       content={urlError?.message || 'Unknown error'}
     />

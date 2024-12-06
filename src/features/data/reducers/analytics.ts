@@ -65,7 +65,9 @@ export const analyticsSlice = createSlice({
           vaultId: VaultEntity['id'];
           timeBucket: GraphBucket;
         },
-        BeefyMetaThunkConfig<{ since: number }>
+        BeefyMetaThunkConfig<{
+          since: number;
+        }>
       >
     ) {
       builder

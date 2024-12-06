@@ -1,12 +1,12 @@
 import { memo, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import {
   isTimelineEntryStandard,
   type TimelineEntryCowcentratedPool,
   type TimelineEntryStandard,
 } from '../../../../../../../data/entities/analytics';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 import { formatISO9075 } from 'date-fns';
 import {
   formatLargeUsd,
@@ -31,7 +31,7 @@ import { TokenImage } from '../../../../../../../../components/TokenImage/TokenI
 import type { TokenEntity } from '../../../../../../../data/entities/token';
 import { type BigNumber } from 'bignumber.js';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type TransactionProps = {
   tx: TimelineEntryStandard | TimelineEntryCowcentratedPool;
@@ -46,77 +46,68 @@ type TransactionStatProps<
   mobile?: boolean;
 };
 
-const StandardAmountStat = memo<TransactionStatProps<TimelineEntryStandard>>(
-  function StandardAmountStat({ tx, mobile }) {
-    const classes = useStyles();
-    const { underlyingDiff } = tx;
-    const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, tx.vaultId));
+const StandardAmountStat = memo(function StandardAmountStat({
+  tx,
+  mobile,
+}: TransactionStatProps<TimelineEntryStandard>) {
+  const { underlyingDiff } = tx;
+  const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, tx.vaultId));
 
-    return (
-      <TokenAmount
-        className={clsx(
-          underlyingDiff.gt(BIG_ZERO) ? classes.textGreen : classes.textRed,
-          mobile ? classes.statMobile : classes.stat
-        )}
-        amount={underlyingDiff}
-        decimals={depositToken.decimals}
-      />
-    );
-  }
-);
+  return (
+    <TokenAmount
+      css={css.raw(
+        underlyingDiff.gt(BIG_ZERO) ? styles.textGreen : styles.textRed,
+        mobile ? styles.statMobile : styles.stat
+      )}
+      amount={underlyingDiff}
+      decimals={depositToken.decimals}
+    />
+  );
+});
 
-const CowcentratedAmountStat = memo<TransactionStatProps<TimelineEntryCowcentratedPool>>(
-  function CowcentratedAmountStat({ tx, mobile }) {
-    const classes = useStyles();
-    const { underlying0Diff, underlying1Diff } = tx;
-    const [token0, token1] = useAppSelector(state =>
-      selectCowcentratedLikeVaultDepositTokens(state, tx.vaultId)
-    );
-    const variant0 = underlying0Diff.isZero()
-      ? 'neutral'
-      : underlying0Diff.gt(BIG_ZERO)
-      ? 'positive'
-      : 'negative';
-    const variant1 = underlying1Diff.isZero()
-      ? 'neutral'
-      : underlying1Diff.gt(BIG_ZERO)
-      ? 'positive'
-      : 'negative';
+const CowcentratedAmountStat = memo(function CowcentratedAmountStat({
+  tx,
+  mobile,
+}: TransactionStatProps<TimelineEntryCowcentratedPool>) {
+  const classes = useStyles();
+  const { underlying0Diff, underlying1Diff } = tx;
+  const [token0, token1] = useAppSelector(state =>
+    selectCowcentratedLikeVaultDepositTokens(state, tx.vaultId)
+  );
+  const variant0 = underlying0Diff.isZero()
+    ? 'neutral'
+    : underlying0Diff.gt(BIG_ZERO)
+    ? 'positive'
+    : 'negative';
+  const variant1 = underlying1Diff.isZero()
+    ? 'neutral'
+    : underlying1Diff.gt(BIG_ZERO)
+    ? 'positive'
+    : 'negative';
 
-    return (
-      <div className={classes.cowcentratedTokenAmounts}>
-        <TokenIconAmount
-          token={token0}
-          amount={underlying0Diff}
-          mobile={mobile}
-          variant={variant0}
-        />
-        <TokenIconAmount
-          token={token1}
-          amount={underlying1Diff}
-          mobile={mobile}
-          variant={variant1}
-        />
-      </div>
-    );
-  }
-);
+  return (
+    <div className={classes.cowcentratedTokenAmounts}>
+      <TokenIconAmount token={token0} amount={underlying0Diff} mobile={mobile} variant={variant0} />
+      <TokenIconAmount token={token1} amount={underlying1Diff} mobile={mobile} variant={variant1} />
+    </div>
+  );
+});
 
-const StandardBalanceStat = memo<TransactionStatProps<TimelineEntryStandard>>(
-  function StandardBalanceStat({ tx, mobile }) {
-    const classes = useStyles();
-    const { shareBalance, shareToUnderlyingPrice } = tx;
-    const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, tx.vaultId));
+const StandardBalanceStat = memo(function StandardBalanceStat({
+  tx,
+  mobile,
+}: TransactionStatProps<TimelineEntryStandard>) {
+  const { shareBalance, shareToUnderlyingPrice } = tx;
+  const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, tx.vaultId));
 
-    return (
-      <TokenAmount
-        amount={shareBalance.times(shareToUnderlyingPrice)}
-        decimals={depositToken.decimals}
-        className={mobile ? classes.statMobile : classes.stat}
-      />
-    );
-  }
-);
+  return (
+    <TokenAmount
+      amount={shareBalance.times(shareToUnderlyingPrice)}
+      decimals={depositToken.decimals}
+      css={mobile ? styles.statMobile : styles.stat}
+    />
+  );
+});
 
 type TokenIconAmountProps = {
   token: TokenEntity;
@@ -125,51 +116,51 @@ type TokenIconAmountProps = {
   mobile?: boolean;
 };
 
-const TokenIconAmount = memo<TokenIconAmountProps>(function IconTokenAmount({
+const TokenIconAmount = memo(function IconTokenAmount({
   token,
   amount,
   mobile,
   variant = 'neutral',
-}) {
-  const classes = useStyles();
-
+}: TokenIconAmountProps) {
   return (
     <div
-      className={clsx(classes.tokenIconAmount, {
-        [classes.tokenIconAmountMobile]: mobile === true,
-        [classes.tokenIconAmountPositive]: variant === 'positive',
-        [classes.tokenIconAmountNegative]: variant === 'negative',
-      })}
+      className={css(
+        styles.tokenIconAmount,
+        mobile === true && styles.tokenIconAmountMobile,
+        variant === 'positive' && styles.tokenIconAmountPositive,
+        variant === 'negative' && styles.tokenIconAmountNegative
+      )}
     >
       <TokenImage
-        className={classes.tokenIcon}
+        css={styles.tokenIcon}
         tokenAddress={token.address}
         chainId={token.chainId}
         size={16}
       />
-      <TokenAmount amount={amount} decimals={18} className={classes.tokenAmount} />
+      <TokenAmount amount={amount} decimals={18} css={styles.tokenAmount} />
     </div>
   );
 });
 
-const CowcentratedBalanceStat = memo<TransactionStatProps<TimelineEntryCowcentratedPool>>(
-  function CowcentratedBalanceStat({ tx, mobile }) {
-    const classes = useStyles();
-    const { underlying0Balance, underlying1Balance } = tx;
-    const [token0, token1] = useAppSelector(state =>
-      selectCowcentratedLikeVaultDepositTokens(state, tx.vaultId)
-    );
+const CowcentratedBalanceStat = memo(function CowcentratedBalanceStat({
+  tx,
+  mobile,
+}: TransactionStatProps<TimelineEntryCowcentratedPool>) {
+  const classes = useStyles();
+  const { underlying0Balance, underlying1Balance } = tx;
+  const [token0, token1] = useAppSelector(state =>
+    selectCowcentratedLikeVaultDepositTokens(state, tx.vaultId)
+  );
 
-    return (
-      <div className={classes.cowcentratedTokenAmounts}>
-        <TokenIconAmount token={token0} amount={underlying0Balance} mobile={mobile} />
-        <TokenIconAmount token={token1} amount={underlying1Balance} mobile={mobile} />
-      </div>
-    );
-  }
-);
+  return (
+    <div className={classes.cowcentratedTokenAmounts}>
+      <TokenIconAmount token={token0} amount={underlying0Balance} mobile={mobile} />
+      <TokenIconAmount token={token1} amount={underlying1Balance} mobile={mobile} />
+    </div>
+  );
+});
 
-export const Transaction = memo<TransactionProps>(function Transaction({ tx }) {
+export const Transaction = memo(function Transaction({ tx }: TransactionProps) {
   const classes = useStyles();
   const isStandard = isTimelineEntryStandard(tx);
   const chainId = isStandard ? tx.source?.chain || tx.chain : tx.chain;
@@ -178,13 +169,13 @@ export const Transaction = memo<TransactionProps>(function Transaction({ tx }) {
 
   return (
     <Row
-      className={clsx({
-        [classes.txCurrent]: tx.timeline === 'current',
-        [classes.txPast]: tx.timeline === 'past',
-      })}
+      css={css.raw(
+        tx.timeline === 'current' && styles.txCurrent,
+        tx.timeline === 'past' && styles.txPast
+      )}
     >
       {/* Date */}
-      <div className={clsx(classes.stat, classes.textFlexStart)}>
+      <div className={css(styles.stat, styles.textFlexStart)}>
         <img
           src={getNetworkSrc(chain.id)}
           alt={chain.name}
@@ -216,7 +207,7 @@ export const Transaction = memo<TransactionProps>(function Transaction({ tx }) {
         </div>
         {/*MooTokenBal */}
         <div className={classes.column}>
-          <TokenAmount amount={shareBalance} decimals={18} className={classes.stat} />
+          <TokenAmount amount={shareBalance} decimals={18} css={styles.stat} />
         </div>
         {/*Usd Balance */}
         <div className={classes.column}>
@@ -227,7 +218,7 @@ export const Transaction = memo<TransactionProps>(function Transaction({ tx }) {
   );
 });
 
-export const TransactionMobile = memo<TransactionProps>(function TransactionMobile({ tx }) {
+export const TransactionMobile = memo(function TransactionMobile({ tx }: TransactionProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const isStandard = isTimelineEntryStandard(tx);
@@ -241,12 +232,13 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
 
   return (
     <RowMobile
-      className={clsx(classes.gridMobile, {
-        [classes.txCurrent]: tx.timeline === 'current',
-        [classes.txPast]: tx.timeline === 'past',
-      })}
+      css={css.raw(
+        styles.gridMobile,
+        tx.timeline === 'current' && styles.txCurrent,
+        tx.timeline === 'past' && styles.txPast
+      )}
     >
-      <VaultNetwork className={classes.vaultNetwork} chainId={chainId} />
+      <VaultNetwork css={styles.vaultNetwork} chainId={chainId} />
       <InfoGrid>
         {isStandard ? (
           <StandardAmountStat tx={tx} mobile />
@@ -268,13 +260,13 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
             formatISO9075(datetime, { representation: 'date' })
           )}
         </div>
-        <div className={clsx(classes.statMobile, classes.textDark)}>
+        <div className={css(styles.statMobile, styles.textDark)}>
           {formatISO9075(datetime, { representation: 'time' })}
         </div>
       </InfoGrid>
       <InfoGrid>
         <MobileStat
-          valueClassName={classes.textOverflow}
+          valueCss={styles.textOverflow}
           label={t('Dashboard-Filter-Balance')}
           value={
             isStandard ? (
@@ -285,7 +277,7 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
           }
         />
         <MobileStat
-          valueClassName={classes.textOverflow}
+          valueCss={styles.textOverflow}
           label={t('Dashboard-Filter-MooTokens')}
           value={mooTokenBal}
         />

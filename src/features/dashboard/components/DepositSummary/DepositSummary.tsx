@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatLargeUsd } from '../../../../helpers/format';
@@ -15,17 +15,17 @@ import { ShortAddress } from '../ShortAddress';
 import { Container } from '../../../../components/Container/Container';
 import { selectUserTotalYieldUsd } from '../../../data/selectors/dashboard';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface DepositSummaryProps {
   address: string;
   addressLabel?: string;
 }
 
-export const DepositSummary = memo<DepositSummaryProps>(function DepositSummary({
+export const DepositSummary = memo(function DepositSummary({
   address,
   addressLabel,
-}) {
+}: DepositSummaryProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const stats = useAppSelector(state => selectUserGlobalStats(state, address));

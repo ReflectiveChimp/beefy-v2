@@ -19,8 +19,10 @@ export const InjectProviderStep = memo(function InjectProviderStep() {
   return <ProviderNotSupported provider={quote.provider} />;
 });
 
-const ProviderNotSupported = memo<{ provider: string }>(function ProviderNotSupported({
+const ProviderNotSupported = memo(function ProviderNotSupported({
   provider,
+}: {
+  provider: string;
 }) {
   const { t } = useTranslation();
 
@@ -41,7 +43,7 @@ const ProviderNotSupported = memo<{ provider: string }>(function ProviderNotSupp
   );
 });
 
-const Provider = memo<{ provider: string }>(function Provider({ provider }) {
+const Provider = memo(function Provider({ provider }: { provider: string }) {
   const { title } = PROVIDERS[provider];
 
   const dispatch = useAppDispatch();

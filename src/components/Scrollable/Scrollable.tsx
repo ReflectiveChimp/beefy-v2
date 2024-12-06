@@ -1,29 +1,19 @@
-import type { ReactNode } from 'react';
-import { forwardRef, memo, useCallback, useState } from 'react';
+import { forwardRef, memo, type ReactNode, useCallback, useMemo, useState } from 'react';
 import type { ScrollbarProps } from 'react-custom-scrollbars-2';
 import { Scrollbars as ScrollContainer } from 'react-custom-scrollbars-2';
-import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import clsx from 'clsx';
-
-const useStyles = makeStyles(styles);
+import { css, type CssStyles, cx } from '@repo/styles/css';
 
 export type ScrollDirection = 'horizontal' | 'vertical';
 
 type ThumbProps = {
   mode: ScrollDirection;
-  className?: string;
+  css?: CssStyles;
 };
 const Thumb = memo(
-  forwardRef<HTMLDivElement, ThumbProps>(function ({ mode, className, ...props }, ref) {
-    const classes = useStyles();
-
+  forwardRef<HTMLDivElement, ThumbProps>(function ({ mode, css: cssProp, ...props }, ref) {
     return (
-      <div
-        {...props}
-        ref={ref}
-        className={clsx(classes.thumb, classes[`${mode}Thumb`], className)}
-      />
+      <div {...props} ref={ref} className={css(styles.thumb, styles[`${mode}Thumb`], cssProp)} />
     );
   })
 );
@@ -41,9 +31,7 @@ type TrackProps = {
 };
 const Track = memo(
   forwardRef<HTMLDivElement, TrackProps>(function ({ mode, ...props }, ref) {
-    const classes = useStyles();
-
-    return <div {...props} ref={ref} className={clsx(classes.track, classes[`${mode}Track`])} />;
+    return <div {...props} ref={ref} className={css(styles.track, styles[`${mode}Track`])} />;
   })
 );
 
@@ -58,26 +46,25 @@ function renderTrackVertical(props) {
 export type ScrollableProps = {
   children: ReactNode;
   autoHeight?: boolean | number;
-  className?: string;
-  shadowClassName?: string;
-  topShadowClassName?: string;
-  bottomShadowClassName?: string;
-  leftShadowClassName?: string;
-  rightShadowClassName?: string;
-  thumbClassName?: string;
+  css?: CssStyles;
+  shadowCss?: CssStyles;
+  topShadowCss?: CssStyles;
+  bottomShadowCss?: CssStyles;
+  leftShadowCss?: CssStyles;
+  rightShadowCss?: CssStyles;
+  thumbCss?: CssStyles;
 };
-export const Scrollable = memo<ScrollableProps>(function Scrollable({
+export const Scrollable = memo(function Scrollable({
   children,
-  className,
-  shadowClassName,
-  topShadowClassName,
-  bottomShadowClassName,
-  leftShadowClassName,
-  rightShadowClassName,
-  thumbClassName,
+  css: cssProp,
+  shadowCss,
+  topShadowCss,
+  bottomShadowCss,
+  leftShadowCss,
+  rightShadowCss,
+  thumbCss,
   autoHeight = false,
-}) {
-  const classes = useStyles();
+}: ScrollableProps) {
   const [shadows, setShadows] = useState({
     top: 0,
     left: 0,
@@ -98,21 +85,22 @@ export const Scrollable = memo<ScrollableProps>(function Scrollable({
     },
     [setShadows]
   );
+  const thumbClassName = useMemo(() => css(thumbCss), [thumbCss]);
   const handleRenderThumbHorizontal = useCallback(
     props => {
-      return renderThumbHorizontal({ ...props, className: clsx(props.className, thumbClassName) });
+      return renderThumbHorizontal({ ...props, className: cx(props.className, thumbClassName) });
     },
     [thumbClassName]
   );
   const handleRenderThumbVertical = useCallback(
     props => {
-      return renderThumbVertical({ ...props, className: clsx(props.className, thumbClassName) });
+      return renderThumbVertical({ ...props, className: cx(props.className, thumbClassName) });
     },
     [thumbClassName]
   );
 
   return (
-    <div className={clsx(classes.shadowContainer, className)}>
+    <div className={css(styles.shadowContainer, cssProp)}>
       <ScrollContainer
         renderThumbVertical={handleRenderThumbVertical}
         renderThumbHorizontal={handleRenderThumbHorizontal}
@@ -127,24 +115,19 @@ export const Scrollable = memo<ScrollableProps>(function Scrollable({
         {children}
       </ScrollContainer>
       <div
-        className={clsx(classes.shadow, classes.topShadow, shadowClassName, topShadowClassName)}
+        className={css(styles.shadow, styles.topShadow, shadowCss, topShadowCss)}
         style={{ opacity: shadows.top }}
       />
       <div
-        className={clsx(
-          classes.shadow,
-          classes.bottomShadow,
-          shadowClassName,
-          bottomShadowClassName
-        )}
+        className={css(styles.shadow, styles.bottomShadow, shadowCss, bottomShadowCss)}
         style={{ opacity: shadows.bottom }}
       />
       <div
-        className={clsx(classes.shadow, classes.leftShadow, shadowClassName, leftShadowClassName)}
+        className={css(styles.shadow, styles.leftShadow, shadowCss, leftShadowCss)}
         style={{ opacity: shadows.left }}
       />
       <div
-        className={clsx(classes.shadow, classes.rightShadow, shadowClassName, rightShadowClassName)}
+        className={css(styles.shadow, styles.rightShadow, shadowCss, rightShadowCss)}
         style={{ opacity: shadows.right }}
       />
     </div>

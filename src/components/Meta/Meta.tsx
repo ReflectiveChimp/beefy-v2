@@ -9,12 +9,12 @@ export type MetaProps = {
   noindex?: boolean;
   disableTitleTemplate?: boolean;
 };
-export const Meta = memo<MetaProps>(function Meta({
+export const Meta = memo(function Meta({
   title,
   description,
   noindex,
   disableTitleTemplate = false,
-}) {
+}: MetaProps) {
   const { t } = useTranslation();
   const fullTitle = useMemo(() => {
     return title && !disableTitleTemplate ? t('Meta-Title-Template', { title }) : title;

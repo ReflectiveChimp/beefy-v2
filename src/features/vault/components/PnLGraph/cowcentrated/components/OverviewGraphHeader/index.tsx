@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 import type { VaultEntity } from '../../../../../../data/entities/vault';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { Stat } from '../Stat';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../../store';
@@ -22,11 +22,11 @@ interface OverviewGraphHeaderProps {
   vaultId: VaultEntity['id'];
 }
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function OverviewGraphHeader({
+export const OverviewGraphHeader = memo(function OverviewGraphHeader({
   vaultId,
-}) {
+}: OverviewGraphHeaderProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const userPnl = useAppSelector(state => selectClmPnl(state, vaultId));
@@ -107,7 +107,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
                 </div>
               }
               content={<ClmPnlTooltipContent userPnl={userPnl} />}
-              contentClass={classes.tooltipContent}
+              contentCss={styles.tooltipContent}
               compact={true}
               dark={true}
             />
@@ -135,7 +135,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
                 </div>
               </div>
             }
-            contentClass={classes.tooltipContent}
+            contentCss={styles.tooltipContent}
             compact={true}
             dark={true}
           />

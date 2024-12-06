@@ -7,10 +7,10 @@ import createTransform from 'redux-persist/es/createTransform';
 import type {
   SortDirectionType,
   SortType,
+  StrategiesType,
   UserCategoryType,
   VaultAssetType,
   VaultCategoryType,
-  StrategiesType,
 } from './filtered-vaults-types';
 import { isValidUserCategory } from './filtered-vaults-types';
 import type { VaultEntity } from '../entities/vault';

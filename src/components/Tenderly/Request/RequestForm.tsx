@@ -11,13 +11,13 @@ import {
 import { AlertError } from '../../Alerts';
 import { ToggleButtons } from '../../ToggleButtons';
 import { Button } from '../../Button';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { ExplorerAddressLink } from '../Links/ExplorerAddressLink';
 import { VerticalLayout } from '../Layout/VerticalLayout';
 import { ErrorMessage } from '../Error/ErrorMessage';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const simulationTypeOptions = {
   full: 'Full',

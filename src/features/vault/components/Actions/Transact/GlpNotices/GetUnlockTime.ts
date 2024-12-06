@@ -79,7 +79,13 @@ export async function getUnlockTime(
         manager: stakedContract.methods[config.managerMethod](),
       },
     ],
-  ])) as [[{ manager: string }]];
+  ])) as [
+    [
+      {
+        manager: string;
+      }
+    ]
+  ];
 
   const managerContract = new web3.eth.Contract(managerAbi, addresses.manager);
   const [[result]] = (await multicall.all([
@@ -89,7 +95,14 @@ export async function getUnlockTime(
         cooldownDuration: managerContract.methods.cooldownDuration(),
       },
     ],
-  ])) as [[{ lastAddedAt: string; cooldownDuration: string }]];
+  ])) as [
+    [
+      {
+        lastAddedAt: string;
+        cooldownDuration: string;
+      }
+    ]
+  ];
 
   const lastAddedAt = new BigNumber(result.lastAddedAt || '0').multipliedBy(1000).toNumber();
   const cooldownDuration = new BigNumber(result.cooldownDuration || '0')

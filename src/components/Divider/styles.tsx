@@ -1,37 +1,37 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  customDivider: {
+export const styles = {
+  customDivider: css.raw({
     display: 'flex',
     alignItems: 'center',
     margin: '16pxpx 0px',
-  },
-  line: {
+  }),
+  line: css.raw({
     height: '2px',
     width: '100%',
-    backgroundColor: theme.palette.background.vaults.default,
+    backgroundColor: 'background.vaults.standard',
     borderRadius: '8px',
-  },
-  arrowContainer: {
+  }),
+  arrowContainer: css.raw({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: theme.palette.background.contentLight,
+    background: 'background.content.light',
     borderRadius: '100%',
     margin: '0 12px',
     height: '24px',
     width: '24px',
     padding: '8px',
-    '& svg': {
-      color: theme.palette.text.middle,
-      fill: 'currentColor',
-      fontSize: '1.5rem',
-      width: '1em',
-      height: '1em',
-      '&:hover': {
-        cursor: props => (props.clickleable ? 'pointer' : 'auto'),
-        color: theme.palette.text.light,
-      },
+  }),
+  arrowSvg: css.raw({
+    color: 'text.middle',
+    fill: 'currentColor',
+    fontSize: '1.5rem',
+    width: '1em',
+    height: '1em',
+    '&[data-clickable]:hover': {
+      cursor: 'pointer',
+      color: 'text.light',
     },
-  },
-});
+  }),
+};

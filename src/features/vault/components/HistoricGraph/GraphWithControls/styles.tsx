@@ -1,47 +1,47 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '1px',
-  },
-  graph: {
-    backgroundColor: theme.palette.background.contentPrimary,
-  },
-  footer: {
+  }),
+  graph: css.raw({
+    backgroundColor: 'background.content',
+  }),
+  footer: css.raw({
     display: 'flex',
-    flexWrap: 'nowrap' as const,
+    flexWrap: 'nowrap',
     gap: '16px',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '12px 24px',
     borderRadius: '0px 0px 12px 12px',
-    backgroundColor: theme.palette.background.contentPrimary,
-    [theme.breakpoints.down('sm')]: {
+    backgroundColor: 'background.content',
+    mdDown: {
       padding: '8px 16px',
     },
-  },
+  }),
 
-  legend: {
+  legend: css.raw({
     display: 'flex',
     gap: '24px',
-  },
-  legendItem: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
+  }),
+  legendItem: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-  },
-  line: {
+  }),
+  line: css.raw({
     height: '2px',
     width: '12px',
-    backgroundColor: '#FFF',
-  },
-  range: {
+    backgroundColor: 'white',
+  }),
+  range: css.raw({
     height: '12px',
     width: '12px',
-    backgroundColor: '#3F446E',
-  },
-});
+    backgroundColor: 'extracted2922',
+  }),
+};

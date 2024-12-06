@@ -1,24 +1,17 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import clsx from 'clsx';
-
-const useStyles = makeStyles(styles);
+import { css, type CssStyles } from '@repo/styles/css';
 
 export type CardHeaderProps = {
   children: ReactNode;
-  className?: string;
+  css?: CssStyles;
   disableDefaultClass?: boolean;
 };
-export const CardHeader = memo<CardHeaderProps>(function CardHeader({
+export const CardHeader = memo(function CardHeader({
   children,
-  className,
+  css: cssProp,
   disableDefaultClass = false,
-}) {
-  const classes = useStyles();
-
-  return (
-    <div className={clsx(className, { [classes.container]: !disableDefaultClass })}>{children}</div>
-  );
+}: CardHeaderProps) {
+  return <div className={css(cssProp, !disableDefaultClass && styles.container)}>{children}</div>;
 });

@@ -1,33 +1,31 @@
 import type { MouseEventHandler, ReactNode } from 'react';
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { ReactComponent as CheckBoxOutlineBlank } from '@repo/images/icons/mui/CheckBoxOutlineBlank.svg';
 import { ReactComponent as CheckBoxOutlined } from '@repo/images/icons/mui/CheckBoxOutlined.svg';
-
-const useStyles = makeStyles(styles);
 
 export type LabelledCheckboxProps = {
   checked: boolean;
   onChange: (checked: boolean) => void;
   label: ReactNode;
-  checkboxClass?: string;
-  iconClass?: string;
-  labelClass?: string;
-  checkedClass?: string;
+  checkboxCss?: CssStyles;
+  iconCss?: CssStyles;
+  labelCss?: CssStyles;
+  checkedCss?: CssStyles;
+  checkedIconCss?: CssStyles;
 };
 
-export const LabelledCheckbox = memo<LabelledCheckboxProps>(function ButtonLink({
+export const LabelledCheckbox = memo(function ButtonLink({
   checked,
   onChange,
   label,
-  checkboxClass,
-  iconClass,
-  labelClass,
-  checkedClass,
-}) {
-  const baseClasses = useStyles();
+  checkboxCss,
+  iconCss,
+  labelCss,
+  checkedCss,
+  checkedIconCss,
+}: LabelledCheckboxProps) {
   const handleChange = useCallback<MouseEventHandler<HTMLLabelElement>>(
     e => {
       e.stopPropagation();
@@ -40,12 +38,17 @@ export const LabelledCheckbox = memo<LabelledCheckboxProps>(function ButtonLink(
   return (
     <label
       onClick={handleChange}
-      className={clsx(baseClasses.checkbox, checkboxClass, {
-        [clsx(baseClasses.checked, checkedClass)]: checked,
-      })}
+      className={css(styles.checkbox, checkboxCss, checked && css.raw(styles.checked, checkedCss))}
+      data-checked={checked}
     >
-      <Icon className={clsx(baseClasses.icon, iconClass)} />
-      <span className={clsx(baseClasses.label, labelClass)}>{label}</span>
+      <Icon
+        className={css(
+          styles.icon,
+          iconCss,
+          checked && css.raw(styles.checkedIcon, checkedIconCss)
+        )}
+      />
+      <span className={css(styles.label, labelCss)}>{label}</span>
     </label>
   );
 });

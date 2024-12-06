@@ -12,7 +12,9 @@ export type FetchOffChainRewardsFulfilledPayload = {
 export const fetchOffChainCampaignsAction = createAsyncThunk<
   FetchOffChainRewardsFulfilledPayload,
   FetchOffChainRewardsActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('rewards/fetchOffChainCampaigns', async () => {
   const api = await getBeefyApi();
   const campaigns = await api.getOffChainRewardCampaigns();

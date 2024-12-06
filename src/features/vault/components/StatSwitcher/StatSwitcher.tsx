@@ -1,10 +1,8 @@
 import { memo } from 'react';
 import { ToggleButtons } from '../../../../components/ToggleButtons';
-import { makeStyles, useMediaQuery, type Theme } from '@material-ui/core';
 import { styles } from './styles';
 import { LabeledSelect } from '../../../../components/LabeledSelect';
-
-const useStyles = makeStyles(styles);
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint';
 
 export type StatSwitcherProps<T extends string = string> = {
   options: Record<T, string>;
@@ -17,15 +15,14 @@ export const StatSwitcher = memo(function StatSwitcher<T extends string = string
   onChange,
   stat,
 }: StatSwitcherProps<T>) {
-  const classes = useStyles();
-  const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+  const mobileView = useBreakpoint({ to: 'xs' });
 
   return (
     <>
       {mobileView ? (
         <>
           <LabeledSelect
-            selectClass={classes.select}
+            selectCss={styles.select}
             options={options}
             value={stat}
             onChange={onChange}
@@ -36,7 +33,7 @@ export const StatSwitcher = memo(function StatSwitcher<T extends string = string
           value={stat}
           options={options}
           onChange={onChange}
-          buttonsClass={classes.tabs}
+          buttonsCss={styles.tabs}
         />
       )}
     </>

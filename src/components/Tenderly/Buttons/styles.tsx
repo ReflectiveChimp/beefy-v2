@@ -1,9 +1,9 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (_theme: Theme) => ({
-  button: {
+export const styles = {
+  button: css.raw({
     display: 'flex',
     justifyContent: 'center',
     gap: '8px',
-  },
-});
+  }),
+};

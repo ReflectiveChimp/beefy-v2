@@ -97,7 +97,9 @@ export type WalletActionsErrorState<T extends TxAdditionalData = TxAdditionalDat
 
 export type WalletActionsPendingState<T extends TxAdditionalData = TxAdditionalData> = {
   result: 'success_pending';
-  data: { hash: TrxHash };
+  data: {
+    hash: TrxHash;
+  };
   additional?: T;
 };
 
@@ -157,7 +159,10 @@ const initialWalletActionState: WalletActionsState = {
 
 export const walletActionsReducer = (
   state = initialWalletActionState,
-  action: { type: 'WALLET_ACTION' | 'WALLET_ACTION_RESET'; payload: WalletActionsState }
+  action: {
+    type: 'WALLET_ACTION' | 'WALLET_ACTION_RESET';
+    payload: WalletActionsState;
+  }
 ): WalletActionsState => {
   switch (action.type) {
     case WALLET_ACTION:

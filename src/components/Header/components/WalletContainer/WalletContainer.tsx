@@ -1,4 +1,5 @@
-import { FormControl, makeStyles } from '@material-ui/core';
+import { FormControl } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -16,14 +17,14 @@ import {
   doDisconnectWallet,
 } from '../../../../features/data/actions/wallet';
 import { selectIsWalletPending } from '../../../../features/data/selectors/data-loader';
-import clsx from 'clsx';
+import { css, cx } from '@repo/styles/css';
 import { useAppDispatch } from '../../../../store';
 import { formatAddressShort, formatDomain } from '../../../../helpers/format';
 import { useResolveAddress } from '../../../../features/data/hooks/resolver';
 import { isFulfilledStatus } from '../../../../features/data/reducers/wallet/resolver-types';
 import { Fragment } from 'react';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const WalletContainer = connect((state: BeefyState) => {
   const isWalletConnected = selectIsWalletConnected(state);
@@ -66,12 +67,12 @@ export const WalletContainer = connect((state: BeefyState) => {
 
     return (
       <div
-        className={clsx({
-          [classes.container]: true,
-          [classes.known]: !!walletAddress,
-          [classes.connected]: isWalletConnected,
-          [classes.disconnected]: !walletAddress,
-        })}
+        className={css(
+          styles.container,
+          !!walletAddress && styles.known,
+          isWalletConnected && styles.connected,
+          !walletAddress && styles.disconnected
+        )}
       >
         <FormControl {...formControlProps}>
           <div>
@@ -84,7 +85,9 @@ export const WalletContainer = connect((state: BeefyState) => {
               </div>
             ) : (
               <Fragment>
-                <div className={clsx(classes.address, { [classes.blurred]: blurred })}>
+                <div
+                  className={cx('wallet-address', css(styles.address, blurred && styles.blurred))}
+                >
                   {walletAddress
                     ? isFulfilledStatus(resolverStatus)
                       ? formatDomain(resolverStatus.value)

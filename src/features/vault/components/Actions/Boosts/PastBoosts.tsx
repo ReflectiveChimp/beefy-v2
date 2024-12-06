@@ -1,20 +1,16 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { Trans, useTranslation } from 'react-i18next';
 import AnimateHeight from 'react-animate-height';
 import { styles } from './styles';
-import {
-  selectIsVaultBoosted,
-  selectPastBoostIdsWithUserBalance,
-} from '../../../../data/selectors/boosts';
+import { selectPastBoostIdsWithUserBalance } from '../../../../data/selectors/boosts';
 import type { BoostEntity } from '../../../../data/entities/boost';
 import { useAppSelector } from '../../../../../store';
 import { BoostPastActionCard } from './BoostPastActionCard';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export function PastBoosts({ vaultId }: { vaultId: BoostEntity['id'] }) {
-  const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
-  const classes = useStyles({ isBoosted });
+  const classes = useStyles();
   const { t } = useTranslation();
   const pastBoostsWithUserBalance = useAppSelector(state =>
     selectPastBoostIdsWithUserBalance(state, vaultId)

@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Section } from '../../../../components/Section';
@@ -9,7 +9,7 @@ import { styles } from './styles';
 import { useMediaQuery } from '@material-ui/core';
 import type { ChainEntity } from '../../../data/entities/chain';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function useTreasuryColumns(numColumns: number) {
   const sortedTreasury = useAppSelector(selectTreasurySorted);
@@ -22,7 +22,13 @@ function useTreasuryColumns(numColumns: number) {
     }
 
     const heights = new Array(numColumns).fill(0);
-    const columns = heights.map(() => [] as { id: string; type: string }[]);
+    const columns = heights.map(
+      () =>
+        [] as {
+          id: string;
+          type: string;
+        }[]
+    );
     let nextColumn = 0;
 
     for (const treasury of sortedTreasury) {

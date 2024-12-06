@@ -9,7 +9,10 @@ export type MerklRewardsCampaign = Omit<BeefyOffChainRewardsMerklCampaign, 'vaul
 export type StellaSwapRewardsCampaign = Omit<BeefyOffChainRewardsStellaSwapCampaign, 'vaults'>;
 export type OffChainRewardsCampaign = MerklRewardsCampaign | StellaSwapRewardsCampaign;
 
-export type VaultRewardApr = { id: string; apr: number };
+export type VaultRewardApr = {
+  id: string;
+  apr: number;
+};
 
 export type GovRewardsState = {
   byVaultId: Record<VaultEntity['id'], GovVaultMultiContractData['rewards']>;

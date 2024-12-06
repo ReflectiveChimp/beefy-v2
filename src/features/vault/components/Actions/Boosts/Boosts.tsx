@@ -7,7 +7,7 @@ import { ActivePast } from './ActivePast';
 export type BoostsProps = {
   vaultId: VaultEntity['id'];
 };
-export const Boosts = memo<BoostsProps>(function Boosts({ vaultId }) {
+export const Boosts = memo(function Boosts({ vaultId }: BoostsProps) {
   const shouldDisplay = useAppSelector(state => selectShouldDisplayVaultBoost(state, vaultId));
   if (!shouldDisplay) {
     return null;

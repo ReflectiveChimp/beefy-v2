@@ -1,26 +1,26 @@
 import { memo, type MouseEventHandler, useCallback, useEffect, useMemo, useState } from 'react';
-import type { Theme } from '@material-ui/core';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { formatAddressShort, formatDomain } from '../../../../helpers/format';
 import { Tooltip } from '../../../../components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ShortAddressProps = {
   address: string;
   addressLabel?: string;
 };
 
-export const ShortAddress = memo<ShortAddressProps>(function ShortAddress({
+export const ShortAddress = memo(function ShortAddress({
   address,
   addressLabel,
-}) {
+}: ShortAddressProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const [showCopied, setShowCopied] = useState<boolean>(false);
-  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'), { noSsr: true });
+  const mdUp = useBreakpoint({ from: 'sm' });
 
   const handleCopyAddressToClipboard = useCallback<MouseEventHandler<HTMLDivElement>>(
     e => {
@@ -57,9 +57,9 @@ export const ShortAddress = memo<ShortAddressProps>(function ShortAddress({
       <Tooltip
         onTriggerClick={handleCopyAddressToClipboard}
         propagateTriggerClick={false}
-        contentClass={classes.longAddress}
-        triggerClass={classes.triggerClass}
-        tooltipClass={classes.tooltipContent}
+        contentCss={styles.longAddress}
+        triggerCss={styles.triggerClass}
+        tooltipCss={styles.tooltipContent}
         children={<div className={classes.shortAddress}>{`(${shortAddressLabel})`}</div>}
         content={showCopied ? t('Clipboard-Copied') : address}
       />

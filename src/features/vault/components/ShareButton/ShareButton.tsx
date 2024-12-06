@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import twitterIcon from '../../../../images/icons/share/twitter.svg';
@@ -44,16 +44,16 @@ import type {
   ShareServiceItemProps,
   VaultDetails,
 } from './types';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export const ShareButton = memo<ShareButtonProps>(function ShareButton({
+export const ShareButton = memo(function ShareButton({
   vaultId,
   placement,
   mobileAlternative = false,
   hideText = false,
-}) {
+}: ShareButtonProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const anchorEl = useRef<HTMLButtonElement>();
@@ -144,16 +144,15 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   return (
     <>
       <Button
-        className={clsx(classes.shareButton, {
-          active: isOpen,
-          [classes.mobileAlternative]: mobileAlternative,
-        })}
+        css={css.raw(styles.shareButton, mobileAlternative && styles.mobileAlternative)}
         ref={anchorEl as RefObject<HTMLButtonElement>}
         onClick={handleOpen}
         active={isOpen}
         borderless={true}
       >
-        {!hideText && <span className={classes.shareText}>{t('Vault-Share')}</span>}
+        {!hideText && !mobileAlternative && (
+          <span className={classes.shareText}>{t('Vault-Share')}</span>
+        )}
         <ShareIcon className={classes.shareIcon} />
       </Button>
       <Dropdown
@@ -161,8 +160,8 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
         open={isOpen}
         onClose={handleClose}
         placement={placement || 'bottom-end'}
-        dropdownClassName={classes.dropdown}
-        innerClassName={classes.dropdownInner}
+        dropdownCss={styles.dropdown}
+        innerCss={styles.dropdownInner}
       >
         <TwitterItem details={vaultDetails} />
         <LensterItem details={vaultDetails} />
@@ -173,7 +172,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   );
 });
 
-const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }) {
+const TwitterItem = memo(function TwitterItem({ details }: ShareServiceItemProps) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
     const message = t(`Vault-Share-Message-${details.kind}`, details);
@@ -190,7 +189,7 @@ const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }
   return <ShareItem text={t('Vault-Share-Twitter')} onClick={onClick} icon={twitterIcon} />;
 });
 
-const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }) {
+const LensterItem = memo(function LensterItem({ details }: ShareServiceItemProps) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
     const message = t(`Vault-Share-Message-${details.kind}`, details);
@@ -207,7 +206,7 @@ const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }
   return <ShareItem text={t('Vault-Share-Lenster')} onClick={onClick} icon={lensterIcon} />;
 });
 
-const TelegramItem = memo<ShareServiceItemProps>(function TelegramItem({ details }) {
+const TelegramItem = memo(function TelegramItem({ details }: ShareServiceItemProps) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
     const message = t(`Vault-Share-Message-${details.kind}`, details);
@@ -224,7 +223,7 @@ const TelegramItem = memo<ShareServiceItemProps>(function TelegramItem({ details
   return <ShareItem text={t('Vault-Share-Telegram')} onClick={onClick} icon={telegramIcon} />;
 });
 
-const CopyLinkItem = memo<ShareServiceItemProps>(function CopyLinkItem({ details }) {
+const CopyLinkItem = memo(function CopyLinkItem({ details }: ShareServiceItemProps) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
     try {
@@ -237,7 +236,7 @@ const CopyLinkItem = memo<ShareServiceItemProps>(function CopyLinkItem({ details
   return <ShareItem text={t('Vault-Share-CopyLink')} onClick={onClick} icon={linkIcon} />;
 });
 
-const ShareItem = memo<ShareItemProps>(function ShareItem({ text, icon, onClick }) {
+const ShareItem = memo(function ShareItem({ text, icon, onClick }: ShareItemProps) {
   const classes = useStyles();
 
   return (

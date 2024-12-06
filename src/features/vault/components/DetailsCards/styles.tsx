@@ -1,74 +1,70 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
-    backgroundColor: theme.palette.background.contentLight,
+export const styles = {
+  container: css.raw({
+    backgroundColor: 'background.content.light',
     padding: '16px',
     borderRadius: '12px',
-  },
-  titleContainer: {
+  }),
+  titleContainer: css.raw({
     display: 'flex',
     columnGap: '8px',
     rowGap: '16px',
-    flexWrap: 'wrap' as const,
-    [theme.breakpoints.up('sm')]: {
-      '& $assetIconSymbol': {
-        order: 1,
-        flexGrow: 0,
-      },
-      '& $assetBridgePrice': {
-        flexGrow: 1,
-        order: 2,
-      },
-      '& $assetLinks': {
-        order: 3,
-      },
+    flexWrap: 'wrap',
+  }),
+  assetIconSymbol: css.raw({
+    display: 'flex',
+    flexWrap: 'nowrap',
+    alignItems: 'center',
+    gap: '8px',
+    flexGrow: '1',
+    sm: {
+      order: '1',
+      flexGrow: '0',
     },
-    [theme.breakpoints.up('lg')]: {
-      '& $assetLinkText': {
-        display: 'inline',
-      },
+  }),
+  assetIcon: css.raw({}),
+  assetSymbol: css.raw({
+    textStyle: 'body.med',
+    flexGrow: '1',
+  }),
+  assetBridgePrice: css.raw({
+    display: 'flex',
+    flexWrap: 'nowrap',
+    alignItems: 'center',
+    gap: '8px',
+    sm: {
+      flexGrow: '1',
+      order: '2',
     },
-  },
-  assetIconSymbol: {
+  }),
+  assetBridge: css.raw({}),
+  assetPrice: css.raw({}),
+  assetLinks: css.raw({
     display: 'flex',
-    flexWrap: 'nowrap' as const,
+    flexWrap: 'nowrap',
     alignItems: 'center',
     gap: '8px',
-    flexGrow: 1,
-  },
-  assetIcon: {},
-  assetSymbol: {
-    ...theme.typography['body-lg-med'],
-    flexGrow: 1,
-  },
-  assetBridgePrice: {
-    display: 'flex',
-    flexWrap: 'nowrap' as const,
-    alignItems: 'center',
-    gap: '8px',
-  },
-  assetBridge: {},
-  assetPrice: {},
-  assetLinks: {
-    display: 'flex',
-    flexWrap: 'nowrap' as const,
-    alignItems: 'center',
-    gap: '8px',
-  },
-  assetLinkText: {
+    sm: {
+      order: '3',
+    },
+  }),
+  assetLinkText: css.raw({
     display: 'none',
-  },
-  assetWebsite: {},
-  assetContract: {},
-  assetDocumentation: {},
-  description: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.middle,
+    lg: {
+      display: 'inline',
+    },
+  }),
+  assetWebsite: css.raw({}),
+  assetContract: css.raw({}),
+  assetDocumentation: css.raw({}),
+  description: css.raw({
+    textStyle: 'body',
+    color: 'text.middle',
     marginTop: '16px',
-    whiteSpace: 'pre-line' as const,
-  },
-  descriptionPending: {
+    whiteSpace: 'pre-line',
+  }),
+  descriptionPending: css.raw({
     fontStyle: 'italic',
-  },
-});
+  }),
+};

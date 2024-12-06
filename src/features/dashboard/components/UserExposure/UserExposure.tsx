@@ -1,4 +1,5 @@
-import { Hidden, makeStyles } from '@material-ui/core';
+import { Hidden } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChainExposureLoader } from '../ChainExposure';
@@ -9,13 +10,13 @@ import { TokenExposureLoader } from '../TokenExposure';
 import { styles } from './styles';
 import { MobileUserExposure } from './components/MobileUserExposure';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type UserExposureProps = {
   address: string;
 };
 
-export const UserExposure = memo<UserExposureProps>(function UserExposure({ address }) {
+export const UserExposure = memo(function UserExposure({ address }: UserExposureProps) {
   const { t } = useTranslation();
   const classes = useStyles();
 

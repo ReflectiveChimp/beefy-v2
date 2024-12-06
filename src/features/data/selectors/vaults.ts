@@ -407,7 +407,14 @@ export const selectAllVaultsWithBridgedVersion = (state: BeefyState) =>
 export const selectVaultHasAssetsWithRisks = (
   state: BeefyState,
   vaultId: VaultEntity['id']
-): { risks: false } | { risks: true; tokens: TokenErc20[] } => {
+):
+  | {
+      risks: false;
+    }
+  | {
+      risks: true;
+      tokens: TokenErc20[];
+    } => {
   const vault = selectVaultById(state, vaultId);
 
   const tokensWithRisks: TokenErc20[] = [];
@@ -436,7 +443,14 @@ export const selectVaultHasAssetsWithRisks = (
 export const selectVaultHasPlatformWithRisks = (
   state: BeefyState,
   vaultId: VaultEntity['id']
-): { risks: false } | { risks: true; platform: PlatformEntity } => {
+):
+  | {
+      risks: false;
+    }
+  | {
+      risks: true;
+      platform: PlatformEntity;
+    } => {
   const vault = selectVaultById(state, vaultId);
 
   const platform = selectPlatformById(state, vault.platformId);

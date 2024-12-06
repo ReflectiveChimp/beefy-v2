@@ -18,7 +18,9 @@ export type CommonVaultDetails = {
   beefyHandle: string;
 };
 export type CommonType = 'normal' | 'clm' | 'clm-pool';
-export type CommonExtraDetails = { kind: CommonType };
+export type CommonExtraDetails = {
+  kind: CommonType;
+};
 export type NormalVaultDetails = CommonVaultDetails & CommonExtraDetails;
 
 export type BoostedVaultExtraDetails = {

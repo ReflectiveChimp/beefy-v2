@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
@@ -8,7 +8,7 @@ import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
 import { selectBridgeTxState } from '../../../../../data/selectors/bridge';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const Transaction = memo(function Transaction() {
   const { t } = useTranslation();

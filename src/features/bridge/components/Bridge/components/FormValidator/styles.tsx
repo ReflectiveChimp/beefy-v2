@@ -1,26 +1,26 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  group: {},
-  labels: {
+export const styles = {
+  group: css.raw({}),
+  labels: css.raw({
     display: 'flex',
     marginBottom: '4px',
-  },
-  label: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
-    color: theme.palette.text.dark,
+  }),
+  label: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: '700',
+    color: 'text.dark',
     flex: '1 1 40%',
-  },
-  balance: {
-    ...theme.typography['body-sm'],
+  }),
+  balance: css.raw({
+    textStyle: 'body.sm',
     cursor: 'pointer',
-    color: theme.palette.text.dark,
+    color: 'text.dark',
     '& span': {
       paddingLeft: '4px',
-      fontWeight: theme.typography['body-sm-med'].fontWeight,
-      color: theme.palette.text.middle,
+      fontWeight: 'body.medium',
+      color: 'text.middle',
     },
-  },
-  input: {},
-});
+  }),
+  input: css.raw({}),
+};

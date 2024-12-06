@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchTreasury } from '../data/actions/treasury';
@@ -14,7 +14,7 @@ import {
   selectIsVaultsAvailable,
 } from '../data/selectors/data-loader';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const Treasury = memo(function Treasury() {
   const { t } = useTranslation();

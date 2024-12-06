@@ -1,63 +1,64 @@
-import type { Theme } from '@material-ui/core';
-export const styles = (theme: Theme) => ({
-  summaryContainer: {
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  summaryContainer: css.raw({
     display: 'grid',
     gridTemplateColumns: 'repeat(4, 1fr)',
     gap: '16px',
-    [theme.breakpoints.down('md')]: {
+    lgDown: {
       gridTemplateColumns: 'repeat(2, 1fr)',
     },
-  },
-  container: {
+  }),
+  container: css.raw({
     width: '100%',
     display: 'flex',
     columnGap: '16px',
     padding: '16px',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.summaryCard,
+    backgroundColor: 'purpleDarkest',
     alignItems: 'center',
-    [theme.breakpoints.down('xs')]: {
+    smDown: {
       columnGap: '8px',
       backgroundColor: 'transparent',
-      padding: 0,
+      padding: '0',
       alignItems: 'flex-start',
     },
-  },
-  iconContainer: {
+  }),
+  iconContainer: css.raw({
     borderRadius: '130px',
-    backgroundColor: theme.palette.background.iconBg,
+    backgroundColor: 'blackMarket2',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     height: '48px',
     width: '48px',
-    [theme.breakpoints.down('xs')]: {
+    smDown: {
       backgroundColor: 'transparent',
       height: '24px',
       width: '24px',
     },
-  },
-  icon: {},
-  contentContainer: {
+  }),
+  icon: css.raw({}),
+  contentContainer: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
-  },
-  title: {
-    ...theme.typography['subline-lg'],
-    fontWeight: 700,
-    color: theme.palette.text.dark,
-    [theme.breakpoints.down('xs')]: {
-      ...theme.typography['body-sm'],
-      fontWeight: 700,
-      textTransform: 'uppercase' as const,
+    flexDirection: 'column',
+  }),
+  title: css.raw({
+    textStyle: 'subline',
+    fontWeight: '700',
+    color: 'text.dark',
+    smDown: {
+      textStyle: 'body.sm',
+      fontWeight: '700',
+      textTransform: 'uppercase',
       letterSpacing: '0.5px',
     },
-  },
-  value: {
-    ...theme.typography.h1,
-    color: theme.palette.text.middle,
-    [theme.breakpoints.down('xs')]: {
-      ...theme.typography['body-lg-med'],
+  }),
+  value: css.raw({
+    textStyle: 'h1',
+    color: 'text.middle',
+    smDown: {
+      textStyle: 'body.med',
     },
-  },
-});
+  }),
+};

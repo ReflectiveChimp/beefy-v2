@@ -1,4 +1,5 @@
-import { Button, makeStyles } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { UserStats } from './UserStats';
 import { VaultsStats } from './VaultsStats';
@@ -10,8 +11,9 @@ import { selectIsBalanceHidden } from '../../../data/selectors/wallet';
 import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { Container } from '../../../../components/Container/Container';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const Portfolio = () => {
   const classes = useStyles();
@@ -43,7 +45,7 @@ export const Portfolio = () => {
             <UserStats />
           </div>
           <div className={classes.vaultStats}>
-            <div className={classes.title}>{t('Vault-platform')}</div>
+            <div className={css(styles.title, styles.vaultStatsTitle)}>{t('Vault-platform')}</div>
             <VaultsStats />
           </div>
         </div>

@@ -1,17 +1,18 @@
-import type { Theme } from '@material-ui/core';
-export const styles = (theme: Theme) => ({
-  container: {
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  container: css.raw({
     padding: '16px 24px',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.contentPrimary,
-    [theme.breakpoints.down('md')]: {
+    backgroundColor: 'background.content',
+    lgDown: {
       padding: '16px',
     },
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       padding: '0px',
     },
-  },
-  infoContainer: {
+  }),
+  infoContainer: css.raw({
     display: 'flex',
     columnGap: '24px',
     justifyContent: 'center',
@@ -19,10 +20,10 @@ export const styles = (theme: Theme) => ({
     '& .recharts-surface:focus': {
       outline: 'none',
     },
-  },
-  title: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
+  }),
+  title: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
     marginBottom: '24px',
-  },
-});
+  }),
+};

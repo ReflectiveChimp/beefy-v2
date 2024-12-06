@@ -1,4 +1,5 @@
-import { IconButton, makeStyles } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { forwardRef, memo, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../../vault/components/Card';
 import { ReactComponent as CloseIcon } from '@repo/images/icons/mui/Close.svg';
@@ -16,7 +17,7 @@ import { orderBy } from 'lodash-es';
 import { getNetworkSrc } from '../../../../../helpers/networkSrc';
 import { entries } from '../../../../../helpers/object';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ModalTvlProps = {
   close: () => void;
@@ -44,14 +45,14 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ 
 
   return (
     <div className={classes.holder} ref={ref} tabIndex={-1}>
-      <Card className={classes.card}>
-        <CardHeader className={classes.header}>
-          <CardTitle titleClassName={classes.title} title={t('TVL-bychain')} />
+      <Card css={styles.card}>
+        <CardHeader css={styles.header}>
+          <CardTitle titleCss={styles.title} title={t('TVL-bychain')} />
           <IconButton className={classes.closeIcon} onClick={close} aria-label="settings">
             <CloseIcon color="#D0D0DA" />
           </IconButton>
         </CardHeader>
-        <CardContent className={classes.content}>
+        <CardContent css={styles.content}>
           <div className={classes.gridScroller}>
             <div className={classes.grid}>
               {sortedTvls.map(item => (
@@ -59,7 +60,7 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ 
               ))}
             </div>
           </div>
-          <Button onClick={close} fullWidth={true} className={classes.closeButton}>
+          <Button onClick={close} fullWidth={true} css={styles.closeButton}>
             {t('Close')}
           </Button>
         </CardContent>
@@ -70,8 +71,11 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ 
 
 export const ModalTvl = memo<ModalTvlProps>(_ModalTvl);
 
-type ChainProps = { chainId: ChainEntity['id']; tvl: BigNumber };
-const Chain = memo<ChainProps>(function Chain({ chainId, tvl }) {
+type ChainProps = {
+  chainId: ChainEntity['id'];
+  tvl: BigNumber;
+};
+const Chain = memo(function Chain({ chainId, tvl }: ChainProps) {
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, chainId));
 

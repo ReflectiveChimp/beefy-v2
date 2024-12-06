@@ -14,11 +14,11 @@ export type MobileVaultYieldStatProps = {
   walletAddress: string;
 } & Omit<VaultValueStatProps, 'label' | 'tooltip' | 'value' | 'subValue' | 'loading'>;
 
-export const MobileVaultYieldStat = memo<MobileVaultYieldStatProps>(function MobileVaultYieldStat({
+export const MobileVaultYieldStat = memo(function MobileVaultYieldStat({
   vaultId,
   walletAddress,
   ...passthrough
-}) {
+}: MobileVaultYieldStatProps) {
   const label = 'VaultStat-Yield';
   const data = useAppSelector(state =>
     selectDashboardUserRewardsOrStatusByVaultId(state, vaultId, walletAddress)

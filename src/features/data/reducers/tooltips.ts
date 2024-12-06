@@ -15,15 +15,33 @@ export const tooltipsSlice = createSlice({
   name: 'tooltips',
   initialState: initialState,
   reducers: {
-    openTooltip(sliceState, action: PayloadAction<{ group: string; id: string }>) {
+    openTooltip(
+      sliceState,
+      action: PayloadAction<{
+        group: string;
+        id: string;
+      }>
+    ) {
       sliceState.byGroup[action.payload.group] = action.payload.id;
     },
-    closeTooltip(sliceState, action: PayloadAction<{ group: string; id: string }>) {
+    closeTooltip(
+      sliceState,
+      action: PayloadAction<{
+        group: string;
+        id: string;
+      }>
+    ) {
       if (sliceState.byGroup[action.payload.group] === action.payload.id) {
         sliceState.byGroup[action.payload.group] = '';
       }
     },
-    toggleTooltip(sliceState, action: PayloadAction<{ group: string; id: string }>) {
+    toggleTooltip(
+      sliceState,
+      action: PayloadAction<{
+        group: string;
+        id: string;
+      }>
+    ) {
       if (sliceState.byGroup[action.payload.group] === action.payload.id) {
         sliceState.byGroup[action.payload.group] = '';
       } else {

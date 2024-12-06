@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { Debug } from './Debug';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,7 @@ import { PROVIDERS } from '../OnRamp/providers';
 import { featureFlag_debugOnRamp } from '../../../data/utils/feature-flags';
 import { getOnRampProviderLogo } from '../../../../helpers/onrampProviderSrc';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const Introduction = memo(function Introduction() {
   const classes = useStyles();

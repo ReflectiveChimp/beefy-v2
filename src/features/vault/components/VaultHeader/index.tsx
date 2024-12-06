@@ -8,7 +8,7 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { VaultPlatform } from '../../../../components/VaultPlatform';
 import { styles } from './styles';
@@ -17,14 +17,14 @@ import { punctuationWrap } from '../../../../helpers/string';
 import { SaveButton } from '../SaveButton';
 import { selectVaultTokenSymbols } from '../../../data/selectors/tokens';
 import { VaultClmLikeTag } from '../../../../components/VaultIdentity/components/VaultTags';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type VaultHeaderProps = {
   vaultId: VaultEntity['id'];
 };
-export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId }) {
+export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -34,23 +34,20 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
 
   return (
     <div className={classes.header}>
-      <div
-        className={clsx(classes.titleHolder, {
-          [classes.titleHolderWithTag]: !!isCowcentratedLike,
-        })}
-      >
+      <div className={css(styles.titleHolder, !!isCowcentratedLike && styles.titleHolderClm)}>
         <AssetsImage
           assetSymbols={vaultTokenSymbols}
           size={48}
           chainId={vault.chainId}
-          className={classes.titleAsset}
+          css={!!isCowcentratedLike && styles.titleAssetClm}
         />
-        <div className={classes.title}>{punctuationWrap(vault.names.list)}</div>
+        <div className={css(styles.title, !!isCowcentratedLike && styles.titleClm)}>
+          {punctuationWrap(vault.names.list)}
+        </div>
         {isCowcentratedLike ? (
           <VaultClmLikeTag
             vault={vault}
             hideFee={isCowcentratedGovVault(vault) ? true : undefined}
-            className={classes.titleTag}
           />
         ) : null}
       </div>

@@ -1,9 +1,9 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  balance: {
+export const styles = {
+  balance: css.raw({
     marginLeft: 'auto',
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.dark,
-  },
-});
+    textStyle: 'body',
+    color: 'text.dark',
+  }),
+};

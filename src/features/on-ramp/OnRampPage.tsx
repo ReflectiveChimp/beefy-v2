@@ -1,16 +1,16 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import Introduction from './components/Introduction';
 import OnRamp from './components/OnRamp';
 import { Container } from '../../components/Container/Container';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const OnRampPage = memo(function OnRampPage() {
   const classes = useStyles();
   return (
-    <Container maxWidth="lg" className={classes.pageContainer}>
+    <Container maxWidth="lg" css={styles.pageContainer}>
       <div className={classes.inner}>
         <Introduction />
         <OnRamp />

@@ -1,5 +1,5 @@
-import { ClickAwayListener, makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
+import { ClickAwayListener } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 import type { FC, MouseEventHandler } from 'react';
 import { memo, useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,8 +10,6 @@ import { NavItem } from '../NavItem';
 import type { BadgeComponent } from '../Badges/types';
 import type { NavItemConfig } from './types';
 
-const useStyles = makeStyles(styles);
-
 interface DropNavItemProps {
   title: string;
   Icon: FC;
@@ -19,14 +17,13 @@ interface DropNavItemProps {
   Badge?: BadgeComponent;
 }
 
-export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
+export const DropNavItem = memo(function DropNavItem({
   title,
   Icon,
   items,
   Badge,
-}) {
+}: DropNavItemProps) {
   const { t } = useTranslation();
-  const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   const anchorEl = useRef<HTMLDivElement | null>(null);
 
@@ -46,20 +43,20 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
     <ClickAwayListener onClickAway={handleClose} mouseEvent="onMouseDown" touchEvent="onTouchStart">
       <div
         onClick={handleToggle}
-        className={clsx(classes.label, { [classes.active]: isOpen })}
+        className={css(styles.label, isOpen && styles.active)}
         ref={anchorEl}
       >
         <Icon />
-        <div className={clsx(classes.title, { [classes.titleWithBadge]: !!Badge })}>
+        <div className={css(styles.title, !!Badge && styles.titleWithBadge)}>
           {t(title)}
           {Badge ? <Badge /> : null}
         </div>
-        <ExpandMore className={classes.arrow} />
+        <ExpandMore className={css(styles.arrow, isOpen && styles.activeArrow)} />
         <Floating
           open={isOpen}
           anchorEl={anchorEl}
           placement="bottom-start"
-          className={classes.dropdown}
+          css={styles.dropdown}
           display="flex"
           autoWidth={false}
         >

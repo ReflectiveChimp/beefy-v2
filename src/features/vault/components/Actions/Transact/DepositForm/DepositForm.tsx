@@ -1,6 +1,6 @@
 import { memo, type ReactNode, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
@@ -30,14 +30,14 @@ import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { TextLoader } from '../../../../../../components/TextLoader';
 import type { TokenEntity } from '../../../../../data/entities/token';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type TokenInWalletProps = {
   token: TokenEntity;
   index: number;
 };
 
-const TokenInWallet = memo<TokenInWalletProps>(function TokenInWallet({ token, index }) {
+const TokenInWallet = memo(function TokenInWallet({ token, index }: TokenInWalletProps) {
   const dispatch = useAppDispatch();
   const balance = useAppSelector(state =>
     token ? selectUserBalanceOfToken(state, token.chainId, token.address) : undefined
@@ -96,9 +96,9 @@ export const DepositForm = memo(function DepositForm() {
       <div className={classes.inputs}>
         <DepositFormInputs />
       </div>
-      <DepositBuyLinks className={classes.links} />
-      <TransactQuote title={t('Transact-YouDeposit')} className={classes.quote} />
-      <DepositActions className={classes.actions} />
+      <DepositBuyLinks css={styles.links} />
+      <TransactQuote title={t('Transact-YouDeposit')} css={styles.quote} />
+      <DepositActions css={styles.actions} />
     </>
   );
 });
@@ -160,14 +160,14 @@ type DepositFormInputProps = {
   tokenAvailable?: ReactNode;
 };
 
-const DepositFormInput = memo<DepositFormInputProps>(function DepositFormInput({
+const DepositFormInput = memo(function DepositFormInput({
   index,
   token,
   selectLabel,
   availableLabel,
   showZapIcon,
   tokenAvailable,
-}) {
+}: DepositFormInputProps) {
   const classes = useStyles();
 
   return (

@@ -1,4 +1,4 @@
-import { type Action, type ThunkAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { type Action, createAsyncThunk, type ThunkAction } from '@reduxjs/toolkit';
 import { isEmpty } from '../../../helpers/utils';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
@@ -16,7 +16,9 @@ export interface StarStepperPayload {
 export const startStepper = createAsyncThunk<
   StarStepperPayload,
   StartStepperParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('stepper/startStepper', chainId => {
   return {
     chainId,
@@ -25,23 +27,26 @@ export const startStepper = createAsyncThunk<
   };
 });
 
-export const updateSteps = createAsyncThunk<void, void, { state: BeefyState }>(
-  'stepper/updateSteps',
-  (_, { getState, dispatch }) => {
-    const store = getState();
-    const walletActionsState = store.user.walletActions;
-    const steps = store.ui.stepperState;
-    if (walletActionsState.result === 'success' && steps.stepContent !== StepContent.SuccessTx) {
-      const nextStep = steps.currentStep + 1;
-      if (!isEmpty(steps.items[nextStep])) {
-        dispatch(stepperActions.updateCurrentStepIndex({ stepIndex: nextStep }));
-        dispatch(stepperActions.setStepContent({ stepContent: StepContent.StartTx }));
-      } else {
-        dispatch(stepperActions.setStepContent({ stepContent: StepContent.SuccessTx }));
-      }
+export const updateSteps = createAsyncThunk<
+  void,
+  void,
+  {
+    state: BeefyState;
+  }
+>('stepper/updateSteps', (_, { getState, dispatch }) => {
+  const store = getState();
+  const walletActionsState = store.user.walletActions;
+  const steps = store.ui.stepperState;
+  if (walletActionsState.result === 'success' && steps.stepContent !== StepContent.SuccessTx) {
+    const nextStep = steps.currentStep + 1;
+    if (!isEmpty(steps.items[nextStep])) {
+      dispatch(stepperActions.updateCurrentStepIndex({ stepIndex: nextStep }));
+      dispatch(stepperActions.setStepContent({ stepContent: StepContent.StartTx }));
+    } else {
+      dispatch(stepperActions.setStepContent({ stepContent: StepContent.SuccessTx }));
     }
   }
-);
+});
 
 export function startStepperWithSteps(
   steps: Step[],

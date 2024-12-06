@@ -424,8 +424,12 @@ function handleCowcentratedVaultTimeline(
 
 export const fetchWalletTimeline = createAsyncThunk<
   FetchWalletTimelineFulfilled,
-  { walletAddress: string },
-  { state: BeefyState }
+  {
+    walletAddress: string;
+  },
+  {
+    state: BeefyState;
+  }
 >(
   'analytics/fetchWalletTimeline',
   async ({ walletAddress }, { getState }) => {
@@ -634,7 +638,9 @@ interface DataBarnPricesProps {
 export const fetchShareToUnderlying = createAsyncThunk<
   DataBarnPricesFulfilled,
   DataBarnPricesProps,
-  BeefyMetaThunkConfig<{ since: number }>
+  BeefyMetaThunkConfig<{
+    since: number;
+  }>
 >(
   'analytics/fetchShareToUnderlying',
   async ({ timeBucket, vaultId }, { getState, fulfillWithValue }) => {
@@ -683,7 +689,9 @@ interface ClmPriceHistoryParams {
 export const fetchCowcentratedPriceHistoryClassic = createAsyncThunk<
   ClmPriceHistoryFulfilled<ClmPriceHistoryEntryClassic>,
   ClmPriceHistoryParams,
-  BeefyMetaThunkConfig<{ since: number }>
+  BeefyMetaThunkConfig<{
+    since: number;
+  }>
 >(
   'analytics/fetchCowcentratedPriceHistoryClassic',
   async ({ timeBucket, vaultId }, { getState, fulfillWithValue }) => {
@@ -719,7 +727,9 @@ export const fetchCowcentratedPriceHistoryClassic = createAsyncThunk<
 export const fetchCowcentratedPriceHistoryClm = createAsyncThunk<
   ClmPriceHistoryFulfilled<ClmPriceHistoryEntryClm>,
   ClmPriceHistoryParams,
-  BeefyMetaThunkConfig<{ since: number }>
+  BeefyMetaThunkConfig<{
+    since: number;
+  }>
 >(
   'analytics/fetchCowcentratedPriceHistoryClm',
   async ({ timeBucket, vaultId }, { getState, fulfillWithValue }) => {
@@ -757,8 +767,13 @@ export const fetchCowcentratedPriceHistoryClm = createAsyncThunk<
  */
 export const fetchClmHarvestsForUserVault = createAsyncThunk<
   void,
-  { vaultId: VaultEntity['id']; walletAddress: string },
-  { state: BeefyState }
+  {
+    vaultId: VaultEntity['id'];
+    walletAddress: string;
+  },
+  {
+    state: BeefyState;
+  }
 >(
   'analytics/fetchClmHarvestsForUserVault',
   async ({ vaultId, walletAddress }, { getState, dispatch }) => {
@@ -779,8 +794,12 @@ export const fetchClmHarvestsForUserVault = createAsyncThunk<
  */
 export const fetchClmHarvestsForUser = createAsyncThunk<
   void,
-  { walletAddress: string },
-  { state: BeefyState }
+  {
+    walletAddress: string;
+  },
+  {
+    state: BeefyState;
+  }
 >(
   'analytics/fetchClmHarvestsForUser',
   async ({ walletAddress }, { getState, dispatch }) => {
@@ -850,8 +869,14 @@ type FetchClmHarvestsForUserFulfilledAction = Array<FetchClmHarvestsForUserResul
  */
 export const fetchClmHarvestsForVaultsOfUserOnChain = createAsyncThunk<
   FetchClmHarvestsForUserFulfilledAction,
-  { walletAddress: string; chainId: ChainEntity['id']; vaultIds: VaultEntity['id'][] },
-  { state: BeefyState }
+  {
+    walletAddress: string;
+    chainId: ChainEntity['id'];
+    vaultIds: VaultEntity['id'][];
+  },
+  {
+    state: BeefyState;
+  }
 >(
   'analytics/fetchClmHarvestsForVaultsOfUserOnChain',
   async ({ walletAddress, chainId, vaultIds }, { getState }) => {
@@ -964,8 +989,13 @@ export type RecalculateClmHarvestsForUserVaultIdPayload = {
  */
 export const recalculateClmPoolHarvestsForUserVaultId = createAsyncThunk<
   RecalculateClmHarvestsForUserVaultIdPayload,
-  { walletAddress: string; vaultId: VaultEntity['id'] },
-  { state: BeefyState }
+  {
+    walletAddress: string;
+    vaultId: VaultEntity['id'];
+  },
+  {
+    state: BeefyState;
+  }
 >(
   'analytics/recalculateClmPoolHarvestsForUserVaultId',
   async ({ walletAddress, vaultId }, { getState }) => {
@@ -1070,8 +1100,12 @@ interface FetchClmPendingRewardsFulfilledAction {
 
 export const fetchClmPendingRewards = createAsyncThunk<
   FetchClmPendingRewardsFulfilledAction,
-  { vaultId: VaultEntity['id'] },
-  { state: BeefyState }
+  {
+    vaultId: VaultEntity['id'];
+  },
+  {
+    state: BeefyState;
+  }
 >('analytics/fetchClmPendingRewards', async ({ vaultId }, { getState }) => {
   const state = getState();
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
@@ -1102,9 +1136,15 @@ export const fetchClmPendingRewards = createAsyncThunk<
 });
 
 export const initDashboardByAddress = createAsyncThunk<
-  { walletAddress: string },
-  { walletAddress: string },
-  { state: BeefyState }
+  {
+    walletAddress: string;
+  },
+  {
+    walletAddress: string;
+  },
+  {
+    state: BeefyState;
+  }
 >('analytics/initDashboardByAddress', async ({ walletAddress }, { getState, dispatch }) => {
   const state = getState();
   const chains = selectAllChainIds(state);

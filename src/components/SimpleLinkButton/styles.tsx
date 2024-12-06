@@ -1,19 +1,19 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  link: {
+export const styles = {
+  link: css.raw({
     display: 'inline-flex',
-    flexDirection: 'row' as const,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     textDecoration: 'none',
-    backgroundColor: theme.palette.background.contentLight,
+    backgroundColor: 'background.content.light',
     padding: '2px 8px',
     borderRadius: '4px',
-    color: theme.palette.text.middle,
-  },
-  icon: {
+    color: 'text.middle',
+  }),
+  icon: css.raw({
     fontSize: 'inherit',
     marginRight: '4px',
-  },
-});
+  }),
+} as const;

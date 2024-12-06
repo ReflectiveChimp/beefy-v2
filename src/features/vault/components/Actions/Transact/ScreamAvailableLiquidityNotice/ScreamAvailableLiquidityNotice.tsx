@@ -64,61 +64,63 @@ async function getLiquidity(vault: VaultEntity, chain: ChainEntity, depositToken
 }
 
 // underlying.balanceOf(strategy) + underlying.balanceOf(scToken).
-const ScreamAvailableLiquidityImpl = memo<ScreamAvailableLiquidityProps>(
-  function ScreamAvailableLiquidityImpl({ vaultId, onChange }) {
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    const chain = useAppSelector(state => selectChainById(state, vault.chainId));
-    const depositToken = useAppSelector(state =>
-      selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
-    );
-    const fetchLiquidity = useCallback(() => {
-      return getLiquidity(vault, chain, depositToken);
-    }, [vault, chain, depositToken]);
-    const {
-      execute: updateLiquidity,
-      status: updateStatus,
-      value: liquidity,
-    } = useAsync(fetchLiquidity, 0);
-    const [haveUpdatedOnce, setHaveUpdatedOnce] = useState(false);
+const ScreamAvailableLiquidityImpl = memo(function ScreamAvailableLiquidityImpl({
+  vaultId,
+  onChange,
+}: ScreamAvailableLiquidityProps) {
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const depositToken = useAppSelector(state =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+  );
+  const fetchLiquidity = useCallback(() => {
+    return getLiquidity(vault, chain, depositToken);
+  }, [vault, chain, depositToken]);
+  const {
+    execute: updateLiquidity,
+    status: updateStatus,
+    value: liquidity,
+  } = useAsync(fetchLiquidity, 0);
+  const [haveUpdatedOnce, setHaveUpdatedOnce] = useState(false);
 
-    useEffect(() => {
-      const handle = setInterval(updateLiquidity, 30000);
-      return () => clearInterval(handle);
-    }, [updateLiquidity]);
+  useEffect(() => {
+    const handle = setInterval(updateLiquidity, 30000);
+    return () => clearInterval(handle);
+  }, [updateLiquidity]);
 
-    useEffect(() => {
-      if (!haveUpdatedOnce && updateStatus === 'success') {
-        setHaveUpdatedOnce(true);
-      }
-    }, [updateStatus, haveUpdatedOnce, setHaveUpdatedOnce]);
-
-    useEffect(() => {
-      onChange(haveUpdatedOnce && liquidity === 0);
-    }, [liquidity, haveUpdatedOnce, onChange]);
-
-    return (
-      <AlertWarning>
-        <p>There is limited liquidity in the underlying protocol to withdraw.</p>
-        {haveUpdatedOnce ? (
-          <p>
-            <strong>Available liquidity:</strong>{' '}
-            {(liquidity || 0).toLocaleString('en-US', {
-              maximumFractionDigits: depositToken.decimals,
-            })}{' '}
-            {depositToken.symbol}
-          </p>
-        ) : null}
-      </AlertWarning>
-    );
-  }
-);
-
-export const ScreamAvailableLiquidityNotice = memo<ScreamAvailableLiquidityProps>(
-  function ScreamAvailableLiquidity({ vaultId, onChange }) {
-    if (enableForVaults.includes(vaultId)) {
-      return <ScreamAvailableLiquidityImpl vaultId={vaultId} onChange={onChange} />;
+  useEffect(() => {
+    if (!haveUpdatedOnce && updateStatus === 'success') {
+      setHaveUpdatedOnce(true);
     }
+  }, [updateStatus, haveUpdatedOnce, setHaveUpdatedOnce]);
 
-    return null;
+  useEffect(() => {
+    onChange(haveUpdatedOnce && liquidity === 0);
+  }, [liquidity, haveUpdatedOnce, onChange]);
+
+  return (
+    <AlertWarning>
+      <p>There is limited liquidity in the underlying protocol to withdraw.</p>
+      {haveUpdatedOnce ? (
+        <p>
+          <strong>Available liquidity:</strong>{' '}
+          {(liquidity || 0).toLocaleString('en-US', {
+            maximumFractionDigits: depositToken.decimals,
+          })}{' '}
+          {depositToken.symbol}
+        </p>
+      ) : null}
+    </AlertWarning>
+  );
+});
+
+export const ScreamAvailableLiquidityNotice = memo(function ScreamAvailableLiquidity({
+  vaultId,
+  onChange,
+}: ScreamAvailableLiquidityProps) {
+  if (enableForVaults.includes(vaultId)) {
+    return <ScreamAvailableLiquidityImpl vaultId={vaultId} onChange={onChange} />;
   }
-);
+
+  return null;
+});

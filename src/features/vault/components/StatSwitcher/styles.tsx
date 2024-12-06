@@ -1,15 +1,15 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  tabs: {
+export const styles = {
+  tabs: css.raw({
     marginTop: '16px',
     backgroundColor: 'transparent',
-    [theme.breakpoints.up('sm')]: {
-      marginTop: 0,
+    sm: {
+      marginTop: '0',
     },
-  },
-  select: {
+  }),
+  select: css.raw({
     width: '100%',
-    backgroundColor: theme.palette.background.contentPrimary,
-  },
-});
+    backgroundColor: 'background.content',
+  }),
+};

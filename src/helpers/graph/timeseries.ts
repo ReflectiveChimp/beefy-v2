@@ -151,7 +151,12 @@ export function getInvestorTimeseries(
  * Advance the index of an array of data to the next item that is after the current date.
  * The key or key function must return a Date or *millisecond* timestamp
  */
-function advanceIndexIfNeeded<T extends string, U extends { [key in T]: Date | number }>(
+function advanceIndexIfNeeded<
+  T extends string,
+  U extends {
+    [key in T]: Date | number;
+  }
+>(
   data: U[],
   key: T | ((item: U) => Date | number),
   idx: number,

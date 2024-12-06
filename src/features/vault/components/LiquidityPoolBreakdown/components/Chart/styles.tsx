@@ -1,11 +1,11 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  holder: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.middle,
+export const styles = {
+  holder: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.middle',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-});
+  }),
+};

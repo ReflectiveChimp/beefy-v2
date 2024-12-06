@@ -13,14 +13,15 @@ export type TenderlyTransactButtonProps = {
   quote: TransactQuote;
 };
 
-export const TenderlyTransactButton = memo<TenderlyTransactButtonProps>(
-  function TenderlyTransactButton({ option, quote }) {
-    const dispatch = useAppDispatch();
-    const { t } = useTranslation();
-    const handleClick = useCallback(() => {
-      dispatch(tenderlySimulateTransactQuote({ option, quote, t }));
-    }, [dispatch, t, option, quote]);
+export const TenderlyTransactButton = memo(function TenderlyTransactButton({
+  option,
+  quote,
+}: TenderlyTransactButtonProps) {
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const handleClick = useCallback(() => {
+    dispatch(tenderlySimulateTransactQuote({ option, quote, t }));
+  }, [dispatch, t, option, quote]);
 
-    return <TenderlyButton chainId={option.chainId} onClick={handleClick} />;
-  }
-);
+  return <TenderlyButton chainId={option.chainId} onClick={handleClick} />;
+});

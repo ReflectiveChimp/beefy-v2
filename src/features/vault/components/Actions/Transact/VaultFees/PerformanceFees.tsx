@@ -6,7 +6,9 @@ import { InterestTooltipContent } from '../../../../../../components/InterestToo
 import { BigNumber } from 'bignumber.js';
 import { isFiniteNumber } from '../../../../../../helpers/number';
 
-export type PerformanceFeesProps = { fees: VaultFee };
+export type PerformanceFeesProps = {
+  fees: VaultFee;
+};
 
 const performanceFeeLabels = {
   stakers: 'Transact-Fee-Holder',
@@ -14,7 +16,7 @@ const performanceFeeLabels = {
   strategist: 'Transact-Fee-Developers',
   call: 'Transact-Fee-HarvestFee',
 };
-export const PerformanceFees = memo<PerformanceFeesProps>(function PerformanceFees({ fees }) {
+export const PerformanceFees = memo(function PerformanceFees({ fees }: PerformanceFeesProps) {
   const { t } = useTranslation();
   const rows = Object.entries(performanceFeeLabels)
     .filter(([key]) => key in fees)

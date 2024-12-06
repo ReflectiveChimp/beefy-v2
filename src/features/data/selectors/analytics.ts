@@ -234,7 +234,11 @@ export const selectStandardGovPnl = (
   };
 };
 
-function withDiff<T extends TokenEntryNow>(entry: T): T & { diff: AmountUsd } {
+function withDiff<T extends TokenEntryNow>(
+  entry: T
+): T & {
+  diff: AmountUsd;
+} {
   return {
     ...entry,
     diff: {

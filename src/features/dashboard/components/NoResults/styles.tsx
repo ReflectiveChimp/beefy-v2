@@ -1,70 +1,71 @@
-import type { Theme } from '@material-ui/core';
-export const styles = (theme: Theme) => ({
-  container: {
-    backgroundColor: theme.palette.background.contentPrimary,
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  container: css.raw({
+    backgroundColor: 'background.content',
     padding: '24px',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     rowGap: '24px',
     borderRadius: '8px',
-  },
-  icon: {
+  }),
+  icon: css.raw({
     width: '120px',
     height: '120px',
-    [theme.breakpoints.up('md')]: {
+    md: {
       width: '132px',
       height: '132px',
     },
-  },
-  textContainer: {
+  }),
+  textContainer: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     rowGap: '4px',
-  },
-  title: {
-    ...theme.typography.h3,
-    color: theme.palette.text.light,
-    textAlign: 'center' as const,
-  },
-  text: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.middle,
-    textAlign: 'center' as const,
-  },
-  actionsContainer: {
+  }),
+  title: css.raw({
+    textStyle: 'h3',
+    color: 'text.light',
+    textAlign: 'center',
+  }),
+  text: css.raw({
+    textStyle: 'body',
+    color: 'text.middle',
+    textAlign: 'center',
+  }),
+  actionsContainer: css.raw({
     display: 'grid',
     gap: '12px',
-  },
-  dividerContainer: {
+  }),
+  dividerContainer: css.raw({
     display: 'flex',
     alignItems: 'center',
     columnGap: '8px',
     width: '272px',
-  },
-  line: {
+  }),
+  line: css.raw({
     height: '2px',
     width: '100%',
-    backgroundColor: theme.palette.background.contentLight,
+    backgroundColor: 'background.content.light',
     borderRadius: '8px',
-  },
-  btn: {
+  }),
+  btn: css.raw({
     width: '100%',
     padding: '6px 12px',
     maxWidth: '272px',
-  },
-  or: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-  },
-  center: {
+  }),
+  or: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+  }),
+  center: css.raw({
     display: 'flex',
     justifyContent: 'center',
-  },
-  search: {
-    backgroundColor: theme.palette.background.searchInputBg,
-  },
-});
+  }),
+  search: css.raw({
+    backgroundColor: 'purpleDarkest',
+  }),
+};

@@ -2,13 +2,14 @@ import type { FC, SVGProps } from 'react';
 import { memo, useCallback } from 'react';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import { selectActiveChainIds, selectChainById } from '../../../../../data/selectors/chains';
-import { makeStyles, Tooltip } from '@material-ui/core';
+import { Tooltip } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles, cx } from '@repo/styles/css';
 import { useAppSelector } from '../../../../../../store';
 import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 const networkIcons = import.meta.glob<FC<SVGProps<SVGSVGElement>>>(
   '../../../../../../images/networks/*.svg',
   {
@@ -22,7 +23,7 @@ type ChainButtonProps = {
   selected: boolean;
   onChange: (selected: boolean, id: ChainEntity['id']) => void;
 };
-const ChainButton = memo<ChainButtonProps>(function ChainButton({ id, selected, onChange }) {
+const ChainButton = memo(function ChainButton({ id, selected, onChange }: ChainButtonProps) {
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, id));
   const handleChange = useCallback(() => {
@@ -39,12 +40,13 @@ const ChainButton = memo<ChainButtonProps>(function ChainButton({ id, selected, 
       placement="top-start"
       classes={{ tooltip: classes.tooltip }}
     >
-      <button
-        onClick={handleChange}
-        className={clsx(classes.button, { [classes.selected]: selected })}
-      >
-        {chain.new ? <NewBadge className={classes.badge} /> : null}
-        <Icon className={classes.icon} width={24} height={24} />
+      <button onClick={handleChange} className={css(styles.button, selected && styles.selected)}>
+        {chain.new ? <NewBadge css={styles.badge} /> : null}
+        <Icon
+          className={cx(classes.icon, !selected && classes.unselectedIcon)}
+          width={24}
+          height={24}
+        />
       </button>
     </Tooltip>
   );
@@ -53,14 +55,13 @@ const ChainButton = memo<ChainButtonProps>(function ChainButton({ id, selected, 
 export type ChainButtonSelectorProps = {
   selected: ChainEntity['id'][];
   onChange: (selected: ChainEntity['id'][]) => void;
-  className?: string;
+  css?: CssStyles;
 };
-export const ChainButtonSelector = memo<ChainButtonSelectorProps>(function ChainButtonSelector({
+export const ChainButtonSelector = memo(function ChainButtonSelector({
   selected,
   onChange,
-  className,
-}) {
-  const classes = useStyles();
+  css: cssProp,
+}: ChainButtonSelectorProps) {
   const chainIds = useAppSelector(selectActiveChainIds);
   const handleChange = useCallback(
     (isSelected, id) => {
@@ -84,7 +85,7 @@ export const ChainButtonSelector = memo<ChainButtonSelectorProps>(function Chain
   );
 
   return (
-    <div className={clsx(classes.selector, className)}>
+    <div className={css(styles.selector, cssProp)}>
       {chainIds.map(id => (
         <ChainButton
           key={id}

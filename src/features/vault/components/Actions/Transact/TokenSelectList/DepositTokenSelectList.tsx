@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
@@ -16,110 +16,110 @@ import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { BigNumber } from 'bignumber.js';
 import type { ToggleProps } from '../../../../../../components/Toggle';
 import { Toggle } from '../../../../../../components/Toggle';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import buildLpIcon from '../../../../../../images/icons/build-lp.svg';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import { ReactComponent as OpenInNewRoundedIcon } from '@repo/images/icons/mui/OpenInNewRounded.svg';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 const DUST_HIDDEN_THRESHOLD = new BigNumber('0.01');
 
 export type DepositTokenSelectListProps = {
-  className?: string;
+  css?: CssStyles;
 };
 
-export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
-  function DepositTokenSelectList({ className }) {
-    const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const classes = useStyles();
-    const vaultId = useAppSelector(selectTransactVaultId);
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    const [dustHidden, setDustHidden] = useState(false);
-    const [selectedChain] = useState(vault.chainId);
-    const [search, setSearch] = useState('');
-    const optionsForChain = useAppSelector(state =>
-      selectTransactDepositTokensForChainIdWithBalances(state, selectedChain, vaultId)
-    );
-    const filteredOptionsForChain = useMemo(() => {
-      let options = optionsForChain;
+export const DepositTokenSelectList = memo(function DepositTokenSelectList({
+  css: cssProp,
+}: DepositTokenSelectListProps) {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const classes = useStyles();
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const [dustHidden, setDustHidden] = useState(false);
+  const [selectedChain] = useState(vault.chainId);
+  const [search, setSearch] = useState('');
+  const optionsForChain = useAppSelector(state =>
+    selectTransactDepositTokensForChainIdWithBalances(state, selectedChain, vaultId)
+  );
+  const filteredOptionsForChain = useMemo(() => {
+    let options = optionsForChain;
 
-      if (search.length) {
-        options = options.filter(option =>
-          option.tokens
-            .map(token => token.symbol)
-            .join(' ')
-            .toLowerCase()
-            .includes(search.toLowerCase())
-        );
-      }
+    if (search.length) {
+      options = options.filter(option =>
+        option.tokens
+          .map(token => token.symbol)
+          .join(' ')
+          .toLowerCase()
+          .includes(search.toLowerCase())
+      );
+    }
 
-      if (dustHidden) {
-        options = options.filter(option => option.balanceValue.gte(DUST_HIDDEN_THRESHOLD));
-      }
+    if (dustHidden) {
+      options = options.filter(option => option.balanceValue.gte(DUST_HIDDEN_THRESHOLD));
+    }
 
-      return options;
-    }, [optionsForChain, search, dustHidden]);
-    // const hasMultipleChains = availableChains.length > 1;
-    const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
-      tokenId => {
-        dispatch(
-          transactActions.selectSelection({
-            selectionId: tokenId,
-            resetInput: true,
-          })
-        );
-      },
-      [dispatch]
-    );
-    const handleToggleDust = useCallback<ToggleProps['onChange']>(
-      checked => {
-        setDustHidden(checked);
-      },
-      [setDustHidden]
-    );
+    return options;
+  }, [optionsForChain, search, dustHidden]);
+  // const hasMultipleChains = availableChains.length > 1;
+  const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
+    tokenId => {
+      dispatch(
+        transactActions.selectSelection({
+          selectionId: tokenId,
+          resetInput: true,
+        })
+      );
+    },
+    [dispatch]
+  );
+  const handleToggleDust = useCallback<ToggleProps['onChange']>(
+    checked => {
+      setDustHidden(checked);
+    },
+    [setDustHidden]
+  );
 
-    return (
-      <div className={clsx(classes.container, classes.deposit, className)}>
-        <div className={classes.search}>
-          <SearchInput value={search} onChange={setSearch} className={classes.searchInput} />
-        </div>
-        <div className={classes.walletToggle}>
-          <div className={classes.inWallet}>{t('Transact-TokenSelect-InYourWallet')}</div>
-          <div className={classes.hideDust}>
-            <Toggle
-              checked={dustHidden}
-              onChange={handleToggleDust}
-              startAdornment={t('Transact-TokenSelect-HideDust')}
-            />
-          </div>
-        </div>
-        {/*hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null*/}
-        <Scrollable className={classes.listContainer}>
-          <div className={classes.list}>
-            {filteredOptionsForChain.length ? (
-              filteredOptionsForChain.map(option => (
-                <ListItem
-                  key={option.id}
-                  selectionId={option.id}
-                  tokens={option.tokens}
-                  balance={option.balance}
-                  decimals={option.decimals}
-                  tag={option.tag}
-                  chainId={selectedChain}
-                  onSelect={handleTokenSelect}
-                />
-              ))
-            ) : (
-              <div className={classes.noResults}>{t('Transact-TokenSelect-NoResults')}</div>
-            )}
-          </div>
-        </Scrollable>
-        {filteredOptionsForChain?.length > 1 && <BuildLpManually vaultId={vaultId} />}
+  return (
+    <div className={css(styles.container, styles.deposit, cssProp)}>
+      <div className={classes.search}>
+        <SearchInput value={search} onChange={setSearch} css={styles.searchInput} />
       </div>
-    );
-  }
-);
+      <div className={classes.walletToggle}>
+        <div className={classes.inWallet}>{t('Transact-TokenSelect-InYourWallet')}</div>
+        <div className={classes.hideDust}>
+          <Toggle
+            checked={dustHidden}
+            onChange={handleToggleDust}
+            startAdornment={t('Transact-TokenSelect-HideDust')}
+          />
+        </div>
+      </div>
+      {/*hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null*/}
+      <Scrollable css={styles.listContainer}>
+        <div className={classes.list}>
+          {filteredOptionsForChain.length ? (
+            filteredOptionsForChain.map(option => (
+              <ListItem
+                key={option.id}
+                selectionId={option.id}
+                tokens={option.tokens}
+                balance={option.balance}
+                decimals={option.decimals}
+                tag={option.tag}
+                chainId={selectedChain}
+                onSelect={handleTokenSelect}
+              />
+            ))
+          ) : (
+            <div className={classes.noResults}>{t('Transact-TokenSelect-NoResults')}</div>
+          )}
+        </div>
+      </Scrollable>
+      {filteredOptionsForChain?.length > 1 && <BuildLpManually vaultId={vaultId} />}
+    </div>
+  );
+});
 
 const BuildLpManually = memo(function BuildLpManually({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));

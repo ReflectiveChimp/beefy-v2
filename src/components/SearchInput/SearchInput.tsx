@@ -1,23 +1,24 @@
 import { memo, useCallback, useMemo } from 'react';
-import { InputBase, makeStyles } from '@material-ui/core';
+import { InputBase } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as CloseRounded } from '@repo/images/icons/mui/CloseRounded.svg';
 import { ReactComponent as Search } from '@repo/images/icons/mui/Search.svg';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type SearchInputProps = {
   value: string;
   onChange: (value: string) => void;
-  className?: string;
+  css?: CssStyles;
 };
-export const SearchInput = memo<SearchInputProps>(function SearchInput({
+export const SearchInput = memo(function SearchInput({
   value,
   onChange,
-  className,
-}) {
+  css: cssProp,
+}: SearchInputProps) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -48,7 +49,7 @@ export const SearchInput = memo<SearchInputProps>(function SearchInput({
 
   return (
     <InputBase
-      className={clsx(classes.search, className)}
+      className={css(styles.search, cssProp)}
       value={value}
       onChange={handleChange}
       fullWidth={true}

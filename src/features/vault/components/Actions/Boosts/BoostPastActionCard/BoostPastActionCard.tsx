@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';
@@ -18,7 +18,7 @@ import { TokenAmount } from '../../../../../../components/TokenAmount';
 import { Unstake } from '../ActionButton/Unstake';
 import { ActionConnectSwitch } from '../ActionConnectSwitch';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface BoostPastCardActionCardProps {
   boostId: BoostEntity['id'];
@@ -67,12 +67,7 @@ export const BoostPastActionCard = memo(function BoostPastActionCard({
         </div>
       </div>
       {canClaim && (
-        <Rewards
-          isInBoost={true}
-          rewards={rewards}
-          className={classes.pastRewards}
-          fadeInactive={false}
-        />
+        <Rewards isInBoost={true} rewards={rewards} css={styles.pastRewards} fadeInactive={false} />
       )}
       {canClaim || canUnstake ? (
         <ActionConnectSwitch chainId={vault.chainId}>

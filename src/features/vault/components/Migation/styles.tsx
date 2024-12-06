@@ -1,38 +1,38 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.contentPrimary,
-  },
-  header: {
+    backgroundColor: 'background.content',
+  }),
+  header: css.raw({
     display: 'flex',
     alignItems: 'center',
     columnGap: '16px',
-    backgroundColor: theme.palette.background.contentDark,
+    backgroundColor: 'background.content.dark',
     borderRadius: '12px 12px 0px 0px ',
     padding: '24px',
-  },
-  icon: {
+  }),
+  icon: css.raw({
     height: '48px',
-  },
-  subTitle: {
-    ...theme.typography['subline-lg'],
-    fontWeight: 700,
-    color: theme.palette.text.dark,
-  },
-  title: {
-    ...theme.typography.h3,
-    fontWeight: 500,
-    color: theme.palette.text.light,
-  },
-  content: {
+  }),
+  subTitle: css.raw({
+    textStyle: 'subline',
+    fontWeight: '700',
+    color: 'text.dark',
+  }),
+  title: css.raw({
+    textStyle: 'h3',
+    fontWeight: '500',
+    color: 'text.light',
+  }),
+  content: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     justifyContent: 'center',
     padding: '24px',
     rowGap: '16px',
-  },
-});
+  }),
+};

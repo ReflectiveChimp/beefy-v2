@@ -1,41 +1,41 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '16px',
-  },
-  entries: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.middle,
+  }),
+  entries: css.raw({
+    textStyle: 'body',
+    color: 'text.middle',
     padding: '16px',
     borderRadius: '8px',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '8px',
-    background: theme.palette.background.contentPrimary,
-  },
-  entry: {
+    background: 'background.content',
+  }),
+  entry: css.raw({
     display: 'flex',
     gap: '8px',
-  },
-  icon: {
+  }),
+  icon: css.raw({
     width: '24px',
     height: '24px',
-    flexGrow: 0,
-    flexShrink: 0,
-  },
-  text: {
-    flexGrow: 1,
-    flexShrink: 1,
-  },
-  tokenAmount: {
-    fontWeight: theme.typography['body-lg-med'].fontWeight,
-    color: theme.palette.background.vaults.boost,
-  },
-  link: {
+    flexGrow: '0',
+    flexShrink: '0',
+  }),
+  text: css.raw({
+    flexGrow: '1',
+    flexShrink: '1',
+  }),
+  tokenAmount: css.raw({
+    fontWeight: 'body.medium',
+    color: 'background.vaults.boost',
+  }),
+  link: css.raw({
     textDecoration: 'none',
-    color: theme.palette.primary.main,
-  },
-});
+    color: 'green',
+  }),
+};

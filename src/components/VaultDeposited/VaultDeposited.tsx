@@ -22,7 +22,14 @@ import {
 import { memo } from 'react';
 
 const _VaultDeposited = connect(
-  (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
+  (
+    state: BeefyState,
+    {
+      vaultId,
+    }: {
+      vaultId: VaultEntity['id'];
+    }
+  ) => {
     const vault = selectVaultById(state, vaultId);
     const walletAddress = selectWalletAddress(state);
     const isLoaded =

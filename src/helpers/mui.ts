@@ -3,7 +3,13 @@ import { css } from '@repo/styles/css';
 
 type StylesRecord = Record<string, SystemStyleObject>;
 
-export function legacyMakeStyles(stylesRecord: StylesRecord): () => Record<string, string> {
+/**
+ * Simply passes the result of css.raw() to css() to generate the className
+ * @deprecated Use css() directly instead (or recipes etc.)
+ */
+export function legacyMakeStyles<T extends StylesRecord>(
+  stylesRecord: T
+): () => Record<keyof T, string> {
   const cached: Record<string | symbol, string | undefined> = {};
 
   return () =>
@@ -24,5 +30,5 @@ export function legacyMakeStyles(stylesRecord: StylesRecord): () => Record<strin
 
         return (cached[p] = css(styles));
       },
-    }) as unknown as Record<string, string>;
+    }) as unknown as Record<keyof T, string>;
 }

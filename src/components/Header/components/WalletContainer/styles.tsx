@@ -1,48 +1,48 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '8px',
     padding: '8px 16px',
-  },
-  address: {
-    ...theme.typography['body-lg-med'],
-    whiteSpace: 'nowrap' as const,
+  }),
+  address: css.raw({
+    textStyle: 'body.med',
+    whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     '&:hover': {
       cursor: 'pointer',
     },
-  },
-  disconnected: {
+  }),
+  disconnected: css.raw({
     display: 'flex',
     justifyContent: 'center',
-    background: theme.palette.background.cta,
-    '& $address': {
-      color: theme.palette.text.light,
+    background: 'green',
+    '& .wallet-address': {
+      color: 'text.light',
       textOverflow: 'clip',
     },
-  },
-  known: {
-    border: `2px solid ${theme.palette.background.indicators.warning}`,
-    '& $address': {
-      color: theme.palette.text.middle,
+  }),
+  known: css.raw({
+    border: '2px solid {colors.indicators.warning}',
+    '& .wallet-address': {
+      color: 'text.middle',
     },
     '&:hover': {
-      borderColor: theme.palette.background.contentLight,
+      borderColor: 'background.content.light',
     },
-  },
-  connected: {
-    borderColor: theme.palette.background.cta,
-    backgroundColor: theme.palette.background.contentDark,
-  },
-  loading: {
+  }),
+  connected: css.raw({
+    borderColor: 'green',
+    backgroundColor: 'background.content.dark',
+  }),
+  loading: css.raw({
     paddingTop: '4px',
-  },
-  blurred: {
+  }),
+  blurred: css.raw({
     filter: 'blur(.5rem)',
-  },
-});
+  }),
+};

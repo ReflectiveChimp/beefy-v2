@@ -11,16 +11,17 @@ import {
   DropdownItemLabel,
   type DropdownItemLabelProps,
 } from '../../../../../../components/LabeledSelect';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import {
   LabeledMultiSelect,
   type LabeledMultiSelectProps,
 } from '../../../../../../components/LabeledMultiSelect';
+import { type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-const CategoryDropdownLabel = memo<DropdownItemLabelProps>(function CategoryDropdownLabel(props) {
+const CategoryDropdownLabel = memo(function CategoryDropdownLabel(props: DropdownItemLabelProps) {
   const classes = useStyles();
   const { value, label: originalLabel } = props;
   const label = useMemo(() => {
@@ -39,42 +40,42 @@ const CategoryDropdownLabel = memo<DropdownItemLabelProps>(function CategoryDrop
 });
 
 export type AssetTypeDropdownFilterProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const AssetTypeDropdownFilter = memo<AssetTypeDropdownFilterProps>(
-  function AssetTypeDropdownFilter({ className }) {
-    const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const options: Record<string, string> = useMemo(
-      () =>
-        Object.fromEntries(Object.entries(TYPE_OPTIONS).map(([key, cat]) => [key, t(cat.i18nKey)])),
-      [t]
-    );
-    const value = useAppSelector(selectFilterAssetType);
+export const AssetTypeDropdownFilter = memo(function AssetTypeDropdownFilter({
+  css: cssProp,
+}: AssetTypeDropdownFilterProps) {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const options: Record<string, string> = useMemo(
+    () =>
+      Object.fromEntries(Object.entries(TYPE_OPTIONS).map(([key, cat]) => [key, t(cat.i18nKey)])),
+    [t]
+  );
+  const value = useAppSelector(selectFilterAssetType);
 
-    const handleChange = useCallback<LabeledMultiSelectProps['onChange']>(
-      selected => {
-        dispatch(
-          filteredVaultsActions.setAssetType(
-            selected.length === Object.values(options).length
-              ? []
-              : (selected as FilteredVaultsState['assetType'])
-          )
-        );
-      },
-      [dispatch, options]
-    );
+  const handleChange = useCallback<LabeledMultiSelectProps['onChange']>(
+    selected => {
+      dispatch(
+        filteredVaultsActions.setAssetType(
+          selected.length === Object.values(options).length
+            ? []
+            : (selected as FilteredVaultsState['assetType'])
+        )
+      );
+    },
+    [dispatch, options]
+  );
 
-    return (
-      <LabeledMultiSelect
-        label={t('Filter-Type')}
-        value={value}
-        options={options}
-        onChange={handleChange}
-        selectClass={className}
-        fullWidth={true}
-        DropdownItemLabelComponent={CategoryDropdownLabel}
-      />
-    );
-  }
-);
+  return (
+    <LabeledMultiSelect
+      label={t('Filter-Type')}
+      value={value}
+      options={options}
+      onChange={handleChange}
+      selectCss={cssProp}
+      fullWidth={true}
+      DropdownItemLabelComponent={CategoryDropdownLabel}
+    />
+  );
+});

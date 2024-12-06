@@ -1,18 +1,18 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.primary,
-    background: theme.palette.background.indicators.warning,
+export const styles = {
+  container: css.raw({
+    textStyle: 'body',
+    color: 'text.white',
+    background: 'indicators.warning',
     padding: '16px',
     borderRadius: '8px',
-  },
-  link: {
-    color: theme.palette.text.primary,
+  }),
+  link: css.raw({
+    color: 'text.white',
     textDecoration: 'underline',
     '&:hover': {
-      cursor: 'pointer' as const,
+      cursor: 'pointer',
     },
-  },
-});
+  }),
+};

@@ -33,7 +33,13 @@ export const tenderlySlice = createSlice({
   },
   extraReducers: builder => {
     const handleCalls = (
-      thunk: AsyncThunk<TenderlyOpenSimulationPayload, unknown, { state: BeefyState }>
+      thunk: AsyncThunk<
+        TenderlyOpenSimulationPayload,
+        unknown,
+        {
+          state: BeefyState;
+        }
+      >
     ) => {
       builder
         .addCase(thunk.pending, state => {

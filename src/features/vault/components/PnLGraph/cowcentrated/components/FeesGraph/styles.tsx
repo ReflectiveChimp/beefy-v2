@@ -1,31 +1,31 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  graphContainer: {
+export const styles = {
+  graphContainer: css.raw({
     padding: '16px 0px',
-    backgroundColor: theme.palette.background.contentPrimary,
+    backgroundColor: 'background.content',
     '& text': {
-      ...theme.typography['subline-sm'],
-      fill: theme.palette.text.dark,
+      textStyle: 'subline.sm',
+      fill: 'text.dark',
       '&.recharts-cartesian-axis-tick-value': {
         textTransform: 'initial',
       },
     },
-  },
-  graph: {
+  }),
+  graph: css.raw({
     '& .recharts-yAxis': {
       '& .recharts-cartesian-axis-tick': {
-        opacity: 1,
+        opacity: '1',
         transition: 'ease-in-out 0.5s',
       },
     },
     '&:hover': {
       '& .recharts-yAxis': {
         '& .recharts-cartesian-axis-tick': {
-          opacity: 0.5,
+          opacity: '0.5',
           transition: 'ease-in-out 0.5s',
         },
       },
     },
-  },
-});
+  }),
+};

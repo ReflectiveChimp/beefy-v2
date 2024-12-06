@@ -11,7 +11,7 @@ import { Meta } from './Meta';
 export type VaultMetaProps = {
   vaultId: VaultEntity['id'];
 };
-export const VaultMeta = memo<VaultMetaProps>(function VaultMeta({ vaultId }) {
+export const VaultMeta = memo(function VaultMeta({ vaultId }: VaultMetaProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));

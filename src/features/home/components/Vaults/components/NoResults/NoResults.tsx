@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectFilterUserCategory,
@@ -15,14 +15,14 @@ import { Button } from '../../../../../../components/Button';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type MessageProps = PropsWithChildren<{
   title: string;
   text: string;
 }>;
 
-const Message = memo<MessageProps>(function Message({ title, text, children }) {
+const Message = memo(function Message({ title, text, children }: MessageProps) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -35,7 +35,7 @@ const Message = memo<MessageProps>(function Message({ title, text, children }) {
   );
 });
 
-const NotConnectedMessage = memo<MessageProps>(function NotConnectedMessage({ title, text }) {
+const NotConnectedMessage = memo(function NotConnectedMessage({ title, text }: MessageProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
@@ -56,7 +56,7 @@ const NotConnectedMessage = memo<MessageProps>(function NotConnectedMessage({ ti
   );
 });
 
-const NotDepositedMessage = memo<MessageProps>(function NotDepositedMessage({ title, text }) {
+const NotDepositedMessage = memo(function NotDepositedMessage({ title, text }: MessageProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleViewAll = useCallback(() => {

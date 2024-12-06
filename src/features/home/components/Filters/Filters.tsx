@@ -1,42 +1,42 @@
 import { memo } from 'react';
-import type { Theme } from '@material-ui/core';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { ChainButtonFilter, ChainDropdownFilter } from './components/ChainFilters';
 import { UserCategoryButtonFilter } from './components/UserCategoryFilters';
 import { AssetTypeButtonFilter } from './components/AssetTypeFilters';
 import { styles } from './styles';
 import { ExtendedFiltersButton } from './components/ExtendedFilters';
 import { ClearFiltersButton } from './components/ClearFiltersButton';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 import { VaultCategoryButtonFilter } from './components/VaultCategoryFilters';
 import { StrategyTypeButtonFilter } from './components/StrategyTypeFilters';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const Filters = memo(function Filters() {
   const classes = useStyles();
-  const desktopView = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
+  const desktopView = useBreakpoint({ from: 'lg' });
 
   return (
     <div className={classes.filters}>
-      {desktopView ? <ChainButtonFilter className={classes.chain} /> : null}
-      <UserCategoryButtonFilter className={classes.userCategory} />
+      {desktopView ? <ChainButtonFilter css={styles.chain} /> : null}
+      <UserCategoryButtonFilter css={styles.userCategory} />
       {desktopView ? (
         <>
-          <VaultCategoryButtonFilter className={classes.vaultCategory} />
-          <AssetTypeButtonFilter className={classes.assetType} />
+          <VaultCategoryButtonFilter css={styles.vaultCategory} />
+          <AssetTypeButtonFilter css={styles.assetType} />
           <StrategyTypeButtonFilter />
         </>
       ) : (
         <>
-          <ChainDropdownFilter className={classes.chain} />
+          <ChainDropdownFilter css={styles.chain} />
         </>
       )}
       <ExtendedFiltersButton
-        className={clsx(classes.button, classes.extended)}
+        css={css.raw(styles.button, styles.extended)}
         desktopView={desktopView}
       />
-      <ClearFiltersButton className={clsx(classes.button, classes.clear)} />
+      <ClearFiltersButton css={css.raw(styles.button, styles.clear)} />
     </div>
   );
 });

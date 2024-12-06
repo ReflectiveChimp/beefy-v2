@@ -1,7 +1,7 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  shareButton: {
+export const styles = {
+  shareButton: css.raw({
     display: 'flex',
     width: '100%',
     alignItems: 'center',
@@ -10,29 +10,29 @@ export const styles = (theme: Theme) => ({
     outline: 'none',
     '&:focus-visible, &.active': {
       outline: 'none',
-      backgroundColor: theme.palette.background.border,
+      backgroundColor: 'bayOfMany',
     },
-    [theme.breakpoints.down('md')]: {
+    lgDown: {
       padding: '10px',
     },
-  },
-  icon: {
-    flexShrink: 0,
-    flexGrow: 0,
+  }),
+  icon: css.raw({
+    flexShrink: '0',
+    flexGrow: '0',
     fontSize: '16px',
-  },
-  iconHolder: {
+  }),
+  iconHolder: css.raw({
     height: '24px',
     width: '24px',
     borderRadius: '50%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.palette.background.buttons.button,
-    [theme.breakpoints.up('lg')]: {
+    backgroundColor: 'bayOfMany',
+    lg: {
       height: '16px',
       width: '16px',
       backgroundColor: 'transparent',
     },
-  },
-});
+  }),
+};

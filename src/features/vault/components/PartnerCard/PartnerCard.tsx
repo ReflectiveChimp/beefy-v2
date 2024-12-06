@@ -1,8 +1,8 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type PartnerCardProps = {
   logo?: string;
@@ -10,12 +10,12 @@ export type PartnerCardProps = {
   content: string;
   url: string;
 };
-export const PartnerCard = memo<PartnerCardProps>(function PartnerCard({
+export const PartnerCard = memo(function PartnerCard({
   logo,
   title,
   content,
   url,
-}) {
+}: PartnerCardProps) {
   const classes = useStyles();
 
   return (

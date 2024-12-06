@@ -6,48 +6,49 @@ import { selectFilterVaultCategory } from '../../../../../data/selectors/filtere
 import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { CATEGORY_OPTIONS } from './category-options';
+import { type CssStyles } from '@repo/styles/css';
 
 export type VaultCategoryButtonFilterProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const VaultCategoryButtonFilter = memo<VaultCategoryButtonFilterProps>(
-  function VaultCategoryButtonFilter({ className }) {
-    const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const allKey = 'all';
-    const options: Record<string, string> = useMemo(
-      () =>
-        Object.fromEntries(
-          Object.entries(CATEGORY_OPTIONS)
-            .filter(([key]) => key !== allKey)
-            .map(([key, cat]) => [key, t(cat.i18nKey)])
-        ),
-      [t]
-    );
-    const value = useAppSelector(selectFilterVaultCategory);
+export const VaultCategoryButtonFilter = memo(function VaultCategoryButtonFilter({
+  css: cssProp,
+}: VaultCategoryButtonFilterProps) {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const allKey = 'all';
+  const options: Record<string, string> = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(CATEGORY_OPTIONS)
+          .filter(([key]) => key !== allKey)
+          .map(([key, cat]) => [key, t(cat.i18nKey)])
+      ),
+    [t]
+  );
+  const value = useAppSelector(selectFilterVaultCategory);
 
-    const handleChange = useCallback(
-      selected => {
-        dispatch(
-          filteredVaultsActions.setVaultCategory(
-            selected.length === Object.values(options).length
-              ? []
-              : (selected as FilteredVaultsState['vaultCategory'])
-          )
-        );
-      },
-      [dispatch, options]
-    );
+  const handleChange = useCallback(
+    selected => {
+      dispatch(
+        filteredVaultsActions.setVaultCategory(
+          selected.length === Object.values(options).length
+            ? []
+            : (selected as FilteredVaultsState['vaultCategory'])
+        )
+      );
+    },
+    [dispatch, options]
+  );
 
-    return (
-      <MultiToggleButtons
-        value={value}
-        options={options}
-        onChange={handleChange}
-        buttonsClass={className}
-        fullWidth={false}
-        untoggleValue={allKey}
-      />
-    );
-  }
-);
+  return (
+    <MultiToggleButtons
+      value={value}
+      options={options}
+      onChange={handleChange}
+      buttonsCss={cssProp}
+      fullWidth={false}
+      untoggleValue={allKey}
+    />
+  );
+});

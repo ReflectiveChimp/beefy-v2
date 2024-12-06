@@ -185,7 +185,10 @@ export type PoolTokensResult = {
   lastChangeBlock: string;
 };
 
-export type PoolTokensResponse = Array<{ token: string; balance: BigNumber }>;
+export type PoolTokensResponse = Array<{
+  token: string;
+  balance: BigNumber;
+}>;
 
 export type JoinPoolZapRequest = {
   join: JoinPoolArgs<JoinPoolUserData>;

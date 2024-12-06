@@ -1,9 +1,9 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {},
-  title: {
-    ...theme.typography.h2,
-    color: theme.palette.text.light,
-  },
-});
+export const styles = {
+  container: css.raw({}),
+  title: css.raw({
+    textStyle: 'h2',
+    color: 'text.light',
+  }),
+};

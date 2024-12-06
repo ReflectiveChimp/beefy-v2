@@ -1,73 +1,73 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  inputContainer: {
-    color: theme.palette.text.middle,
-    background: theme.palette.background.searchInputBg,
+export const styles = {
+  inputContainer: css.raw({
+    color: 'text.middle',
+    background: 'purpleDarkest',
     display: 'flex',
     alignItems: 'center',
     borderRadius: '8px',
     padding: '0px 12px',
     cursor: 'default',
-    boxSizing: 'border-box' as const,
-    position: 'relative' as const,
+    boxSizing: 'border-box',
+    position: 'relative',
     justifyContent: 'space-between',
     minHeight: '52px',
     gap: '8px',
-  },
-  inputContent: {
+  }),
+  inputContent: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     flexBasis: '50%',
-    flexGrow: 1,
-    flexShrink: 1,
-    minWidth: 0,
-  },
-  input: {
-    ...theme.typography['h2'],
-    padding: 0,
-    margin: 0,
+    flexGrow: '1',
+    flexShrink: '1',
+    minWidth: '0',
+  }),
+  input: css.raw({
+    textStyle: 'h2',
+    padding: '0',
+    margin: '0',
     border: 'none',
     background: 'none',
     boxShadow: 'none',
     width: '100%',
-    color: theme.palette.text.light,
+    color: 'text.light',
     height: 'auto',
     cursor: 'default',
-    outline: 0,
+    outline: '0',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     '&::placeholder': {
-      color: theme.palette.text.dark,
-      opacity: 1,
+      color: 'text.dark',
+      opacity: '1',
     },
     '&::focus ': {
-      outline: 0,
+      outline: '0',
     },
-  },
-  inputWithPrice: {
-    ...theme.typography['body-lg-med'],
-  },
-  error: {
-    border: `1px solid ${theme.palette.background.indicators.error}`,
-  },
-  warning: {
-    border: `1px solid ${theme.palette.background.indicators.warning}`,
-  },
-  fullWidth: {
+  }),
+  inputWithPrice: css.raw({
+    textStyle: 'body.med',
+  }),
+  error: css.raw({
+    border: '1px solid {colors.indicators.error}',
+  }),
+  warning: css.raw({
+    border: '1px solid {colors.indicators.warning}',
+  }),
+  fullWidth: css.raw({
     width: '100%',
-  },
-  price: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.dark,
-  },
-  endAdornment: {
-    flexGrow: 0,
-    flexShrink: 0,
+  }),
+  price: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
+  }),
+  endAdornment: css.raw({
+    flexGrow: '0',
+    flexShrink: '0',
     flexBasis: 'auto',
-  },
-  startAdornment: {
+  }),
+  startAdornment: css.raw({
     marginRight: '24px',
     flexBasis: 'auto',
-  },
-});
+  }),
+};

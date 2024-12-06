@@ -1,84 +1,85 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
-    padding: 12,
+export const styles = {
+  container: css.raw({
+    padding: '12',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.contentLight,
-  },
-  title: {
+    backgroundColor: 'background.content.light',
+  }),
+  title: css.raw({
     display: 'flex',
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.middle,
+    textStyle: 'body',
+    color: 'text.middle',
     alignItems: 'center',
     '&:Hover': {
-      cursor: 'pointer ' as const,
+      cursor: 'pointer ',
     },
-  },
-  iconButton: {
-    padding: 0,
+  }),
+  iconButton: css.raw({
+    padding: '0',
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiSvgIcon-root': {
-      fill: theme.palette.text.dark,
+      fill: 'text.dark',
     },
     '&:hover': {
-      backgroundColor: 'transparent' as const,
+      backgroundColor: 'transparent',
     },
     marginRight: '4px',
-  },
-  text: {
-    ...theme.typography['body-lg'],
-    flexGrow: 1,
-  },
-  balance: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.dark,
+  }),
+  text: css.raw({
+    textStyle: 'body',
+    flexGrow: '1',
+  }),
+  balance: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
     '& div': {
-      color: theme.palette.text.middle,
+      color: 'text.middle',
     },
-  },
-  actions: {
+  }),
+  actions: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     marginTop: '8px',
     rowGap: '16px',
-  },
-  button: {
+  }),
+  button: css.raw({
     '&:disabled': {
-      borderColor: 'transparent' as const,
+      borderColor: 'transparent',
     },
-  },
-  maxButton: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
+  }),
+  maxButton: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: '700',
     padding: '2px 6px',
     borderRadius: '4px',
-    marginRight: `${8 - 2}px`,
-    backgroundColor: theme.palette.background.buttons.button,
-    borderColor: 'transparent' as const,
+    marginRight: '6px',
+    backgroundColor: 'bayOfMany',
+    borderColor: 'transparent',
     '&:disabled': {
-      borderColor: 'transparent' as const,
+      borderColor: 'transparent',
     },
-  },
-  input: {
-    color: theme.palette.text.middle,
-    background: theme.palette.background.searchInputBg,
+  }),
+  input: css.raw({
+    color: 'text.middle',
+    background: 'purpleDarkest',
     borderRadius: '8px',
     width: '100%',
     display: 'flex',
-    border: `solid 2px ${theme.palette.background.searchInputBg}`,
+    border: 'solid 2px {colors.purpleDarkest}',
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiInputBase-input': {
-      ...theme.typography['h3'],
-      padding: `${8 - 2}px 16px`,
-      color: theme.palette.text.middle,
+      textStyle: 'h3',
+      padding: '6px 16px',
+      color: 'text.middle',
       height: 'auto',
       '&:focus': {
-        color: theme.palette.text.light,
+        color: 'text.light',
       },
       '&::placeholder': {
-        color: theme.palette.text.middle,
-        opacity: 1,
+        color: 'text.middle',
+        opacity: '1',
       },
     },
-    '& .MuiInputBase-inputAdornedEnd': {},
-  },
-});
+  }),
+};

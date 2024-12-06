@@ -1,52 +1,52 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  vaultRow: {
-    borderBottom: `solid 2px ${theme.palette.background.contentDark}`,
+export const styles = {
+  vaultRow: css.raw({
+    borderBottom: 'solid 2px {colors.background.content.dark}',
     '&:last-child': {
-      borderBottom: 0,
+      borderBottom: '0',
       borderBottomLeftRadius: '8px',
       borderBottomRightRadius: '8px',
       backgroundClip: 'padding-box',
       overflow: 'hidden',
     },
-  },
-  vault: {
+  }),
+  vault: css.raw({
     display: 'grid',
-    position: 'relative' as const,
-    color: '#9595B2',
-    background: theme.palette.background.contentPrimary,
+    position: 'relative',
+    color: 'extracted676',
+    background: 'background.content',
     padding: '24px 16px',
     textDecoration: 'none',
     '&:hover': {
       cursor: 'pointer',
     },
-  },
-  vaultInner: {
+  }),
+  vaultInner: css.raw({
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
     columnGap: '8px',
     width: '100%',
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       gridTemplateColumns: 'minmax(0, 80fr) minmax(0, 20fr)',
     },
-  },
-  vaultEarnings: {
-    backgroundColor: theme.palette.background.vaults.gov,
-  },
-  vaultPaused: {
-    backgroundColor: 'rgba(209, 83, 71, 0.05)',
-  },
-  vaultClm: {
-    backgroundColor: theme.palette.background.vaults.clm,
-  },
-  vaultClmPool: {
-    backgroundColor: theme.palette.background.vaults.clmPool,
-  },
-  vaultCowcentratedVault: {
-    backgroundColor: theme.palette.background.vaults.clmVault,
-  },
-  vaultRetired: {
-    backgroundColor: theme.palette.background.vaults.inactive,
-  },
-});
+  }),
+  vaultEarnings: css.raw({
+    backgroundColor: 'background.vaults.gov',
+  }),
+  vaultPaused: css.raw({
+    backgroundColor: 'extracted1758',
+  }),
+  vaultClm: css.raw({
+    backgroundColor: 'background.vaults.clm',
+  }),
+  vaultClmPool: css.raw({
+    backgroundColor: 'background.vaults.clm.pool',
+  }),
+  vaultCowcentratedVault: css.raw({
+    backgroundColor: 'background.vaults.clm.vault',
+  }),
+  vaultRetired: css.raw({
+    backgroundColor: 'background.vaults.inactive',
+  }),
+};

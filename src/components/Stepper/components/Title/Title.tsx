@@ -1,18 +1,18 @@
-import { IconButton, makeStyles } from '@material-ui/core';
-import { type ReactNode, useCallback } from 'react';
-import { memo } from 'react';
+import { IconButton } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
+import { memo, type ReactNode, useCallback } from 'react';
 import { ReactComponent as CloseRoundedIcon } from '@repo/images/icons/mui/CloseRounded.svg';
 import { useAppDispatch } from '../../../../store';
 import { styles } from './styles';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface TitleProps {
   text: ReactNode;
 }
 
-export const Title = memo<TitleProps>(function Title({ text }) {
+export const Title = memo(function Title({ text }: TitleProps) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const handleClose = useCallback(() => {

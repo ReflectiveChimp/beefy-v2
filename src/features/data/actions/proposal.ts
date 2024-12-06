@@ -53,7 +53,9 @@ export type FetchActiveProposalsFulfilledPayload = {
 export const fetchActiveProposals = createAsyncThunk<
   FetchActiveProposalsFulfilledPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('proposals/fetchActive', async () => {
   const api = await getBeefyApi();
   const proposals = await api.getActiveProposals();
@@ -69,7 +71,9 @@ export type MarkAllProposalsReadFulfilledPayload = {
 export const markAllProposalsRead = createAsyncThunk<
   MarkAllProposalsReadFulfilledPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('proposals/markAllRead', async (_, { getState }) => {
   const state = getState();
   const proposalIds: ProposalEntity['id'][] = selectAllProposalIds(state);

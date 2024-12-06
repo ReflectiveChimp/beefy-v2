@@ -1,5 +1,5 @@
 import { memo, type MutableRefObject, useCallback, useRef, useState } from 'react';
-import clsx from 'clsx';
+import { type CssStyles } from '@repo/styles/css';
 import { Button } from '../../../../../../components/Button';
 import { useTranslation } from 'react-i18next';
 import { Sidebar } from './Sidebar';
@@ -8,47 +8,48 @@ import { Dropdown } from '../../../../../../components/Dropdown';
 
 export type ExtendedFiltersButtonProps = {
   desktopView: boolean;
-  className?: string;
+  css?: CssStyles;
 };
-export const ExtendedFiltersButton = memo<ExtendedFiltersButtonProps>(
-  function ExtendedFiltersButton({ desktopView, className }) {
-    const { t } = useTranslation();
-    const anchorEl = useRef<HTMLButtonElement>();
-    const [isOpen, setIsOpen] = useState(false);
+export const ExtendedFiltersButton = memo(function ExtendedFiltersButton({
+  desktopView,
+  css: cssProp,
+}: ExtendedFiltersButtonProps) {
+  const { t } = useTranslation();
+  const anchorEl = useRef<HTMLButtonElement>();
+  const [isOpen, setIsOpen] = useState(false);
 
-    const handleClose = useCallback(() => {
-      setIsOpen(false);
-    }, [setIsOpen]);
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, [setIsOpen]);
 
-    const handleOpen = useCallback(() => {
-      setIsOpen(true);
-    }, [setIsOpen]);
+  const handleOpen = useCallback(() => {
+    setIsOpen(true);
+  }, [setIsOpen]);
 
-    return (
-      <>
-        <Button
-          className={clsx(className)}
-          variant="filter"
-          size="sm"
-          ref={anchorEl as MutableRefObject<HTMLButtonElement>}
-          onClick={handleOpen}
-          active={isOpen}
+  return (
+    <>
+      <Button
+        css={cssProp}
+        variant="filter"
+        size="sm"
+        ref={anchorEl as MutableRefObject<HTMLButtonElement>}
+        onClick={handleOpen}
+        active={isOpen}
+      >
+        {t('Filter-Btn')}
+      </Button>
+      {desktopView ? (
+        <Dropdown
+          anchorEl={anchorEl as MutableRefObject<HTMLButtonElement>}
+          open={isOpen}
+          onClose={handleClose}
+          placement="bottom-end"
         >
-          {t('Filter-Btn')}
-        </Button>
-        {desktopView ? (
-          <Dropdown
-            anchorEl={anchorEl as MutableRefObject<HTMLButtonElement>}
-            open={isOpen}
-            onClose={handleClose}
-            placement="bottom-end"
-          >
-            <ExtendedFilters desktopView={true} />
-          </Dropdown>
-        ) : (
-          <Sidebar open={isOpen} onClose={handleClose} />
-        )}
-      </>
-    );
-  }
-);
+          <ExtendedFilters desktopView={true} />
+        </Dropdown>
+      ) : (
+        <Sidebar open={isOpen} onClose={handleClose} />
+      )}
+    </>
+  );
+});

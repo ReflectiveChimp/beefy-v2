@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { memo, useCallback, useMemo, useState } from 'react';
@@ -45,7 +45,7 @@ import { WithdrawFees } from '../VaultFees';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const WithdrawActions = memo(function WithdrawActions() {
   const vaultId = useAppSelector(selectTransactVaultId);
@@ -89,7 +89,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
         <ActionClaimWithdraw quote={quote} vault={vault} />
       ) : (
         <ActionConnectSwitch
-          className={classes.feesContainer}
+          css={styles.feesContainer}
           FeesComponent={WithdrawFees}
           chainId={vault.chainId}
         >
@@ -106,9 +106,9 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   );
 });
 
-const ActionWithdrawDisabled = memo<ActionButtonProps>(function ActionWithdrawDisabled({
-  className,
-}) {
+const ActionWithdrawDisabled = memo(function ActionWithdrawDisabled({
+  css: cssProp,
+}: ActionButtonProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
@@ -116,13 +116,7 @@ const ActionWithdrawDisabled = memo<ActionButtonProps>(function ActionWithdrawDi
 
   return (
     <div className={classes.feesContainer}>
-      <Button
-        variant="success"
-        disabled={true}
-        fullWidth={true}
-        borderless={true}
-        className={className}
-      >
+      <Button variant="success" disabled={true} fullWidth={true} borderless={true} css={cssProp}>
         {t('Transact-Withdraw')}
       </Button>
       {!isGovVault(vault) && <WithdrawFees />}
@@ -134,7 +128,7 @@ type ActionWithdrawProps = {
   option: TransactOption;
   quote: TransactQuote;
 } & ActionButtonProps;
-const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ option, quote }) {
+const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWithdrawProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const classes = useStyles();
@@ -195,10 +189,10 @@ type ActionClaimWithdrawProps = {
   quote: GovVaultWithdrawQuote | GovComposerZapWithdrawQuote;
   vault: VaultGov;
 } & ActionButtonProps;
-const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimWithdraw({
+const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
   quote,
   vault,
-}) {
+}: ActionClaimWithdrawProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
@@ -229,7 +223,7 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
       <div className={classes.buttons}>
         <ActionConnectSwitch
           FeesComponent={WithdrawFees}
-          className={classes.feesContainer}
+          css={styles.feesContainer}
           chainId={option.chainId}
         >
           <Button
@@ -261,7 +255,7 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
 type ActionClaimProps = {
   vault: VaultGov;
 } & ActionButtonProps;
-const ActionClaim = memo<ActionClaimProps>(function ActionClaim({ vault }) {
+const ActionClaim = memo(function ActionClaim({ vault }: ActionClaimProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const walletAddress = useAppSelector(selectWalletAddress);

@@ -13,7 +13,7 @@ type GovExplainerProps = {
   vaultId: VaultGov['id'];
 };
 
-export const GovExplainer = memo<GovExplainerProps>(function GovExplainer({ vaultId }) {
+export const GovExplainer = memo(function GovExplainer({ vaultId }: GovExplainerProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId)) as VaultGov;
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));

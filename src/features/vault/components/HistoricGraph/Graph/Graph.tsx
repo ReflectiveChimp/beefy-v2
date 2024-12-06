@@ -13,8 +13,7 @@ import {
 import type { VaultEntity } from '../../../../data/entities/vault';
 import type { TokenEntity } from '../../../../data/entities/token';
 import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
-import type { Theme } from '@material-ui/core';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { format, fromUnixTime } from 'date-fns';
 import { XAxisTick } from '../../../../../components/XAxisTick';
 import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../helpers/graph/graph';
@@ -31,8 +30,9 @@ import { useAppSelector } from '../../../../../store';
 import { selectVaultById } from '../../../../data/selectors/vaults';
 import { max as lodashMax } from 'lodash-es';
 import type { ChartStat } from '../types';
+import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ChartProp<TStat extends ChartStat> = {
   vaultId: VaultEntity['id'];
@@ -52,7 +52,7 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
   inverted,
 }: ChartProp<TStat>) {
   const classes = useStyles();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+  const isMobile = useBreakpoint({ to: 'xs' });
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const vaultType = vault.type;
   const chartData = useChartData(stat, vaultId, oracleId, bucket, inverted);

@@ -45,7 +45,9 @@ interface InitBoostFormPayload {
 export const initiateBoostForm = createAsyncThunk<
   InitBoostFormPayload,
   InitBoostFormParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('boosts/initBoostForm', async ({ boostId, walletAddress }, { getState }) => {
   const boost = selectBoostById(getState(), boostId);
   const vault = selectVaultById(getState(), boost.vaultId);

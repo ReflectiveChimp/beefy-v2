@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../AssetsImage';
@@ -13,7 +13,7 @@ import type {
   TokenExposurePayloadData,
 } from '../PieChart/types';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type BaseExposureTooltipProps = {
   active?: boolean;
@@ -22,17 +22,23 @@ type BaseExposureTooltipProps = {
 
 type TokenExposureTooltipProps = BaseExposureTooltipProps & {
   type: 'token';
-  payload?: { payload: TokenExposurePayloadData }[];
+  payload?: {
+    payload: TokenExposurePayloadData;
+  }[];
 };
 
 type ChainExposureTooltipProps = BaseExposureTooltipProps & {
   type: 'chain';
-  payload?: { payload: ChainExposurePayloadData }[];
+  payload?: {
+    payload: ChainExposurePayloadData;
+  }[];
 };
 
 type GenericExposureTooltipProps = BaseExposureTooltipProps & {
   type: Exclude<PieChartType, 'token' | 'chain'>;
-  payload?: { payload: GenericExposurePayloadData }[];
+  payload?: {
+    payload: GenericExposurePayloadData;
+  }[];
 };
 
 type TooltipProps =
@@ -114,7 +120,7 @@ function extractProps(props: TooltipProps): InactiveData | ChainData | TokenData
   };
 }
 
-export const PieChartTooltip = memo<TooltipProps>(function PieChartTooltip(props) {
+export const PieChartTooltip = memo(function PieChartTooltip(props: TooltipProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const data = useMemo(() => extractProps(props), [props]);

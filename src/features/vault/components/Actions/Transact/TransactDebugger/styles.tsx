@@ -1,37 +1,39 @@
-export const styles = () => ({
-  container: {
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  container: css.raw({
     display: 'none',
-    position: 'fixed' as const,
-    top: 0,
-    left: 0,
+    position: 'fixed',
+    top: '0',
+    left: '0',
     width: 'calc((100vw - 1296px)/2)',
     height: '100%',
     overflow: 'auto',
-    whiteSpace: 'pre-wrap' as const,
-    backgroundColor: '#111',
+    whiteSpace: 'pre-wrap',
+    backgroundColor: 'extracted3636',
     '@media (min-width: 2000px)': {
       display: 'flex',
-      flexDirection: 'column' as const,
+      flexDirection: 'column',
       gap: '16px',
     },
-  },
-  item: {
+  }),
+  item: css.raw({
     '&:nth-child(2n)': {
-      background: '#222',
+      background: 'extracted2201',
     },
-  },
-  grid: {
+  }),
+  grid: css.raw({
     display: 'grid',
     gridTemplateColumns: '1fr auto auto auto',
     gridTemplateRows: 'auto',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
     width: '100%',
     maxWidth: '100%',
-    textAlign: 'left' as const,
+    textAlign: 'left',
     gap: '2px 8px',
-  },
-  address: {
-    textOverflow: 'ellipsis' as const,
+  }),
+  address: css.raw({
+    textOverflow: 'ellipsis',
     overflow: 'hidden',
-  },
-});
+  }),
+};

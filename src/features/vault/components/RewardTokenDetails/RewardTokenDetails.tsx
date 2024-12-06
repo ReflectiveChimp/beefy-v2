@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, type ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
@@ -12,25 +12,25 @@ import { ReactComponent as PlusIcon } from '../../../../images/icons/plus.svg';
 import { styles } from './styles';
 import { explorerTokenUrl } from '../../../../helpers/url';
 import { addTokenToWalletAction } from '../../../data/actions/add-to-wallet';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface RewardTokenDetailsProps {
   token: TokenEntity;
   chainId: ChainEntity['id'];
-  className?: string;
+  css?: CssStyles;
   prependButtons?: ReactNode;
   appendText?: ReactNode;
 }
 
-export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardTokenDetails({
+export const RewardTokenDetails = memo(function RewardTokenDetails({
   token,
   chainId,
-  className,
+  css: cssProp,
   prependButtons,
   appendText,
-}) {
+}: RewardTokenDetailsProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const classes = useStyles();
@@ -40,7 +40,7 @@ export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardT
   }, [dispatch, chainId, token.address]);
 
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       <div className={classes.token}>
         <AssetsImage size={24} chainId={chainId} assetSymbols={[token.symbol]} />{' '}
         <div className={classes.text}>
@@ -50,7 +50,7 @@ export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardT
       </div>
       <div className={classes.buttons}>
         {prependButtons ? prependButtons : null}
-        <Button className={classes.button} onClick={addTokenToWallet}>
+        <Button css={styles.button} onClick={addTokenToWallet}>
           {t('Add-To-Wallet')}
           <PlusIcon className={classes.icon} />
         </Button>

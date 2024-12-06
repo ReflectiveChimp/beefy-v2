@@ -3,27 +3,27 @@ import type { VaultEntity } from '../../../data/entities/vault';
 import { Trans, useTranslation } from 'react-i18next';
 import { RISKS } from '../../../../config/risk';
 import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
+import { legacyMakeStyles } from '@repo/helpers/mui';
+import { css, type CssStyles } from '@repo/styles/css';
 import { useVaultHasRisks } from './hooks';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface NoSafuRisksProps {
   vaultId: VaultEntity['id'];
   isTitle: boolean;
-  className?: string;
+  css?: CssStyles;
 }
 
-export const NoSafuRisks = memo<NoSafuRisksProps>(function NoSafuRisks({
+export const NoSafuRisks = memo(function NoSafuRisks({
   vaultId,
   isTitle,
-  className,
-}) {
+  css: cssProp,
+}: NoSafuRisksProps) {
   const { vaultHasRisks, values, risk } = useVaultHasRisks(vaultId);
 
   if (vaultHasRisks && values && risk) {
-    return <WarningText className={className} isTitle={isTitle} values={values} risk={risk} />;
+    return <WarningText css={cssProp} isTitle={isTitle} values={values} risk={risk} />;
   }
 
   return null;
@@ -33,15 +33,15 @@ interface WarningTextProps {
   isTitle: boolean;
   risk: string;
   values: Record<string, string>;
-  className?: string;
+  css?: CssStyles;
 }
 
-const WarningText = memo<WarningTextProps>(function WarningText({
+const WarningText = memo(function WarningText({
   isTitle,
   risk,
   values,
-  className,
-}) {
+  css: cssProp,
+}: WarningTextProps) {
   const { t } = useTranslation('risks');
   const classes = useStyles();
 
@@ -60,7 +60,7 @@ const WarningText = memo<WarningTextProps>(function WarningText({
   }, []);
 
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       <Trans
         t={t}
         i18nKey={i18Key}

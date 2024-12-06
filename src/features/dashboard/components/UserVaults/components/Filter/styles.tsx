@@ -1,47 +1,47 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
-    backgroundColor: theme.palette.background.contentDark,
+export const styles = {
+  container: css.raw({
+    backgroundColor: 'background.content.dark',
     borderRadius: '8px 8px 0px 0px',
     padding: '16px',
     display: 'grid',
     width: '100%',
     columnGap: '8px',
     backgroundClip: 'padding-box',
-    borderBottom: `solid 2px ${theme.palette.background.contentDark}`,
+    borderBottom: 'solid 2px {colors.background.content.dark}',
     gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       gridTemplateColumns: 'minmax(0, 60fr) minmax(0, 40fr)',
     },
-  },
-  sortColumns: {
+  }),
+  sortColumns: css.raw({
     display: 'grid',
     width: '100%',
     columnGap: '8px',
     gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
-    [theme.breakpoints.up('md')]: {
+    md: {
       gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
     },
-    [theme.breakpoints.up('lg')]: {
+    lg: {
       gridTemplateColumns: 'repeat(6, minmax(0, 1fr))',
     },
-  },
-  hideSm: {
+  }),
+  hideSm: css.raw({
     display: 'none',
-    [theme.breakpoints.up('md')]: {
+    md: {
       display: 'flex',
     },
-  },
-  hideMd: {
+  }),
+  hideMd: css.raw({
     display: 'none',
-    [theme.breakpoints.up('lg')]: {
+    lg: {
       display: 'flex',
     },
-  },
-  searchWidth: {
-    [theme.breakpoints.up('lg')]: {
+  }),
+  searchWidth: css.raw({
+    lg: {
       maxWidth: '75%',
     },
-  },
-});
+  }),
+};

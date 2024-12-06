@@ -1,11 +1,11 @@
 import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles, cx } from '@repo/styles/css';
 import { ReactComponent as ChevronRight } from '@repo/images/icons/mui/ChevronRight.svg';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ButtonAdornmentProps = {
   children: ReactNode;
@@ -13,19 +13,19 @@ export type ButtonAdornmentProps = {
     ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   >['onClick'];
-  className?: string;
+  css?: CssStyles;
 };
-export const ButtonAdornment = memo<ButtonAdornmentProps>(function ButtonAdornment({
+export const ButtonAdornment = memo(function ButtonAdornment({
   children,
   onClick,
-  className,
-}) {
+  css: cssProp,
+}: ButtonAdornmentProps) {
   const classes = useStyles();
 
   return (
-    <button className={clsx(classes.button, className)} onClick={onClick}>
+    <button className={css(styles.button, cssProp)} onClick={onClick}>
       {children}
-      <ChevronRight className={classes.arrow} />
+      <ChevronRight className={cx('button-arrow', classes.arrow)} />
     </button>
   );
 });

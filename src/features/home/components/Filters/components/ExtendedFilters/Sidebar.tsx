@@ -1,19 +1,20 @@
 import { memo, useMemo } from 'react';
-import { Drawer, makeStyles } from '@material-ui/core';
+import { Drawer } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { ExtendedFilters } from './ExtendedFilters';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
 import { ReactComponent as CloseOutlined } from '@repo/images/icons/mui/CloseOutlined.svg';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type SidebarProps = {
   open: boolean;
   onClose: () => void;
 };
 
-export const Sidebar = memo<SidebarProps>(function Sidebar({ open, onClose }) {
+export const Sidebar = memo(function Sidebar({ open, onClose }: SidebarProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const drawerClasses = useMemo(

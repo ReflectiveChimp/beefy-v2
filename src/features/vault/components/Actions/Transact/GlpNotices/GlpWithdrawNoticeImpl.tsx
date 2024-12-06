@@ -13,25 +13,27 @@ export type GlpWithdrawNoticeImplProps = {
   onChange: (isLocked: boolean) => void;
 };
 
-export const GlpWithdrawNoticeImpl = memo<GlpWithdrawNoticeImplProps>(
-  function GlpWithdrawNoticeImpl({ vaultId, config, onChange }) {
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    const chain = useAppSelector(state => selectChainById(state, vault.chainId));
-    const strategyAddress = useAppSelector(state => selectVaultStrategyAddress(state, vault.id));
-    const depositTokenAddress = vault.depositTokenAddress;
+export const GlpWithdrawNoticeImpl = memo(function GlpWithdrawNoticeImpl({
+  vaultId,
+  config,
+  onChange,
+}: GlpWithdrawNoticeImplProps) {
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const strategyAddress = useAppSelector(state => selectVaultStrategyAddress(state, vault.id));
+  const depositTokenAddress = vault.depositTokenAddress;
 
-    const fetchUnlockTime = useCallback(
-      () => getUnlockTime(depositTokenAddress, strategyAddress, chain, config),
-      [strategyAddress, depositTokenAddress, chain, config]
-    );
+  const fetchUnlockTime = useCallback(
+    () => getUnlockTime(depositTokenAddress, strategyAddress, chain, config),
+    [strategyAddress, depositTokenAddress, chain, config]
+  );
 
-    return (
-      <GlpNotice
-        noticeKey="Glp-Withdraw-Notice"
-        noticeKeyUnlocks="Glp-Withdraw-Notice-Unlocks"
-        onChange={onChange}
-        fetchUnlockTime={fetchUnlockTime}
-      />
-    );
-  }
-);
+  return (
+    <GlpNotice
+      noticeKey="Glp-Withdraw-Notice"
+      noticeKeyUnlocks="Glp-Withdraw-Notice-Unlocks"
+      onChange={onChange}
+      fetchUnlockTime={fetchUnlockTime}
+    />
+  );
+});

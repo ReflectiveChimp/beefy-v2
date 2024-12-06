@@ -1,14 +1,10 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
 import { ReactComponent as Refresh } from '@repo/images/icons/mui/Refresh.svg';
 import { ReactComponent as ErrorOutline } from '@repo/images/icons/mui/ErrorOutline.svg';
-import { styles } from './styles';
+import { refreshRecipe } from './styles';
 import { Tooltip } from '../../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../../components/Tooltip/BasicTooltipContent';
-import clsx from 'clsx';
 import { TRIGGERS } from '../../../../../../../components/Tooltip/constants';
-
-const useStyles = makeStyles(styles);
 
 type RefreshButtonProps = {
   title: string;
@@ -18,32 +14,24 @@ type RefreshButtonProps = {
   onClick?: () => void;
 };
 
-export const RefreshButton = memo<RefreshButtonProps>(function RefreshButton({
+export const RefreshButton = memo(function RefreshButton({
   title,
   text,
   status,
   onClick,
   disabled,
-}) {
-  const classes = useStyles();
+}: RefreshButtonProps) {
   const isDisabled = disabled === undefined ? !onClick : disabled;
   const canLoad = !isDisabled && !!onClick;
+  const classes = refreshRecipe({ status, canLoad });
 
   return (
-    <div
-      className={clsx(classes.tooltipTrigger, {
-        [classes.loading]: status === 'loading',
-        [classes.loaded]: status === 'loaded',
-        [classes.error]: status === 'error',
-        [classes.canLoad]: canLoad,
-      })}
-    >
+    <div className={classes.container}>
       <Tooltip
         content={<BasicTooltipContent title={title} content={text} />}
         triggers={TRIGGERS.HOVER | (isDisabled ? TRIGGERS.CLICK : 0)}
-        triggerClass={classes.tooltipTrigger}
       >
-        <button disabled={isDisabled} onClick={onClick} className={clsx(classes.button)}>
+        <button disabled={isDisabled} onClick={onClick} className={classes.button}>
           {status === 'error' && !canLoad ? (
             <ErrorOutline className={classes.icon} />
           ) : (

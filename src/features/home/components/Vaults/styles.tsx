@@ -1,9 +1,9 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  vaults: {
+export const styles = {
+  vaults: css.raw({
     marginTop: '32px',
     borderRadius: '12px',
-    border: `solid 2px ${theme.palette.background.contentDark}`,
-  },
-});
+    border: 'solid 2px {colors.background.content.dark}',
+  }),
+};

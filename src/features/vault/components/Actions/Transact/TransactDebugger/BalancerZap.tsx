@@ -1,5 +1,5 @@
 import { Fragment, memo, useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useAppSelector, useAppStore } from '../../../../../../store';
 import { styles } from './styles';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
@@ -20,12 +20,12 @@ import {
 import type { BalancerStrategyConfig } from '../../../../../data/apis/transact/strategies/strategy-configs';
 import { isDefined } from '../../../../../data/utils/array-utils';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type BalancerZapProps = {
   vaultId: string;
 };
-export const BalancerZap = memo<BalancerZapProps>(function BalancerZap({ vaultId }) {
+export const BalancerZap = memo(function BalancerZap({ vaultId }: BalancerZapProps) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const zap = isStandardVault(vault)
@@ -55,7 +55,7 @@ type ZapProps = {
   zap: BalancerStrategyConfig;
 };
 
-const ZapLoader = memo<ZapLoaderProps>(function ZapLoader({ vault, zap }) {
+const ZapLoader = memo(function ZapLoader({ vault, zap }: ZapLoaderProps) {
   const store = useAppStore();
   const swapLoaded = useAppSelector(
     state => selectIsZapLoaded(state) && selectIsAddressBookLoaded(state, vault.chainId)
@@ -98,7 +98,7 @@ const ZapLoader = memo<ZapLoaderProps>(function ZapLoader({ vault, zap }) {
   return <div>Loading curve zap debugger...</div>;
 });
 
-const Zap = memo<ZapProps>(function Zap({ aggregatorSupportedTokens, vault, zap }) {
+const Zap = memo(function Zap({ aggregatorSupportedTokens, vault, zap }: ZapProps) {
   const classes = useStyles();
   const tokens = useAppSelector(state =>
     zap.tokens.map(address => {

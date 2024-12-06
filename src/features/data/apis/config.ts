@@ -35,7 +35,9 @@ export class ConfigAPI {
     return { ...(await import('../../../helpers/partners')) };
   }
 
-  public async fetchZapAmms(): Promise<{ [chainId in ChainEntity['id']]: AmmConfig[] }> {
+  public async fetchZapAmms(): Promise<{
+    [chainId in ChainEntity['id']]: AmmConfig[];
+  }> {
     return Object.fromEntries(
       await Promise.all(
         Object.keys(chainConfigs).map(async chainId => [
@@ -63,8 +65,12 @@ export class ConfigAPI {
     return (await import('../../../config/zap/zaps.json')).default as ZapConfig[];
   }
 
-  public async fetchAllVaults(): Promise<{ [chainId in ChainEntity['id']]: VaultConfig[] }> {
-    const vaultsByChainId: { [chainId in ChainEntity['id']]: VaultConfig[] } = Object.fromEntries(
+  public async fetchAllVaults(): Promise<{
+    [chainId in ChainEntity['id']]: VaultConfig[];
+  }> {
+    const vaultsByChainId: {
+      [chainId in ChainEntity['id']]: VaultConfig[];
+    } = Object.fromEntries(
       await Promise.all(
         keys(chainConfigs).map(async chainId => [
           chainId,
@@ -106,7 +112,9 @@ export class ConfigAPI {
     return { boostsByChainId, partnersById, campaignsById };
   }
 
-  public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]?: MinterConfig[] }> {
+  public async fetchAllMinters(): Promise<{
+    [chainId in ChainEntity['id']]?: MinterConfig[];
+  }> {
     const entries = await Promise.all(
       keys(chainConfigs).map(async chainId => {
         const minters = await getMinterConfig(chainId);

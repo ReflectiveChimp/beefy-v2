@@ -1,30 +1,30 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  header: {
-    [theme.breakpoints.up('sm')]: {
+export const styles = {
+  header: css.raw({
+    sm: {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
     },
-    [theme.breakpoints.down('xs')]: {
+    smDown: {
       display: 'flex',
-      flexDirection: 'column' as const,
+      flexDirection: 'column',
       gap: '8px',
       padding: '16px',
     },
-  },
-  content: {
+  }),
+  content: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '1px',
-    padding: 0,
+    padding: '0',
     backgroundColor: 'transparent',
-  },
-  container: {
+  }),
+  container: css.raw({
     backgroundColor: 'transparent',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '1px',
-  },
-});
+  }),
+};

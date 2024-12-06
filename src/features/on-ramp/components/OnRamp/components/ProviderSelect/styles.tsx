@@ -1,58 +1,58 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
     width: '100%',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '8px',
-  },
-  label: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-  },
-  button: {
-    ...theme.typography['body-lg-med'],
+  }),
+  label: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+  }),
+  button: css.raw({
+    textStyle: 'body.med',
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-    color: theme.palette.text.middle,
-    background: theme.palette.background.border,
+    color: 'text.middle',
+    background: 'bayOfMany',
     padding: '8px 12px',
     border: 'none',
     borderRadius: '8px',
-    margin: 0,
+    margin: '0',
     boxShadow: 'none',
     outline: 'none',
-  },
-  clickable: {
+  }),
+  clickable: css.raw({
     cursor: 'pointer',
-  },
-  unclickable: {
+  }),
+  unclickable: css.raw({
     cursor: 'default',
-    pointerEvents: 'none' as const,
-  },
-  icon: {
+    pointerEvents: 'none',
+  }),
+  icon: css.raw({
     width: '24px',
     height: '24px',
     borderRadius: '50%',
     marginRight: '8px',
-  },
-  iconLoading: {
-    background: 'rgba(255, 255, 255, 0.12);',
-  },
-  iconProvider: {},
-  provider: {
+  }),
+  iconLoading: css.raw({
+    background: 'whiteo11;',
+  }),
+  iconProvider: css.raw({}),
+  provider: css.raw({
     marginRight: '8px',
-  },
-  rate: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.dark,
+  }),
+  rate: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
     marginRight: '8px',
-  },
-  arrow: {
+  }),
+  arrow: css.raw({
     marginLeft: 'auto',
-    color: theme.palette.text.middle,
+    color: 'text.middle',
     height: '24px',
-  },
-});
+  }),
+};

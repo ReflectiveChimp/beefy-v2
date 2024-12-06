@@ -1,14 +1,15 @@
-import type { Theme } from '@material-ui/core';
-export const styles = (theme: Theme) => ({
-  container: {
-    backgroundColor: theme.palette.background.footerHeader,
-    padding: `24px 0 48px 0`,
-    [theme.breakpoints.down('sm')]: {
-      padding: `24px 0 32px 0`,
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  container: css.raw({
+    backgroundColor: 'background.header',
+    padding: '24px 0 48px 0',
+    mdDown: {
+      padding: '24px 0 32px 0',
     },
-  },
-  title: {
-    ...theme.typography.h1,
+  }),
+  title: css.raw({
+    textStyle: 'h1',
     marginBottom: '24px',
-  },
-});
+  }),
+};

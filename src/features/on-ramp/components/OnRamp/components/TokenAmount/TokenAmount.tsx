@@ -10,21 +10,22 @@ import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 import { AmountInput } from '../AmountInput';
 import { TokenAmountAdornment } from '../TokenAmountAdornment';
 import { AmountOutput } from '../AmountOutput';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { AmountLabel } from '../AmountLabel';
 import { useTranslation } from 'react-i18next';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
+import { css, type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type TokenAmountProps = {
   isInput: boolean;
-  className?: string;
+  css?: CssStyles;
 };
-export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({ isInput, className }) {
+export const TokenAmount = memo(function TokenAmount({ isInput, css: cssProp }: TokenAmountProps) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const classes = useStyles();
@@ -45,8 +46,8 @@ export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({ isInput
   }, [dispatch]);
 
   return (
-    <div className={className}>
-      <AmountLabel className={classes.label}>{t('OnRamp-YouBuy')}</AmountLabel>
+    <div className={css(cssProp)}>
+      <AmountLabel css={styles.label}>{t('OnRamp-YouBuy')}</AmountLabel>
       {isInput ? (
         <AmountInput
           value={inputValue}

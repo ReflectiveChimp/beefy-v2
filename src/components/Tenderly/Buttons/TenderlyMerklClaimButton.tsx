@@ -10,14 +10,15 @@ export type TenderlyMerklClaimButtonProps = {
   disabled?: boolean;
 };
 
-export const TenderlyMerklClaimButton = memo<TenderlyMerklClaimButtonProps>(
-  function TenderlyMerklClaimButton({ chainId, disabled }) {
-    const dispatch = useAppDispatch();
-    const { t } = useTranslation();
-    const handleClick = useCallback(() => {
-      dispatch(tenderlySimulateMerklClaim({ chainId, t }));
-    }, [dispatch, t, chainId]);
+export const TenderlyMerklClaimButton = memo(function TenderlyMerklClaimButton({
+  chainId,
+  disabled,
+}: TenderlyMerklClaimButtonProps) {
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const handleClick = useCallback(() => {
+    dispatch(tenderlySimulateMerklClaim({ chainId, t }));
+  }, [dispatch, t, chainId]);
 
-    return <TenderlyButton chainId={chainId} onClick={handleClick} disabled={disabled} />;
-  }
-);
+  return <TenderlyButton chainId={chainId} onClick={handleClick} disabled={disabled} />;
+});

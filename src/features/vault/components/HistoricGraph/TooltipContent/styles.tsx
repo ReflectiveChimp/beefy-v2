@@ -1,50 +1,50 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  content: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.primary,
+export const styles = {
+  content: css.raw({
+    textStyle: 'body',
+    color: 'text.white',
     padding: '12px 16px',
     minWidth: '250px',
-    background: '#1B1D32',
+    background: 'extracted668',
     borderRadius: '8px',
-    textAlign: 'left' as const,
-  },
-  timestamp: {
+    textAlign: 'left',
+  }),
+  timestamp: css.raw({
     marginBottom: '8px',
-  },
-  grid: {
+  }),
+  grid: css.raw({
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '8px 16px',
-  },
-  label: {
-    color: theme.palette.text.dark,
-  },
-  labelDetail: {
-    ...theme.typography['body-sm'],
-    lineHeight: 1,
-  },
-  value: {
-    ...theme.typography['body-lg-med'],
+  }),
+  label: css.raw({
+    color: 'text.dark',
+  }),
+  labelDetail: css.raw({
+    textStyle: 'body.sm',
+    lineHeight: '1',
+  }),
+  value: css.raw({
+    textStyle: 'body.med',
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
-    textAlign: 'right' as const,
-  },
-  itemContainer: {
+    textAlign: 'right',
+  }),
+  itemContainer: css.raw({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: '8px',
-  },
-  rangeIndicator: {
+  }),
+  rangeIndicator: css.raw({
     width: '8px',
     height: '8px',
     borderRadius: '50%',
-    backgroundColor: theme.palette.background.indicators.error,
-  },
-  onRange: {
-    backgroundColor: theme.palette.background.indicators.success,
-  },
-});
+    backgroundColor: 'indicators.error',
+  }),
+  onRange: css.raw({
+    backgroundColor: 'indicators.success',
+  }),
+};

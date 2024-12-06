@@ -1,14 +1,14 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  label: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
+export const styles = {
+  label: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
     marginBottom: '8px',
-  },
-  error: {
-    ...theme.typography['body-sm-med'],
-    color: theme.palette.background.indicators.error,
+  }),
+  error: css.raw({
+    textStyle: 'body.sm.med',
+    color: 'indicators.error',
     marginTop: '8px',
-  },
-});
+  }),
+};

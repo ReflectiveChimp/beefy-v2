@@ -1,224 +1,270 @@
-import type { Theme } from '@material-ui/core';
+import { css, sva } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  label: {
-    ...theme.typography['subline-sm'],
+export const transactionRecipe = sva({
+  slots: [
+    'transaction',
+    'transactionHeader',
+    'transactionHeaderIndex',
+    'transactionHeaderStep',
+    'transactionHeaderStatus',
+    'transactionDetails',
+  ],
+  base: {
+    transaction: {
+      minHeight: '0',
+    },
+    transactionHeader: {
+      display: 'flex',
+      gap: '4px 8px',
+    },
+    transactionHeaderIndex: {},
+    transactionHeaderStep: {},
+    transactionHeaderStatus: {
+      marginLeft: 'auto',
+    },
+    transactionDetails: {
+      marginTop: '8px',
+    },
+  },
+  variants: {
+    status: {
+      success: {
+        transactionHeaderStatus: {
+          color: 'indicators.success',
+        },
+      },
+      revert: {
+        transactionHeaderStatus: {
+          color: 'indicators.error',
+        },
+      },
+      missing: {
+        transactionHeaderStatus: {
+          color: 'text.dark',
+        },
+      },
+    },
+  },
+});
+
+export const stackRecipe = sva({
+  slots: [
+    'stack',
+    'stackIndent',
+    'stackDetails',
+    'stackToFunc',
+    'stackTo',
+    'stackFunc',
+    'stackFuncAccessor',
+    'stackFuncParamsOpen',
+    'stackFuncParamsClose',
+    'stackFuncOutput',
+    'stackInput',
+    'stackOutput',
+    'stackPair',
+    'stackPairName',
+    'stackTag',
+    'stackSource',
+  ],
+  base: {
+    stack: {
+      display: 'flex',
+      gap: '4px 8px',
+      width: '100%',
+    },
+    stackIndent: {},
+    stackDetails: {
+      flex: '1 1 auto',
+      minWidth: '0',
+    },
+    stackToFunc: {
+      display: 'flex',
+    },
+    stackTo: {
+      color: 'extracted1885',
+    },
+    stackFunc: {
+      color: 'extracted2568',
+    },
+    stackFuncAccessor: {
+      color: 'text.middle',
+    },
+    stackFuncParamsOpen: {
+      color: 'text.middle',
+    },
+    stackFuncParamsClose: {
+      color: 'text.middle',
+    },
+    stackFuncOutput: {
+      color: 'text.middle',
+    },
+    stackInput: {},
+    stackOutput: {},
+    stackPair: {
+      display: 'flex',
+      gap: '4px',
+    },
+    stackPairName: {
+      color: 'extracted1355',
+    },
+    stackTag: {
+      textStyle: 'subline.sm',
+      flex: '0 0 auto',
+      padding: '1px 4px',
+      display: 'block',
+      backgroundColor: 'extracted3759o11',
+      border: '1px solid extracted3759o11',
+      color: 'extracted3759',
+      width: '54',
+      textAlign: 'center',
+      '&:hover': {
+        textDecoration: 'none',
+      },
+    },
+    stackSource: {
+      fontFamily: 'monospace',
+      whiteSpace: 'pre-wrap',
+      color: 'text.light',
+      backgroundColor: 'background.content',
+      border: 'solid 1px {colors.purpleDarkest}',
+      borderRadius: '4px',
+      width: '100%',
+      padding: '4px 8px',
+      '& strong': {
+        color: 'extracted556',
+      },
+    },
+  },
+  variants: {
+    type: {
+      revert: {
+        stackTag: {
+          backgroundColor: 'extracted2805o11',
+          border: '1px solid extracted2805o11',
+          color: 'extracted556',
+          '&:hover': {
+            borderColor: 'extracted2805',
+          },
+        },
+      },
+      call: {
+        stackTag: {
+          backgroundColor: 'extracted1757o11',
+          border: '1px solid extracted1757o11',
+          color: 'extracted1757',
+          '&:hover': {
+            borderColor: 'extracted1757',
+          },
+        },
+      },
+      delegatecall: {
+        stackTag: {
+          backgroundColor: 'extracted1757o11',
+          border: '1px solid extracted1757o11',
+          color: 'extracted1757',
+          '&:hover': {
+            borderColor: 'extracted1757',
+          },
+        },
+      },
+      jumpdest: {
+        stackTag: {
+          backgroundColor: 'extracted282o11',
+          border: '1px solid extracted282o11',
+          color: 'extracted2833',
+          '&:hover': {
+            borderColor: 'extracted282',
+          },
+        },
+      },
+      other: {},
+      unknown: {},
+    },
+  },
+  defaultVariants: {
+    type: 'unknown',
+  },
+});
+
+export const styles = {
+  label: css.raw({
+    textStyle: 'subline.sm',
     marginBottom: '4px',
-  },
-  transaction: {
-    minHeight: 0,
-  },
-  transactionHeader: {
-    display: 'flex',
-    gap: '4px 8px',
-  },
-  transactionHeaderIndex: {},
-  transactionHeaderStep: {},
-  transactionHeaderStatus: {
-    marginLeft: 'auto',
-  },
-  transactionDetails: {
-    marginTop: '8px',
-  },
-  transactionSuccess: {
-    '& $transactionHeaderStatus': {
-      color: theme.palette.background.indicators.success,
-    },
-  },
-  transactionRevert: {
-    '& $transactionHeaderStatus': {
-      color: theme.palette.background.indicators.error,
-    },
-  },
-  transactionMissing: {
-    '& $transactionHeaderStatus': {
-      color: theme.palette.text.dark,
-    },
-  },
-  reverts: {
+  }),
+  reverts: css.raw({
     display: 'flex',
     gap: '16px',
-    flexDirection: 'column' as const,
-  },
-  revert: {
+    flexDirection: 'column',
+  }),
+  revert: css.raw({
     display: 'flex',
     gap: '8px',
-    flexDirection: 'column' as const,
-  },
-  revertReason: {},
-  revertStack: {
+    flexDirection: 'column',
+  }),
+  revertReason: css.raw({}),
+  revertStack: css.raw({
     display: 'flex',
     gap: '4px',
-    flexDirection: 'column' as const,
-    backgroundColor: theme.palette.background.contentDark,
+    flexDirection: 'column',
+    backgroundColor: 'background.content.dark',
     padding: '8px',
-  },
-  stack: {
-    display: 'flex',
-    gap: '4px 8px',
-    width: '100%',
-  },
-  stackIndent: {},
-  stackDetails: {
-    flex: '1 1 auto',
-    minWidth: 0,
-  },
-  stackToFunc: {
-    display: 'flex',
-  },
-  stackTo: {
-    color: '#71aefe',
-  },
-  stackFunc: {
-    color: '#9e8cfc',
-  },
-  stackFuncAccessor: { color: theme.palette.text.middle },
-  stackFuncParamsOpen: { color: theme.palette.text.middle },
-  stackFuncParamsClose: { color: theme.palette.text.middle },
-  stackFuncOutput: { color: theme.palette.text.middle },
-  stackInput: {},
-  stackOutput: {},
-  stackPair: {
-    display: 'flex',
-    gap: '4px',
-  },
-  stackPairName: {
-    color: '#edc389',
-  },
-  stackPairValue: {},
-  stackPairMultiLine: {
-    flexDirection: 'column' as const,
-    '& $stackPairValue': {
-      overflow: 'auto',
-      whiteSpace: 'pre-wrap' as const,
-      padding: '8px',
-      maxWidth: '100%',
-    },
-  },
-  stackTag: {
-    ...theme.typography['subline-sm'],
-    flex: '0 0 auto',
-    padding: '1px 4px',
-    display: 'block',
-    backgroundColor: '#CEC0F01F',
-    border: '1px solid #CEC0F01F',
-    color: '#CEC0F0FF',
-    width: 54,
-    textAlign: 'center' as const,
-    '&:hover': {
-      textDecoration: 'none',
-    },
-  },
-  stackSource: {
+  }),
+  bytesDisplay: css.raw({
     fontFamily: 'monospace',
-    whiteSpace: 'pre-wrap' as const,
-    color: theme.palette.text.light,
-    backgroundColor: theme.palette.background.contentPrimary,
-    border: `solid 1px ${theme.palette.background.searchInputBg}`,
+    color: 'text.light',
+    backgroundColor: 'background.content',
+    border: 'solid 1px {colors.purpleDarkest}',
     borderRadius: '4px',
     width: '100%',
+  }),
+  bytesDisplayInner: css.raw({
     padding: '4px 8px',
-    '& strong': {
-      color: '#e5484d',
-    },
-  },
-  stackRevert: {
-    '& $stackTag': {
-      backgroundColor: '#f020561f',
-      border: '1px solid #f020561f',
-      color: '#e5484d',
-      '&:hover': {
-        borderColor: '#f02056',
-      },
-    },
-  },
-  stackCall: {
-    '& $stackTag': {
-      backgroundColor: '#9873f01f',
-      border: '1px solid #9873f01f',
-      color: '#9873f0',
-      '&:hover': {
-        borderColor: '#9873f0',
-      },
-    },
-  },
-  stackCallDelegate: {
-    '& $stackTag': {
-      backgroundColor: '#9873f01f',
-      border: '1px solid #9873f01f',
-      color: '#9873f0',
-      '&:hover': {
-        borderColor: '#9873f0',
-      },
-    },
-  },
-  stackJumpDest: {
-    '& $stackTag': {
-      backgroundColor: '#23c1971f',
-      border: '1px solid #23c1971f',
-      color: '#30a46c',
-      '&:hover': {
-        borderColor: '#23c197',
-      },
-    },
-  },
-  stackUnknown: {},
-  bytesDisplay: {
-    fontFamily: 'monospace',
-    color: theme.palette.text.light,
-    backgroundColor: theme.palette.background.contentPrimary,
-    border: `solid 1px ${theme.palette.background.searchInputBg}`,
-    borderRadius: '4px',
-    width: '100%',
-  },
-  bytesDisplayInner: {
-    padding: '4px 8px',
-  },
-  bytesDisplayLine: {
+  }),
+  bytesDisplayLine: css.raw({
     display: 'flex',
     '&::before': {
       content: 'attr(data-line)',
-      textAlign: 'right' as const,
+      textAlign: 'right',
       marginRight: '8px',
-      userSelect: 'none' as const,
-      color: theme.palette.text.dark,
+      userSelect: 'none',
+      color: 'text.dark',
     },
-  },
-  paramsDisplay: {
+  }),
+  paramsDisplay: css.raw({
     fontFamily: 'monospace',
-    color: theme.palette.text.light,
-    backgroundColor: theme.palette.background.contentPrimary,
-    border: `solid 1px ${theme.palette.background.searchInputBg}`,
+    color: 'text.light',
+    backgroundColor: 'background.content',
+    border: 'solid 1px {colors.purpleDarkest}',
     borderRadius: '4px',
     width: '100%',
-  },
-  pairDisplay: {
+  }),
+  pairDisplay: css.raw({
     display: 'grid',
     gridTemplateColumns: 'auto minmax(0, 1fr)',
     gap: '2px 8px',
-    background: theme.palette.background.contentPrimary,
+    background: 'background.content',
     padding: '4px 8px',
-  },
-  pairDisplayKey: {
-    color: '#edc389',
-  },
-  pairDisplayValue: {},
-  pairDisplayOdd: {
-    background: theme.palette.background.contentDark,
-    '& > $pairDisplayKey': {
-      color: '#ed9889',
+  }),
+  pairDisplayKey: css.raw({
+    color: 'extracted1355',
+  }),
+  pairDisplayValue: css.raw({}),
+  pairDisplayOdd: css.raw({
+    background: 'background.content.dark',
+    '& > .pairDisplayKey': {
+      color: 'extracted516',
     },
-  },
-  calls: {
+  }),
+  calls: css.raw({
     display: 'grid',
     gridTemplateColumns: 'auto auto auto minmax(0, 1fr)',
     gap: '4px 8px',
-  },
-  callHeader: {
-    fontWeight: theme.typography['body-sm-med'].fontWeight,
-  },
-  callData: {
+  }),
+  callHeader: css.raw({
+    fontWeight: 'body.medium',
+  }),
+  callData: css.raw({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  },
-});
+  }),
+};

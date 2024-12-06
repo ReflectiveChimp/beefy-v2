@@ -1,26 +1,26 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
-    padding: 24,
+export const styles = {
+  container: css.raw({
+    padding: '24',
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.contentPrimary,
-  },
-  content: {
-    padding: 16,
-  },
-  title: {
+    backgroundColor: 'background.content',
+  }),
+  content: css.raw({
+    padding: '16',
+  }),
+  title: css.raw({
     display: 'flex',
-    padding: 0,
+    padding: '0',
     justifyContent: 'space-between',
-    backgroundColor: 'transparent' as const,
-    borderColor: 'transparent' as const,
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
     '&:Hover': {
-      backgroundColor: 'transparent' as const,
-      borderColor: 'transparent' as const,
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
     },
-  },
-  titleIcon: {
-    fill: theme.palette.text.dark,
-  },
-});
+  }),
+  titleIcon: css.raw({
+    fill: 'text.dark',
+  }),
+};

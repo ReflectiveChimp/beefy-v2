@@ -1,15 +1,13 @@
 import type { FC, MouseEventHandler, ReactNode } from 'react';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
-import { ClickAwayListener, makeStyles } from '@material-ui/core';
+import { ClickAwayListener } from '@material-ui/core';
 import { orderBy } from 'lodash-es';
-import { styles } from './styles';
+import { styles as baseStyles } from './styles';
 import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { Floating } from '../Floating';
 import type { Placement } from '@floating-ui/react-dom';
 import { entries } from '../../helpers/object';
-
-const useStyles = makeStyles(styles);
 
 export type LabeledSelectCommonProps<V extends string = string> = {
   label?: string;
@@ -19,17 +17,18 @@ export type LabeledSelectCommonProps<V extends string = string> = {
   fullWidth?: boolean;
   borderless?: boolean;
   disabled?: boolean;
-  selectClass?: string;
-  selectCurrentClass?: string;
-  selectLabelClass?: string;
-  selectValueClass?: string;
-  selectIconClass?: string;
-  selectFullWidthClass?: string;
-  selectBorderlessClass?: string;
-  selectOpenClass?: string;
-  dropdownClass?: string;
-  dropdownItemClass?: string;
-  dropdownItemSelectedClass?: string;
+  selectCss?: CssStyles;
+  selectCurrentCss?: CssStyles;
+  selectLabelCss?: CssStyles;
+  selectValueCss?: CssStyles;
+  selectIconCss?: CssStyles;
+  selectFullWidthCss?: CssStyles;
+  selectBorderlessCss?: CssStyles;
+  selectOpenCss?: CssStyles;
+  selectOpenIconCss?: CssStyles;
+  dropdownCss?: CssStyles;
+  dropdownItemCss?: CssStyles;
+  dropdownItemSelectedCss?: CssStyles;
   dropdownAutoWidth?: boolean;
   dropdownAutoHeight?: boolean;
   dropdownAutoHide?: boolean;
@@ -52,7 +51,7 @@ type DropdownItemProps<V extends string = string> = {
   label: string;
   value: V;
   onChange: (value: V) => void;
-  className?: string;
+  css?: CssStyles;
   DropdownItemLabelComponent?: FC<DropdownItemLabelProps<V>>;
 };
 
@@ -70,7 +69,11 @@ function useSortedOptions<V extends string = string>(
   options: LabeledSelectProps<V>['options'],
   sort: LabeledSelectProps<V>['sortOptions'],
   defaultValue: LabeledSelectProps<V>['defaultValue']
-): { value: V; label: string; isDefault: boolean }[] {
+): {
+  value: V;
+  label: string;
+  isDefault: boolean;
+}[] {
   return useMemo(() => {
     const values = entries(options as Record<V, string>).map(([value, label]) => ({
       value,
@@ -87,7 +90,7 @@ const DropdownItem = memo(function DropdownItem<V extends string = string>({
   label,
   value,
   onChange,
-  className,
+  css: cssProp,
   DropdownItemLabelComponent = DropdownItemLabel<V>,
 }: DropdownItemProps<V>) {
   const handleChange = useCallback<MouseEventHandler<HTMLDivElement>>(
@@ -99,7 +102,7 @@ const DropdownItem = memo(function DropdownItem<V extends string = string>({
   );
 
   return (
-    <div onClick={handleChange} className={className}>
+    <div onClick={handleChange} className={css(cssProp)}>
       <DropdownItemLabelComponent value={value} label={label} />
     </div>
   );
@@ -131,55 +134,56 @@ export const LabeledSelect = memo(function LabeledSelect<V extends string = stri
   SelectedItemComponent = SelectedItem<V>,
   DropdownItemComponent = DropdownItem<V>,
   DropdownItemLabelComponent = DropdownItemLabel<V>,
-  selectClass,
-  selectCurrentClass,
-  selectLabelClass,
-  selectValueClass,
-  selectIconClass,
-  selectFullWidthClass,
-  selectBorderlessClass,
-  selectOpenClass,
-  dropdownClass,
-  dropdownItemClass,
-  dropdownItemSelectedClass,
+  selectCss,
+  selectCurrentCss,
+  selectLabelCss,
+  selectValueCss,
+  selectIconCss,
+  selectFullWidthCss,
+  selectBorderlessCss,
+  selectOpenCss,
+  selectOpenIconCss,
+  dropdownCss,
+  dropdownItemCss,
+  dropdownItemSelectedCss,
   dropdownAutoWidth = true,
   dropdownAutoHeight = true,
   dropdownAutoHide = true,
   placement = 'bottom-start',
   showArrow = true,
 }: LabeledSelectProps<V>) {
-  const baseClasses = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   const anchorEl = useRef<HTMLButtonElement>(null);
   const optionsList = useSortedOptions<V>(options, sortOptions, defaultValue);
-  const classes = useMemo<typeof baseClasses>(
+  const styles = useMemo<typeof baseStyles>(
     () => ({
-      ...baseClasses,
-      select: clsx(baseClasses.select, selectClass),
-      selectCurrent: clsx(baseClasses.selectCurrent, selectCurrentClass),
-      selectLabel: clsx(baseClasses.selectLabel, selectLabelClass),
-      selectValue: clsx(baseClasses.selectValue, selectValueClass),
-      selectIcon: clsx(baseClasses.selectIcon, selectIconClass),
-      selectFullWidth: clsx(baseClasses.selectFullWidth, selectFullWidthClass),
-      selectBorderless: clsx(baseClasses.selectBorderless, selectBorderlessClass),
-      selectOpen: clsx(baseClasses.selectOpen, selectOpenClass),
-      dropdown: clsx(baseClasses.dropdown, dropdownClass),
-      dropdownItem: clsx(baseClasses.dropdownItem, dropdownItemClass),
-      dropdownItemSelected: clsx(baseClasses.dropdownItemSelected, dropdownItemSelectedClass),
+      ...baseStyles,
+      select: css.raw(baseStyles.select, selectCss),
+      selectCurrent: css.raw(baseStyles.selectCurrent, selectCurrentCss),
+      selectLabel: css.raw(baseStyles.selectLabel, selectLabelCss),
+      selectValue: css.raw(baseStyles.selectValue, selectValueCss),
+      selectIcon: css.raw(baseStyles.selectIcon, selectIconCss),
+      selectFullWidth: css.raw(baseStyles.selectFullWidth, selectFullWidthCss),
+      selectBorderless: css.raw(baseStyles.selectBorderless, selectBorderlessCss),
+      selectOpen: css.raw(baseStyles.selectOpen, selectOpenCss),
+      selectOpenIcon: css.raw(baseStyles.selectOpenIcon, selectOpenIconCss),
+      dropdown: css.raw(baseStyles.dropdown, dropdownCss),
+      dropdownItem: css.raw(baseStyles.dropdownItem, dropdownItemCss),
+      dropdownItemSelected: css.raw(baseStyles.dropdownItemSelected, dropdownItemSelectedCss),
     }),
     [
-      baseClasses,
-      selectClass,
-      selectCurrentClass,
-      selectLabelClass,
-      selectValueClass,
-      selectIconClass,
-      selectFullWidthClass,
-      selectBorderlessClass,
-      selectOpenClass,
-      dropdownClass,
-      dropdownItemClass,
-      dropdownItemSelectedClass,
+      selectCss,
+      selectCurrentCss,
+      selectLabelCss,
+      selectValueCss,
+      selectIconCss,
+      selectFullWidthCss,
+      selectBorderlessCss,
+      selectOpenCss,
+      selectOpenIconCss,
+      dropdownCss,
+      dropdownItemCss,
+      dropdownItemSelectedCss,
     ]
   );
 
@@ -208,25 +212,28 @@ export const LabeledSelect = memo(function LabeledSelect<V extends string = stri
       <button
         onClick={disabled ? undefined : handleToggle}
         ref={anchorEl}
-        className={clsx(classes.select, {
-          [classes.selectBorderless]: borderless,
-          [classes.selectFullWidth]: fullWidth,
-          [classes.selectOpen]: isOpen,
-          [classes.selectDisabled]: disabled,
-        })}
+        className={css(
+          styles.select,
+          borderless && styles.selectBorderless,
+          fullWidth && styles.selectFullWidth,
+          isOpen && styles.selectOpen,
+          disabled && styles.selectDisabled
+        )}
       >
-        <div className={classes.selectCurrent}>
-          {label ? <div className={classes.selectLabel}>{label}</div> : null}
-          <div className={classes.selectValue}>
+        <div className={css(styles.selectCurrent)}>
+          {label ? <div className={css(styles.selectLabel)}>{label}</div> : null}
+          <div className={css(styles.selectValue)}>
             <SelectedItemComponent options={options} value={value} />
           </div>
-          {showArrow && <ExpandMore className={classes.selectIcon} />}
+          {showArrow && (
+            <ExpandMore className={css(styles.selectIcon, isOpen && styles.selectOpenIcon)} />
+          )}
         </div>
         <Floating
           open={isOpen}
           anchorEl={anchorEl}
           placement={placement}
-          className={classes.dropdown}
+          css={styles.dropdown}
           autoWidth={dropdownAutoWidth}
           autoHeight={dropdownAutoHeight}
           autoHide={dropdownAutoHide}
@@ -238,9 +245,10 @@ export const LabeledSelect = memo(function LabeledSelect<V extends string = stri
               label={label}
               value={optionValue}
               DropdownItemLabelComponent={DropdownItemLabelComponent}
-              className={clsx(classes.dropdownItem, {
-                [classes.dropdownItemSelected]: optionValue === value,
-              })}
+              css={css.raw(
+                styles.dropdownItem,
+                optionValue === value && styles.dropdownItemSelected
+              )}
             />
           ))}
         </Floating>

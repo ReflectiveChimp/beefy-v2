@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import { memo, useEffect } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { NetworkStep } from './components/NetworkStep';
 import { TokenStep } from './components/TokenStep';
@@ -20,7 +20,7 @@ import {
 import { InjectProviderStep } from './components/InjectProviderStep';
 import { SelectProviderStep } from './components/SelectProviderStep';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const stepToComponent: Record<FormStep, ComponentType> = {
   [FormStep.UnsupportedCountry]: UnsupportedCountryStep,

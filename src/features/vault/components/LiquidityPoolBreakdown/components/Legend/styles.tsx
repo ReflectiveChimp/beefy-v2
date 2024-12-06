@@ -1,36 +1,36 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  holder: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.middle,
+export const styles = {
+  holder: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.middle',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '16px',
     columnGap: '8px',
     justifyContent: 'center',
-    [theme.breakpoints.up('sm')]: {
+    sm: {
       display: 'grid',
       gridTemplateColumns: 'repeat(3, 1fr)',
     },
-    [theme.breakpoints.up('lg')]: {
+    lg: {
       display: 'grid',
       gridTemplateColumns: 'repeat(2, 1fr)',
     },
-  },
-  item: {
+  }),
+  item: css.raw({
     display: 'flex',
     alignItems: 'center',
-  },
-  icon: {
+  }),
+  icon: css.raw({
     width: '24px',
     height: '24px',
     marginLeft: '8px',
     marginRight: '4px',
-  },
-  key: {
+  }),
+  key: css.raw({
     width: '4px',
     height: '24px',
     borderRadius: '2px',
-  },
-});
+  }),
+};

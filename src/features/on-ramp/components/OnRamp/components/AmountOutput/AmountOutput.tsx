@@ -1,13 +1,14 @@
 import { memo, useMemo } from 'react';
-import { InputBase, makeStyles } from '@material-ui/core';
+import { InputBase } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
 import ContentLoader from 'react-content-loader';
 import { useAppSelector } from '../../../../../../store';
 import { selectQuoteStatus } from '../../../../../data/selectors/on-ramp';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function numberToString(value: number, maxDecimals: number): string {
   if (value <= 0) {
@@ -39,23 +40,22 @@ const PendingAmount = memo(function PendingAmount() {
 export type AmountOutputProps = {
   maxDecimals?: number;
   value: number;
-  className?: string;
+  css?: CssStyles;
   endAdornment?: InputBaseProps['endAdornment'];
 };
-export const AmountOutput = memo<AmountOutputProps>(function AmountOutput({
+export const AmountOutput = memo(function AmountOutput({
   value,
   maxDecimals = 2,
-  className,
+  css: cssProp,
   endAdornment,
-}) {
-  const classes = useStyles();
+}: AmountOutputProps) {
   const displayValue = useMemo(() => numberToString(value, maxDecimals), [value, maxDecimals]);
   const pending = useAppSelector(selectQuoteStatus) === 'pending';
   const startAdornment = useMemo(() => (pending ? <PendingAmount /> : undefined), [pending]);
 
   return (
     <InputBase
-      className={clsx(classes.input, className)}
+      className={css(styles.input, cssProp)}
       value={pending ? '' : displayValue}
       fullWidth={true}
       startAdornment={startAdornment}

@@ -2,12 +2,12 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { useHistory } from 'react-router-dom';
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import image from '../../images/404image.svg';
 import { Button } from '../../components/Button';
 import { Container } from '../../components/Container/Container';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const PageNotFound = () => {
   const classes = useStyles();
@@ -24,7 +24,7 @@ export const PageNotFound = () => {
         <img src={image} alt="404" className={classes.image} />
         <div className={classes.textContainer}>
           <div className={classes.text}>{t('Page-Not-Found')}</div>
-          <Button variant="success" className={classes.button} onClick={handleOpen}>
+          <Button variant="success" css={styles.button} onClick={handleOpen}>
             {t('View-All')}
           </Button>
         </div>

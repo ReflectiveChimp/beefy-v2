@@ -1,5 +1,5 @@
-import { type ThunkAction, createAction, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
-import type { BeefyState, BeefyThunk, BeefyStateFn } from '../../../redux-types';
+import { createAction, createAsyncThunk, nanoid, type ThunkAction } from '@reduxjs/toolkit';
+import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../../redux-types';
 import { isCowcentratedVault, type VaultEntity, type VaultGov } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { getTransactApi } from '../apis/instances';
@@ -78,7 +78,9 @@ const optionsForByMode = {
 export const transactFetchOptions = createAsyncThunk<
   TransactFetchOptionsPayload,
   TransactFetchOptionsArgs,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'transact/fetchOptions',
   async ({ vaultId, mode }, { getState, dispatch }) => {
@@ -147,7 +149,10 @@ export type TransactFetchQuotesPayload = {
 export const transactFetchQuotes = createAsyncThunk<
   TransactFetchQuotesPayload,
   void,
-  { state: BeefyState; rejectValue: SerializedError }
+  {
+    state: BeefyState;
+    rejectValue: SerializedError;
+  }
 >('transact/fetchQuotes', async (_, { getState, dispatch, rejectWithValue }) => {
   try {
     const api = await getTransactApi();
@@ -268,35 +273,38 @@ export const transactFetchQuotes = createAsyncThunk<
   }
 });
 
-export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state: BeefyState }>(
-  'transact/fetchQuotesIfNeeded',
-  async (_, { getState, dispatch }) => {
-    const state = getState();
-    const quote = selectTransactSelectedQuoteOrUndefined(state);
-    let shouldFetch = selectTransactQuoteStatus(state) !== TransactStatus.Fulfilled;
-
-    if (quote) {
-      const option = quote.option;
-      const vaultId = selectTransactVaultId(state);
-      const chainId = selectTransactSelectedChainId(state);
-      const selectionId = selectTransactSelectedSelectionId(state);
-      const inputAmounts = selectTransactInputAmounts(state);
-      const matchingInputs =
-        inputAmounts.length === quote.inputs.length &&
-        inputAmounts.every((amount, index) => amount.eq(quote.inputs[index].amount));
-
-      shouldFetch =
-        option.chainId !== chainId ||
-        option.vaultId !== vaultId ||
-        option.selectionId !== selectionId ||
-        !matchingInputs;
-    }
-
-    if (shouldFetch) {
-      dispatch(transactFetchQuotes());
-    }
+export const transactFetchQuotesIfNeeded = createAsyncThunk<
+  void,
+  void,
+  {
+    state: BeefyState;
   }
-);
+>('transact/fetchQuotesIfNeeded', async (_, { getState, dispatch }) => {
+  const state = getState();
+  const quote = selectTransactSelectedQuoteOrUndefined(state);
+  let shouldFetch = selectTransactQuoteStatus(state) !== TransactStatus.Fulfilled;
+
+  if (quote) {
+    const option = quote.option;
+    const vaultId = selectTransactVaultId(state);
+    const chainId = selectTransactSelectedChainId(state);
+    const selectionId = selectTransactSelectedSelectionId(state);
+    const inputAmounts = selectTransactInputAmounts(state);
+    const matchingInputs =
+      inputAmounts.length === quote.inputs.length &&
+      inputAmounts.every((amount, index) => amount.eq(quote.inputs[index].amount));
+
+    shouldFetch =
+      option.chainId !== chainId ||
+      option.vaultId !== vaultId ||
+      option.selectionId !== selectionId ||
+      !matchingInputs;
+  }
+
+  if (shouldFetch) {
+    dispatch(transactFetchQuotes());
+  }
+});
 
 export async function getTransactSteps(
   quote: TransactQuote,

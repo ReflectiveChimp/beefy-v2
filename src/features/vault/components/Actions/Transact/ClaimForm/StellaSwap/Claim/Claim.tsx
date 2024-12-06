@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector } from '../../../../../../../../store';
 import { walletActions } from '../../../../../../../data/actions/wallet-actions';
 import { startStepperWithSteps } from '../../../../../../../data/actions/stepper';
 import { selectFetchStellaSwapRewardsLastDispatched } from '../../../../../../../data/selectors/data-loader';
-import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { selectChainById } from '../../../../../../../data/selectors/chains';
 import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper';
@@ -15,8 +14,7 @@ import type { VaultEntity } from '../../../../../../../data/entities/vault';
 import { TenderlyStellaSwapClaimButton } from '../../../../../../../../components/Tenderly/Buttons/TenderlyStellaSwapClaimButton';
 import { TimeCountdown } from '../../TimeCountdown/TimeCountdown';
 
-const useStyles = makeStyles(styles);
-const STELLA_SWAP_MIN_TIME_BETWEEN_REQUESTS_MS = 5_000;
+const STELLA_SWAP_MIN_TIME_BETWEEN_REQUESTS_MS = 5000;
 
 type ClaimProps = {
   chainId: ChainEntity['id'];
@@ -24,8 +22,7 @@ type ClaimProps = {
   withChain?: boolean;
 };
 
-export const Claim = memo<ClaimProps>(function Claim({ chainId, vaultId, withChain }) {
-  const classes = useStyles();
+export const Claim = memo(function Claim({ chainId, vaultId, withChain }: ClaimProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const chain = useAppSelector(state => selectChainById(state, chainId));
@@ -70,7 +67,7 @@ export const Claim = memo<ClaimProps>(function Claim({ chainId, vaultId, withCha
           variant="success"
           onClick={handleClaim}
           disabled={disable}
-          className={classes.claim}
+          css={styles.claim}
         >
           {!isStepping && shouldWait ? (
             <TimeCountdown until={lastDispatched + STELLA_SWAP_MIN_TIME_BETWEEN_REQUESTS_MS} />

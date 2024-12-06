@@ -12,7 +12,9 @@ import { entries } from '../../../helpers/object';
 interface AddressHolding {
   address: string;
   name: string;
-  balances: { [address: string]: TreasuryHoldingEntity };
+  balances: {
+    [address: string]: TreasuryHoldingEntity;
+  };
 }
 
 interface ExchangeHolding {
@@ -80,7 +82,9 @@ export const treasurySlice = createSlice({
 
 const mapBalances = (
   state: BeefyState,
-  balances: { [address: string]: TreasuryHoldingConfig },
+  balances: {
+    [address: string]: TreasuryHoldingConfig;
+  },
   chainId: ChainEntity['id']
 ) => {
   return Object.values(balances).reduce((totals, token) => {

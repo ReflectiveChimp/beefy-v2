@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
 import {
@@ -25,7 +25,7 @@ import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice';
 import { useDispatch } from 'react-redux';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const DepositedInVault = memo(function DepositedInVault() {
   const vaultId = useAppSelector(selectTransactVaultId);
@@ -97,7 +97,7 @@ export const WithdrawForm = memo(function WithdrawForm() {
 
   return (
     <>
-      <WithdrawnInWalletNotice className={classes.notice} />
+      <WithdrawnInWalletNotice css={styles.notice} />
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
           {hasOptions ? <img src={zapIcon} alt="Zap" height={12} /> : null}
@@ -113,7 +113,7 @@ export const WithdrawForm = memo(function WithdrawForm() {
       <div className={classes.inputs}>
         <WithdrawTokenAmountInput />
       </div>
-      <TransactQuote title={t('Transact-YouWithdraw')} className={classes.quote} />
+      <TransactQuote title={t('Transact-YouWithdraw')} css={styles.quote} />
       <div className={classes.actions}>
         <WithdrawActions />
       </div>

@@ -1,45 +1,43 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  wrapper: {
+export const styles = {
+  wrapper: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     alignItems: 'stretch',
     justifyContent: 'flex-start',
     minHeight: '100vh',
     width: '100%',
-    backgroundColor: theme.palette.background.appBg,
-  },
-  wrapperTop: {
+    backgroundColor: 'background.body',
+  }),
+  wrapperTop: css.raw({
     marginBottom: 'auto',
-  },
-  footer: {
-    background: theme.palette.background.footerHeader,
+  }),
+  footer: css.raw({
+    background: 'background.header',
     padding: '40px',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     alignItems: 'center',
-  },
-  nav: {
+    rowGap: '32px',
+  }),
+  nav: css.raw({
     display: 'flex',
-    flexDirection: 'row' as const,
-    flexWrap: 'wrap' as const,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'center',
     padding: '0',
-    margin: `0 ${24 / -2}px ${24 / -2}px ${24 / -2}px`,
+    margin: '0 -12px -12px -12px',
     listStyle: 'none',
-    '& + $nav': {
-      marginTop: '32px',
-    },
-  },
-  navItem: {
-    margin: `0 ${24 / 2}px ${24 / 2}px ${24 / 2}px`,
-  },
-  navLink: {
-    ...theme.typography['body-lg-med'],
+  }),
+  navItem: css.raw({
+    margin: '0 12px 12px 12px',
+  }),
+  navLink: css.raw({
+    textStyle: 'body.med',
     display: 'block',
     textDecoration: 'none',
-    color: theme.palette.text.middle,
+    color: 'text.middle',
     '& svg': {
       display: 'block',
       fill: 'currentColor',
@@ -47,7 +45,7 @@ export const styles = (theme: Theme) => ({
       height: '24px',
     },
     '&:hover': {
-      color: theme.palette.text.light,
+      color: 'text.light',
     },
-  },
-});
+  }),
+};

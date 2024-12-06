@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import { memo } from 'react';
-import { Hidden, makeStyles, useMediaQuery } from '@material-ui/core';
+import { Hidden, useMediaQuery } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { formatLargePercent, formatLargeUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
@@ -8,14 +9,14 @@ import { useAppSelector } from '../../../../../store';
 import { selectUserGlobalStats } from '../../../../data/selectors/apy';
 import { selectIsBalanceHidden } from '../../../../data/selectors/wallet';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type UserStatProps = {
   label: string;
   value: string;
   blurred: boolean;
 };
-const UserStat = memo<UserStatProps>(function UserStat({ label, value, blurred }) {
+const UserStat = memo(function UserStat({ label, value, blurred }: UserStatProps) {
   const classes = useStyles();
 
   return (
@@ -31,7 +32,7 @@ const UserStat = memo<UserStatProps>(function UserStat({ label, value, blurred }
 type VisibleAboveProps = PropsWithChildren<{
   width: number;
 }>;
-const VisibleAbove = memo<VisibleAboveProps>(function VisibleAbove({ width, children }) {
+const VisibleAbove = memo(function VisibleAbove({ width, children }: VisibleAboveProps) {
   const aboveWidth = useMediaQuery(`(min-width: ${width}px)`, { noSsr: true });
   return <>{aboveWidth ? children : null}</>;
 });

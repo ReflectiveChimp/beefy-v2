@@ -1,13 +1,13 @@
 import { type ComponentType, lazy, memo, Suspense, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectTransactShouldShowClaims,
   selectTransactMode,
-  selectTransactVaultId,
+  selectTransactShouldShowClaims,
   selectTransactShouldShowClaimsNotification,
+  selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { CardsTabs } from '../../../Card/CardTabs';
@@ -15,7 +15,7 @@ import { transactFetchOptions } from '../../../../../data/actions/transact';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const DepositFormLoader = lazy(() => import('../DepositForm'));
 const ClaimFormLoader = lazy(() => import('../ClaimForm'));

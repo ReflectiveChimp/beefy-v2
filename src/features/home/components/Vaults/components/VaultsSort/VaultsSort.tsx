@@ -1,7 +1,6 @@
 import type { FC } from 'react';
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
-import type { Theme } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { useTranslation } from 'react-i18next';
@@ -14,8 +13,9 @@ import type { LabeledSelectProps } from '../../../../../../components/LabeledSel
 import { LabeledSelect } from '../../../../../../components/LabeledSelect';
 import { styles } from './styles';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader';
+import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const SORT_COLUMNS: {
   label: string;
@@ -64,7 +64,6 @@ const SortColumns = memo(function SortColumns() {
 
 const SortDropdown = memo(function SortDropdown() {
   const { t } = useTranslation();
-  const classes = useStyles();
   const dispatch = useAppDispatch();
   const value = useAppSelector(selectFilterSearchSortField);
   const options = useMemo<Record<FilteredVaultsState['sort'], string>>(() => {
@@ -95,13 +94,13 @@ const SortDropdown = memo(function SortDropdown() {
       borderless={true}
       fullWidth={true}
       defaultValue={'default'}
-      selectClass={classes.sortDropdown}
+      selectCss={styles.sortDropdown}
     />
   );
 });
 
 export const VaultsSort = memo(function VaultsSort() {
-  const sortColumns = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
+  const sortColumns = useBreakpoint({ from: 'lg' });
 
   return sortColumns ? (
     <SortColumns />

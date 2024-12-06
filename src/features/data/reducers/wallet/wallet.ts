@@ -33,7 +33,10 @@ export const walletSlice = createSlice({
      */
     userDidConnect(
       sliceState,
-      action: PayloadAction<{ chainId: ChainEntity['id']; address: string }>
+      action: PayloadAction<{
+        chainId: ChainEntity['id'];
+        address: string;
+      }>
     ) {
       sliceState.address = action.payload.address;
       sliceState.connectedAddress = action.payload.address;
@@ -45,13 +48,21 @@ export const walletSlice = createSlice({
       sliceState.connectedAddress = undefined;
       sliceState.error = null;
     },
-    accountHasChanged(sliceState, action: PayloadAction<{ address: string }>) {
+    accountHasChanged(
+      sliceState,
+      action: PayloadAction<{
+        address: string;
+      }>
+    ) {
       sliceState.address = action.payload.address;
       sliceState.connectedAddress = action.payload.address;
     },
     chainHasChanged(
       sliceState,
-      action: PayloadAction<{ chainId: ChainEntity['id']; address: string }>
+      action: PayloadAction<{
+        chainId: ChainEntity['id'];
+        address: string;
+      }>
     ) {
       sliceState.address = action.payload.address;
       sliceState.connectedAddress = action.payload.address;
@@ -60,7 +71,10 @@ export const walletSlice = createSlice({
     },
     chainHasChangedToUnsupported(
       sliceState,
-      action: PayloadAction<{ networkChainId: string | number; address: string }>
+      action: PayloadAction<{
+        networkChainId: string | number;
+        address: string;
+      }>
     ) {
       sliceState.address = action.payload.address;
       sliceState.connectedAddress = action.payload.address;

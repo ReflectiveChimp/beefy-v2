@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as IconGithub } from '../../images/socials/github.svg';
@@ -70,7 +70,7 @@ const socialLinks = [
   },
 ];
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const Footer = memo(function Footer() {
   const classes = useStyles();

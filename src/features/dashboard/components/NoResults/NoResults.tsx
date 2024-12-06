@@ -1,4 +1,4 @@
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonLink } from '../../../../components/Button';
@@ -9,11 +9,11 @@ import { Section } from '../../../../components/Section';
 import { styles } from './styles';
 import iconEmptyState from '../../../../images/empty-state.svg';
 import { AddressInput } from '../AddressInput';
-import type { Theme } from '@material-ui/core';
 import { isValidAddress } from '../../../../helpers/addresses';
 import { formatAddressShort } from '../../../../helpers/format';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const InvalidDomain = memo(function InvalidDomain() {
   const { t } = useTranslation();
@@ -56,7 +56,7 @@ export type NoResultsProps = {
   title: string;
   address: string;
 };
-export const NoResults = memo<NoResultsProps>(function NoResults({ title, address }) {
+export const NoResults = memo(function NoResults({ title, address }: NoResultsProps) {
   const { t } = useTranslation();
   const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
   const requestForConnectedWallet = useMemo(() => {
@@ -83,10 +83,10 @@ type ErrorProps = {
   text: string;
   connectedAction?: 'vaults' | 'dashboard';
 };
-const Error = memo<ErrorProps>(function Error({ title, text, connectedAction = 'vaults' }) {
+const Error = memo(function Error({ title, text, connectedAction = 'vaults' }: ErrorProps) {
   const classes = useStyles();
 
-  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+  const smDown = useBreakpoint({ to: 'sm' });
 
   const wrappedTitle = useMemo(() => {
     return smDown && isValidAddress(title) ? formatAddressShort(title) : title;
@@ -111,7 +111,7 @@ const Error = memo<ErrorProps>(function Error({ title, text, connectedAction = '
 type ActionProps = {
   connectedAction?: 'vaults' | 'dashboard';
 };
-const Actions = memo<ActionProps>(function Actions({ connectedAction }) {
+const Actions = memo(function Actions({ connectedAction }: ActionProps) {
   const { t } = useTranslation();
   const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
   const classes = useStyles();
@@ -130,26 +130,22 @@ const Actions = memo<ActionProps>(function Actions({ connectedAction }) {
       <div className={classes.center}>
         {connectedAddress ? (
           connectedAction === 'dashboard' ? (
-            <ButtonLink
-              className={classes.btn}
-              to={`/dashboard/${connectedAddress}`}
-              variant="success"
-            >
+            <ButtonLink css={styles.btn} to={`/dashboard/${connectedAddress}`} variant="success">
               {t('NoResults-ViewConnectedDashboard')}
             </ButtonLink>
           ) : (
-            <ButtonLink className={classes.btn} to="/" variant="success">
+            <ButtonLink css={styles.btn} to="/" variant="success">
               {t('NoResults-ViewAllVaults')}
             </ButtonLink>
           )
         ) : (
-          <Button className={classes.btn} onClick={handleWalletConnect} variant="success">
+          <Button css={styles.btn} onClick={handleWalletConnect} variant="success">
             {t('NoResults-ConnectWallet')}
           </Button>
         )}
       </div>
       <Divider />
-      <AddressInput className={classes.search} />
+      <AddressInput css={styles.search} />
     </div>
   );
 });

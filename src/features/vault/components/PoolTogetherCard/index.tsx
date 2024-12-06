@@ -10,7 +10,7 @@ export type PoolTogetherCardProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const PoolTogetherCard = memo<PoolTogetherCardProps>(function PoolTogetherCard({ vaultId }) {
+export const PoolTogetherCard = memo(function PoolTogetherCard({ vaultId }: PoolTogetherCardProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 

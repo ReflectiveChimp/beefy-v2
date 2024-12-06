@@ -14,7 +14,9 @@ export interface FetchTreasuryFulfilledPayload {
 export const fetchTreasury = createAsyncThunk<
   FetchTreasuryFulfilledPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('treasury/fetchTreasury', async (_, { getState }) => {
   const state = getState();
   const api = await getBeefyApi();

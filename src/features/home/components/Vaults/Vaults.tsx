@@ -1,10 +1,10 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { VaultsHeader } from './components/VaultsHeader';
 import { VaultsList } from './components/VaultsList';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const Vaults = memo(function Vaults() {
   const classes = useStyles();

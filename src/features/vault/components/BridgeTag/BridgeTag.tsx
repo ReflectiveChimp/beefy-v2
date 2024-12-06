@@ -1,9 +1,9 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import type { MouseEventHandler, ReactNode } from 'react';
 import { forwardRef, memo, useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { BridgeEntity } from '../../../data/entities/bridge';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import type { TooltipProps } from '../../../../components/Tooltip';
 import { Tooltip } from '../../../../components/Tooltip';
 import { getAssetBridgeIcon } from '../../../../helpers/assetBridgeSrc';
@@ -12,20 +12,20 @@ import { getNetworkSrc } from '../../../../helpers/networkSrc';
 import { styles } from './styles';
 import { TRIGGERS } from '../../../../components/Tooltip/constants';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type NativeTagProps = {
   chain: ChainEntity;
-  className?: string;
+  css?: CssStyles;
 };
 
-export const NativeTag = memo<NativeTagProps>(function NativeTag({ chain, className }) {
+export const NativeTag = memo(function NativeTag({ chain, css: cssProp }: NativeTagProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const icon = getNetworkSrc(chain.id);
 
   return (
-    <TagWithTooltip content={<NativeTooltip chain={chain} />} className={className}>
+    <TagWithTooltip content={<NativeTooltip chain={chain} />} css={cssProp}>
       {icon ? <img src={icon} alt={chain.name} className={classes.icon} width={24} /> : null}
       {t('TokenBridge-native')}
     </TagWithTooltip>
@@ -35,16 +35,16 @@ export const NativeTag = memo<NativeTagProps>(function NativeTag({ chain, classN
 export type BridgeTagProps = {
   bridge: BridgeEntity;
   chain: ChainEntity;
-  className?: string;
+  css?: CssStyles;
 };
-export const BridgeTag = memo<BridgeTagProps>(function BridgeTag({ bridge, chain, className }) {
+export const BridgeTag = memo(function BridgeTag({ bridge, chain, css: cssProp }: BridgeTagProps) {
   const classes = useStyles();
   const icon = bridge.id.includes('canonical')
     ? getNetworkSrc(chain.id)
     : getAssetBridgeIcon(bridge.id);
 
   return (
-    <TagWithTooltip content={<BridgeTooltip bridge={bridge} chain={chain} />} className={className}>
+    <TagWithTooltip content={<BridgeTooltip bridge={bridge} chain={chain} />} css={cssProp}>
       {icon ? <img src={icon} alt={bridge.name} className={classes.icon} width={24} /> : null}
       {bridge.tagName}
     </TagWithTooltip>
@@ -54,7 +54,7 @@ export const BridgeTag = memo<BridgeTagProps>(function BridgeTag({ bridge, chain
 export type NativeTooltipProps = {
   chain: ChainEntity;
 };
-const NativeTooltip = memo<NativeTooltipProps>(function NativeTooltip({ chain }) {
+const NativeTooltip = memo(function NativeTooltip({ chain }: NativeTooltipProps) {
   const { t } = useTranslation();
   return <TagTooltip content={t('TokenBridge-Tooltip-native', { chain: chain.name })} />;
 });
@@ -63,7 +63,7 @@ export type BridgeTooltipProps = {
   bridge: BridgeEntity;
   chain: ChainEntity;
 };
-const BridgeTooltip = memo<BridgeTooltipProps>(function BridgeTooltip({ bridge, chain }) {
+const BridgeTooltip = memo(function BridgeTooltip({ bridge, chain }: BridgeTooltipProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const onClick = useCallback<MouseEventHandler<HTMLAnchorElement>>(e => {
@@ -97,26 +97,25 @@ const BridgeTooltip = memo<BridgeTooltipProps>(function BridgeTooltip({ bridge, 
 export type TagTooltipProps = {
   content: ReactNode;
 };
-export const TagTooltip = memo<TagTooltipProps>(function BridgeTooltip({ content }) {
+export const TagTooltip = memo(function BridgeTooltip({ content }: TagTooltipProps) {
   const classes = useStyles();
   return <div className={classes.tooltip}>{content}</div>;
 });
 
 type TagWithTooltipProps = {
-  className?: string;
+  css?: CssStyles;
   children: ReactNode;
 } & TooltipProps;
 
 export const TagWithTooltip = memo(
   forwardRef<HTMLDivElement, TagWithTooltipProps>(function TagWithTooltip(
-    { children, className, triggerClass, ...rest },
+    { children, css: cssProp, triggerCss, ...rest },
     ref
   ) {
-    const classes = useStyles();
     return (
       <Tooltip
         placement="top"
-        triggerClass={clsx(classes.tag, className, triggerClass)}
+        triggerCss={css.raw(styles.tag, cssProp, triggerCss)}
         triggers={TRIGGERS.CLICK}
         ref={ref}
         {...rest}

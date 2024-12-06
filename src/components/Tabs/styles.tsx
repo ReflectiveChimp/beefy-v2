@@ -1,42 +1,50 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {},
-  tabs: {
-    backgroundColor: theme.palette.background.buttons.button,
-    borderRadius: 8,
-    border: `2px solid ${theme.palette.background.contentLight}`,
-    '& .MuiTabs-indicator': {
-      display: 'none' as const,
-      color: 'transparent',
-    },
-    '& .MuiTab-root': {
-      minWidth: 70,
-    },
-    '& .MuiTab-textColorPrimary': {
-      color: theme.palette.text.dark,
-    },
-    '& .Mui-selected': {
-      backgroundColor: theme.palette.background.contentLight,
-      borderRadius: 4,
-      color: theme.palette.text.light,
-      padding: '5px',
-    },
-  },
-  basicTabs: {
+export const styles = {
+  container: css.raw({}),
+  tabs: css.raw({
+    backgroundColor: 'bayOfMany',
+    borderRadius: '8',
+    border: '2px solid {colors.background.content.light}',
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiTabs-indicator': {
       display: 'none',
       color: 'transparent',
     },
+    //FIXME MUI2PANDA: Target MUI class
+    '& .MuiTab-root': {
+      minWidth: '70',
+    },
+    //FIXME MUI2PANDA: Target MUI class
+    '& .MuiTab-textColorPrimary': {
+      color: 'text.dark',
+    },
+    //FIXME MUI2PANDA: Target MUI class
+    '& .Mui-selected': {
+      backgroundColor: 'background.content.light',
+      borderRadius: '4',
+      color: 'text.light',
+      padding: '5px',
+    },
+  }),
+  basicTabs: css.raw({
+    //FIXME MUI2PANDA: Target MUI class
+    '& .MuiTabs-indicator': {
+      display: 'none',
+      color: 'transparent',
+    },
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiTab-root': {
       minWidth: 'fit-content',
       padding: '0 12',
     },
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiTab-textColorPrimary': {
-      color: theme.palette.text.dark,
+      color: 'text.dark',
     },
+    //FIXME MUI2PANDA: Target MUI class
     '& .Mui-selected': {
-      color: theme.palette.text.light,
+      color: 'text.light',
     },
-  },
-});
+  }),
+};

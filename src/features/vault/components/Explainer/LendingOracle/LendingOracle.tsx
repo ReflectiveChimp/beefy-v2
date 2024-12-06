@@ -5,10 +5,10 @@ import { useAppSelector } from '../../../../../store';
 import { selectVaultById } from '../../../../data/selectors/vaults';
 import { selectChainById } from '../../../../data/selectors/chains';
 import { explorerAddressUrl } from '../../../../../helpers/url';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const oraclesMapToText: Record<string, string> = {
   chainlink: 'Chainlink',
@@ -22,7 +22,7 @@ export type LendingOracleProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const LendingOracle = memo<LendingOracleProps>(function LendingOracle({ vaultId }) {
+export const LendingOracle = memo(function LendingOracle({ vaultId }: LendingOracleProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));

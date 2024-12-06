@@ -9,8 +9,7 @@ import {
   YAxis,
 } from 'recharts';
 import { useFeesChartData } from './hooks';
-import type { Theme } from '@material-ui/core';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { GraphLoader } from '../../../../GraphLoader';
 import { GRAPH_TIME_BUCKETS, makeUsdTickFormatter } from '../../../../../../../helpers/graph/graph';
 import { styles } from './styles';
@@ -20,8 +19,9 @@ import type { ClmInvestorFeesTimeSeriesPoint } from '../../../../../../../helper
 import { LINE_COLORS } from '../../../../../../../helpers/charts';
 import type { GraphBucket } from '../../../../../../../helpers/graph/types';
 import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks';
+import { useBreakpoint } from '../../../../../../../components/MediaQueries/useBreakpoint';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface CLMFeesGraphProps {
   vaultId: string;
@@ -31,13 +31,13 @@ interface CLMFeesGraphProps {
 
 const FEES_TIME_BUCKET: GraphBucket[] = ['1h_1w', '1d_1M', '1d_1Y', '1d_all'];
 
-export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
+export const CLMFeesGraph = memo(function CLMFeesGraph({
   vaultId,
   period,
   address,
-}) {
+}: CLMFeesGraphProps) {
   const classes = useStyles();
-  const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+  const xsDown = useBreakpoint({ to: 'xs' });
   const xMargin = xsDown ? 16 : 24;
   const { chartData, isLoading } = useFeesChartData(FEES_TIME_BUCKET[period], vaultId, address);
   const { data, tokens, minUsd, maxUsd } = chartData;

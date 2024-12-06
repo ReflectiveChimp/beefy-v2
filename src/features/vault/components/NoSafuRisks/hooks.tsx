@@ -14,7 +14,11 @@ export const useVaultHasRisks = (
       values: Record<string, string>;
       risk: string;
     }
-  | { vaultHasRisks: false; values: undefined; risk: undefined } => {
+  | {
+      vaultHasRisks: false;
+      values: undefined;
+      risk: undefined;
+    } => {
   const vaultHasPlatformWithRisks = useAppSelector(state =>
     selectVaultHasPlatformWithRisks(state, vaultId)
   );

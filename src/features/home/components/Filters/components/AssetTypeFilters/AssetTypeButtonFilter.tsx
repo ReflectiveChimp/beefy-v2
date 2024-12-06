@@ -1,8 +1,8 @@
 import { memo, useCallback, useMemo } from 'react';
 import {
   MultiToggleButton,
-  MultiToggleButtons,
   type MultiToggleButtonProps,
+  MultiToggleButtons,
 } from '../../../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
@@ -11,15 +11,16 @@ import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { TYPE_OPTIONS } from './type-options';
 import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
+import { type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type AssetTypeButtonFilterProps = {
-  className?: string;
+  css?: CssStyles;
 };
 
-const CategoryToggleButton = memo<MultiToggleButtonProps>(function CategoryToggleButton(props) {
+const CategoryToggleButton = memo(function CategoryToggleButton(props: MultiToggleButtonProps) {
   const classes = useStyles();
   const { value, label: originalLabel, onClick } = props;
   const label = useMemo(() => {
@@ -41,45 +42,45 @@ const CategoryToggleButton = memo<MultiToggleButtonProps>(function CategoryToggl
   return <MultiToggleButton {...props} label={label} onClick={handleClick} />;
 });
 
-export const AssetTypeButtonFilter = memo<AssetTypeButtonFilterProps>(
-  function AssetTypeButtonFilter({ className }) {
-    const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const allKey = 'all';
-    const options: Record<string, string> = useMemo(
-      () =>
-        Object.fromEntries(
-          Object.entries(TYPE_OPTIONS)
-            .filter(([key]) => key !== allKey)
-            .map(([key, cat]) => [key, t(cat.i18nKey)])
-        ),
-      [t]
-    );
-    const value = useAppSelector(selectFilterAssetType);
+export const AssetTypeButtonFilter = memo(function AssetTypeButtonFilter({
+  css: cssProp,
+}: AssetTypeButtonFilterProps) {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const allKey = 'all';
+  const options: Record<string, string> = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(TYPE_OPTIONS)
+          .filter(([key]) => key !== allKey)
+          .map(([key, cat]) => [key, t(cat.i18nKey)])
+      ),
+    [t]
+  );
+  const value = useAppSelector(selectFilterAssetType);
 
-    const handleChange = useCallback(
-      selected => {
-        dispatch(
-          filteredVaultsActions.setAssetType(
-            selected.length === Object.values(options).length
-              ? []
-              : (selected as FilteredVaultsState['assetType'])
-          )
-        );
-      },
-      [dispatch, options]
-    );
+  const handleChange = useCallback(
+    selected => {
+      dispatch(
+        filteredVaultsActions.setAssetType(
+          selected.length === Object.values(options).length
+            ? []
+            : (selected as FilteredVaultsState['assetType'])
+        )
+      );
+    },
+    [dispatch, options]
+  );
 
-    return (
-      <MultiToggleButtons
-        value={value}
-        options={options}
-        onChange={handleChange}
-        buttonsClass={className}
-        fullWidth={false}
-        untoggleValue={allKey}
-        ButtonComponent={CategoryToggleButton}
-      />
-    );
-  }
-);
+  return (
+    <MultiToggleButtons
+      value={value}
+      options={options}
+      onChange={handleChange}
+      buttonsCss={cssProp}
+      fullWidth={false}
+      untoggleValue={allKey}
+      ButtonComponent={CategoryToggleButton}
+    />
+  );
+});

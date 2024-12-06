@@ -16,41 +16,50 @@ import {
   selectIsPricesAvailable,
 } from '../../features/data/selectors/data-loader';
 
-const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
-  const label = 'VaultStat-TVL';
-  const vault = selectVaultById(state, vaultId);
-  const isLoaded =
-    selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
+const _VaultTvl = connect(
+  (
+    state: BeefyState,
+    {
+      vaultId,
+    }: {
+      vaultId: VaultEntity['id'];
+    }
+  ) => {
+    const label = 'VaultStat-TVL';
+    const vault = selectVaultById(state, vaultId);
+    const isLoaded =
+      selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
 
-  if (!isLoaded) {
-    return {
-      label,
-      vaultTvl: BIG_ZERO,
-      underlyingTvl: null,
-      loading: true,
-      breakdown: null,
-    };
-  }
+    if (!isLoaded) {
+      return {
+        label,
+        vaultTvl: BIG_ZERO,
+        underlyingTvl: null,
+        loading: true,
+        breakdown: null,
+      };
+    }
 
-  const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
-  if (!breakdown || !('underlyingTvl' in breakdown)) {
+    const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
+    if (!breakdown || !('underlyingTvl' in breakdown)) {
+      return {
+        label,
+        vaultTvl: breakdown.vaultTvl,
+        underlyingTvl: null,
+        loading: false,
+        breakdown: null,
+      };
+    }
+
     return {
       label,
       vaultTvl: breakdown.vaultTvl,
-      underlyingTvl: null,
-      loading: false,
-      breakdown: null,
+      underlyingTvl: breakdown.underlyingTvl,
+      loading: !isLoaded,
+      breakdown,
     };
   }
-
-  return {
-    label,
-    vaultTvl: breakdown.vaultTvl,
-    underlyingTvl: breakdown.underlyingTvl,
-    loading: !isLoaded,
-    breakdown,
-  };
-})(
+)(
   ({
     label,
     vaultTvl,

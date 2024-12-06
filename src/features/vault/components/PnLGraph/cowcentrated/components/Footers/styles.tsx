@@ -1,73 +1,76 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  footer: {
+export const styles = {
+  footer: css.raw({
     display: 'flex',
-    flexWrap: 'nowrap' as const,
+    flexWrap: 'nowrap',
     gap: '8px 16px',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '12px 24px',
     borderRadius: '0px 0px 12px 12px',
-    backgroundColor: theme.palette.background.contentPrimary,
-    [theme.breakpoints.down('sm')]: {
+    backgroundColor: 'background.content',
+    mdDown: {
       padding: '8px 16px',
-      flexWrap: 'wrap' as const,
+      flexWrap: 'wrap',
     },
-  },
-  legendContainer: {
-    ...theme.typography['body-sm-med'],
-    textTransform: 'uppercase' as const,
+  }),
+  legendContainer: css.raw({
+    textStyle: 'body.sm.med',
+    textTransform: 'uppercase',
     letterSpacing: '0.5px',
-    color: theme.palette.text.dark,
+    color: 'text.dark',
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    [theme.breakpoints.down('xs')]: {
-      flexWrap: 'wrap' as const,
+    smDown: {
+      flexWrap: 'wrap',
     },
-  },
-  legendItem: {
+  }),
+  legendItem: css.raw({
     display: 'flex',
-    flexWrap: 'nowrap' as const,
+    flexWrap: 'nowrap',
     alignItems: 'center',
     gap: '8px',
-  },
-  positionReferenceLine: {
+  }),
+  positionReferenceLine: css.raw({
     height: '2px',
     width: '12px',
-    backgroundColor: '#4DB258',
+    backgroundColor: 'green',
     borderRadius: '4px',
-  },
-  usdReferenceLine: {
+  }),
+  usdReferenceLine: css.raw({
     height: '2px',
     width: '12px',
-    backgroundColor: '#606FCF',
+    backgroundColor: 'extracted3604',
     borderRadius: '4px',
-  },
-  token1ReferenceLine: {
+  }),
+  token1ReferenceLine: css.raw({
     height: '2px',
     width: '12px',
-    backgroundColor: theme.palette.background.cta,
+    backgroundColor: 'green',
     borderRadius: '4px',
-  },
-  holdReferenceLine: {
+  }),
+  holdReferenceLine: css.raw({
     height: '2px',
     width: '12px',
-    backgroundColor: theme.palette.text.dark,
+    backgroundColor: 'text.dark',
     borderRadius: '4px',
-  },
-  tabsContainer: {
+  }),
+  tabsContainer: css.raw({
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiTabs-root': {
       minHeight: '24px',
     },
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiTab-root': {
-      ...theme.typography['body-sm-med'],
+      textStyle: 'body.sm.med',
       minHeight: '22px',
       padding: '0px',
     },
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiTabs-flexContainer': {
       gap: '12px',
     },
-  },
-});
+  }),
+};

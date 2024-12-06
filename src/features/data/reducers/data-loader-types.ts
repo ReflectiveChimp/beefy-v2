@@ -96,9 +96,6 @@ export interface DataLoaderState {
       byChainId: {
         [chainId in ChainEntity['id']]?: ByAddressByChainDataEntity;
       };
-      // byVaultId: {
-      //   [vaultId: string]: ByAddressByVaultDataEntity;
-      // };
     };
   };
 }

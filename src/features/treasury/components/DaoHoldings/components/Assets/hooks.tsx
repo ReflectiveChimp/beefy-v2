@@ -46,7 +46,9 @@ export const useSortedAssets = (assets: TreasuryHoldingEntity[]): SortedAssetCat
 };
 
 export const useSortedMMHoldings = (exchanges: {
-  [exchangeId: string]: { [address: string]: MarketMakerHoldingEntity };
+  [exchangeId: string]: {
+    [address: string]: MarketMakerHoldingEntity;
+  };
 }): SortedMMAssets => {
   const exchangeBalances = {};
   for (const [exchangeId, exchangeHoldings] of Object.entries(exchanges)) {

@@ -1,5 +1,6 @@
 import { memo, useMemo } from 'react';
-import { Button, makeStyles } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card';
 import { AssetsImage } from '../../../../../../../components/AssetsImage';
@@ -37,7 +38,7 @@ import { isTokenErc20 } from '../../../../../../data/entities/token';
 import { useInputForm } from '../../../../../../data/hooks/input';
 import { AmountInput } from '../../../Transact/AmountInput';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -134,7 +135,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   };
 
   return (
-    <CardContent className={classes.cardContent}>
+    <CardContent css={styles.cardContent}>
       <div className={classes.content}>
         {t(
           [
@@ -251,7 +252,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         )}
       </>
       {formData.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) && (
-        <AlertWarning className={classes.noReserves}>
+        <AlertWarning css={styles.noReserves}>
           {t('noreserves', { token: minter.depositToken.symbol })}
         </AlertWarning>
       )}

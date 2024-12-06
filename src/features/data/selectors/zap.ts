@@ -42,10 +42,20 @@ export const selectSwapAggregatorForChainType = <T extends SwapAggregatorEntity[
   state: BeefyState,
   chainId: ChainEntity['id'],
   type: T
-): Extract<SwapAggregatorEntity, { type: T }> => {
+): Extract<
+  SwapAggregatorEntity,
+  {
+    type: T;
+  }
+> => {
   const id = state.entities.zaps.aggregators.byChainId[chainId]?.byType[type];
   const entity = id ? state.entities.zaps.aggregators.byId[id] : undefined;
-  return entity as Extract<SwapAggregatorEntity, { type: T }>;
+  return entity as Extract<
+    SwapAggregatorEntity,
+    {
+      type: T;
+    }
+  >;
 };
 
 export const selectZapTokenScoresByChainId = (

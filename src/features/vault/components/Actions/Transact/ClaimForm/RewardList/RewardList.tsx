@@ -6,22 +6,22 @@ import {
   formatTokenDisplayCondensed,
   formatUsd,
 } from '../../../../../../../helpers/format';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { TokenImageFromEntity } from '../../../../../../../components/TokenImage/TokenImage';
 import { orderBy } from 'lodash-es';
 import { getNetworkSrc } from '../../../../../../../helpers/networkSrc';
 import { Tooltip } from '../../../../../../../components/Tooltip';
 import type { ChainEntity } from '../../../../../../data/entities/chain';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type Token = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
 
 type RewardListProps = {
   chainId: ChainEntity['id'];
-  className?: string;
+  css?: CssStyles;
   deposited: boolean;
   rewards: {
     active: boolean;
@@ -32,12 +32,12 @@ type RewardListProps = {
   }[];
 };
 
-export const RewardList = memo<RewardListProps>(function RewardList({
+export const RewardList = memo(function RewardList({
   rewards,
   deposited,
-  className,
+  css: cssProp,
   chainId,
-}) {
+}: RewardListProps) {
   const classes = useStyles();
   const sortedRewards = useMemo(
     () => (deposited ? rewards : orderBy(rewards, r => r.apr, 'desc')),
@@ -45,7 +45,7 @@ export const RewardList = memo<RewardListProps>(function RewardList({
   );
 
   return (
-    <div className={clsx(classes.rewards, className)}>
+    <div className={css(styles.rewards, cssProp)}>
       {sortedRewards.map(r => (
         <Fragment key={r.token.address}>
           <div className={classes.icon}>

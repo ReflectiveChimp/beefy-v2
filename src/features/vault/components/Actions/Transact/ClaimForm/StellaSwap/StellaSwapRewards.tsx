@@ -52,12 +52,12 @@ type StellaSwapRewardsProps = {
   deposited: boolean;
 };
 
-export const StellaSwapRewards = memo<StellaSwapRewardsProps>(function StellaSwapRewards({
+export const StellaSwapRewards = memo(function StellaSwapRewards({
   vaultId,
   chainId,
   walletAddress,
   deposited,
-}) {
+}: StellaSwapRewardsProps) {
   const { t } = useTranslation();
   const vaultRewards = useAppSelector(state =>
     selectUserStellaSwapUnifiedRewardsForVault(state, vaultId, walletAddress)
@@ -104,13 +104,13 @@ type ClaimableRewardsProps = {
   deposited: boolean;
 };
 
-const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
+const ClaimableRewards = memo(function ClaimableRewards({
   vaultId,
   vaultRewards,
   walletAddress,
   deposited,
   vaultChainId,
-}) {
+}: ClaimableRewardsProps) {
   const byChain = useMemo(
     () =>
       groupBy(vaultRewards, r => r.token.chainId) as Partial<
@@ -146,7 +146,7 @@ type ClaimableChainRewardsProps = {
   withRefresh?: boolean;
 };
 
-const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function ClaimableChainRewards({
+const ClaimableChainRewards = memo(function ClaimableChainRewards({
   chainId,
   vaultId,
   vaultChainId,
@@ -155,7 +155,7 @@ const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function Claimabl
   deposited,
   withChain,
   withRefresh,
-}) {
+}: ClaimableChainRewardsProps) {
   const { t } = useTranslation();
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const hasClaimable = useMemo(() => vaultRewards.some(r => r.amount.gt(BIG_ZERO)), [vaultRewards]);
@@ -185,20 +185,20 @@ type RewardsRefresherProps = {
   walletAddress: string;
 };
 
-const AutomaticUserRewardsRefresher = memo<RewardsRefresherProps>(
-  function AutomaticUserRewardsRefresher({ walletAddress }) {
-    const status = useUserRewardsLoader(walletAddress, true);
-    if (status.isError) {
-      return <AlertWarning>{'Failed to fetch user rewards from StellaSwap API.'}</AlertWarning>;
-    }
-
-    return null;
-  }
-);
-
-const UserRewardsRefreshButton = memo<RewardsRefresherProps>(function UserRewardsRefreshButton({
+const AutomaticUserRewardsRefresher = memo(function AutomaticUserRewardsRefresher({
   walletAddress,
-}) {
+}: RewardsRefresherProps) {
+  const status = useUserRewardsLoader(walletAddress, true);
+  if (status.isError) {
+    return <AlertWarning>{'Failed to fetch user rewards from StellaSwap API.'}</AlertWarning>;
+  }
+
+  return null;
+});
+
+const UserRewardsRefreshButton = memo(function UserRewardsRefreshButton({
+  walletAddress,
+}: RewardsRefresherProps) {
   const { t } = useTranslation();
   const status = useUserRewardsLoader(walletAddress, false);
   const canRefresh = status.canLoad && !!status.handleLoad;

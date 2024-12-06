@@ -1,18 +1,14 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-type StylesProps = {
-  gap?: number;
+export const styles = {
+  vertical: css.raw({
+    display: 'flex',
+    gap: '16px',
+    flexDirection: 'column',
+  }),
+  horizontal: css.raw({
+    display: 'flex',
+    gap: '16px',
+    flexDirection: 'row',
+  }),
 };
-
-export const styles = (_theme: Theme) => ({
-  vertical: {
-    display: 'flex',
-    gap: (props?: StylesProps) => props?.gap || 16,
-    flexDirection: 'column' as const,
-  },
-  horizontal: {
-    display: 'flex',
-    gap: (props?: StylesProps) => props?.gap || 16,
-    flexDirection: 'row' as const,
-  },
-});

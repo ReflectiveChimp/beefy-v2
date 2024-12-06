@@ -21,7 +21,10 @@ export class TenderlySimulateResponseProcessor {
       const walk = (
         trace: TenderlyCallTrace,
         stack: Array<StackEntry>,
-        reverts: Array<{ error: string; stack: StackEntry[] }>
+        reverts: Array<{
+          error: string;
+          stack: StackEntry[];
+        }>
       ) => {
         const lastStack = stack[stack.length - 1];
 

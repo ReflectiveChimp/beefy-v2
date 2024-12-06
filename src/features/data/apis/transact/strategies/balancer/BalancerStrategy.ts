@@ -516,9 +516,12 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     return withLiquidity[0];
   }
 
-  protected async getSwapAmounts(
-    input: TokenAmount
-  ): Promise<Array<{ from: TokenAmount; to: TokenEntity }>> {
+  protected async getSwapAmounts(input: TokenAmount): Promise<
+    Array<{
+      from: TokenAmount;
+      to: TokenEntity;
+    }>
+  > {
     const pool = this.getPool();
     const ratios = await pool.getSwapRatios();
     console.debug('ratios', ratios.toString());
@@ -544,9 +547,11 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     }));
   }
 
-  protected async quoteAddLiquidity(
-    inputs: TokenAmount[]
-  ): Promise<{ liquidity: TokenAmount; usedInput: TokenAmount[]; unusedInput: TokenAmount[] }> {
+  protected async quoteAddLiquidity(inputs: TokenAmount[]): Promise<{
+    liquidity: TokenAmount;
+    usedInput: TokenAmount[];
+    unusedInput: TokenAmount[];
+  }> {
     const pool = this.getPool();
     const inputAmountsWei = inputs.map(input => toWeiFromTokenAmount(input));
     const result = await pool.quoteAddLiquidity(inputAmountsWei);
@@ -1022,9 +1027,10 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     return [...singleOptions, ...allOptions];
   }
 
-  protected async quoteRemoveLiquidity(
-    input: TokenAmount
-  ): Promise<{ liquidity: TokenAmount; outputs: TokenAmount[] }> {
+  protected async quoteRemoveLiquidity(input: TokenAmount): Promise<{
+    liquidity: TokenAmount;
+    outputs: TokenAmount[];
+  }> {
     const pool = this.getPool();
     const inputAmountWei = toWeiFromTokenAmount(input);
     const result = await pool.quoteRemoveLiquidity(inputAmountWei);
@@ -1038,7 +1044,10 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
   protected async quoteRemoveLiquidityOneToken(
     input: TokenAmount,
     wantedToken: TokenEntity
-  ): Promise<{ liquidity: TokenAmount; outputs: TokenAmount[] }> {
+  ): Promise<{
+    liquidity: TokenAmount;
+    outputs: TokenAmount[];
+  }> {
     const pool = this.getPool();
     if (!isBalancerSinglePool(pool)) {
       throw new Error('BalancerStrategy: Pool does not support removing liquidity to one token');
@@ -1112,7 +1121,10 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     // Withdraw liquidity
     let breakSets: Array<{
       input: TokenAmount;
-      liquidity: { input: TokenAmount; outputs: TokenAmount[] };
+      liquidity: {
+        input: TokenAmount;
+        outputs: TokenAmount[];
+      };
     }>;
     if (option.type === 'single' && option.via === 'aggregator') {
       breakSets = await this.fetchWithdrawLiquiditySingleAggregator(input, option);

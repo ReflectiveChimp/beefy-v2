@@ -180,7 +180,13 @@ function makeFulfilledState(existing: LoaderState | undefined): LoaderStateFulfi
  */
 function addGlobalAsyncThunkActions(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<unknown, unknown, { state: BeefyState }>,
+  action: AsyncThunk<
+    unknown,
+    unknown,
+    {
+      state: BeefyState;
+    }
+  >,
   stateKey: LoaderGlobalKey,
   openNetworkModalOnReject: boolean = false
 ) {
@@ -289,9 +295,19 @@ function getOrCreateAddressChainState(
   return vaultState;
 }*/
 
-function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity['id'] }>(
+function addByChainAsyncThunkActions<
+  ActionParams extends {
+    chainId: ChainEntity['id'];
+  }
+>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
+  action: AsyncThunk<
+    unknown,
+    ActionParams,
+    {
+      state: BeefyState;
+    }
+  >,
   stateKeys: Array<LoaderChainKey>
 ) {
   builder
@@ -326,10 +342,19 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity
 }
 
 function addByAddressByChainAsyncThunkActions<
-  ActionParams extends { chainId: ChainEntity['id']; walletAddress: string }
+  ActionParams extends {
+    chainId: ChainEntity['id'];
+    walletAddress: string;
+  }
 >(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
+  action: AsyncThunk<
+    unknown,
+    ActionParams,
+    {
+      state: BeefyState;
+    }
+  >,
   stateKeys: Array<LoaderAddressChainKey>
 ) {
   builder
@@ -419,9 +444,19 @@ function addByAddressByChainAsyncThunkActions<
     });
 }*/
 
-function addByAddressAsyncThunkActions<ActionParams extends { walletAddress: string }>(
+function addByAddressAsyncThunkActions<
+  ActionParams extends {
+    walletAddress: string;
+  }
+>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
+  action: AsyncThunk<
+    unknown,
+    ActionParams,
+    {
+      state: BeefyState;
+    }
+  >,
   addressKeys: Array<LoaderAddressKey>,
   globalKeys?: Array<LoaderGlobalKey>
 ) {

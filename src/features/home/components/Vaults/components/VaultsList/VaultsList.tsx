@@ -1,12 +1,12 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { selectFilteredVaults } from '../../../../../data/selectors/filtered-vaults';
 import { NoResults } from '../NoResults';
 import { VirtualVaultsList } from '../VirtualVaultsList';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const VaultsList = memo(function VaultsList() {
   const vaultIds = useAppSelector(selectFilteredVaults);

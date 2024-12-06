@@ -114,7 +114,11 @@ export type VaultStandardBaseOnly = {
   receiptTokenAddress: string;
   /** Map of chain->address of bridged receipt tokens */
   bridged?: Record<ChainEntity['id'], string>;
-  lendingOracle?: { provider: string; address?: string; loops?: number };
+  lendingOracle?: {
+    provider: string;
+    address?: string;
+    loops?: number;
+  };
 };
 
 type VaultStandardOnly = VaultStandardBaseOnly & {
@@ -190,13 +194,19 @@ type VaultStandardCowcentratedOnly = VaultCowcentratedBaseOnly &
     receiptTokenAddress: string;
   };
 
-type MakeVaultActive<TVaultType extends VaultType, TOnly> = { type: TVaultType } & VaultBase &
+type MakeVaultActive<TVaultType extends VaultType, TOnly> = {
+  type: TVaultType;
+} & VaultBase &
   VaultActive &
   TOnly;
-type MakeVaultRetired<TVaultType extends VaultType, TOnly> = { type: TVaultType } & VaultBase &
+type MakeVaultRetired<TVaultType extends VaultType, TOnly> = {
+  type: TVaultType;
+} & VaultBase &
   VaultRetired &
   TOnly;
-type MakeVaultPaused<TVaultType extends VaultType, TOnly> = { type: TVaultType } & VaultBase &
+type MakeVaultPaused<TVaultType extends VaultType, TOnly> = {
+  type: TVaultType;
+} & VaultBase &
   VaultPaused &
   TOnly;
 

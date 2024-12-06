@@ -83,7 +83,9 @@ type UserRewardsStatusEntry = {
 
 export type UserRewards = {
   [status in UserRewardStatus]: UserRewardsStatusEntry;
-} & { all: UserRewardsStatusEntry };
+} & {
+  all: UserRewardsStatusEntry;
+};
 
 const emptyUserRewardsStatusEntry: UserRewardsStatusEntry = {
   has: false,
@@ -240,7 +242,11 @@ export const selectDashboardUserRewardsOrStatusByVaultId = (
   return status;
 };
 
-type DashboardUserExposureVaultEntry = { key: string; label: string; value: BigNumber };
+type DashboardUserExposureVaultEntry = {
+  key: string;
+  label: string;
+  value: BigNumber;
+};
 type DashboardUserExposureVaultFn<
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry
 > = (
@@ -275,12 +281,12 @@ const getDashboardLpBreakdownScalingFactor = (
     if (assetValueTotal.gt(userVaultTvl.times(1.01))) {
       // If more than % out, warn in console, and let UI show over 100%
       /*console.warn(
-        `[${vaultId}] Total asset value (${assetValueTotal.toString(
-          10
-        )}) from user LP breakdown is >1% greater than user's total vault deposit (${userVaultTvl.toString(
-          10
-        )})`
-      );*/
+                    `[${vaultId}] Total asset value (${assetValueTotal.toString(
+                      10
+                    )}) from user LP breakdown is >1% greater than user's total vault deposit (${userVaultTvl.toString(
+                      10
+                    )})`
+                  );*/
     } else {
       // If less than % out, just scale user values down equally to not go over 100%
       scaleFactor = userVaultTvl.dividedBy(assetValueTotal);

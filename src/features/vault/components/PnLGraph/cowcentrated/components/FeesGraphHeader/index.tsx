@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import type { VaultEntity } from '../../../../../../data/entities/vault';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { Stat } from '../Stat';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
@@ -13,12 +13,12 @@ interface FeesGraphHeaderProps {
   address?: string;
 }
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export const FeesGraphHeader = memo<FeesGraphHeaderProps>(function FeesGraphHeader({
+export const FeesGraphHeader = memo(function FeesGraphHeader({
   vaultId,
   address,
-}) {
+}: FeesGraphHeaderProps) {
   const classes = useStyles();
 
   const { t } = useTranslation();

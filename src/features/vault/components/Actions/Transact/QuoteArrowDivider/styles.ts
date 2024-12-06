@@ -1,30 +1,30 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  holder: {
+export const styles = {
+  holder: css.raw({
     display: 'flex',
-    position: 'relative' as const,
+    position: 'relative',
     width: '100%',
     justifyContent: 'center',
     '&::before, &::after': {
       content: '""',
       display: 'block',
-      position: 'absolute' as const,
+      position: 'absolute',
       top: 'calc(50% - 1px)',
       height: '2px',
-      background: theme.palette.background.contentLight,
+      background: 'background.content.light',
       width: 'calc((100% - 48px)/2)',
     },
     '&::before': {
-      left: 0,
+      left: '0',
     },
     '&::after': {
-      right: 0,
+      right: '0',
     },
-  },
-  arrow: {
-    fill: theme.palette.background.contentLight,
+  }),
+  arrow: css.raw({
+    fill: 'background.content.light',
     width: '15px',
     height: '18px',
-  },
-});
+  }),
+};

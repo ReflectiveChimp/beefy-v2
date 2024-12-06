@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
 import {
@@ -24,14 +24,14 @@ import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { performBridge } from '../../../../../data/actions/bridge';
 import { AlertError } from '../../../../../../components/Alerts';
 import { TechLoader } from '../../../../../../components/TechLoader';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 import { getBridgeProviderLogo } from '../../../../../../helpers/bridgeProviderSrc';
 import { ReactComponent as MonetizationOn } from '@repo/images/icons/mui/MonetizationOn.svg';
 import { ReactComponent as Timer } from '@repo/images/icons/mui/Timer.svg';
 import { formatMinutesDuration } from '../../../../../../helpers/date';
 import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const ConfirmLoading = memo(function ConfirmLoading() {
   return <TechLoader />;
@@ -83,7 +83,7 @@ const ConfirmReady = memo(function ConfirmReady() {
   return (
     <>
       <div className={classes.steps}>
-        <div className={clsx(classes.step, classes.stepFrom)}>
+        <div className={css(styles.step, styles.stepFrom)}>
           <div className={classes.tokenAmount}>
             {t('Bridge-From-Send', {
               amount: formatTokenDisplay(quote.input.amount, quote.input.token.decimals),
@@ -102,7 +102,7 @@ const ConfirmReady = memo(function ConfirmReady() {
             <div className={classes.networkName}> {fromChain.name}</div>
           </div>
         </div>
-        <div className={clsx(classes.step, classes.stepBridge)}>
+        <div className={css(styles.step, styles.stepBridge)}>
           <div className={classes.via}>{t('Bridge-Via')}</div>
           <div className={classes.provider}>
             <img
@@ -124,7 +124,7 @@ const ConfirmReady = memo(function ConfirmReady() {
             </div>
           </div>
         </div>
-        <div className={clsx(classes.step, classes.stepTo)}>
+        <div className={css(styles.step, styles.stepTo)}>
           <div className={classes.tokenAmount}>
             {t('Bridge-To-Receive', {
               amount: formatTokenDisplay(quote.input.amount, quote.input.token.decimals),

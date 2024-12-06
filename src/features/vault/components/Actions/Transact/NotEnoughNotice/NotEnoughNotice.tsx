@@ -10,17 +10,18 @@ import {
 import { selectIsWalletConnected } from '../../../../../data/selectors/wallet';
 import { isCowcentratedDepositQuote } from '../../../../../data/apis/transact/transact-types';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { type CssStyles } from '@repo/styles/css';
 
 export type NotEnoughProps = {
   onChange: (shouldDisable: boolean) => void;
   mode: 'deposit' | 'withdraw';
-  className?: string;
+  css?: CssStyles;
 };
-export const NotEnoughNotice = memo<NotEnoughProps>(function NotEnoughNotice({
+export const NotEnoughNotice = memo(function NotEnoughNotice({
   onChange,
-  className,
+  css: cssProp,
   mode,
-}) {
+}: NotEnoughProps) {
   const { t } = useTranslation();
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const inputAmountExceedsBalance = useAppSelector(
@@ -43,7 +44,7 @@ export const NotEnoughNotice = memo<NotEnoughProps>(function NotEnoughNotice({
   }
 
   return (
-    <AlertError className={className}>
+    <AlertError css={cssProp}>
       <p>{t('Transact-Notice-NotEnough')}</p>
     </AlertError>
   );

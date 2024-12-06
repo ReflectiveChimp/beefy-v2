@@ -1,8 +1,8 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { type FC, memo } from 'react';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface SummaryStatProps {
   title: string;
@@ -10,7 +10,7 @@ interface SummaryStatProps {
   value: string;
 }
 
-const SummaryStat = memo<SummaryStatProps>(function SummaryStat({ title, Icon, value }) {
+const SummaryStat = memo(function SummaryStat({ title, Icon, value }: SummaryStatProps) {
   const classes = useStyles();
   return (
     <div className={classes.container}>
@@ -29,7 +29,7 @@ interface SummaryStatsProps {
   items: SummaryStatProps[];
 }
 
-export const SummaryStats = memo<SummaryStatsProps>(function SummaryStats({ items }) {
+export const SummaryStats = memo(function SummaryStats({ items }: SummaryStatsProps) {
   const classes = useStyles();
 
   return (

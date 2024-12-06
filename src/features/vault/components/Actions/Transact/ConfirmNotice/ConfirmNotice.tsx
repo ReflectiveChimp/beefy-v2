@@ -9,22 +9,22 @@ import {
 } from '../../../../../data/selectors/transact';
 import { errorToString } from '../../../../../../helpers/format';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ConfirmNoticeProps = {
   onChange: (shouldDisable: boolean) => void;
-  className?: string;
+  css?: CssStyles;
 };
-export const ConfirmNotice = memo<ConfirmNoticeProps>(function ConfirmNotice({
-  className,
+export const ConfirmNotice = memo(function ConfirmNotice({
+  css: cssProp,
   onChange,
-}) {
+}: ConfirmNoticeProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const status = useAppSelector(selectTransactConfirmStatus);
@@ -37,7 +37,7 @@ export const ConfirmNotice = memo<ConfirmNoticeProps>(function ConfirmNotice({
 
   if (status === TransactStatus.Fulfilled && changes.length > 0) {
     return (
-      <AlertWarning className={className}>
+      <AlertWarning css={cssProp}>
         <p>{t('Transact-Notice-Confirm')}</p>
         <div className={classes.changes}>
           {changes.map((change, i) => (
@@ -69,10 +69,10 @@ export const ConfirmNotice = memo<ConfirmNoticeProps>(function ConfirmNotice({
                     <TokenAmountFromEntity
                       amount={change.difference}
                       token={change.token}
-                      className={clsx({
-                        [classes.positive]: change.difference.gt(BIG_ZERO),
-                        [classes.negative]: change.difference.lt(BIG_ZERO),
-                      })}
+                      css={css.raw(
+                        change.difference.gt(BIG_ZERO) && styles.positive,
+                        change.difference.lt(BIG_ZERO) && styles.negative
+                      )}
                     />
                   ),
                 }}
@@ -86,7 +86,7 @@ export const ConfirmNotice = memo<ConfirmNoticeProps>(function ConfirmNotice({
 
   if (status === TransactStatus.Rejected) {
     return (
-      <AlertError className={className}>
+      <AlertError css={cssProp}>
         <p>
           {t('Transact-Notice-Confirm-Error', {
             error: error ? errorToString(error) : 'unknown error',

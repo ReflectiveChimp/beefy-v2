@@ -1,84 +1,84 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  containerBoost: {
+export const styles = {
+  containerBoost: css.raw({
     padding: '24px',
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.contentPrimary,
+    backgroundColor: 'background.content',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '16px',
-  },
-  containerExpired: {
+  }),
+  containerExpired: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '16px',
     padding: '24px',
-    backgroundColor: theme.palette.background.contentPrimary,
+    backgroundColor: 'background.content',
     borderRadius: '12px',
-  },
-  containerExpiredBoosts: {
+  }),
+  containerExpiredBoosts: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '16px',
-  },
-  boostImg: {
-    width: 30,
-    height: 30,
+  }),
+  boostImg: css.raw({
+    width: '30',
+    height: '30',
     marginLeft: '-8px',
-  },
-  title: {
-    ...theme.typography['h2'],
-    color: theme.palette.background.vaults.boost,
+  }),
+  title: css.raw({
+    textStyle: 'h2',
+    color: 'background.vaults.boost',
     display: 'flex',
     alignItems: 'center',
-  },
-  titleWhite: {
-    color: '#fff',
-  },
-  titleTooltipTrigger: {
-    color: theme.palette.text.middle,
+  }),
+  titleWhite: css.raw({
+    color: 'white',
+  }),
+  titleTooltipTrigger: css.raw({
+    color: 'text.middle',
     marginLeft: '8px',
-  },
-  rewards: {
+  }),
+  rewards: css.raw({
     display: 'grid',
     gridTemplateColumns: '1fr auto',
     columnGap: '16px',
-    backgroundColor: theme.palette.background.contentLight,
-    color: theme.palette.text.middle,
+    backgroundColor: 'background.content.light',
+    color: 'text.middle',
     padding: '12px',
     borderRadius: '8px',
-  },
-  rewardLabel: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-    whiteSpace: 'nowrap' as const,
-  },
-  rewardValue: {
-    ...theme.typography['body-lg-med'],
+  }),
+  rewardLabel: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+    whiteSpace: 'nowrap',
+  }),
+  rewardValue: css.raw({
+    textStyle: 'body.med',
     display: 'flex',
     gap: '4px',
     alignItems: 'center',
-    whiteSpace: 'nowrap' as const,
-  },
-  rewardsFadeInactive: {
-    color: theme.palette.text.dark,
-  },
-  rewardValueActive: {
-    color: theme.palette.text.middle,
-  },
-  rewardValueAmount: {
-    minWidth: 0,
-  },
-  rewardEllipsis: {
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
+  }),
+  rewardsFadeInactive: css.raw({
+    color: 'text.dark',
+  }),
+  rewardValueActive: css.raw({
+    color: 'text.middle',
+  }),
+  rewardValueAmount: css.raw({
+    minWidth: '0',
+  }),
+  rewardEllipsis: css.raw({
+    whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  },
-  rewardSymbol: {
+  }),
+  rewardSymbol: css.raw({
     marginLeft: '4px',
-  },
-  button: {
+  }),
+  button: css.raw({
     borderRadius: '8px',
-  },
-});
+  }),
+};

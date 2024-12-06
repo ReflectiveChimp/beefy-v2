@@ -1,9 +1,9 @@
 import type { FC } from 'react';
-import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import type { SimpleLinkButtonProps } from './SimpleLinkButtonProps';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const SimpleLinkButton: FC<SimpleLinkButtonProps> = ({ href, text, IconComponent }) => {
   const classes = useStyles();

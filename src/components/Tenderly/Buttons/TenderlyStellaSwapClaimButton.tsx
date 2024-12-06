@@ -12,14 +12,16 @@ export type TenderlyStellaSwapClaimButtonProps = {
   disabled?: boolean;
 };
 
-export const TenderlyStellaSwapClaimButton = memo<TenderlyStellaSwapClaimButtonProps>(
-  function TenderlyStellaSwapClaimButton({ chainId, vaultId, disabled }) {
-    const dispatch = useAppDispatch();
-    const { t } = useTranslation();
-    const handleClick = useCallback(() => {
-      dispatch(tenderlySimulateStellaSwapClaim({ chainId, vaultId, t }));
-    }, [dispatch, t, chainId, vaultId]);
+export const TenderlyStellaSwapClaimButton = memo(function TenderlyStellaSwapClaimButton({
+  chainId,
+  vaultId,
+  disabled,
+}: TenderlyStellaSwapClaimButtonProps) {
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const handleClick = useCallback(() => {
+    dispatch(tenderlySimulateStellaSwapClaim({ chainId, vaultId, t }));
+  }, [dispatch, t, chainId, vaultId]);
 
-    return <TenderlyButton chainId={chainId} onClick={handleClick} disabled={disabled} />;
-  }
-);
+  return <TenderlyButton chainId={chainId} onClick={handleClick} disabled={disabled} />;
+});

@@ -14,14 +14,20 @@ export const mapValuesDeep = (
         isPlainObject(val) || isArray(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)
       );
 
-export function createIdMap<T extends { id: string }>(
-  arr: T[],
-  getId: (item: T) => string = item => item.id
-) {
-  return arr.reduce((agg, item) => {
-    agg[getId(item)] = item;
-    return agg;
-  }, {} as { [id: string]: T });
+export function createIdMap<
+  T extends {
+    id: string;
+  }
+>(arr: T[], getId: (item: T) => string = item => item.id) {
+  return arr.reduce(
+    (agg, item) => {
+      agg[getId(item)] = item;
+      return agg;
+    },
+    {} as {
+      [id: string]: T;
+    }
+  );
 }
 
 //https://github.com/lodash/lodash/issues/2339#issuecomment-585615971

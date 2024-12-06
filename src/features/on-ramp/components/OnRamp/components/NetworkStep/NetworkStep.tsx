@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { Step } from '../../../../../../components/Step';
 import { useTranslation } from 'react-i18next';
@@ -14,13 +14,13 @@ import {
 import { useDispatch } from 'react-redux';
 import { SearchableList } from '../../../../../../components/SearchableList';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { TokenIconAdornment } from '../TokenTitleAdornment';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const NetworkStep = memo(function NetworkStep() {
   const { t } = useTranslation();
@@ -50,9 +50,12 @@ export const NetworkStep = memo(function NetworkStep() {
   );
 });
 
-const TokenNotSupported = memo<{ fiat: string; token: string }>(function TokenNotSupported({
+const TokenNotSupported = memo(function TokenNotSupported({
   fiat,
   token,
+}: {
+  fiat: string;
+  token: string;
 }) {
   return (
     <div>
@@ -63,16 +66,16 @@ const TokenNotSupported = memo<{ fiat: string; token: string }>(function TokenNo
 
 type NetworkIconPlaceholderProps = {
   network: string;
-  className?: string;
+  css?: CssStyles;
 };
-const NetworkIconPlaceholder = memo<NetworkIconPlaceholderProps>(function NetworkIconPlaceholder({
+const NetworkIconPlaceholder = memo(function NetworkIconPlaceholder({
   network,
-  className,
-}) {
-  return <div className={className} data-network={network} />;
+  css: cssProp,
+}: NetworkIconPlaceholderProps) {
+  return <div className={css(cssProp)} data-network={network} />;
 });
 
-const NetworkListItem = memo<{ value: ChainEntity['id'] }>(function NetworkListItem({ value }) {
+const NetworkListItem = memo(function NetworkListItem({ value }: { value: ChainEntity['id'] }) {
   const classes = useStyles();
   const src = getNetworkSrc(value);
   const chain = useAppSelector(state => selectChainById(state, value));
@@ -84,7 +87,7 @@ const NetworkListItem = memo<{ value: ChainEntity['id'] }>(function NetworkListI
       ) : (
         <NetworkIconPlaceholder
           network={value}
-          className={clsx(classes.listItemIcon, classes.listItemIconPlaceholder)}
+          css={css.raw(styles.listItemIcon, styles.listItemIconPlaceholder)}
         />
       )}
       {chain.name}
@@ -92,9 +95,12 @@ const NetworkListItem = memo<{ value: ChainEntity['id'] }>(function NetworkListI
   );
 });
 
-const NetworkSelector = memo<{ fiat: string; token: string }>(function NetworkSelector({
+const NetworkSelector = memo(function NetworkSelector({
   fiat,
   token,
+}: {
+  fiat: string;
+  token: string;
 }) {
   const networks = useAppSelector(state => selectNetworksForFiatToken(state, fiat, token));
   const sortedNetworks = useMemo(() => [...networks].sort(), [networks]);

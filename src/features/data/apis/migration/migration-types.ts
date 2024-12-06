@@ -24,13 +24,19 @@ export interface CommonMigrationUpdateFulfilledPayload {
 export type CommonMigrationUpdateAsyncThunk = AsyncThunk<
   CommonMigrationUpdateFulfilledPayload,
   MigratorUpdateProps,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >;
 
 export type CommonMigrationUpdateFulfilledAction = PayloadAction<
   CommonMigrationUpdateFulfilledPayload,
   string,
-  { arg: MigratorUpdateProps; requestId: string; requestStatus: 'fulfilled' },
+  {
+    arg: MigratorUpdateProps;
+    requestId: string;
+    requestStatus: 'fulfilled';
+  },
   never
 >;
 
@@ -43,7 +49,9 @@ export interface MigratorExecuteProps {
 export type CommonMigrationExecuteAsyncThunk = AsyncThunk<
   void,
   MigratorExecuteProps,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >;
 
 export interface Migrator {

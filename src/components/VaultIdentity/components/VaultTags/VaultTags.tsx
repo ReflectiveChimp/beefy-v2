@@ -1,5 +1,6 @@
 import { memo, useMemo } from 'react';
-import { makeStyles, type Theme, useMediaQuery } from '@material-ui/core';
+import { useMediaQuery } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { VaultTag, VaultTagWithTooltip } from './VaultTag';
 import { useTranslation } from 'react-i18next';
@@ -37,21 +38,22 @@ import {
   selectVaultById,
 } from '../../../../features/data/selectors/vaults';
 import { getBoostIconSrc } from '../../../../helpers/boostIconSrc';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { getIcon } from '../../../../helpers/iconSrc';
 import { selectPlatformById } from '../../../../features/data/selectors/platforms';
 import {
   selectVaultActiveMerklBoostCampaigns,
   selectVaultHasActiveMerklBoostCampaigns,
 } from '../../../../features/data/selectors/rewards';
+import { useBreakpoint } from '../../../MediaQueries/useBreakpoint';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type VaultBoostTagProps = {
   boostId: BoostEntity['id'];
   onlyIcon?: boolean;
 };
-const VaultBoostTag = memo<VaultBoostTagProps>(function VaultBoostTag({ boostId, onlyIcon }) {
+const VaultBoostTag = memo(function VaultBoostTag({ boostId, onlyIcon }: VaultBoostTagProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const boost = useAppSelector(state => selectBoostById(state, boostId));
@@ -64,7 +66,7 @@ const VaultBoostTag = memo<VaultBoostTagProps>(function VaultBoostTag({ boostId,
       content={<BasicTooltipContent title={t('VaultTag-PartnerBoost', { partner: name })} />}
       placement="bottom"
       disabled={!isOverflowing && !onlyIcon}
-      className={classes.vaultTagBoost}
+      css={styles.vaultTagBoost}
       ref={ref}
       icon={
         iconSrc ? (
@@ -102,7 +104,7 @@ export const VaultMerklBoostTag = memo(function VaultMerklBoostTag({
         content={<BasicTooltipContent title={tagText || title} />}
         placement="bottom"
         disabled={!isOverflowing && !onlyIcon}
-        className={classes.vaultTagBoost}
+        css={styles.vaultTagBoost}
         ref={ref}
         icon={
           tagIcon ? (
@@ -128,11 +130,10 @@ type VaultEarnTagProps = {
   chainId: ChainEntity['id'];
   earnedTokenAddress: TokenEntity['address'];
 };
-const VaultEarnTag = memo<VaultEarnTagProps>(function VaultEarnTag({
+const VaultEarnTag = memo(function VaultEarnTag({
   chainId,
   earnedTokenAddress,
-}) {
-  const classes = useStyles();
+}: VaultEarnTagProps) {
   const { t } = useTranslation();
   const earnedToken = useAppSelector(state =>
     selectTokenByAddress(state, chainId, earnedTokenAddress)
@@ -140,7 +141,7 @@ const VaultEarnTag = memo<VaultEarnTagProps>(function VaultEarnTag({
 
   return (
     <VaultTag
-      className={classes.vaultTagEarn}
+      css={styles.vaultTagEarn}
       text={t('VaultTag-EarnToken', { token: earnedToken.symbol })}
     />
   );
@@ -149,18 +150,14 @@ const VaultEarnTag = memo<VaultEarnTagProps>(function VaultEarnTag({
 type VaultPlatformTagProps = {
   vaultId: VaultEntity['id'];
 };
-const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({ vaultId }) {
-  const classes = useStyles();
+const VaultPlatformTag = memo(function VaultPlatformTag({ vaultId }: VaultPlatformTagProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
 
   return (
     <VaultTag
-      className={clsx({
-        [classes.platformTagGov]: isGov,
-        [classes.platformTagClm]: isCowcentratedLike,
-      })}
+      css={css.raw(isGov && styles.platformTagGov, isCowcentratedLike && styles.platformTagClm)}
       text={<VaultPlatform vaultId={vaultId} />}
     />
   );
@@ -173,7 +170,7 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   platformName,
   hideLabel,
   hideFee,
-  className,
+  css: cssProp,
   onlyIcon,
 }: {
   label: string;
@@ -182,7 +179,7 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   platformName: string;
   hideLabel?: boolean;
   hideFee?: boolean;
-  className?: string;
+  css?: CssStyles;
   onlyIcon?: boolean;
 }) {
   const classes = useStyles();
@@ -196,10 +193,8 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
         <BasicTooltipContent title={longLabel} content={`${platformName} trading fee: ${fee}`} />
       }
       placement="bottom"
-      triggerClass={className}
-      className={clsx(classes.vaultTagClm, {
-        [classes.vaultTagClmAutoHide]: hideFee === undefined && hideLabel === undefined,
-      })}
+      triggerCss={cssProp}
+      css={css.raw(styles.vaultTagClm)}
       icon={
         <img
           src={getIcon('clm')}
@@ -212,7 +207,16 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
       text={
         !onlyIcon && (!hideLabel || (!hideFee && fee)) ? (
           <>
-            {!hideLabel && <div className={classes.vaultTagClmText}>{label}</div>}
+            {!hideLabel && (
+              <div
+                className={css(
+                  styles.vaultTagClmText,
+                  hideFee === undefined && hideLabel === undefined && styles.vaultTagClmTextAutoHide
+                )}
+              >
+                {label}
+              </div>
+            )}
             {!hideFee && fee && (
               <>
                 <div className={classes.divider} />
@@ -230,7 +234,7 @@ const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
   vault,
   hideFee,
   hideLabel,
-  className,
+  css: cssProp,
   isPool,
   onlyIcon,
 }: {
@@ -238,7 +242,7 @@ const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
   isPool?: boolean;
   hideFee?: boolean;
   hideLabel?: boolean;
-  className?: string;
+  css?: CssStyles;
   onlyIcon?: boolean;
 }) {
   const cowcentratedVault = useAppSelector(state =>
@@ -262,7 +266,7 @@ const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
       platformName={provider?.name || 'LP'}
       hideFee={hideFee}
       hideLabel={hideLabel}
-      className={className}
+      css={cssProp}
       onlyIcon={onlyIcon}
     />
   );
@@ -272,13 +276,13 @@ const VaultClmTag = memo(function VaultClmTag({
   vault,
   hideFee,
   hideLabel,
-  className,
+  css: cssProp,
   onlyIcon,
 }: {
   vault: VaultCowcentrated;
   hideFee?: boolean;
   hideLabel?: boolean;
-  className?: string;
+  css?: CssStyles;
   onlyIcon?: boolean;
 }) {
   const hasDynamicFee = vault.feeTier === 'Dynamic';
@@ -297,7 +301,7 @@ const VaultClmTag = memo(function VaultClmTag({
       platformName={provider?.name || 'LP'}
       hideFee={hideFee || hasDynamicFee}
       hideLabel={hideLabel}
-      className={className}
+      css={cssProp}
       onlyIcon={onlyIcon}
     />
   );
@@ -307,13 +311,13 @@ export const VaultClmLikeTag = memo(function VaultClmLikeTag({
   vault,
   hideFee,
   hideLabel,
-  className,
+  css: cssProp,
   onlyIcon,
 }: {
   vault: VaultCowcentratedLike;
   hideFee?: boolean;
   hideLabel?: boolean;
-  className?: string;
+  css?: CssStyles;
   onlyIcon?: boolean;
 }) {
   if (isCowcentratedGovVault(vault)) {
@@ -323,7 +327,7 @@ export const VaultClmLikeTag = memo(function VaultClmLikeTag({
         vault={vault}
         hideFee={true}
         hideLabel={hideLabel}
-        className={className}
+        css={cssProp}
         onlyIcon={onlyIcon}
       />
     );
@@ -333,7 +337,7 @@ export const VaultClmLikeTag = memo(function VaultClmLikeTag({
         vault={vault}
         hideFee={true}
         hideLabel={hideLabel}
-        className={className}
+        css={cssProp}
         onlyIcon={onlyIcon}
       />
     );
@@ -343,7 +347,7 @@ export const VaultClmLikeTag = memo(function VaultClmLikeTag({
         vault={vault}
         hideFee={hideFee}
         hideLabel={hideLabel}
-        className={className}
+        css={cssProp}
         onlyIcon={onlyIcon}
       />
     );
@@ -353,7 +357,6 @@ export const VaultClmLikeTag = memo(function VaultClmLikeTag({
 });
 
 const PointsTag = memo(function PointsTag() {
-  const classes = useStyles();
   const { t } = useTranslation();
   const { isOverflowing, ref } = useIsOverflowingHorizontally();
   return (
@@ -361,7 +364,7 @@ const PointsTag = memo(function PointsTag() {
       content={<BasicTooltipContent title={t('VaultTag-Points')} />}
       placement="bottom"
       disabled={!isOverflowing}
-      className={classes.vaultTagPoints}
+      css={styles.vaultTagPoints}
       ref={ref}
       text={t('VaultTag-Points')}
     />
@@ -371,13 +374,12 @@ const PointsTag = memo(function PointsTag() {
 export type VaultTagsProps = {
   vaultId: VaultEntity['id'];
 };
-export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
-  const classes = useStyles();
+export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const boostIds = useAppSelector(state => selectPreStakeOrActiveBoostIds(state, vaultId));
   const boostId = boostIds.length ? boostIds[0] : null;
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+  const isMobile = useBreakpoint({ to: 'xs' });
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
   const hasBaseActiveMerklCampaigns = useAppSelector(state =>
@@ -394,7 +396,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   // Tag 3: Retired -> Paused -> Boosted > Pool -> none
   // Tag 4: Points -> none
   return (
-    <div className={clsx(classes.vaultTags)}>
+    <div className={css(styles.vaultTags)}>
       <VaultPlatformTag vaultId={vaultId} />
       {isCowcentratedLike && (
         <VaultClmLikeTag
@@ -405,9 +407,9 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
         />
       )}
       {isVaultRetired(vault) ? (
-        <VaultTag className={classes.vaultTagRetired} text={t('VaultTag-Retired')} />
+        <VaultTag css={styles.vaultTagRetired} text={t('VaultTag-Retired')} />
       ) : isVaultPaused(vault) ? (
-        <VaultTag className={classes.vaultTagPaused} text={t('VaultTag-Paused')} />
+        <VaultTag css={styles.vaultTagPaused} text={t('VaultTag-Paused')} />
       ) : boostId ? (
         <VaultBoostTag onlyIcon={isClmAndBoostedAndSmallDevice} boostId={boostId} />
       ) : hasBaseActiveMerklCampaigns ? (

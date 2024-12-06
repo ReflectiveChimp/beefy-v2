@@ -18,7 +18,7 @@ const TransactDebugger = import.meta.env.DEV
 export type ActionsProps = {
   vaultId: VaultEntity['id'];
 };
-export const Actions = memo<ActionsProps>(function Actions({ vaultId }) {
+export const Actions = memo(function Actions({ vaultId }: ActionsProps) {
   return (
     <>
       {TransactDebugger ? <TransactDebugger vaultId={vaultId} /> : null}

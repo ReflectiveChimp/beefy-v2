@@ -1,5 +1,5 @@
 import { Fragment, memo, useMemo, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { Trans, useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { selectVaultById } from '../../../../data/selectors/vaults';
@@ -24,7 +24,7 @@ import { Unstake } from './ActionButton/Unstake';
 import { StakeInput } from './ActionInputButton/StakeInput';
 import { UnstakeInput } from './ActionInputButton/UnstakeInput';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export function ActiveBoost({ boostId }: { boostId: BoostEntity['id'] }) {
   const boost = useAppSelector(state => selectBoostById(state, boostId));
@@ -127,7 +127,7 @@ const Title = memo(function Title({ upcoming }: TitleProps) {
       <IconWithBasicTooltip
         title={t('Boost-WhatIs')}
         content={t('Boost-Explain')}
-        triggerClass={classes.titleTooltipTrigger}
+        triggerCss={styles.titleTooltipTrigger}
       />
     </div>
   );

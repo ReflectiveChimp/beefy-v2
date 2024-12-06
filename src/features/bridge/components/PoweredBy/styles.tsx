@@ -1,16 +1,16 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  poweredBy: {},
-  poweredByLabel: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-  },
-  poweredByLogos: {
+export const styles = {
+  poweredBy: css.raw({}),
+  poweredByLabel: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+  }),
+  poweredByLogos: css.raw({
     marginTop: '16px',
     display: 'flex',
-    flexWrap: 'wrap' as const,
+    flexWrap: 'wrap',
     alignItems: 'center',
     gap: '24px',
-  },
-});
+  }),
+};

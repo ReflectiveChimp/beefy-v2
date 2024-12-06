@@ -1,36 +1,36 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center' as const,
+    textAlign: 'center',
     width: '100%',
     height: '100%',
-  },
-  circle: {
+  }),
+  circle: css.raw({
     width: '64px',
     height: '64px',
     borderRadius: '50%',
-    background: 'rgba(209, 83, 71, 0.15)',
+    background: 'extracted583',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  icon: {
-    color: theme.palette.background.indicators.error,
+  }),
+  icon: css.raw({
+    color: 'indicators.error',
     fontSize: '30px',
-  },
-  title: {
-    ...theme.typography.h3,
-    color: theme.palette.text.light,
+  }),
+  title: css.raw({
+    textStyle: 'h3',
+    color: 'text.light',
     marginTop: '24px',
-  },
-  content: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.middle,
+  }),
+  content: css.raw({
+    textStyle: 'body',
+    color: 'text.middle',
     marginTop: '24px',
-  },
-});
+  }),
+};

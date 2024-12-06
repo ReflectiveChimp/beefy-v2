@@ -1,12 +1,12 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  statsContainer: {
+export const styles = {
+  statsContainer: css.raw({
     display: 'grid',
     gap: '1px',
     gridTemplateColumns: 'repeat(3, 1fr)',
-    [theme.breakpoints.down('xs')]: {
+    smDown: {
       gridTemplateColumns: 'repeat(1, 1fr)',
     },
-  },
-});
+  }),
+};

@@ -1,38 +1,38 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  header: {
+export const styles = {
+  header: css.raw({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     gap: '8px',
-  },
-  title: {},
-  actions: {
+  }),
+  title: css.raw({}),
+  actions: css.raw({
     display: 'flex',
     alignItems: 'center',
-    flexWrap: 'wrap' as const,
+    flexWrap: 'wrap',
     rowGap: '8px',
     columnGap: '8px',
     marginLeft: 'auto',
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       marginLeft: '0',
     },
-  },
-  content: {
+  }),
+  content: css.raw({
     gap: '32px',
-  },
-  description: {
-    whiteSpace: 'pre-line' as const,
-    color: theme.palette.text.middle,
-  },
-  details: {
+  }),
+  description: css.raw({
+    whiteSpace: 'pre-line',
+    color: 'text.middle',
+  }),
+  details: css.raw({
     display: 'flex',
     columnGap: '8px',
     justifyContent: 'space-between',
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       flexDirection: 'column',
       rowGap: '8px',
     },
-  },
-});
+  }),
+};

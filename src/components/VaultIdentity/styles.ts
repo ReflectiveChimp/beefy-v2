@@ -1,133 +1,133 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  vaultIdentity: {
+export const styles = {
+  vaultIdentity: css.raw({
     display: 'flex',
-    flexGrow: 0,
-    flexShrink: 0,
-    flexDirection: 'row' as const,
+    flexGrow: '0',
+    flexShrink: '0',
+    flexDirection: 'row',
     columnGap: '16px',
-    minWidth: 0,
+    minWidth: '0',
     textDecoration: 'none',
-  },
-  vaultNameTags: {
-    minWidth: 0, // needed for overflowing tags
-  },
-  vaultName: {
-    ...theme.typography['h3'],
-    color: theme.palette.text.light,
-    textDecoration: 'none' as const,
-  },
-  vaultNameBoosted: {
-    color: theme.palette.background.vaults.boost,
-  },
-  vaultNetwork: {
-    position: 'absolute' as const,
+  }),
+  vaultNameTags: css.raw({
+    minWidth: '0',
+  }),
+  vaultName: css.raw({
+    textStyle: 'h3',
+    color: 'text.light',
+    textDecoration: 'none',
+  }),
+  vaultNameBoosted: css.raw({
+    color: 'background.vaults.boost',
+  }),
+  vaultNetwork: css.raw({
+    position: 'absolute',
     top: '-2px',
     left: '-2px',
     width: '28px',
     height: '28px',
-    border: `solid 2px ${theme.palette.background.contentDark}`,
+    border: 'solid 2px {colors.background.content.dark}',
     borderBottomRightRadius: '16px',
     '& img': {
       width: '22px',
       height: '22px',
     },
-  },
-  'vaultNetwork-bsc': {
-    backgroundColor: '#F0B90B',
-  },
-  'vaultNetwork-heco': {
-    backgroundColor: '#02943f',
-  },
-  'vaultNetwork-avax': {
-    backgroundColor: '#e74142',
-  },
-  'vaultNetwork-polygon': {
-    backgroundColor: '#f5f0fd',
-  },
-  'vaultNetwork-fantom': {
-    backgroundColor: '#1969FF',
-  },
-  'vaultNetwork-harmony': {
-    backgroundColor: '#01d8af',
-  },
-  'vaultNetwork-arbitrum': {
-    backgroundColor: '#2d374b',
-  },
-  'vaultNetwork-celo': {
-    backgroundColor: '#FCFF52',
-  },
-  'vaultNetwork-moonriver': {
-    backgroundColor: '#06353D',
-  },
-  'vaultNetwork-cronos': {
-    backgroundColor: '#121926',
-  },
-  'vaultNetwork-fuse': {
-    backgroundColor: '#B4F9BA',
-  },
-  'vaultNetwork-metis': {
-    backgroundColor: '#00CFFF',
-  },
-  'vaultNetwork-aurora': {
-    backgroundColor: '#70d44b',
-  },
-  'vaultNetwork-moonbeam': {
-    backgroundColor: '#958FDC',
-  },
-  'vaultNetwork-emerald': {
-    backgroundColor: '#0192f6',
-  },
-  'vaultNetwork-optimism': {
-    backgroundColor: '#ff0420',
-  },
-  'vaultNetwork-kava': {
-    backgroundColor: '#FF564F',
-  },
-  'vaultNetwork-ethereum': {
-    backgroundColor: '#627ee9',
-  },
-  'vaultNetwork-canto': {
-    backgroundColor: '#06fc99',
-  },
-  'vaultNetwork-zksync': {
-    backgroundColor: '#fff',
-  },
-  'vaultNetwork-zkevm': {
-    backgroundColor: '#8247e4',
-  },
-  'vaultNetwork-base': {
-    backgroundColor: '#fff',
-  },
-  'vaultNetwork-gnosis': {
-    backgroundColor: '#133629',
-  },
-  'vaultNetwork-linea': {
-    backgroundColor: '#121212',
-  },
-  'vaultNetwork-mantle': {
-    backgroundColor: '#121212',
-  },
-  'vaultNetwork-fraxtal': {
-    backgroundColor: '#000',
-  },
-  'vaultNetwork-mode': {
-    backgroundColor: '#000',
-  },
-  'vaultNetwork-manta': {
-    backgroundColor: '#000',
-  },
-  'vaultNetwork-real': {
-    backgroundColor: '#FFF',
-  },
-  'vaultNetwork-sei': {
-    backgroundColor: '#000',
-  },
-  'vaultNetwork-rootstock': {
-    backgroundColor: '#000',
-  },
-  'vaultNetwork-scroll': {
-    backgroundColor: '#ffe6c8',
-  },
-});
+  }),
+  'vaultNetwork-bsc': css.raw({
+    backgroundColor: 'extracted2911',
+  }),
+  'vaultNetwork-heco': css.raw({
+    backgroundColor: 'extracted4048',
+  }),
+  'vaultNetwork-avax': css.raw({
+    backgroundColor: 'extracted3560',
+  }),
+  'vaultNetwork-polygon': css.raw({
+    backgroundColor: 'extracted785',
+  }),
+  'vaultNetwork-fantom': css.raw({
+    backgroundColor: 'extracted3886',
+  }),
+  'vaultNetwork-harmony': css.raw({
+    backgroundColor: 'extracted973',
+  }),
+  'vaultNetwork-arbitrum': css.raw({
+    backgroundColor: 'extracted2698',
+  }),
+  'vaultNetwork-celo': css.raw({
+    backgroundColor: 'extracted3748',
+  }),
+  'vaultNetwork-moonriver': css.raw({
+    backgroundColor: 'extracted1870',
+  }),
+  'vaultNetwork-cronos': css.raw({
+    backgroundColor: 'extracted1254',
+  }),
+  'vaultNetwork-fuse': css.raw({
+    backgroundColor: 'extracted3379',
+  }),
+  'vaultNetwork-metis': css.raw({
+    backgroundColor: 'extracted21',
+  }),
+  'vaultNetwork-aurora': css.raw({
+    backgroundColor: 'extracted2394',
+  }),
+  'vaultNetwork-moonbeam': css.raw({
+    backgroundColor: 'extracted4093',
+  }),
+  'vaultNetwork-emerald': css.raw({
+    backgroundColor: 'extracted308',
+  }),
+  'vaultNetwork-optimism': css.raw({
+    backgroundColor: 'extracted1370',
+  }),
+  'vaultNetwork-kava': css.raw({
+    backgroundColor: 'extracted3790',
+  }),
+  'vaultNetwork-ethereum': css.raw({
+    backgroundColor: 'extracted4068',
+  }),
+  'vaultNetwork-canto': css.raw({
+    backgroundColor: 'extracted1459',
+  }),
+  'vaultNetwork-zksync': css.raw({
+    backgroundColor: 'white',
+  }),
+  'vaultNetwork-zkevm': css.raw({
+    backgroundColor: 'extracted1174',
+  }),
+  'vaultNetwork-base': css.raw({
+    backgroundColor: 'white',
+  }),
+  'vaultNetwork-gnosis': css.raw({
+    backgroundColor: 'extracted2923',
+  }),
+  'vaultNetwork-linea': css.raw({
+    backgroundColor: 'extracted1099',
+  }),
+  'vaultNetwork-mantle': css.raw({
+    backgroundColor: 'extracted1099',
+  }),
+  'vaultNetwork-fraxtal': css.raw({
+    backgroundColor: 'black',
+  }),
+  'vaultNetwork-mode': css.raw({
+    backgroundColor: 'black',
+  }),
+  'vaultNetwork-manta': css.raw({
+    backgroundColor: 'black',
+  }),
+  'vaultNetwork-real': css.raw({
+    backgroundColor: 'white',
+  }),
+  'vaultNetwork-sei': css.raw({
+    backgroundColor: 'black',
+  }),
+  'vaultNetwork-rootstock': css.raw({
+    backgroundColor: 'black',
+  }),
+  'vaultNetwork-scroll': css.raw({
+    backgroundColor: 'extracted208',
+  }),
+};

@@ -1,102 +1,102 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  holder: {
-    ...theme.typography['body-lg-med'],
+export const styles = {
+  holder: css.raw({
+    textStyle: 'body.med',
     lineHeight: '20px',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '2px',
-  },
-  navToken: {
+  }),
+  navToken: css.raw({
     display: 'flex',
     gap: '4px',
-    justifyContent: 'center' as const,
-    alignItems: 'center' as const,
-    whiteSpace: 'nowrap' as const,
+    justifyContent: 'center',
+    alignItems: 'center',
+    whiteSpace: 'nowrap',
     textDecoration: 'none',
-    color: theme.palette.text.light,
-    [theme.breakpoints.down('md')]: {
+    color: 'text.light',
+    lgDown: {
       justifyContent: 'flex-start',
     },
-  },
-  navIcon: {
+  }),
+  navIcon: css.raw({
     display: 'block',
     height: '24px',
     width: '24px',
-  },
-  trigger: {
+  }),
+  trigger: css.raw({
     cursor: 'pointer',
-    userSelect: 'none' as const,
-    position: 'relative' as const,
+    userSelect: 'none',
+    position: 'relative',
     width: '68px',
     height: '24px',
-  },
-  face: {
-    position: 'absolute' as const,
+  }),
+  face: css.raw({
+    position: 'absolute',
     width: '100%',
     height: '100%',
-    backfaceVisibility: 'hidden' as const,
-    transformStyle: 'preserve-3d' as const,
+    backfaceVisibility: 'hidden',
+    transformStyle: 'preserve-3d',
     transform: 'rotateX(0deg)',
     transition: 'transform 0.5s ease-in-out',
-  },
-  current: {
+  }),
+  current: css.raw({
     transform: 'rotateX(0deg)',
     zIndex: 2,
-  },
-  next: {
+  }),
+  next: css.raw({
     transform: 'rotateX(90deg)',
     zIndex: 1,
-  },
-  hidden: {
+  }),
+  hidden: css.raw({
     transform: 'rotateX(90deg)',
-  },
-  icon: {
+  }),
+  icon: css.raw({
     display: 'block',
     height: '24px',
     width: '24px',
-    gridColumnStart: 1,
-  },
-  grid: {},
-  tooltipTokens: {
+    gridColumnStart: '1',
+  }),
+  grid: css.raw({}),
+  tooltipTokens: css.raw({
     display: 'grid',
     gap: '8px',
     gridTemplateColumns: 'min-content 1fr min-content min-content min-content min-content',
-    alignItems: 'center' as const,
-  },
-  tooltipToken: {},
-  mooToken: {
-    ...theme.typography['subline-lg'],
-    textTransform: 'none' as const,
+    alignItems: 'center',
+  }),
+  tooltipToken: css.raw({}),
+  mooToken: css.raw({
+    textStyle: 'subline',
+    textTransform: 'none',
     marginTop: '12px',
-    textAlign: 'center' as const,
+    textAlign: 'center',
     lineHeight: '1.1',
-  },
-  symbol: {
-    ...theme.typography['body-lg-med'],
+  }),
+  symbol: css.raw({
+    textStyle: 'body.med',
     paddingRight: '8px',
-  },
-  price: {},
-  iconLink: {
+  }),
+  price: css.raw({}),
+  iconLink: css.raw({
     display: 'flex',
-    alignItems: 'center' as const,
-    justifyContent: 'center' as const,
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: '4px',
     borderRadius: '4px',
-    border: `none`,
-    color: theme.palette.text.light,
+    border: 'none',
+    color: 'text.light',
     textDecoration: 'none',
-    backgroundColor: theme.palette.background.border,
+    backgroundColor: 'bayOfMany',
     boxShadow: 'none',
     outline: 'none',
     cursor: 'pointer',
     width: '32px',
     height: '32px',
-    '& $icon': {
-      height: '20px',
-      width: '20px',
-      fill: 'currentColor',
-    },
-  },
-});
+  }),
+  iconLinkIcon: css.raw({
+    height: '20px',
+    width: '20px',
+    fill: 'currentColor',
+  }),
+};

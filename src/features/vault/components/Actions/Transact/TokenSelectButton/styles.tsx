@@ -1,46 +1,46 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  button: {
+export const styles = {
+  button: css.raw({
     padding: '6px 12px',
-    margin: 0,
+    margin: '0',
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
-    background: theme.palette.background.contentDark,
+    background: 'background.content.dark',
     borderRadius: '8px',
     display: 'flex',
     alignItems: 'center',
     gap: '2px',
-    pointerEvents: 'none' as const,
-  },
-  buttonMore: {
+    pointerEvents: 'none',
+  }),
+  buttonMore: css.raw({
     padding: '6px 6px 6px 12px',
-    cursor: 'pointer' as const,
-    pointerEvents: 'auto' as const,
-  },
-  iconAssets: {
+    cursor: 'pointer',
+    pointerEvents: 'auto',
+  }),
+  iconAssets: css.raw({
     width: '32px',
     height: '32px',
-    flexShrink: 0,
-    flexGrow: 0,
-  },
-  iconMore: {
-    flexShrink: 0,
-    flexGrow: 0,
-    fill: theme.palette.text.middle,
-  },
-  select: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.primary,
+    flexShrink: '0',
+    flexGrow: '0',
+  }),
+  iconMore: css.raw({
+    flexShrink: '0',
+    flexGrow: '0',
+    fill: 'text.middle',
+  }),
+  select: css.raw({
+    textStyle: 'body.med',
+    color: 'text.white',
     display: 'flex',
     columnGap: '8px',
     alignItems: 'center',
-  },
-  zapIcon: {
+  }),
+  zapIcon: css.raw({
     height: '24px',
     width: '24px',
-    backgroundColor: theme.palette.background.contentLight,
+    backgroundColor: 'background.content.light',
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
@@ -48,15 +48,15 @@ export const styles = (theme: Theme) => ({
     '& img': {
       height: '18px',
     },
-  },
-  breakLp: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.primary,
+  }),
+  breakLp: css.raw({
+    textStyle: 'body.med',
+    color: 'text.white',
     display: 'flex',
     gap: '4px',
     alignItems: 'center',
-  },
-  forceSelection: {
-    color: theme.palette.text.dark,
-  },
-});
+  }),
+  forceSelection: css.raw({
+    color: 'text.dark',
+  }),
+};

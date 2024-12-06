@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { lazy, memo, Suspense, useRef } from 'react';
 
 import { NetworkStatus } from '../../../NetworkStatus';
@@ -7,7 +7,7 @@ import { styles } from './styles';
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = lazy(() => import(`../WalletContainer`));
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const ConnectionStatus = memo(function ConnectionStatus() {
   const classes = useStyles();

@@ -28,7 +28,9 @@ const PEARL_VOTER = '0xa26C2A6BfeC5512c13Ae9EacF41Cb4319d30cCF0';
 export const fetchPearlStakedBalance = createAsyncThunk<
   CommonMigrationUpdateFulfilledPayload,
   MigratorUpdateProps,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('migration/polygon-pearl/update', async ({ vaultId, walletAddress }, { getState }) => {
   const state = getState();
   const vault = selectVaultById(state, vaultId);
@@ -68,7 +70,9 @@ async function unstakeCall(
 export const executePearlAction = createAsyncThunk<
   void,
   MigratorExecuteProps,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'migration/polygon-pearl/execute',
   async ({ vaultId, t, migrationId }, { getState, dispatch }) => {

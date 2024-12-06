@@ -1,32 +1,32 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  tag: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
+export const styles = {
+  tag: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: '700',
     padding: '2px 8px',
-    background: theme.palette.background.buttons.button,
-    color: theme.palette.text.middle,
+    background: 'bayOfMany',
+    color: 'text.middle',
     display: 'flex',
     gap: '4px',
     alignItems: 'center',
     borderRadius: '4px',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
     lineHeight: '24px',
     height: '24px',
     '&:hover': {
-      background: theme.palette.background.buttons.buttonHover,
+      background: 'blueJewel',
       cursor: 'pointer',
     },
-  },
-  icon: {
+  }),
+  icon: css.raw({
     width: '16px',
     height: '16px',
     display: 'block',
-  },
-  tooltip: {},
-  link: {
+  }),
+  tooltip: css.raw({}),
+  link: css.raw({
     color: 'var(--tooltip-link-color)',
     textDecoration: 'underline',
-  },
-});
+  }),
+};

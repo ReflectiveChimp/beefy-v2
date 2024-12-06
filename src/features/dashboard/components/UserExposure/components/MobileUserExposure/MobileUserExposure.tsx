@@ -2,8 +2,8 @@ import type { FC } from 'react';
 import { memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core';
+import { css } from '@repo/styles/css';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { TokenExposureLoader } from '../../../TokenExposure';
 import { ChainExposureLoader } from '../../../ChainExposure';
 import { PlatformExposureLoader } from '../../../PlatformExposure';
@@ -21,15 +21,15 @@ const chartToComponent: Record<ChartEnum, FC<ExposureDashboardChartLoaderProps>>
   [ChartEnum.Platform]: PlatformExposureLoader,
 };
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface MobileUserExposureProps {
   address: string;
 }
 
-export const MobileUserExposure = memo<MobileUserExposureProps>(function MobileUserExposure({
+export const MobileUserExposure = memo(function MobileUserExposure({
   address,
-}) {
+}: MobileUserExposureProps) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -57,9 +57,7 @@ export const MobileUserExposure = memo<MobileUserExposureProps>(function MobileU
             <div
               key={item.key}
               onClick={() => setChart(item.value)}
-              className={clsx(classes.option, {
-                [classes.active]: item.value === chart,
-              })}
+              className={css(styles.option, item.value === chart && styles.active)}
             >
               {item.text}
             </div>

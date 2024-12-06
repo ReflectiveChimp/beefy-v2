@@ -4,8 +4,9 @@ import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { debounce } from 'lodash-es';
 import { Search } from '../../../../../../components/Search';
+import { type CssStyles } from '@repo/styles/css';
 
-export const VaultsSearch = memo(function VaultsHeader({ className }: { className?: string }) {
+export const VaultsSearch = memo(function VaultsHeader({ css: cssProp }: { css?: CssStyles }) {
   const dispatch = useAppDispatch();
   const searchText = useAppSelector(selectFilterSearchText);
   const [value, setValue] = useState(searchText);
@@ -37,7 +38,7 @@ export const VaultsSearch = memo(function VaultsHeader({ className }: { classNam
 
   return (
     <Search
-      className={className}
+      css={cssProp}
       searchText={value}
       handleClearText={handleClear}
       handleSearchText={handleChange}

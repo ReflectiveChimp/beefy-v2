@@ -1,12 +1,13 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  label: {
-    ...theme.typography['body-lg-med'],
+export const styles = {
+  label: css.raw({
+    textStyle: 'body.med',
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
-    color: theme.palette.text.dark,
+    color: 'text.dark',
+    //FIXME MUI2PANDA: Target MUI class
     '& .MuiBadge-root': {
       padding: '0px 12px 0px 0px',
       verticalAlign: 'initial',
@@ -14,34 +15,34 @@ export const styles = (theme: Theme) => ({
     },
     '&:hover': {
       cursor: 'pointer',
-      color: theme.palette.text.light,
+      color: 'text.light',
     },
-  },
-  active: {
-    color: theme.palette.text.light,
-    '& $arrow': {
-      transform: 'rotateX(180deg)',
-    },
-  },
-  arrow: {
+  }),
+  active: css.raw({
+    color: 'text.light',
+  }),
+  arrow: css.raw({
     height: '18px',
     width: '18px',
-  },
-  dropdown: {
-    zIndex: 1,
+  }),
+  activeArrow: css.raw({
+    transform: 'rotateX(180deg)',
+  }),
+  dropdown: css.raw({
+    zIndex: 'dropdown',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '12px',
-    padding: `8px`,
-    border: `2px solid ${theme.palette.background.contentDark}`,
-    backgroundColor: theme.palette.background.searchInputBg,
+    padding: '8px',
+    border: '2px solid {colors.background.content.dark}',
+    backgroundColor: 'purpleDarkest',
     borderRadius: '4px',
     marginLeft: '-8px',
-  },
-  title: {},
-  titleWithBadge: {
-    position: 'relative' as const,
+  }),
+  title: css.raw({}),
+  titleWithBadge: css.raw({
+    position: 'relative',
     display: 'flex',
     alignItems: 'center',
-  },
-});
+  }),
+};

@@ -355,13 +355,13 @@ export class Vault {
 
   async getSwapZap(request: SwapZapRequest): Promise<ZapStep> {
     /*
-     the byte offset at which amountIn is inserted in the calldata
-     calculated using 32-byte words:
-     00 : swap offset (07)
-     valueAt(00) + 0 : singleSwap.poolId
-     ..
-     valueAt(00) + 4 : singleSwap.amount
-     */
+             the byte offset at which amountIn is inserted in the calldata
+             calculated using 32-byte words:
+             00 : swap offset (07)
+             valueAt(00) + 0 : singleSwap.poolId
+             ..
+             valueAt(00) + 4 : singleSwap.amount
+             */
     const amountInIndex = getInsertIndex(7 + 4);
 
     return {

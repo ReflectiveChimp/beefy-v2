@@ -1,20 +1,16 @@
 import type { PropsWithChildren } from 'react';
 import { memo } from 'react';
-import { makeStyles, Paper } from '@material-ui/core';
-import clsx from 'clsx';
+import { Paper } from '@material-ui/core';
+import { css, type CssStyles } from '@repo/styles/css';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
 export type CardProps = PropsWithChildren<{
-  className?: string;
+  css?: CssStyles;
   id?: string;
 }>;
-export const Card = memo<CardProps>(function Card({ className, children, id }) {
-  const classes = useStyles();
-
+export const Card = memo(function Card({ css: cssProp, children, id }: CardProps) {
   return (
-    <Paper id={id} className={clsx(classes.container, className)}>
+    <Paper id={id} className={css(styles.container, cssProp)}>
       {children}
     </Paper>
   );

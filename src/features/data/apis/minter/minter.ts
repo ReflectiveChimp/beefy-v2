@@ -45,7 +45,10 @@ export class MinterApi implements IMinterApi {
     const result = results
       .flat()
       .flat()
-      .reduce((acc, res) => ({ ...acc, ...res }), {}) as { totalSupply: string; reserves?: string };
+      .reduce((acc, res) => ({ ...acc, ...res }), {}) as {
+      totalSupply: string;
+      reserves?: string;
+    };
 
     return {
       id: minter.id,

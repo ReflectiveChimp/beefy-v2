@@ -1,22 +1,22 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  tabs: {
-    border: 0,
-    padding: 0,
+export const styles = {
+  tabs: css.raw({
+    border: '0',
+    padding: '0',
     background: 'transparent',
     gap: '12px',
-  },
-  tab: {
-    ...theme.typography['body-sm-med'],
-    border: 0,
-    padding: 0,
+  }),
+  tab: css.raw({
+    textStyle: 'body.sm.med',
+    border: '0',
+    padding: '0',
     background: 'transparent',
     '&:hover': {
       background: 'transparent',
     },
-  },
-  selected: {
+  }),
+  selected: css.raw({
     background: 'transparent',
-  },
-});
+  }),
+};

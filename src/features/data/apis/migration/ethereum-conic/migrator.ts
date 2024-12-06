@@ -23,7 +23,9 @@ const CONIC_LP_TOKEN_STAKER = '0xA5241560306298efb9ed80b87427e664FFff0CF9';
 export const fetchConicStakedBalance = createAsyncThunk<
   ConicMigrationUpdateFulfilledPayload,
   MigratorUpdateProps,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('migration/ethereum-conic/update', async ({ vaultId, walletAddress }, { getState }) => {
   const state = getState();
   const vault = selectVaultById(state, vaultId);
@@ -78,7 +80,9 @@ async function unstakeCall(
 export const executeConicAction = createAsyncThunk<
   void,
   MigratorExecuteProps,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'migration/ethereum-conic/execute',
   async ({ vaultId, t, migrationId }, { getState, dispatch }) => {

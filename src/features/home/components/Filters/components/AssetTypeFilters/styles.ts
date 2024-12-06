@@ -1,23 +1,23 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  holder: {
-    position: 'relative' as const,
+export const styles = {
+  holder: css.raw({
+    position: 'relative',
     display: 'inline-block',
     padding: '0 8px 0 0',
-  },
-  highlight: {
-    ...theme.typography['body-sm'],
-    backgroundColor: theme.palette.background.tags.clm,
-    color: theme.palette.text.light,
+  }),
+  highlight: css.raw({
+    textStyle: 'body.sm',
+    backgroundColor: 'tags.clm.background',
+    color: 'text.light',
     padding: '0px 6px',
     borderRadius: '10px',
     height: '20px',
-    position: 'absolute' as const,
+    position: 'absolute',
     top: '-2px',
     right: '0',
     transform: 'translate(50%, -50%)',
-    pointerEvents: 'none' as const,
-    zIndex: 10,
-  },
-});
+    pointerEvents: 'none',
+    zIndex: 'highlight',
+  }),
+};

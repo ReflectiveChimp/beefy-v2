@@ -154,7 +154,9 @@ function addContractDataToState(
   }
 
   // create an index of ppfs for boost tvl usage
-  const ppfsPerVaultId: { [vaultId: VaultEntity['id']]: BigNumber } = {};
+  const ppfsPerVaultId: {
+    [vaultId: VaultEntity['id']]: BigNumber;
+  } = {};
   for (const vault of contractData.standardVaults) {
     ppfsPerVaultId[vault.id] = vault.pricePerFullShare;
   }

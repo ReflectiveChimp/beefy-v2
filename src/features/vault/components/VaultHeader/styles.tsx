@@ -1,63 +1,65 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  header: {
+export const styles = {
+  header: css.raw({
     display: 'flex',
-    [theme.breakpoints.down('md')]: {
+    lgDown: {
       display: 'block',
     },
-  },
-  titleHolder: {
+  }),
+  titleHolder: css.raw({
     display: 'flex',
     marginBottom: '8px',
     alignItems: 'center',
     gap: '8px 12px',
-    flexGrow: 1,
-    [theme.breakpoints.up('lg')]: {
+    flexGrow: '1',
+    lg: {
       marginBottom: '0',
     },
-  },
-  title: {
-    ...theme.typography['h1'],
-    color: theme.palette.text.middle,
-  },
-  titleAsset: {},
-  titleTag: {},
-  titleHolderWithTag: {
-    [theme.breakpoints.down('xs')]: {
+  }),
+  title: css.raw({
+    textStyle: 'h1',
+    color: 'text.middle',
+  }),
+  titleHolderClm: css.raw({
+    smDown: {
       flexWrap: 'wrap',
-      '& $titleAsset': {
-        width: '32px',
-        height: '32px',
-      },
-      '& $title': {
-        width: '100%',
-        order: 10,
-      },
     },
-  },
-  labelsHolder: {
+  }),
+  titleAssetClm: css.raw({
+    smDown: {
+      width: '32px',
+      height: '32px',
+    },
+  }),
+  titleClm: css.raw({
+    smDown: {
+      width: '100%',
+      order: '10',
+    },
+  }),
+  labelsHolder: css.raw({
     display: 'flex',
     rowGap: '24px',
     columnGap: '24px',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    [theme.breakpoints.down('md')]: {
+    lgDown: {
       justifyContent: 'flex-start',
     },
-  },
-  platformLabel: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
+  }),
+  platformLabel: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
     '& span': {
-      color: theme.palette.text.light,
-      textTransform: 'uppercase' as const,
+      color: 'text.light',
+      textTransform: 'uppercase',
     },
-  },
-  shareHolder: {
+  }),
+  shareHolder: css.raw({
     display: 'flex',
     columnGap: '8px',
     alignItems: 'center',
     marginLeft: 'auto',
-  },
-});
+  }),
+};

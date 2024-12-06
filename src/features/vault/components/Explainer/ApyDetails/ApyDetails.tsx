@@ -1,10 +1,10 @@
 import { Fragment, memo, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { formatTotalApy } from '../../../../../helpers/format';
 import { StatLoader } from '../../../../../components/StatLoader';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import {
   type ApyLabelsType,
   getApyComponents,
@@ -12,15 +12,19 @@ import {
 } from '../../../../../helpers/apy';
 import type { TotalApy } from '../../../../data/reducers/apy';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ApyDetailsProps = {
   values: TotalApy;
   type: ApyLabelsType;
-  className?: string;
+  css?: CssStyles;
 };
 
-export const ApyDetails = memo<ApyDetailsProps>(function ApyDetails({ values, type, className }) {
+export const ApyDetails = memo(function ApyDetails({
+  values,
+  type,
+  css: cssProp,
+}: ApyDetailsProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const formatted = useMemo(() => formatTotalApy(values, <StatLoader />), [values]);
@@ -35,7 +39,7 @@ export const ApyDetails = memo<ApyDetailsProps>(function ApyDetails({ values, ty
   const labels = getApyLabelsForType(type);
 
   return (
-    <div className={clsx(classes.apysContainer, className)}>
+    <div className={css(styles.apysContainer, cssProp)}>
       <div className={classes.apyTitle}>{t(labels.breakdown)}</div>
       <div className={classes.apys}>
         <div className={classes.apy}>

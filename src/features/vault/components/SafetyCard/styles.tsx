@@ -1,81 +1,81 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  header: {
+export const styles = {
+  header: css.raw({
     display: 'flex',
-  },
-  riskList: {
+  }),
+  riskList: css.raw({
     marginBottom: '32px',
-  },
-  warning: {
+  }),
+  warning: css.raw({
     marginBottom: '18px',
-  },
-  riskRow: {
+  }),
+  riskRow: css.raw({
     display: 'flex',
-    flexDirection: 'row' as const,
+    flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: '16px',
     '&:last-child': {
-      marginBottom: 0,
+      marginBottom: '0',
     },
-  },
-  risk: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
-    marginRight: 8,
-  },
-  riskCategory: {
-    color: theme.palette.text.dark,
-  },
-  infoContainer: {
+  }),
+  risk: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
+    marginRight: '8',
+  }),
+  riskCategory: css.raw({
+    color: 'text.dark',
+  }),
+  infoContainer: css.raw({
     display: 'flex',
     alignItems: 'flex-start',
-  },
-  moreInfoContainer: {
+  }),
+  moreInfoContainer: css.raw({
     display: 'flex',
     alignItems: 'center',
-  },
-  notes: {
+  }),
+  notes: css.raw({
     marginTop: '16px',
     '& p': {
       margin: '0 0 12px 0',
-      color: theme.palette.text.middle,
+      color: 'text.middle',
     },
     '& p:last-child': {
-      marginBottom: 0,
+      marginBottom: '0',
     },
-  },
-  arrow: {
+  }),
+  arrow: css.raw({
     marginTop: '5px',
     marginRight: '8px',
-  },
-  tooltipLabel: {
+  }),
+  tooltipLabel: css.raw({
     display: 'flex',
     alignItems: 'center',
-  },
-  tooltipIcon: {
-    color: theme.palette.text.dark,
-  },
-  safetyLabel: {
-    ...theme.typography.h2,
-    color: theme.palette.text.light,
+  }),
+  tooltipIcon: css.raw({
+    color: 'text.dark',
+  }),
+  safetyLabel: css.raw({
+    textStyle: 'h2',
+    color: 'text.light',
     marginRight: '16px',
-  },
-  tooltipHolder: {
+  }),
+  tooltipHolder: css.raw({
     marginLeft: '4px',
-  },
-  howItWorksContainer: {
-    padding: 16,
-    backgroundColor: theme.palette.background.contentLight,
-  },
-  titleClassName: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.light,
-  },
-  up: {
-    fill: theme.palette.primary.main,
-  },
-  down: {
-    fill: theme.palette.background.indicators.error,
-  },
-});
+  }),
+  howItWorksContainer: css.raw({
+    padding: '16',
+    backgroundColor: 'background.content.light',
+  }),
+  titleClassName: css.raw({
+    textStyle: 'body.med',
+    color: 'text.light',
+  }),
+  up: css.raw({
+    fill: 'green',
+  }),
+  down: css.raw({
+    fill: 'indicators.error',
+  }),
+};

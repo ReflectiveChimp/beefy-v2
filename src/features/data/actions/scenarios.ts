@@ -21,10 +21,10 @@ import { fetchPlatforms } from './platforms';
 import { selectAllChainIds } from '../selectors/chains';
 import { fetchBridges } from './bridges';
 import {
-  fetchZapSwapAggregatorsAction,
-  fetchZapConfigsAction,
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
+  fetchZapConfigsAction,
+  fetchZapSwapAggregatorsAction,
 } from './zap';
 import { fetchOffChainCampaignsAction } from './rewards';
 
@@ -35,7 +35,6 @@ export interface CapturedFulfilledActions {
   user:
     | {
         balance: CapturedFulfilledActionGetter;
-        //allowance: CapturedFulfilledActionGetter;
       }
     | undefined;
 }
@@ -263,5 +262,5 @@ function preLoadPages() {
       await import('../../../features/vault');
       console.debug('pre-loading vault page done');
     });
-  }, 10_000);
+  }, 10000);
 }

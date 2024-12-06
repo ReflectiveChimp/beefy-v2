@@ -1,26 +1,26 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  inner: {
+export const styles = {
+  inner: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '12px',
-  },
-  statMobile: {
+  }),
+  statMobile: css.raw({
     display: 'flex',
     justifyContent: 'space-between',
-  },
-  value: {
-    ...theme.typography['body-sm'],
-    textAlign: 'end' as const,
-  },
-  valueContainer: {
+  }),
+  value: css.raw({
+    textStyle: 'body.sm',
+    textAlign: 'end',
+  }),
+  valueContainer: css.raw({
     display: 'flex',
     columnGap: '8px',
     alignItems: 'center',
-  },
-  label: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.dark,
-  },
-});
+  }),
+  label: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
+  }),
+};

@@ -1,24 +1,24 @@
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { ReactComponent as SwitchIcon } from '../../../../../../images/switcher.svg';
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 import { useAppDispatch } from '../../../../../../store';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type InputSwitcherProps = {
-  className?: string;
+  css?: CssStyles;
 };
 
-export const InputSwitcher = memo<InputSwitcherProps>(function InputSwitcher({ className }) {
+export const InputSwitcher = memo(function InputSwitcher({ css: cssProp }: InputSwitcherProps) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const setInputMode = useCallback(() => dispatch(onRampFormActions.toggleInputMode()), [dispatch]);
 
   return (
-    <div className={clsx(classes.switcher, className)}>
+    <div className={css(styles.switcher, cssProp)}>
       <button onClick={setInputMode} className={classes.button}>
         <SwitchIcon className={classes.icon} />
       </button>

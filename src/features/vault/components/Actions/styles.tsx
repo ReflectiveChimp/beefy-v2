@@ -1,7 +1,9 @@
-export const styles = () => ({
-  container: {
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  container: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '24px',
-  },
-});
+  }),
+};

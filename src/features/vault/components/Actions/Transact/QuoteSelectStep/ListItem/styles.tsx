@@ -1,34 +1,34 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  item: {
-    ...theme.typography['body-lg-med'],
+export const styles = {
+  item: css.raw({
+    textStyle: 'body.med',
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-    color: theme.palette.text.dark,
+    color: 'text.dark',
     background: 'transparent',
     border: 'none',
     boxShadow: 'none',
-    padding: 0,
-    margin: 0,
+    padding: '0',
+    margin: '0',
     cursor: 'pointer',
-    userSelect: 'none' as const,
+    userSelect: 'none',
     outline: 'none',
     '&:hover, &:focus-visible': {
-      color: theme.palette.text.middle,
-      '& $arrow': {
-        color: '#fff',
+      color: 'text.middle',
+      '& > .item-arrow': {
+        color: 'white',
       },
     },
-  },
-  provider: {
+  }),
+  provider: css.raw({
     marginRight: 'auto',
-  },
-  output: {},
-  arrow: {
+  }),
+  output: css.raw({}),
+  arrow: css.raw({
     marginLeft: '12px',
-    color: theme.palette.text.middle,
+    color: 'text.middle',
     height: '24px',
-  },
-});
+  }),
+};

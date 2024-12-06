@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const LoadingStep = memo(function LoadingStep() {
   const { t } = useTranslation();
