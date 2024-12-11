@@ -1,29 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  input: css.raw({
-    color: 'text.middle',
-    background: 'purpleDarkest',
-    borderRadius: '8px',
-    width: '100%',
-    display: 'flex',
-    cursor: 'default',
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiInputBase-input': {
-      textStyle: 'h2',
-      padding: '8px 16px',
-      color: 'text.middle',
-      height: 'auto',
-      cursor: 'default',
-      '&:focus': {
-        color: 'text.light',
-      },
-      '&::placeholder': {
-        color: 'text.dark',
-        opacity: '1',
-      },
-    },
-  }),
   pending: css.raw({
     position: 'absolute',
     left: '0',

@@ -1,12 +1,12 @@
 import { legacyMakeStyles } from '@repo/helpers/mui';
-import { memo } from 'react';
-import { BasicTabs } from '../../../../../../../components/Tabs/BasicTabs';
+import { memo, useCallback, useMemo } from 'react';
 import type { VaultEntity } from '../../../../../../data/entities/vault';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { css, type CssStyles } from '@repo/styles/css';
 import { useAppSelector } from '../../../../../../../store';
 import { selectCowcentratedLikeVaultDepositTokens } from '../../../../../../data/selectors/tokens';
+import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -32,6 +32,15 @@ export const OverviewFooter = memo(function OverviewFooter({
 }: OverviewFooterProps) {
   const classes = useStyles();
   const { t } = useTranslation();
+  const options: Record<string, string> = useMemo(() => {
+    return Object.fromEntries(labels.map((label, index) => [index, label]));
+  }, [labels]);
+  const handleChange = useCallback(
+    (newValue: string) => {
+      handlePeriod(Number(newValue));
+    },
+    [handlePeriod]
+  );
 
   return (
     <div className={css(styles.footer, cssProp)}>
@@ -52,10 +61,13 @@ export const OverviewFooter = memo(function OverviewFooter({
         </div>
       </div>
       <div className={css(styles.tabsContainer, tabsCss)}>
-        <BasicTabs
-          onChange={(newValue: number) => handlePeriod(newValue)}
-          labels={labels}
-          value={period}
+        <ToggleButtons
+          value={period.toString()}
+          options={options}
+          onChange={handleChange}
+          noBackground={true}
+          noPadding={true}
+          variant="range"
         />
       </div>
     </div>
@@ -78,6 +90,15 @@ export const FeesFooter = memo(function Footer({
   const [token0, token1] = useAppSelector(state =>
     selectCowcentratedLikeVaultDepositTokens(state, vaultId)
   );
+  const options: Record<string, string> = useMemo(() => {
+    return Object.fromEntries(labels.map((label, index) => [index, label]));
+  }, [labels]);
+  const handleChange = useCallback(
+    (newValue: string) => {
+      handlePeriod(Number(newValue));
+    },
+    [handlePeriod]
+  );
 
   return (
     <div className={css(styles.footer, cssProp)}>
@@ -92,10 +113,13 @@ export const FeesFooter = memo(function Footer({
         </div>
       </div>
       <div className={css(styles.tabsContainer, tabsCss)}>
-        <BasicTabs
-          onChange={(newValue: number) => handlePeriod(newValue)}
-          labels={labels}
-          value={period}
+        <ToggleButtons
+          value={period.toString()}
+          options={options}
+          onChange={handleChange}
+          noBackground={true}
+          noPadding={true}
+          variant="range"
         />
       </div>
     </div>

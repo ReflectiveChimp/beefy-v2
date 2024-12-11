@@ -1,4 +1,4 @@
-import { CircularProgress, InputBase } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { ReactComponent as CloseRounded } from '@repo/images/icons/mui/CloseRounded.svg';
 import { ReactComponent as Search } from '@repo/images/icons/mui/Search.svg';
@@ -25,6 +25,7 @@ import {
   isPendingStatus,
   isRejectedStatus,
 } from '../../../data/reducers/wallet/resolver-types';
+import { BaseInput } from '../../../../components/Input';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -36,7 +37,7 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
   const [isDomainResolving, setIsDomainResolving] = useState<boolean>(false);
   const [hasFocus, setHasFocus] = useState<boolean>(false);
   const { t } = useTranslation();
-  const anchorEl = useRef<HTMLInputElement>();
+  const anchorEl = useRef<HTMLInputElement | null>(null);
   const history = useHistory();
 
   const handleChange = useCallback(
@@ -64,7 +65,7 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
   const isValid = useMemo(() => isAddressValid || isDomainValid, [isAddressValid, isDomainValid]);
 
   const handleGoToDashboardOnEnterKey = useCallback(
-    (e: KeyboardEvent<HTMLDivElement>) => {
+    (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter' && isValid) {
         history.push(`/dashboard/${userInput}`);
         handleClear();
@@ -109,15 +110,19 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
 
   return (
     <>
-      <InputBase
+      <BaseInput
         ref={anchorEl}
-        className={css(styles.search, cssProp, userInput.length !== 0 && styles.active)}
+        className={css(
+          styles.search,
+          cssProp,
+          (userInput.length !== 0 || hasFocus) && styles.active
+        )}
         value={userInput}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
         fullWidth={true}
-        onKeyPress={handleGoToDashboardOnEnterKey}
+        onKeyDown={handleGoToDashboardOnEnterKey}
         endAdornment={
           <GoToDashboardButton
             domainResolving={isDomainResolving}

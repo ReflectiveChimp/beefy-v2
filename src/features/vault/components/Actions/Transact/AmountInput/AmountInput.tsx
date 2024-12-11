@@ -1,8 +1,16 @@
-import { memo, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  type ChangeEventHandler,
+  type FocusEventHandler,
+  memo,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
 import { css, type CssStyles } from '@repo/styles/css';
-import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
 import { BigNumber } from 'bignumber.js';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { formatLargeUsd, formatTokenInput } from '../../../../../../helpers/format';
@@ -77,7 +85,7 @@ export const AmountInput = memo(function AmountInput({
     onChange(maxValue, true);
   }, [maxValue, onChange, tokenDecimals, setInput]);
 
-  const handleChange = useCallback<Exclude<InputBaseProps['onChange'], undefined>>(
+  const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     e => {
       const rawInput = e.target.value;
 
@@ -121,7 +129,7 @@ export const AmountInput = memo(function AmountInput({
     [allowInputAboveBalance, handleMax, maxValue, onChange]
   );
 
-  const handleBlur = useCallback<Exclude<InputBaseProps['onBlur'], undefined>>(
+  const handleBlur = useCallback<FocusEventHandler<HTMLInputElement>>(
     e => {
       const rawInput = e.target.value;
 
@@ -138,6 +146,7 @@ export const AmountInput = memo(function AmountInput({
     },
     [setInput, tokenDecimals]
   );
+
   useEffect(() => {
     if (!allowInputAboveBalance && maxValue && value.gt(maxValue)) {
       setInput(numberToString(maxValue, tokenDecimals));

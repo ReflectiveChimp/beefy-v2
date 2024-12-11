@@ -117,6 +117,12 @@ const config = buildConfig(
           pointerEvents: 'none',
         },
       },
+      input: {
+        textStyle: 'body.med',
+        margin: 0,
+        display: 'block',
+        minWidth: '20px',
+      },
       'onboard-v2': {
         position: 'relative!',
         zIndex: 'layer1.modal!',

@@ -66,7 +66,7 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
   return (
     <div className={css(styles.container, styles.withdraw, cssProp)}>
       <div className={classes.search}>
-        <SearchInput value={search} onChange={setSearch} css={styles.searchInput} />
+        <SearchInput value={search} onChange={setSearch} />
       </div>
       {/*hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null*/}
       <Scrollable css={styles.listContainer}>

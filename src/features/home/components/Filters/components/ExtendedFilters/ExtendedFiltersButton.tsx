@@ -7,11 +7,11 @@ import { ExtendedFilters } from './ExtendedFilters';
 import { Dropdown } from '../../../../../../components/Dropdown';
 
 export type ExtendedFiltersButtonProps = {
-  desktopView: boolean;
+  view: 'dropdown' | 'sidebar';
   css?: CssStyles;
 };
 export const ExtendedFiltersButton = memo(function ExtendedFiltersButton({
-  desktopView,
+  view,
   css: cssProp,
 }: ExtendedFiltersButtonProps) {
   const { t } = useTranslation();
@@ -38,7 +38,7 @@ export const ExtendedFiltersButton = memo(function ExtendedFiltersButton({
       >
         {t('Filter-Btn')}
       </Button>
-      {desktopView ? (
+      {view === 'dropdown' ? (
         <Dropdown
           anchorEl={anchorEl as MutableRefObject<HTMLButtonElement>}
           open={isOpen}

@@ -69,44 +69,28 @@ export const styles = {
   }),
   inputContainer: css.raw({
     margin: '24px 0',
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiPaper-root': {
-      position: 'relative',
-      backgroundColor: 'purpleDarkest',
-      borderRadius: '8px',
-      padding: '0',
-      margin: '0',
-      boxShadow: 'none',
-      //FIXME MUI2PANDA: Target MUI class
-      '& .MuiInputBase-input': {
-        textStyle: 'h3',
-        height: 'auto',
-        padding: '12px 8px 12px 48px',
-      },
-    },
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiButton-root': {
-      textStyle: 'subline.sm',
-      color: 'text.light',
+  }),
+  max: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.light',
+    backgroundColor: 'bayOfMany',
+    border: 'none',
+    boxShadow: 'none',
+    outline: 'none',
+    borderRadius: '4px',
+    margin: '0',
+    padding: '4px 12px',
+    minWidth: '0',
+    flexShrink: '0',
+    cursor: 'pointer',
+    '&:disabled': {
+      color: 'text.dark',
       backgroundColor: 'bayOfMany',
-      borderRadius: '4px',
-      margin: '0',
-      padding: '6px 12px',
-      position: 'absolute',
-      top: '8px',
-      right: '8px',
-      minWidth: '0',
-    },
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiInputBase-root': {
-      width: '100%',
+      borderColor: 'background.content.light',
+      opacity: '0.4',
     },
   }),
-  inputLogo: css.raw({
-    position: 'absolute',
-    top: '12px',
-    left: '12px',
-  }),
+  inputLogo: css.raw({}),
   balances: css.raw({
     display: 'flex',
     justifyContent: 'space-between',
@@ -119,6 +103,7 @@ export const styles = {
   value: css.raw({
     textStyle: 'body.sm',
     color: 'text.middle',
+    textTransform: 'none',
   }),
   customDivider: css.raw({
     display: 'flex',

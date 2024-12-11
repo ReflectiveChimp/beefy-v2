@@ -1,68 +1,35 @@
-import type { FC, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { memo, useCallback, useMemo } from 'react';
-import { styles as baseStyles } from './styles';
-import { css, type CssStyles } from '@repo/styles/css';
-import { ExtraOptionsList } from './components/ExtraOptionsList';
-
-export type ToggleButtonProps = {
-  value: string;
-  label: ReactNode;
-  onClick: (value: string) => void;
-  css?: CssStyles;
-};
+import { Button, type ButtonVariantProps } from './Button';
+import { Buttons, type ButtonsVariantProps } from './Buttons';
 
 export type ToggleButtonsProps = {
   value: string;
   options: Record<string, string>;
-  extraOptions?: Record<string, string>;
-  fullWidth?: boolean;
-  buttonsCss?: CssStyles;
-  buttonCss?: CssStyles;
-  selectedCss?: CssStyles;
-  untogglableCss?: CssStyles;
   onChange: (value: string) => void;
-  ButtonComponent?: FC<ToggleButtonProps>;
   /** set this to 'all' key */
   untoggleValue?: string;
-};
+  noPadding?: boolean;
+} & ButtonsVariantProps;
 
-export const ToggleButton = memo(function ToggleButton({
-  value,
-  label,
-  onClick,
-  css: cssProp,
-}: ToggleButtonProps) {
-  const handleClick = useCallback(() => {
-    onClick(value);
-  }, [value, onClick]);
-
-  return (
-    <button className={css(cssProp)} onClick={handleClick}>
-      {label}
-    </button>
-  );
-});
-
-export const ToggleButtons = memo(function ToggleButtons({
+export const ToggleButtons = memo<ToggleButtonsProps>(function ToggleButtons({
   value,
   options,
-  extraOptions,
   fullWidth,
-  buttonsCss,
-  buttonCss,
-  selectedCss,
-  untogglableCss,
   onChange,
-  ButtonComponent = ToggleButton,
   untoggleValue,
-}: ToggleButtonsProps) {
+  variant,
+  noBackground,
+  noPadding = false,
+}) {
+  const canUntoggle = untoggleValue !== undefined;
   const optionsList = useMemo(
     () => Object.entries(options).map(([value, label]) => ({ value, label })),
     [options]
   );
 
   const handleClick = useCallback(
-    newValue => {
+    (newValue: string) => {
       if (untoggleValue) {
         onChange(newValue === value ? untoggleValue : newValue);
       } else {
@@ -73,122 +40,42 @@ export const ToggleButtons = memo(function ToggleButtons({
   );
 
   return (
-    <div
-      className={css(
-        baseStyles.buttons,
-        buttonsCss,
-        fullWidth && baseStyles.fullWidth,
-        untoggleValue !== undefined && css.raw(baseStyles.untogglable, untogglableCss)
-      )}
-    >
+    <Buttons fullWidth={fullWidth} variant={variant} noBackground={noBackground ?? canUntoggle}>
       {optionsList.map(({ value: optionValue, label }) => (
-        <ButtonComponent
+        <ToggleButton
           key={optionValue}
           value={optionValue}
           label={label}
           onClick={handleClick}
-          css={css.raw(
-            baseStyles.button,
-            buttonCss,
-            value === optionValue && css.raw(baseStyles.selected, selectedCss),
-            untoggleValue !== undefined && baseStyles.untogglableButton
-          )}
+          active={value === optionValue}
+          noBackground={noBackground ?? canUntoggle}
+          noPadding={noPadding}
+          unselectable={!canUntoggle && value === optionValue}
         />
       ))}
-      {extraOptions && (
-        <ExtraOptionsList
-          ButtonComponent={ButtonComponent}
-          extraOptions={extraOptions}
-          onClick={handleClick}
-          value={value}
-          buttonCss={buttonCss}
-          selectedCss={selectedCss}
-        />
-      )}
-    </div>
+    </Buttons>
   );
 });
 
-export type MultiToggleButtonProps = Omit<ToggleButtonProps, 'onClick'> & {
-  isSelected: boolean;
-  onClick: (isSelected: boolean, value: string) => void;
-};
+export type ToggleButtonProps = {
+  value: string;
+  label: ReactNode;
+  onClick: (value: string) => void;
+} & ButtonVariantProps;
 
-export const MultiToggleButton = memo(function ToggleButton({
+export const ToggleButton = memo<ToggleButtonProps>(function ToggleButton({
   value,
   label,
   onClick,
-  isSelected,
-  css: cssProp,
-}: MultiToggleButtonProps) {
+  ...rest
+}) {
   const handleClick = useCallback(() => {
-    onClick(!isSelected, value);
-  }, [onClick, isSelected, value]);
+    onClick(value);
+  }, [value, onClick]);
 
   return (
-    <button className={css(cssProp)} onClick={handleClick} data-selected={isSelected}>
+    <Button {...rest} onClick={handleClick}>
       {label}
-    </button>
-  );
-});
-
-type MultiToggleButtonsProps = Omit<
-  ToggleButtonsProps,
-  'value' | 'extraOptions' | 'onChange' | 'ButtonComponent'
-> & {
-  value: string[];
-  onChange: (value: string[]) => void;
-  ButtonComponent?: FC<MultiToggleButtonProps>;
-};
-
-export const MultiToggleButtons = memo(function MultiToggleButtons({
-  value,
-  options,
-  fullWidth,
-  buttonsCss,
-  buttonCss,
-  selectedCss,
-  untogglableCss,
-  onChange,
-  ButtonComponent = MultiToggleButton,
-  untoggleValue,
-}: MultiToggleButtonsProps) {
-  const optionsList = useMemo(
-    () => Object.entries(options).map(([value, label]) => ({ value, label })),
-    [options]
-  );
-
-  const handleClick = useCallback(
-    (isSelected, id) => {
-      onChange(isSelected ? [...value, id] : value.filter(selectedId => selectedId !== id));
-    },
-    [onChange, value]
-  );
-
-  return (
-    <div
-      className={css(
-        baseStyles.buttons,
-        buttonsCss,
-        fullWidth && baseStyles.fullWidth,
-        untoggleValue !== undefined && css.raw(baseStyles.untogglable, untogglableCss)
-      )}
-    >
-      {optionsList.map(({ value: optionValue, label }) => (
-        <ButtonComponent
-          key={optionValue}
-          value={optionValue}
-          label={label}
-          isSelected={value.includes(optionValue)}
-          onClick={handleClick}
-          css={css.raw(
-            baseStyles.button,
-            buttonCss,
-            value.includes(optionValue) && css.raw(baseStyles.selected, selectedCss),
-            untoggleValue !== undefined && baseStyles.untogglableButton
-          )}
-        />
-      ))}
-    </div>
+    </Button>
   );
 });

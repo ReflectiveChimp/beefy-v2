@@ -16,9 +16,6 @@ export const styles = {
     padding: '0 24px',
     margin: '0 0 24px 0',
   }),
-  searchInput: css.raw({
-    background: 'purpleDarkest',
-  }),
   chainSelector: css.raw({
     padding: '0 24px',
     margin: '0 0 16px 0',

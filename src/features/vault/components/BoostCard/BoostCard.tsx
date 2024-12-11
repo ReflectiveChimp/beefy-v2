@@ -2,7 +2,7 @@ import { legacyMakeStyles } from '@repo/helpers/mui';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../../../../components/LinkButton';
-import { CardContent } from '../Card';
+import { Card, CardContent, CardHeader } from '../Card';
 import { styles } from './styles';
 import type { VaultEntity } from '../../../data/entities/vault';
 import {
@@ -117,8 +117,8 @@ const CampaignContent = memo(function CampaignContent({
   const { t } = useTranslation();
 
   return (
-    <div>
-      <div className={classes.header}>
+    <Card>
+      <CardHeader>
         <h2 className={classes.boostedBy}>
           {t('Vault-BoostedBy')}
           <span>{name}</span>
@@ -129,8 +129,8 @@ const CampaignContent = memo(function CampaignContent({
           {social.telegram && <LinkIcon alt="telegram" logo={Telegram} href={social.telegram} />}
           {social.discord && <LinkIcon alt="discord" logo={Discord} href={social.discord} />}
         </div>
-      </div>
-      <CardContent css={styles.content}>
+      </CardHeader>
+      <CardContent css={{ gap: '16px' }}>
         <div className={classes.campaignTitle}>{title}</div>
         <div className={classes.campaignText}>{description}</div>
         {partnerIds && partnerIds.length > 0 && (
@@ -148,7 +148,7 @@ const CampaignContent = memo(function CampaignContent({
           />
         ))}
       </CardContent>
-    </div>
+    </Card>
   );
 });
 
@@ -216,8 +216,8 @@ const PartnerBoostCard = memo(function PartnerBoostCard({
   );
 
   return (
-    <div>
-      <div className={classes.header}>
+    <Card>
+      <CardHeader>
         <h2 className={classes.boostedBy}>
           {t('Vault-BoostedBy')}
           <span>{boost.name}</span>
@@ -228,8 +228,8 @@ const PartnerBoostCard = memo(function PartnerBoostCard({
           {social.telegram && <LinkIcon alt="telegram" logo={Telegram} href={social.telegram} />}
           {social.discord && <LinkIcon alt="discord" logo={Discord} href={social.discord} />}
         </div>
-      </div>
-      <CardContent css={styles.content}>
+      </CardHeader>
+      <CardContent css={{ gap: '16px' }}>
         <div>{text}</div>
         {rewardTokens.map(rewardToken => (
           <RewardTokenDetails
@@ -239,6 +239,6 @@ const PartnerBoostCard = memo(function PartnerBoostCard({
           />
         ))}
       </CardContent>
-    </div>
+    </Card>
   );
 });

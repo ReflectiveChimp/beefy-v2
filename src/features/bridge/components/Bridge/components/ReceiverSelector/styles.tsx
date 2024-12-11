@@ -26,21 +26,6 @@ export const styles = {
     fill: 'currentColor',
   }),
   input: css.raw({
-    color: 'text.middle',
-    background: 'purpleDarkest',
-    display: 'flex',
-    alignItems: 'center',
-    borderRadius: '8px',
-    padding: '0px 12px',
-    cursor: 'default',
-    boxSizing: 'border-box',
-    position: 'relative',
-    justifyContent: 'space-between',
     minHeight: '52px',
-    gap: '8px',
-    //FIXME MUI2PANDA: Target MUI class
-    '&.Mui-error': {
-      border: '1px solid {colors.indicators.error}',
-    },
   }),
 };

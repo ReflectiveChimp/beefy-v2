@@ -7,7 +7,7 @@ export const Card = styled('div', {
     width: '100%',
     outline: 'none',
     borderRadius: '12px',
-    backgroundColor: 'background.contentPrimary',
+    backgroundColor: 'background.content',
   },
   variants: {
     width: {

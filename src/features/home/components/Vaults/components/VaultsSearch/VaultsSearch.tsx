@@ -42,6 +42,7 @@ export const VaultsSearch = memo(function VaultsHeader({ css: cssProp }: { css?:
       searchText={value}
       handleClearText={handleClear}
       handleSearchText={handleChange}
+      minLength={2}
     />
   );
 });

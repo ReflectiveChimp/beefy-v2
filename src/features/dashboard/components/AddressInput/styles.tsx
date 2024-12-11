@@ -5,25 +5,12 @@ export const styles = {
     color: 'text.middle',
     background: 'purpleDarkest',
     borderRadius: '8px',
-    //FIXME MUI2PANDA: Target MUI class
-    '&.Mui-focused': {
-      //FIXME MUI2PANDA: Target MUI class
-      '& .MuiInputBase-input': {
-        width: '400px',
-        lgDown: {
-          width: '100%',
-        },
-      },
-    },
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiInputBase-input': {
-      minWidth: '200px',
+    '& .BaseInput-input': {
+      width: '200px',
+      maxWidth: '100%',
       transition: '0.2s ease-in-out',
-      padding: '8px 16px',
-      color: 'text.middle',
-      height: 'auto',
-      '&:focus': {
-        color: 'text.light',
+      _focus: {
+        width: '400px',
       },
       '&::placeholder': {
         color: 'text.dark',
@@ -32,19 +19,14 @@ export const styles = {
     },
   }),
   active: css.raw({
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiInputBase-input': {
+    '& .BaseInput-input': {
       width: '400px',
-      mdDown: {
-        width: '100%',
-      },
     },
   }),
   icon: css.raw({
     background: 'transparent',
     padding: '0',
     border: '0',
-    margin: '0 16px 0 0',
     boxShadow: 'none',
     lineHeight: 'inherit',
     display: 'flex',

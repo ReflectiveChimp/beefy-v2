@@ -1,7 +1,6 @@
+export { ToggleButtons, type ToggleButtonsProps } from './ToggleButtons';
 export {
-  ToggleButtons,
-  type ToggleButtonsProps,
   MultiToggleButtons,
   MultiToggleButton,
   type MultiToggleButtonProps,
-} from './ToggleButtons';
+} from './MultiToggleButtons';

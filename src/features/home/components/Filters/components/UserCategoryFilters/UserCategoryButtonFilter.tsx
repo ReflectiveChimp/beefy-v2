@@ -7,14 +7,8 @@ import { selectFilterUserCategory } from '../../../../../data/selectors/filtered
 import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { CATEGORY_OPTIONS } from './category-options';
-import { type CssStyles } from '@repo/styles/css';
 
-export type UserCategoryButtonFilterProps = {
-  css?: CssStyles;
-};
-export const UserCategoryButtonFilter = memo(function UserCategoryButtonFilter({
-  css: cssProp,
-}: UserCategoryButtonFilterProps) {
+export const UserCategoryButtonFilter = memo(function UserCategoryButtonFilter() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const options: Record<string, string> = useMemo(
@@ -31,6 +25,12 @@ export const UserCategoryButtonFilter = memo(function UserCategoryButtonFilter({
   );
 
   return (
-    <ToggleButtons value={value} options={options} onChange={handleChange} buttonsCss={cssProp} />
+    <ToggleButtons
+      value={value}
+      options={options}
+      onChange={handleChange}
+      variant="filter"
+      fullWidth={true}
+    />
   );
 });

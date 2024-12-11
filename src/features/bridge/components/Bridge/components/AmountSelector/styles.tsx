@@ -22,7 +22,6 @@ export const styles = {
       color: 'text.middle',
     },
   }),
-  input: css.raw({}),
   max: css.raw({
     textStyle: 'subline.sm',
     color: 'text.light',
@@ -36,7 +35,6 @@ export const styles = {
     minWidth: '0',
     flexShrink: '0',
     cursor: 'pointer',
-    marginRight: '12px',
     '&:disabled': {
       color: 'text.dark',
       backgroundColor: 'bayOfMany',

@@ -5,7 +5,6 @@ import {
   selectTenderlyStatus,
 } from '../../../features/data/selectors/tenderly';
 import { type TenderlyCredentials, tenderlyLogin } from '../../../features/data/actions/tenderly';
-import { InputBase } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { Button } from '../../Button';
 import { VerticalLayout } from '../Layout/VerticalLayout';
@@ -16,6 +15,7 @@ import { HorizontalLayout } from '../Layout/HorizontalLayout';
 import { ReactComponent as InfoOutlined } from '@repo/images/icons/mui/InfoOutlined.svg';
 import { AlertInfo } from '../../Alerts';
 import logoUrl from '../logo.svg';
+import { BaseInput } from '../../Input';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -57,7 +57,7 @@ const CredentialInput = memo(function CredentialInput({
     <VerticalLayout css={styles.field} gap={8}>
       <div className={classes.label}>{label}</div>
       <div className={hasHelp ? classes.inputHelpHolder : classes.inputHolder}>
-        <InputBase
+        <BaseInput
           type={type}
           className={classes.input}
           value={credentials[field]}

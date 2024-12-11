@@ -18,6 +18,7 @@ export const styles = {
     },
   }),
   icon: css.raw({
+    fontSize: 'inherit',
     '&:first-child': {
       marginRight: '4px',
     },

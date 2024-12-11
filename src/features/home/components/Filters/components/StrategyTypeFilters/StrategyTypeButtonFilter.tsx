@@ -7,14 +7,8 @@ import { selectFilterStrategyType } from '../../../../../data/selectors/filtered
 import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { TYPE_OPTIONS } from './type-options';
-import { type CssStyles } from '@repo/styles/css';
 
-export type StrategyTypeButtonFilterProps = {
-  css?: CssStyles;
-};
-export const StrategyTypeButtonFilter = memo(function StrategyTypeButtonFilter({
-  css: cssProp,
-}: StrategyTypeButtonFilterProps) {
+export const StrategyTypeButtonFilter = memo(function StrategyTypeButtonFilter() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const allKey = 'all';
@@ -40,9 +34,9 @@ export const StrategyTypeButtonFilter = memo(function StrategyTypeButtonFilter({
       value={value}
       options={options}
       onChange={handleChange}
-      buttonsCss={cssProp}
       fullWidth={false}
       untoggleValue={allKey}
+      variant="filter"
     />
   );
 });

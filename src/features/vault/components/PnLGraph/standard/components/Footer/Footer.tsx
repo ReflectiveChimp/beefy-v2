@@ -1,8 +1,8 @@
-import { memo } from 'react';
-import { BasicTabs } from '../../../../../../../components/Tabs/BasicTabs';
+import { memo, useCallback, useMemo } from 'react';
 import type { VaultEntity } from '../../../../../../data/entities/vault';
 import { styles } from './styles';
 import { css, type CssStyles } from '@repo/styles/css';
+import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
 
 interface FooterProps {
   period: number;
@@ -20,10 +20,27 @@ export const Footer = memo(function Footer({
   tabsCss,
   css: cssProp,
 }: FooterProps) {
+  const options: Record<string, string> = useMemo(() => {
+    return Object.fromEntries(labels.map((label, index) => [index, label]));
+  }, [labels]);
+  const handleChange = useCallback(
+    (newValue: string) => {
+      handlePeriod(Number(newValue));
+    },
+    [handlePeriod]
+  );
+
   return (
     <div className={css(styles.footer, cssProp)}>
       <div className={css(styles.tabsContainer, tabsCss)}>
-        <BasicTabs labels={labels} value={period} onChange={newValue => handlePeriod(newValue)} />
+        <ToggleButtons
+          value={period.toString()}
+          options={options}
+          onChange={handleChange}
+          noBackground={true}
+          noPadding={true}
+          variant="range"
+        />
       </div>
     </div>
   );

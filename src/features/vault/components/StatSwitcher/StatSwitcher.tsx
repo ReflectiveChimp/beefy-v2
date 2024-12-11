@@ -29,12 +29,7 @@ export const StatSwitcher = memo(function StatSwitcher<T extends string = string
           />
         </>
       ) : (
-        <ToggleButtons
-          value={stat}
-          options={options}
-          onChange={onChange}
-          buttonsCss={styles.tabs}
-        />
+        <ToggleButtons value={stat} options={options} onChange={onChange} variant="filter" />
       )}
     </>
   );

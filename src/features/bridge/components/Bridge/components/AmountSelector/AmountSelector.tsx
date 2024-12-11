@@ -75,7 +75,6 @@ export const AmountSelector = memo(function AmountSelector({ css: cssProp }: Amo
         </div>
       </div>
       <AmountInput
-        css={styles.input}
         value={input.amount}
         maxValue={userBalance}
         tokenDecimals={input.token.decimals}

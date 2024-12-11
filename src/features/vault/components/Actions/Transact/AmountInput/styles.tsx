@@ -67,7 +67,8 @@ export const styles = {
     flexBasis: 'auto',
   }),
   startAdornment: css.raw({
-    marginRight: '24px',
+    flexGrow: '0',
+    flexShrink: '0',
     flexBasis: 'auto',
   }),
 };

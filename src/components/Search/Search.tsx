@@ -1,13 +1,12 @@
-import type { ChangeEvent, MouseEventHandler } from 'react';
+import type { ChangeEvent, FocusEventHandler, MouseEventHandler } from 'react';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { InputBaseProps } from '@material-ui/core';
-import { InputBase } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { ReactComponent as SearchIcon } from '@repo/images/icons/mui/Search.svg';
 import { ReactComponent as CloseRounded } from '@repo/images/icons/mui/CloseRounded.svg';
 import { styles } from './styles';
 import { css, type CssStyles } from '@repo/styles/css';
+import { BaseInput } from '../Input';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -15,22 +14,22 @@ interface SearchProps {
   handleSearchText: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   handleClearText: () => void;
   searchText: string;
-  autoFocus?: HTMLInputElement['autofocus'];
   css?: CssStyles;
   onClick?: MouseEventHandler<HTMLDivElement>;
-  onFocus?: InputBaseProps['onFocus'];
-  onBlur?: InputBaseProps['onBlur'];
+  onFocus?: FocusEventHandler<HTMLInputElement>;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  minLength?: number;
 }
 
 export const Search = memo(function Search({
   handleSearchText,
   searchText,
   handleClearText,
-  autoFocus = false,
   css: cssProp,
   onClick,
   onFocus,
   onBlur,
+  minLength = 0,
 }: SearchProps) {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -50,17 +49,17 @@ export const Search = memo(function Search({
   }, [valueLength, iconClass, handleClearText]);
 
   return (
-    <InputBase
+    <BaseInput
       onFocus={onFocus}
       onBlur={onBlur}
-      className={css(cssProp, styles.search)}
+      className={css(cssProp)}
       value={searchText}
       onChange={handleSearchText}
       fullWidth={true}
       endAdornment={icon}
-      autoFocus={autoFocus}
       placeholder={t('Filter-Search')}
       onClick={onClick}
+      warning={minLength > 0 && valueLength > 0 && valueLength < minLength}
     />
   );
 });

@@ -83,7 +83,7 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
   return (
     <div className={css(styles.container, styles.deposit, cssProp)}>
       <div className={classes.search}>
-        <SearchInput value={search} onChange={setSearch} css={styles.searchInput} />
+        <SearchInput value={search} onChange={setSearch} />
       </div>
       <div className={classes.walletToggle}>
         <div className={classes.inWallet}>{t('Transact-TokenSelect-InYourWallet')}</div>

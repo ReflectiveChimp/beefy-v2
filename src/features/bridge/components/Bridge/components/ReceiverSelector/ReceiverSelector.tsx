@@ -1,5 +1,4 @@
 import { type ChangeEventHandler, memo, useCallback, useMemo } from 'react';
-import { InputBase } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectBridgeFormState } from '../../../../../data/selectors/bridge';
@@ -11,6 +10,7 @@ import {
   LabelledCheckbox,
   type LabelledCheckboxProps,
 } from '../../../../../../components/LabelledCheckbox';
+import { BaseInput } from '../../../../../../components/Input';
 
 type ReceiverSelectorProps = {
   css?: CssStyles;
@@ -58,7 +58,7 @@ export const ReceiverSelector = memo(function ReceiverSelector({
         onChange={handleReceiverToggle}
       />
       {receiverIsDifferent ? (
-        <InputBase
+        <BaseInput
           className={css(styles.input)}
           value={receiverAddress || ''}
           onChange={handleAddressChange}

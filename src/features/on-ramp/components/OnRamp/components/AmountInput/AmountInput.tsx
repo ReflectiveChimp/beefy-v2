@@ -1,8 +1,12 @@
-import { memo, useCallback, useState } from 'react';
-import { InputBase } from '@material-ui/core';
-import { styles } from './styles';
-import { css, type CssStyles } from '@repo/styles/css';
-import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
+import {
+  type ChangeEventHandler,
+  type FocusEventHandler,
+  memo,
+  useCallback,
+  useState,
+} from 'react';
+import { BaseInput } from '../../../../../../components/Input';
+import type { BaseInputProps } from '../../../../../../components/Input/BaseInput';
 
 function isValidNumberInputString(value: string, maxDecimals: number): boolean {
   const regex = new RegExp(`^[0-9]*\\.?[0-9]{0,${maxDecimals}}$`);
@@ -30,15 +34,13 @@ export type AmountInputProps = {
   value: number;
   onChange: (value: number | undefined) => void;
   error?: boolean;
-  css?: CssStyles;
-  endAdornment?: InputBaseProps['endAdornment'];
+  endAdornment?: BaseInputProps['endAdornment'];
 };
 export const AmountInput = memo(function AmountInput({
   value,
   onChange,
   maxDecimals = 2,
   error = false,
-  css: cssProp,
   endAdornment,
 }: AmountInputProps) {
   // Initial value to string
@@ -46,7 +48,7 @@ export const AmountInput = memo(function AmountInput({
     return numberToString(value, maxDecimals);
   });
 
-  const handleChange = useCallback<Exclude<InputBaseProps['onChange'], undefined>>(
+  const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     e => {
       const rawInput = e.target.value;
 
@@ -77,7 +79,7 @@ export const AmountInput = memo(function AmountInput({
     [setInput, maxDecimals, onChange]
   );
 
-  const handleBlur = useCallback<Exclude<InputBaseProps['onBlur'], undefined>>(
+  const handleBlur = useCallback<FocusEventHandler<HTMLInputElement>>(
     e => {
       const rawInput = e.target.value;
 
@@ -96,14 +98,15 @@ export const AmountInput = memo(function AmountInput({
   );
 
   return (
-    <InputBase
-      className={css(styles.input, cssProp, error && styles.error)}
+    <BaseInput
       value={input}
       onChange={handleChange}
       onBlur={handleBlur}
       fullWidth={true}
       endAdornment={endAdornment}
       placeholder={`0`}
+      error={error}
+      variant="amount"
     />
   );
 });

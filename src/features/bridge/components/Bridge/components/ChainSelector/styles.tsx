@@ -64,6 +64,7 @@ export const styles = {
   chain: css.raw({
     flex: '1 1 20%',
     padding: '8px 8px',
+    justifyContent: 'flex-start',
     '&:hover': {
       color: 'white',
     },

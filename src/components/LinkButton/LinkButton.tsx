@@ -26,9 +26,7 @@ export const LinkButton: FC<LinkButtonProps> = ({
       {type === 'code' && <CodeRoundedIcon fontSize="inherit" className={classes.icon} />}
       {type === 'link' && <InsertIcon fontSize="inherit" className={classes.icon} />}
       <span>{text}</span>
-      {shouldHideIcon !== true && (
-        <OpenInNewRoundedIcon fontSize="inherit" className={classes.icon} />
-      )}
+      {shouldHideIcon !== true && <OpenInNewRoundedIcon className={classes.icon} />}
     </a>
   );
 };

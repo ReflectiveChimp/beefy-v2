@@ -15,6 +15,7 @@ export const styles = {
     textStyle: 'body.med',
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'flex-start',
     width: '100%',
     color: 'text.middle',
     background: 'bayOfMany',

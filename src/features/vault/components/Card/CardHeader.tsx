@@ -2,7 +2,7 @@ import { styled } from '@repo/styles/jsx';
 
 export const CardHeader = styled('div', {
   base: {
-    backgroundColor: 'background.contentDark',
+    backgroundColor: 'background.content.dark',
     borderTopRadius: '12px',
     display: 'flex',
     alignItems: 'center',

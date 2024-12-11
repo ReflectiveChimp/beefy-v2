@@ -1,12 +1,11 @@
 import { memo, useMemo } from 'react';
-import { InputBase } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
-import { css, type CssStyles } from '@repo/styles/css';
-import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
 import ContentLoader from 'react-content-loader';
 import { useAppSelector } from '../../../../../../store';
 import { selectQuoteStatus } from '../../../../../data/selectors/on-ramp';
+import { BaseInput } from '../../../../../../components/Input';
+import type { BaseInputProps } from '../../../../../../components/Input/BaseInput';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -40,13 +39,11 @@ const PendingAmount = memo(function PendingAmount() {
 export type AmountOutputProps = {
   maxDecimals?: number;
   value: number;
-  css?: CssStyles;
-  endAdornment?: InputBaseProps['endAdornment'];
+  endAdornment?: BaseInputProps['endAdornment'];
 };
 export const AmountOutput = memo(function AmountOutput({
   value,
   maxDecimals = 2,
-  css: cssProp,
   endAdornment,
 }: AmountOutputProps) {
   const displayValue = useMemo(() => numberToString(value, maxDecimals), [value, maxDecimals]);
@@ -54,14 +51,14 @@ export const AmountOutput = memo(function AmountOutput({
   const startAdornment = useMemo(() => (pending ? <PendingAmount /> : undefined), [pending]);
 
   return (
-    <InputBase
-      className={css(styles.input, cssProp)}
+    <BaseInput
       value={pending ? '' : displayValue}
       fullWidth={true}
       startAdornment={startAdornment}
       endAdornment={endAdornment}
       placeholder={pending ? '' : '0'}
       readOnly={true}
+      variant="amount"
     />
   );
 });

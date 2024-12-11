@@ -100,9 +100,13 @@ export const ActionInputButton = memo(function ActionInputButton({
             onChange={handleChange}
             tokenDecimals={mooToken.decimals}
             endAdornment={
-              <Button disabled={isDisabledMaxButton} css={styles.maxButton} onClick={handleMax}>
+              <button
+                disabled={isDisabledMaxButton}
+                className={classes.maxButton}
+                onClick={handleMax}
+              >
                 MAX
-              </Button>
+              </button>
             }
           />
           <ActionButton onClick={handleClick} disabled={isDisabled}>

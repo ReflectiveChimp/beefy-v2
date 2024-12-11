@@ -2,7 +2,6 @@ import { memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToggleButtons } from '../../../../../components/ToggleButtons';
 import type { TimeRange } from '../utils';
-import { styles } from './styles';
 
 export type RangeSwitcherProps = {
   availableRanges: TimeRange[];
@@ -31,9 +30,9 @@ export const RangeSwitcher = memo(function RangeSwitcher({
       value={range}
       options={options}
       onChange={onChange}
-      buttonsCss={styles.tabs}
-      buttonCss={styles.tab}
-      selectedCss={styles.selected}
+      noBackground={true}
+      noPadding={true}
+      variant="range"
     />
   );
 });
