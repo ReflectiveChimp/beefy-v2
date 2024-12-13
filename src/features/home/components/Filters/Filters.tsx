@@ -2,12 +2,13 @@ import { memo } from 'react';
 import { ChainButtonFilter, ChainDropdownFilter } from './components/ChainFilters';
 import { UserCategoryButtonFilter } from './components/UserCategoryFilters';
 import { AssetTypeButtonFilter } from './components/AssetTypeFilters';
-import { ExtendedFiltersButton } from './components/ExtendedFilters';
+import { ExtendedFiltersButtonDropdown } from './components/ExtendedFilters';
 import { ClearFiltersButton } from './components/ClearFiltersButton';
 import { VaultCategoryButtonFilter } from './components/VaultCategoryFilters';
 import { StrategyTypeButtonFilter } from './components/StrategyTypeFilters';
 import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint';
 import { styled } from '@repo/styles/jsx';
+import { ExtendedFiltersButtonSidebar } from './components/ExtendedFilters/ExtendedFiltersButtonSidebar';
 
 export const Filters = memo(function Filters() {
   const isDesktop = useBreakpoint({ from: 'lg' });
@@ -26,7 +27,7 @@ const MobileLayout = memo(function MobileLayout() {
           <ChainDropdownFilter />
         </Left>
         <Right>
-          <ExtendedFiltersButton view="sidebar" />
+          <ExtendedFiltersButtonSidebar />
           <ClearFiltersButton />
         </Right>
       </Bottom>
@@ -48,7 +49,7 @@ const DesktopLayout = memo(function DesktopLayout() {
           <VaultCategoryButtonFilter />
           <AssetTypeButtonFilter />
           <StrategyTypeButtonFilter />
-          <ExtendedFiltersButton view="dropdown" />
+          <ExtendedFiltersButtonDropdown />
           <ClearFiltersButton />
         </Right>
       </Bottom>

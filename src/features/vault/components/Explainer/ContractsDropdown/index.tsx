@@ -1,4 +1,4 @@
-import { memo, type MutableRefObject, type RefObject, useCallback, useRef, useState } from 'react';
+import { memo, useCallback, useRef, useState } from 'react';
 import { Button } from '../../../../../components/Button';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as ExpandMore } from '@repo/images/icons/mui/ExpandMore.svg';
@@ -61,7 +61,7 @@ export const ContractsDropdown = memo(function ContractsDropdown({
   const classes = useStyles();
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const anchorEl = useRef<HTMLButtonElement>();
+  const anchorEl = useRef<HTMLButtonElement | null>(null);
 
   const handleChange = useCallback(() => {
     setOpen(value => !value);
@@ -69,17 +69,13 @@ export const ContractsDropdown = memo(function ContractsDropdown({
 
   return (
     <>
-      <Button
-        css={css.raw(styles.button)}
-        ref={anchorEl as RefObject<HTMLButtonElement>}
-        onClick={handleChange}
-      >
+      <Button css={css.raw(styles.button)} ref={anchorEl} onClick={handleChange}>
         {t('Contracts')}
         <ExpandMore className={css(styles.selectIcon, open && styles.selectOpenIcon)} />
       </Button>
       <Floating
         open={open}
-        anchorEl={anchorEl as MutableRefObject<HTMLElement>}
+        anchorEl={anchorEl}
         css={styles.dropdown}
         placement="bottom-end"
         display="flex"

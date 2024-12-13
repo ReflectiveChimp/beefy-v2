@@ -56,7 +56,7 @@ export const ShareButton = memo(function ShareButton({
 }: ShareButtonProps) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const anchorEl = useRef<HTMLButtonElement>();
+  const anchorEl = useRef<HTMLButtonElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
@@ -156,7 +156,7 @@ export const ShareButton = memo(function ShareButton({
         <ShareIcon className={classes.shareIcon} />
       </Button>
       <Dropdown
-        anchorEl={anchorEl as MutableRefObject<HTMLElement>}
+        anchorEl={anchorEl}
         open={isOpen}
         onClose={handleClose}
         placement={placement || 'bottom-end'}

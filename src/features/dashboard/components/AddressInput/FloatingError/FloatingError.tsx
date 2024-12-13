@@ -42,7 +42,7 @@ export const FloatingError = memo(function FloatingError({
       <Floating
         open={!isDomainValid}
         placement="bottom-start"
-        anchorEl={anchorRef as MutableRefObject<HTMLElement>}
+        anchorEl={anchorRef}
         css={dropdownCss}
         display="flex"
         autoWidth={false}
@@ -57,7 +57,7 @@ export const FloatingError = memo(function FloatingError({
       <Floating
         open={!isAddressValid}
         placement="bottom-start"
-        anchorEl={anchorRef as MutableRefObject<HTMLElement>}
+        anchorEl={anchorRef}
         css={dropdownCss}
         display="flex"
         autoWidth={false}

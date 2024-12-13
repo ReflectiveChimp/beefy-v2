@@ -71,8 +71,8 @@ export const VirtualList = memo(function VirtualList({ vaults, address }: Virtua
   const totalVaults = vaults.length;
   const minBatchSize = 3;
   const [renderCount, setRenderCount] = useState(minBatchSize);
-  const containerRef = useRef<HTMLDivElement>();
-  const bottomRef = useRef<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
   const renderVaultIds = useMemo(() => vaults.slice(0, renderCount), [vaults, renderCount]);
   const remainingVaults = useMemo(() => {
     return Math.max(0, totalVaults - renderCount);
@@ -138,12 +138,12 @@ export const VirtualList = memo(function VirtualList({ vaults, address }: Virtua
 
   return (
     <>
-      <div className={classes.container} ref={containerRef as MutableRefObject<HTMLDivElement>}>
+      <div className={classes.container} ref={containerRef}>
         {renderVaultIds.map(vault => {
           return <Vault address={address} key={vault.id} vaultId={vault.id} />;
         })}
       </div>
-      <div ref={bottomRef as MutableRefObject<HTMLDivElement>} />
+      <div ref={bottomRef} />
       <div ref={placeholderRef} />
     </>
   );

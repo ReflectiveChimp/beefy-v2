@@ -10,41 +10,9 @@ import { selectFilterAssetType } from '../../../../../data/selectors/filtered-va
 import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { TYPE_OPTIONS } from './type-options';
-import { styles } from './styles';
-import { legacyMakeStyles } from '@repo/helpers/mui';
-import { type CssStyles } from '@repo/styles/css';
+import { Highlight } from './Highlight';
 
-const useStyles = legacyMakeStyles(styles);
-
-export type AssetTypeButtonFilterProps = {
-  css?: CssStyles;
-};
-
-const CategoryToggleButton = memo(function CategoryToggleButton(props: MultiToggleButtonProps) {
-  const classes = useStyles();
-  const { value, label: originalLabel, onClick } = props;
-  const label = useMemo(() => {
-    const option = TYPE_OPTIONS[value];
-    if (option && option.highlight) {
-      return (
-        <>
-          {originalLabel} <span className={classes.highlight}>{option.highlight}</span>
-        </>
-      );
-    }
-    return originalLabel;
-  }, [value, originalLabel, classes]);
-
-  const handleClick = (isSelected: boolean, value: string) => {
-    onClick(isSelected, value);
-  };
-
-  return <MultiToggleButton {...props} label={label} onClick={handleClick} />;
-});
-
-export const AssetTypeButtonFilter = memo(function AssetTypeButtonFilter({
-  css: cssProp,
-}: AssetTypeButtonFilterProps) {
+export const AssetTypeButtonFilter = memo(function AssetTypeButtonFilter() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const allKey = 'all';
@@ -60,7 +28,7 @@ export const AssetTypeButtonFilter = memo(function AssetTypeButtonFilter({
   const value = useAppSelector(selectFilterAssetType);
 
   const handleChange = useCallback(
-    selected => {
+    (selected: string[]) => {
       dispatch(
         filteredVaultsActions.setAssetType(
           selected.length === Object.values(options).length
@@ -77,10 +45,26 @@ export const AssetTypeButtonFilter = memo(function AssetTypeButtonFilter({
       value={value}
       options={options}
       onChange={handleChange}
-      buttonsCss={cssProp}
       fullWidth={false}
-      untoggleValue={allKey}
       ButtonComponent={CategoryToggleButton}
+      variant="filter"
     />
   );
+});
+
+const CategoryToggleButton = memo<MultiToggleButtonProps>(function CategoryToggleButton(props) {
+  const { value, label: originalLabel } = props;
+  const label = useMemo(() => {
+    const option = TYPE_OPTIONS[value];
+    if (option && option.highlight) {
+      return (
+        <>
+          {originalLabel} <Highlight>{option.highlight}</Highlight>
+        </>
+      );
+    }
+    return originalLabel;
+  }, [value, originalLabel]);
+
+  return <MultiToggleButton {...props} label={label} />;
 });

@@ -4,15 +4,8 @@ import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vau
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { ChainButtonSelector } from './ChainButtonSelector';
-import type { CssStyles } from '@repo/styles/css';
 
-export type ChainButtonFilterProps = {
-  css?: CssStyles;
-};
-
-export const ChainButtonFilter = memo(function ChainButtonFilter({
-  css: cssProp,
-}: ChainButtonFilterProps) {
+export const ChainButtonFilter = memo(function ChainButtonFilter() {
   const dispatch = useAppDispatch();
   const selectedChainIds = useAppSelector(selectFilterChainIds);
 
@@ -23,11 +16,5 @@ export const ChainButtonFilter = memo(function ChainButtonFilter({
     [dispatch]
   );
 
-  return (
-    <ChainButtonSelector
-      selected={selectedChainIds}
-      onChange={handleChainSelectorChange}
-      css={cssProp}
-    />
-  );
+  return <ChainButtonSelector selected={selectedChainIds} onChange={handleChainSelectorChange} />;
 });

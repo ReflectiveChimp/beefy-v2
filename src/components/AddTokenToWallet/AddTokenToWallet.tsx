@@ -32,7 +32,7 @@ const addTokenToWalletRecipe = sva({
       display: 'flex',
       alignItems: 'center',
       padding: '18px 24px',
-      background: 'background.contentDark',
+      background: 'background.content.dark',
       borderRadius: '10px 10px 0px 0px ',
       borderBottom: `2px solid {background.border}`,
     },
@@ -50,7 +50,7 @@ const addTokenToWalletRecipe = sva({
       },
     },
     cardContent: {
-      background: 'background.contentPrimary',
+      background: 'background.content',
       borderRadius: '0 0 12px 12px',
       padding: '24px',
       minHeight: '200px',

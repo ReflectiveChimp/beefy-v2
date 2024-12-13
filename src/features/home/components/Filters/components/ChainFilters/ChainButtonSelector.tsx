@@ -5,9 +5,10 @@ import { selectActiveChainIds, selectChainById } from '../../../../../data/selec
 import { Tooltip } from '@material-ui/core';
 import { legacyMakeStyles } from '@repo/helpers/mui';
 import { styles } from './styles';
-import { css, type CssStyles, cx } from '@repo/styles/css';
+import { css, cx } from '@repo/styles/css';
 import { useAppSelector } from '../../../../../../store';
 import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge';
+import { styled } from '@repo/styles/jsx';
 
 const useStyles = legacyMakeStyles(styles);
 const networkIcons = import.meta.glob<FC<SVGProps<SVGSVGElement>>>(
@@ -55,12 +56,10 @@ const ChainButton = memo(function ChainButton({ id, selected, onChange }: ChainB
 export type ChainButtonSelectorProps = {
   selected: ChainEntity['id'][];
   onChange: (selected: ChainEntity['id'][]) => void;
-  css?: CssStyles;
 };
 export const ChainButtonSelector = memo(function ChainButtonSelector({
   selected,
   onChange,
-  css: cssProp,
 }: ChainButtonSelectorProps) {
   const chainIds = useAppSelector(selectActiveChainIds);
   const handleChange = useCallback(
@@ -85,7 +84,7 @@ export const ChainButtonSelector = memo(function ChainButtonSelector({
   );
 
   return (
-    <div className={css(styles.selector, cssProp)}>
+    <Buttons>
       {chainIds.map(id => (
         <ChainButton
           key={id}
@@ -94,6 +93,22 @@ export const ChainButtonSelector = memo(function ChainButtonSelector({
           onChange={handleChange}
         />
       ))}
-    </div>
+    </Buttons>
   );
+});
+
+const Buttons = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    columnGap: '0',
+    rowGap: '16px',
+    width: '100%',
+    borderStyle: 'solid',
+    borderWidth: '2px',
+    borderColor: 'background.content',
+    borderRadius: '8px',
+    backgroundColor: 'background.content.dark',
+  },
 });

@@ -40,7 +40,7 @@ export const ExplorerLinks = memo(function ExplorerLinks({ chainId }: ExplorerLi
         <img className={classes.icon} src={iconExternalLink} alt="external link" />
         <Floating
           open={isOpen}
-          anchorEl={anchorEl as MutableRefObject<HTMLDivElement>}
+          anchorEl={anchorEl}
           placement="bottom-start"
           css={styles.dropdown}
           display="flex"

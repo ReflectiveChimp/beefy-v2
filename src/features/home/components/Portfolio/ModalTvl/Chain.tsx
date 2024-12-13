@@ -33,7 +33,7 @@ const Box = styled('div', {
     alignItems: 'center',
     padding: '8px',
     borderRadius: '4px',
-    backgroundColor: 'background.contentLight',
+    backgroundColor: 'background.content.light',
     gap: '8px',
   },
 });

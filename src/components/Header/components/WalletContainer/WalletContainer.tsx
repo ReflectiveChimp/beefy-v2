@@ -90,7 +90,7 @@ const Button = styled('button', {
       known: {
         borderColor: 'indicators.warning',
         _hover: {
-          borderColor: 'background.contentLight',
+          borderColor: 'background.content.light',
         },
       },
       connected: {

@@ -6,14 +6,8 @@ import { selectFilterVaultCategory } from '../../../../../data/selectors/filtere
 import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { CATEGORY_OPTIONS } from './category-options';
-import { type CssStyles } from '@repo/styles/css';
 
-export type VaultCategoryButtonFilterProps = {
-  css?: CssStyles;
-};
-export const VaultCategoryButtonFilter = memo(function VaultCategoryButtonFilter({
-  css: cssProp,
-}: VaultCategoryButtonFilterProps) {
+export const VaultCategoryButtonFilter = memo(function VaultCategoryButtonFilter() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const allKey = 'all';
@@ -29,7 +23,7 @@ export const VaultCategoryButtonFilter = memo(function VaultCategoryButtonFilter
   const value = useAppSelector(selectFilterVaultCategory);
 
   const handleChange = useCallback(
-    selected => {
+    (selected: string[]) => {
       dispatch(
         filteredVaultsActions.setVaultCategory(
           selected.length === Object.values(options).length
@@ -46,9 +40,8 @@ export const VaultCategoryButtonFilter = memo(function VaultCategoryButtonFilter
       value={value}
       options={options}
       onChange={handleChange}
-      buttonsCss={cssProp}
       fullWidth={false}
-      untoggleValue={allKey}
+      variant="filter"
     />
   );
 });

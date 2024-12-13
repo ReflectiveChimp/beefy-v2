@@ -22,7 +22,7 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
 const Holder = styled('div', {
   base: {
     display: 'flex',
-    backgroundColor: 'background.contentDark',
+    backgroundColor: 'background.content.dark',
     alignItems: 'center',
     borderRadius: '8px',
   },

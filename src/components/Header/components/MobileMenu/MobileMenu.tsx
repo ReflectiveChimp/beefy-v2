@@ -50,7 +50,7 @@ export const MobileMenu = memo(function MobileMenu() {
 const Divider = styled('hr', {
   base: {
     height: '2px',
-    backgroundColor: 'background.contentDark',
+    backgroundColor: 'background.content.dark',
     display: 'block',
     margin: 0,
     padding: 0,

@@ -61,8 +61,8 @@ export const VirtualVaultsList = memo(function VirtualVaultsList({
   const totalVaults = vaultIds.length;
   const minBatchSize = 10;
   const [renderCount, setRenderCount] = useState(minBatchSize);
-  const containerRef = useRef<HTMLDivElement>();
-  const bottomRef = useRef<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
   const vaultHeightEstimate = useVaultHeightEstimate();
   const renderVaultIds = useMemo(() => vaultIds.slice(0, renderCount), [vaultIds, renderCount]);
   const remainingVaults = useMemo(() => {
@@ -147,12 +147,12 @@ export const VirtualVaultsList = memo(function VirtualVaultsList({
 
   return (
     <>
-      <div className={classes.container} ref={containerRef as MutableRefObject<HTMLDivElement>}>
+      <div className={classes.container} ref={containerRef}>
         {renderVaultIds.map(vaultId => (
           <Vault vaultId={vaultId} key={vaultId} />
         ))}
       </div>
-      <div ref={bottomRef as MutableRefObject<HTMLDivElement>} />
+      <div ref={bottomRef} />
       <div style={placeholderStyle} ref={placeholderRef} />
     </>
   );

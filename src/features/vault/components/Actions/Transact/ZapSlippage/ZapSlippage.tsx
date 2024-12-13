@@ -4,7 +4,6 @@ import type {
   DetailedHTMLProps,
   FocusEventHandler,
   MouseEventHandler,
-  MutableRefObject,
 } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { legacyMakeStyles } from '@repo/helpers/mui';
@@ -97,7 +96,7 @@ const CustomSlippageInput = memo(function CustomSlippageInput({
 }: CustomSlippageInputProps) {
   const [inputMode, setInputMode] = useState(false);
   const [input, setInput] = useState('');
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const showPlaceholder = !inputMode && !isCustom;
 
   const handleClick = useCallback<MouseEventHandler<HTMLButtonElement>>(() => {
@@ -159,7 +158,7 @@ const CustomSlippageInput = memo(function CustomSlippageInput({
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
-        ref={inputRef as MutableRefObject<HTMLInputElement>}
+        ref={inputRef}
       />
       {showPlaceholder ? (
         <button

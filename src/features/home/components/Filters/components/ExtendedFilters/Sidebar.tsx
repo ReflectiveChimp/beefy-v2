@@ -38,7 +38,7 @@ export const Sidebar = memo<SidebarProps>(function Sidebar({ open, onClose }) {
 
 const Layout = styled('div', {
   base: {
-    backgroundColor: 'background.contentPrimary',
+    backgroundColor: 'background.content',
     height: '100vh',
     maxHeight: '100%',
     width: '320px',
@@ -50,7 +50,7 @@ const Layout = styled('div', {
 const Header = styled('div', {
   base: {
     textStyle: 'h2',
-    backgroundColor: 'background.contentDark',
+    backgroundColor: 'background.content.dark',
     color: 'text.light',
     padding: '24px',
     flexGrow: 0,

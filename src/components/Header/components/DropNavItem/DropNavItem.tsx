@@ -68,7 +68,7 @@ const DropdownItems = styled(FloatingDropdown, {
     padding: `8px`,
     borderWidth: '2px',
     borderStyle: 'solid',
-    borderColor: 'background.contentDark',
+    borderColor: 'background.content.dark',
     backgroundColor: 'searchInput.background',
     borderRadius: '4px',
     marginLeft: '-8px',
