@@ -127,7 +127,7 @@ const Title = memo(function Title({ upcoming }: TitleProps) {
       <IconWithBasicTooltip
         title={t('Boost-WhatIs')}
         content={t('Boost-Explain')}
-        triggerCss={styles.titleTooltipTrigger}
+        iconCss={styles.titleTooltipTrigger}
       />
     </div>
   );

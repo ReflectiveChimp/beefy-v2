@@ -105,7 +105,6 @@ export const styles = {
     fontSize: 'var(--tooltip-icon-size, 20px)',
     width: 'var(--tooltip-icon-size, 20px)',
     height: 'var(--tooltip-icon-size, 20px)',
-    display: 'block',
   }),
   dark: css.raw({
     '--tooltip-background-color': 'tooltip.dark.background',

@@ -27,6 +27,7 @@ export const Dialog = styled('div', {
     },
   },
   defaultVariants: {
+    scrollable: false,
     position: 'center',
   },
 });

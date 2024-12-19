@@ -21,6 +21,7 @@ export function muiCompatSvgrPlugin() {
       expandProps: 'end',
       typescript: true,
       memo: true,
+      ref: true,
       svgProps: {
         focusable: 'false',
         'aria-hidden': 'true',

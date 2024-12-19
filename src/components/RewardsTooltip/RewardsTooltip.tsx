@@ -18,6 +18,7 @@ import { uniq } from 'lodash-es';
 import { getMostCommon, isDefined } from '../../features/data/utils/array-utils';
 import { ucFirstLetter } from '../../helpers/string';
 import { groupByMap } from '../../helpers/collection';
+import { AsTooltip } from '../Tooltip/AsTooltip';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -72,11 +73,11 @@ export const PendingRewardsIconWithTooltip = memo(function PendingRewardsIconWit
   }
 
   return (
-    <Tooltip content={<StatusRewards status={'pending'} rewards={pending.rewards} />}>
+    <AsTooltip content={<StatusRewards status={'pending'} rewards={pending.rewards} />}>
       <div className={classes.container}>
         <AssetsImage chainId={tokens.chainId} size={size || 20} assetSymbols={tokens.symbols} />
       </div>
-    </Tooltip>
+    </AsTooltip>
   );
 });
 

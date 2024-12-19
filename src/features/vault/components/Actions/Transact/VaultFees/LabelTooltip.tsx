@@ -10,6 +10,7 @@ const triggerCss = css.raw({
   height: '16px',
   margin: '0',
   verticalAlign: 'middle',
+  display: 'inline-block',
   '& svg': {
     width: '16px',
     height: '16px',
@@ -21,7 +22,7 @@ export type LabelTooltipProps = BasicTooltipContentProps;
 export const LabelTooltip = memo(function LabelTooltip({ title, content }: LabelTooltipProps) {
   return (
     <IconWithTooltip
-      triggerCss={triggerCss}
+      iconCss={triggerCss}
       content={<BasicTooltipContent title={title} content={content} />}
     />
   );
@@ -30,5 +31,5 @@ export const LabelTooltip = memo(function LabelTooltip({ title, content }: Label
 export type LabelCustomTooltipProps = Omit<IconWithTooltipProps, 'triggerCss'>;
 
 export const LabelCustomTooltip = memo(function LabelCustomTooltip(props: LabelCustomTooltipProps) {
-  return <IconWithTooltip triggerCss={triggerCss} {...props} />;
+  return <IconWithTooltip iconCss={triggerCss} {...props} />;
 });
