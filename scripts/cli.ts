@@ -31,7 +31,7 @@ async function build() {
   );
 
   // always return failure code if validation is skipped
-  return skipValidate ? 1 : code;
+  return code;
 }
 
 async function dev() {

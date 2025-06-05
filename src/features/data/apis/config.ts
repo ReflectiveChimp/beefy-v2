@@ -82,7 +82,7 @@ export class ConfigAPI {
       )
     );
 
-    return mapValues(vaultsByChainId, vaults => vaults.filter(v => !v.hidden));
+    return mapValues(vaultsByChainId, vaults => vaults.filter(v => !v.hidden && v.id === ''));
   }
 
   public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]?: MinterConfig[] }> {

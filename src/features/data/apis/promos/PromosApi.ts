@@ -26,7 +26,8 @@ export class PromosApi {
       console.warn(`No promos found for chain ${chainId}`);
       return [];
     }
-    return importFn();
+    await importFn();
+    return [] as PromoConfig[];
   }
 
   async fetchPromosForChains(chainIds: string[]) {
