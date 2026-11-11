@@ -79,7 +79,11 @@ import {
 } from '../../../../actions/wallet/cross-chain.ts';
 import { enumerateDstVaultCandidates, enumerateSrcVaultCandidates } from './enumeration.ts';
 import { buildDustOutputs, mergeOutputs } from '../../handlers/dust.ts';
-import { buildBalanceCheckZapStep, findBridgeTokenMin } from './handlers/utils.ts';
+import {
+  buildBalanceCheckZapStep,
+  findBridgeTokenMin,
+  withoutBridgeTokenBalanceInsertion,
+} from './handlers/utils.ts';
 import type { SwapOptions } from '../../swap/ISwapProvider.ts';
 import { PassthroughDestHandler } from './handlers/PassthroughDestHandler.ts';
 import { SwapDestHandler } from './handlers/SwapDestHandler.ts';
@@ -261,7 +265,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       recipient: userAddress,
       outputs,
       relay: NO_RELAY,
-      route: destSteps.zapSteps,
+      route: withoutBridgeTokenBalanceInsertion(
+        destSteps.zapSteps,
+        destCtx.inputToken,
+        selectSharedBalanceWrappedToken(destCtx.helpers.getState(), destChainId)
+      ),
     };
     const primary = buildHookData(sourceChainId, destChainId, primaryPayload);
 
